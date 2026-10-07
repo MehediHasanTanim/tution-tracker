@@ -7,6 +7,7 @@ import 'package:tution_tracker/features/batches/presentation/batch_form_screen.d
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
+import 'package:tution_tracker/features/receipts/presentation/receipt_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
 import 'package:tution_tracker/features/settings/presentation/settings_screen.dart';
 import 'package:tution_tracker/features/students/presentation/student_form_screen.dart';
@@ -91,6 +92,12 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                     path: 'pay/:studentId',
                     builder: (context, state) => RecordPaymentScreen(
                       studentId: state.pathParameters['studentId'],
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'receipt/:paymentId',
+                    builder: (context, state) => ReceiptScreen(
+                      paymentId: state.pathParameters['paymentId']!,
                     ),
                   ),
                   GoRoute(

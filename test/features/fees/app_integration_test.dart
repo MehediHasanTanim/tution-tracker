@@ -107,7 +107,7 @@ void main() {
       await goTab(tester, 'সেটিংস');
 
       expect(find.text('ডেভেলপার'), findsOneWidget);
-      await tester.tap(find.text('হিসাব যাচাই চালান'));
+      await tapCentered(tester, find.text('হিসাব যাচাই চালান'));
       await waitFor(tester);
       expect(find.text('কোনো সমস্যা পাওয়া যায়নি'), findsOneWidget);
     });
@@ -124,7 +124,7 @@ void main() {
       );
       await pumpHarnessApp(tester, h);
       await goTab(tester, 'সেটিংস');
-      await tester.tap(find.text('হিসাব যাচাই চালান'));
+      await tapCentered(tester, find.text('হিসাব যাচাই চালান'));
       await waitFor(tester);
       expect(find.text('১টি সমস্যা পাওয়া গেছে'), findsOneWidget);
       expect(find.textContaining('allocationSumMismatch'), findsOneWidget);

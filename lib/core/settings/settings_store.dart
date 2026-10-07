@@ -33,6 +33,9 @@ class SettingsStore {
         .distinct();
   }
 
+  /// Emits once now and again whenever any setting changes.
+  Stream<void> watchAny() => _db.select(_db.settings).watch().map((_) {});
+
   /// Removes a stored value so the default applies again.
   Future<void> reset<T>(SettingKey<T> key) =>
       (_db.delete(_db.settings)..where((t) => t.key.equals(key.name))).go();

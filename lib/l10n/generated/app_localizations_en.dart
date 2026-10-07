@@ -616,4 +616,279 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genericError => 'Something went wrong';
+
+  @override
+  String get attStatusPresent => 'Present';
+
+  @override
+  String get attStatusAbsent => 'Absent';
+
+  @override
+  String get attStatusLate => 'Late';
+
+  @override
+  String get attStatusExcused => 'Excused';
+
+  @override
+  String get attMarkAllPresent => 'Mark all present';
+
+  @override
+  String get attTopic => 'Topic covered (optional)';
+
+  @override
+  String get attSaved => 'Attendance saved';
+
+  @override
+  String get attDiscardTitle => 'Save your changes?';
+
+  @override
+  String get attDiscardBody =>
+      'You changed the attendance and have not saved it yet.';
+
+  @override
+  String get attDiscard => 'Discard';
+
+  @override
+  String get attNoStudents => 'No students in this class';
+
+  @override
+  String get attCancelClass => 'Cancel class';
+
+  @override
+  String get attHoliday => 'Mark as holiday';
+
+  @override
+  String get attReason => 'Reason (optional)';
+
+  @override
+  String get attRestore => 'Restore class';
+
+  @override
+  String get attCancelledBanner => 'This class was cancelled';
+
+  @override
+  String get attHolidayBanner => 'This day was marked a holiday';
+
+  @override
+  String attMarked(String done, String total) {
+    return 'Marked $done/$total';
+  }
+
+  @override
+  String get homeToday => 'Today';
+
+  @override
+  String get homeClasses => 'Classes';
+
+  @override
+  String get homeNoClasses => 'No classes this day';
+
+  @override
+  String get classNotTaken => 'Not taken';
+
+  @override
+  String get classTaken => 'Taken';
+
+  @override
+  String get classCancelled => 'Cancelled';
+
+  @override
+  String get classHoliday => 'Holiday';
+
+  @override
+  String classAttended(String attended, String total) {
+    return '$attended of $total present';
+  }
+
+  @override
+  String get classExtra => 'Extra';
+
+  @override
+  String get homePrevDay => 'Previous day';
+
+  @override
+  String get homeNextDay => 'Next day';
+
+  @override
+  String get homePickDate => 'Pick a date';
+
+  @override
+  String get homeAddExtra => 'Extra class';
+
+  @override
+  String get homeExtraTitle => 'Add an extra class';
+
+  @override
+  String get homeExtraBatches => 'Batches';
+
+  @override
+  String get homeExtraStudents => 'One-to-one';
+
+  @override
+  String get homeExtraNone => 'Nothing found';
+
+  @override
+  String get homeExtraTime => 'Start time (optional)';
+
+  @override
+  String get homeMonthTitle => 'This month';
+
+  @override
+  String get homeExpected => 'Expected';
+
+  @override
+  String get homeCollected => 'Collected';
+
+  @override
+  String get homeOutstanding => 'Outstanding';
+
+  @override
+  String homeOverdueStudents(String count) {
+    return '$count overdue';
+  }
+
+  @override
+  String homeTotalOwed(String amount) {
+    return 'Owed across all months: $amount';
+  }
+
+  @override
+  String get homeUpcoming => 'Fees due this week';
+
+  @override
+  String get homeUpcomingNone => 'No fees fall due this week';
+
+  @override
+  String get homeSeeAll => 'See all';
+
+  @override
+  String get attClassesCount => 'Classes';
+
+  @override
+  String get attRate => 'Rate';
+
+  @override
+  String get attNoClasses => 'No classes recorded this month';
+
+  @override
+  String get calPrevMonth => 'Previous month';
+
+  @override
+  String get calNextMonth => 'Next month';
+
+  @override
+  String get attShare => 'Share with guardian';
+
+  @override
+  String shareAttTitle(String name, String month) {
+    return '$name — attendance for $month';
+  }
+
+  @override
+  String shareAttClasses(String count) {
+    return 'Classes: $count';
+  }
+
+  @override
+  String shareAttBreakdown(
+    String present,
+    String late,
+    String absent,
+    String excused,
+  ) {
+    return 'Present $present · Late $late · Absent $absent · Excused $excused';
+  }
+
+  @override
+  String shareAttRate(String percent) {
+    return 'Attendance rate: $percent';
+  }
+
+  @override
+  String get shareAttNone => 'No classes were held this month';
+
+  @override
+  String shareFooter(String name) {
+    return '— $name';
+  }
+
+  @override
+  String get reportCollectionRate => 'Collection rate';
+
+  @override
+  String get reportCash => 'Cash received this month';
+
+  @override
+  String get reportBatches => 'By batch';
+
+  @override
+  String get reportNoBatch => 'No batch';
+
+  @override
+  String reportStudents(String count) {
+    return 'Students: $count';
+  }
+
+  @override
+  String reportAttendance(String percent) {
+    return 'Attendance $percent';
+  }
+
+  @override
+  String get reportNote =>
+      'A student in several batches is counted in the one they joined first.';
+
+  @override
+  String get reportIncomeTitle => 'Income by month (last 12 months)';
+
+  @override
+  String get reportNoData => 'No data for this month';
+
+  @override
+  String get receiptTitle => 'Receipt';
+
+  @override
+  String get receiptAction => 'Receipt';
+
+  @override
+  String get receiptShareAction => 'Share receipt';
+
+  @override
+  String get receiptStudent => 'Student';
+
+  @override
+  String get receiptGuardian => 'Guardian';
+
+  @override
+  String get receiptFor => 'For';
+
+  @override
+  String get receiptTotal => 'Total received';
+
+  @override
+  String get receiptThanks => 'Thank you';
+
+  @override
+  String get receiptShareImage => 'Share as image';
+
+  @override
+  String get receiptSharePdf => 'Share as PDF';
+
+  @override
+  String get receiptShareFailed => 'Could not share';
+
+  @override
+  String get tutorSection => 'Tutor profile';
+
+  @override
+  String get tutorSectionHint => 'Shown on receipts and shared messages';
+
+  @override
+  String get tutorName => 'Your name';
+
+  @override
+  String get tutorInstitution => 'Institution name';
+
+  @override
+  String get tutorPhone => 'Phone number';
 }

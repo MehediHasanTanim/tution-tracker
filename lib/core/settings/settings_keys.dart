@@ -48,6 +48,12 @@ abstract final class SettingKeys {
     decode: ClockTime.parse,
   );
 
+  /// The tutor's own details, shown on receipts and shared messages (spec
+  /// ON-2). All optional.
+  static final tutorName = stringKey('tutor_name');
+  static final institutionName = stringKey('institution_name');
+  static final tutorPhone = stringKey('tutor_phone');
+
   /// The receipt number the next payment will get (design 7.4, 10.5).
   static final nextReceiptNo = intKey('next_receipt_no', 1, min: 1);
 }

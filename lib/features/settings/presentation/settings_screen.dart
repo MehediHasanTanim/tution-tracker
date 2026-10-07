@@ -3,6 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/app.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
+import 'package:tution_tracker/core/settings/setting_key.dart';
+import 'package:tution_tracker/core/settings/settings_keys.dart';
+import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -16,7 +20,7 @@ class SettingsScreen extends ConsumerWidget {
     final locale = ref.watch(localeProvider);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,6 +42,8 @@ class SettingsScreen extends ConsumerWidget {
               onSelectionChanged: (s) =>
                   ref.read(localeProvider.notifier).setLocale(s.first),
             ),
+            const SizedBox(height: 24),
+            const _TutorProfileSection(),
             const SizedBox(height: 24),
             Text(l10n.sampleConjuncts),
             if (ref.watch(appFlavorProvider) == AppFlavor.dev) ...[
@@ -98,4 +104,94 @@ Future<void> _runConsistencyCheck(BuildContext context, WidgetRef ref) async {
       ],
     ),
   );
+}
+
+/// The tutor's name, institution and phone (spec ON-2), saved as they type.
+class _TutorProfileSection extends ConsumerStatefulWidget {
+  const _TutorProfileSection();
+
+  @override
+  ConsumerState<_TutorProfileSection> createState() =>
+      _TutorProfileSectionState();
+}
+
+class _TutorProfileSectionState extends ConsumerState<_TutorProfileSection> {
+  final _name = TextEditingController();
+  final _institution = TextEditingController();
+  final _phone = TextEditingController();
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final store = await ref.read(settingsStoreProvider.future);
+    _name.text = await store.get(SettingKeys.tutorName);
+    _institution.text = await store.get(SettingKeys.institutionName);
+    _phone.text = await store.get(SettingKeys.tutorPhone);
+    if (mounted) setState(() => _loaded = true);
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _institution.dispose();
+    _phone.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save(SettingKey<String> key, String value) async {
+    final store = await ref.read(settingsStoreProvider.future);
+    await store.set(key, value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(l10n.tutorSection, style: theme.textTheme.titleMedium),
+        Text(l10n.tutorSectionHint, style: theme.textTheme.bodySmall),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _name,
+          enabled: _loaded,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            labelText: l10n.tutorName,
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (v) => _save(SettingKeys.tutorName, v),
+        ),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _institution,
+          enabled: _loaded,
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            labelText: l10n.tutorInstitution,
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (v) => _save(SettingKeys.institutionName, v),
+        ),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _phone,
+          enabled: _loaded,
+          keyboardType: TextInputType.phone,
+          inputFormatters: const [PhoneInputFormatter()],
+          decoration: InputDecoration(
+            labelText: l10n.tutorPhone,
+            border: const OutlineInputBorder(),
+          ),
+          onChanged: (v) => _save(SettingKeys.tutorPhone, v),
+        ),
+      ],
+    );
+  }
 }

@@ -388,6 +388,11 @@ class StudentFeesTab extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
+              leading: const Icon(Icons.receipt_long),
+              title: Text(l10n.receiptAction),
+              onTap: () => Navigator.pop(context, 'receipt'),
+            ),
+            ListTile(
               leading: const Icon(Icons.edit_outlined),
               title: Text(l10n.actionEdit),
               onTap: () => Navigator.pop(context, 'edit'),
@@ -402,6 +407,11 @@ class StudentFeesTab extends ConsumerWidget {
       ),
     );
     if (choice == null || !context.mounted) return;
+
+    if (choice == 'receipt') {
+      await context.push('/fees/receipt/${payment.id}');
+      return;
+    }
 
     if (choice == 'edit') {
       await context.push('/fees/payments/${payment.id}/edit');

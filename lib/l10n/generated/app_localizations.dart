@@ -1243,6 +1243,503 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'কিছু ভুল হয়েছে'**
   String get genericError;
+
+  /// No description provided for @attStatusPresent.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিত'**
+  String get attStatusPresent;
+
+  /// No description provided for @attStatusAbsent.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুপস্থিত'**
+  String get attStatusAbsent;
+
+  /// No description provided for @attStatusLate.
+  ///
+  /// In bn, this message translates to:
+  /// **'দেরি'**
+  String get attStatusLate;
+
+  /// No description provided for @attStatusExcused.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছুটি'**
+  String get attStatusExcused;
+
+  /// No description provided for @attMarkAllPresent.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাইকে উপস্থিত করুন'**
+  String get attMarkAllPresent;
+
+  /// No description provided for @attTopic.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের পাঠ (ঐচ্ছিক)'**
+  String get attTopic;
+
+  /// No description provided for @attSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিতি সংরক্ষিত হয়েছে'**
+  String get attSaved;
+
+  /// No description provided for @attDiscardTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিবর্তন সংরক্ষণ করবেন?'**
+  String get attDiscardTitle;
+
+  /// No description provided for @attDiscardBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি উপস্থিতিতে পরিবর্তন করেছেন যা এখনও সংরক্ষিত হয়নি।'**
+  String get attDiscardBody;
+
+  /// No description provided for @attDiscard.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাদ দিন'**
+  String get attDiscard;
+
+  /// No description provided for @attNoStudents.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ক্লাসে কোনো শিক্ষার্থী নেই'**
+  String get attNoStudents;
+
+  /// No description provided for @attCancelClass.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বাতিল করুন'**
+  String get attCancelClass;
+
+  /// No description provided for @attHoliday.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছুটির দিন হিসেবে চিহ্নিত করুন'**
+  String get attHoliday;
+
+  /// No description provided for @attReason.
+  ///
+  /// In bn, this message translates to:
+  /// **'কারণ (ঐচ্ছিক)'**
+  String get attReason;
+
+  /// No description provided for @attRestore.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস আবার চালু করুন'**
+  String get attRestore;
+
+  /// No description provided for @attCancelledBanner.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ক্লাস বাতিল করা হয়েছে'**
+  String get attCancelledBanner;
+
+  /// No description provided for @attHolidayBanner.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই দিন ছুটি'**
+  String get attHolidayBanner;
+
+  /// No description provided for @attMarked.
+  ///
+  /// In bn, this message translates to:
+  /// **'চিহ্নিত {done}/{total}'**
+  String attMarked(String done, String total);
+
+  /// No description provided for @homeToday.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজ'**
+  String get homeToday;
+
+  /// No description provided for @homeClasses.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস'**
+  String get homeClasses;
+
+  /// No description provided for @homeNoClasses.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই দিনে কোনো ক্লাস নেই'**
+  String get homeNoClasses;
+
+  /// No description provided for @classNotTaken.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেওয়া হয়নি'**
+  String get classNotTaken;
+
+  /// No description provided for @classTaken.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেওয়া হয়েছে'**
+  String get classTaken;
+
+  /// No description provided for @classCancelled.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get classCancelled;
+
+  /// No description provided for @classHoliday.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছুটি'**
+  String get classHoliday;
+
+  /// No description provided for @classAttended.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিত {attended}/{total}'**
+  String classAttended(String attended, String total);
+
+  /// No description provided for @classExtra.
+  ///
+  /// In bn, this message translates to:
+  /// **'অতিরিক্ত'**
+  String get classExtra;
+
+  /// No description provided for @homePrevDay.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের দিন'**
+  String get homePrevDay;
+
+  /// No description provided for @homeNextDay.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরের দিন'**
+  String get homeNextDay;
+
+  /// No description provided for @homePickDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'তারিখ বাছুন'**
+  String get homePickDate;
+
+  /// No description provided for @homeAddExtra.
+  ///
+  /// In bn, this message translates to:
+  /// **'অতিরিক্ত ক্লাস'**
+  String get homeAddExtra;
+
+  /// No description provided for @homeExtraTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অতিরিক্ত ক্লাস যোগ করুন'**
+  String get homeExtraTitle;
+
+  /// No description provided for @homeExtraBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ'**
+  String get homeExtraBatches;
+
+  /// No description provided for @homeExtraStudents.
+  ///
+  /// In bn, this message translates to:
+  /// **'একক শিক্ষার্থী'**
+  String get homeExtraStudents;
+
+  /// No description provided for @homeExtraNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'কিছু পাওয়া যায়নি'**
+  String get homeExtraNone;
+
+  /// No description provided for @homeExtraTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুরুর সময় (ঐচ্ছিক)'**
+  String get homeExtraTime;
+
+  /// No description provided for @homeMonthTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মাস'**
+  String get homeMonthTitle;
+
+  /// No description provided for @homeExpected.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রত্যাশিত'**
+  String get homeExpected;
+
+  /// No description provided for @homeCollected.
+  ///
+  /// In bn, this message translates to:
+  /// **'আদায়'**
+  String get homeCollected;
+
+  /// No description provided for @homeOutstanding.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি'**
+  String get homeOutstanding;
+
+  /// No description provided for @homeOverdueStudents.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} জন বিলম্বিত'**
+  String homeOverdueStudents(String count);
+
+  /// No description provided for @homeTotalOwed.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব মাস মিলিয়ে বাকি: {amount}'**
+  String homeTotalOwed(String amount);
+
+  /// No description provided for @homeUpcoming.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই সপ্তাহে ফি দেওয়ার তারিখ'**
+  String get homeUpcoming;
+
+  /// No description provided for @homeUpcomingNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই সপ্তাহে কোনো ফি দেওয়ার তারিখ নেই'**
+  String get homeUpcomingNone;
+
+  /// No description provided for @homeSeeAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব দেখুন'**
+  String get homeSeeAll;
+
+  /// No description provided for @attClassesCount.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট ক্লাস'**
+  String get attClassesCount;
+
+  /// No description provided for @attRate.
+  ///
+  /// In bn, this message translates to:
+  /// **'হার'**
+  String get attRate;
+
+  /// No description provided for @attNoClasses.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মাসে কোনো ক্লাসের তথ্য নেই'**
+  String get attNoClasses;
+
+  /// No description provided for @calPrevMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের মাস'**
+  String get calPrevMonth;
+
+  /// No description provided for @calNextMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরের মাস'**
+  String get calNextMonth;
+
+  /// No description provided for @attShare.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবকের জন্য শেয়ার করুন'**
+  String get attShare;
+
+  /// No description provided for @shareAttTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'{name} — {month}-এর উপস্থিতি'**
+  String shareAttTitle(String name, String month);
+
+  /// No description provided for @shareAttClasses.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট ক্লাস: {count}'**
+  String shareAttClasses(String count);
+
+  /// No description provided for @shareAttBreakdown.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিত {present} · দেরি {late} · অনুপস্থিত {absent} · ছুটি {excused}'**
+  String shareAttBreakdown(
+    String present,
+    String late,
+    String absent,
+    String excused,
+  );
+
+  /// No description provided for @shareAttRate.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিতির হার: {percent}'**
+  String shareAttRate(String percent);
+
+  /// No description provided for @shareAttNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মাসে কোনো ক্লাস হয়নি'**
+  String get shareAttNone;
+
+  /// No description provided for @shareFooter.
+  ///
+  /// In bn, this message translates to:
+  /// **'— {name}'**
+  String shareFooter(String name);
+
+  /// No description provided for @reportCollectionRate.
+  ///
+  /// In bn, this message translates to:
+  /// **'আদায়ের হার'**
+  String get reportCollectionRate;
+
+  /// No description provided for @reportCash.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মাসে হাতে পাওয়া'**
+  String get reportCash;
+
+  /// No description provided for @reportBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ অনুযায়ী'**
+  String get reportBatches;
+
+  /// No description provided for @reportNoBatch.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো ব্যাচ নয়'**
+  String get reportNoBatch;
+
+  /// No description provided for @reportStudents.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী: {count}'**
+  String reportStudents(String count);
+
+  /// No description provided for @reportAttendance.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিতি {percent}'**
+  String reportAttendance(String percent);
+
+  /// No description provided for @reportNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'একাধিক ব্যাচের শিক্ষার্থী প্রথম যে ব্যাচে যোগ দিয়েছেন সেখানে গোনা হয়।'**
+  String get reportNote;
+
+  /// No description provided for @reportIncomeTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসওয়ারি আয় (শেষ ১২ মাস)'**
+  String get reportIncomeTitle;
+
+  /// No description provided for @reportNoData.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই মাসে কোনো তথ্য নেই'**
+  String get reportNoData;
+
+  /// No description provided for @receiptTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ'**
+  String get receiptTitle;
+
+  /// No description provided for @receiptAction.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ'**
+  String get receiptAction;
+
+  /// No description provided for @receiptShareAction.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ শেয়ার করুন'**
+  String get receiptShareAction;
+
+  /// No description provided for @receiptStudent.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী'**
+  String get receiptStudent;
+
+  /// No description provided for @receiptGuardian.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবক'**
+  String get receiptGuardian;
+
+  /// No description provided for @receiptFor.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে মাসের জন্য'**
+  String get receiptFor;
+
+  /// No description provided for @receiptTotal.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট জমা'**
+  String get receiptTotal;
+
+  /// No description provided for @receiptThanks.
+  ///
+  /// In bn, this message translates to:
+  /// **'ধন্যবাদ'**
+  String get receiptThanks;
+
+  /// No description provided for @receiptShareImage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি হিসেবে শেয়ার করুন'**
+  String get receiptShareImage;
+
+  /// No description provided for @receiptSharePdf.
+  ///
+  /// In bn, this message translates to:
+  /// **'PDF হিসেবে শেয়ার করুন'**
+  String get receiptSharePdf;
+
+  /// No description provided for @receiptShareFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেয়ার করা যায়নি'**
+  String get receiptShareFailed;
+
+  /// No description provided for @tutorSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষকের তথ্য'**
+  String get tutorSection;
+
+  /// No description provided for @tutorSectionHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ ও শেয়ার করা বার্তায় দেখানো হবে'**
+  String get tutorSectionHint;
+
+  /// No description provided for @tutorName.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষকের নাম'**
+  String get tutorName;
+
+  /// No description provided for @tutorInstitution.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিষ্ঠানের নাম'**
+  String get tutorInstitution;
+
+  /// No description provided for @tutorPhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফোন নম্বর'**
+  String get tutorPhone;
 }
 
 class _AppLocalizationsDelegate

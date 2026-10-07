@@ -308,5 +308,182 @@
       }
     }
   },
-  "genericError": "কিছু ভুল হয়েছে"
+  "genericError": "কিছু ভুল হয়েছে",
+  "attStatusPresent": "উপস্থিত",
+  "attStatusAbsent": "অনুপস্থিত",
+  "attStatusLate": "দেরি",
+  "attStatusExcused": "ছুটি",
+  "attMarkAllPresent": "সবাইকে উপস্থিত করুন",
+  "attTopic": "আজকের পাঠ (ঐচ্ছিক)",
+  "attSaved": "উপস্থিতি সংরক্ষিত হয়েছে",
+  "attDiscardTitle": "পরিবর্তন সংরক্ষণ করবেন?",
+  "attDiscardBody": "আপনি উপস্থিতিতে পরিবর্তন করেছেন যা এখনও সংরক্ষিত হয়নি।",
+  "attDiscard": "বাদ দিন",
+  "attNoStudents": "এই ক্লাসে কোনো শিক্ষার্থী নেই",
+  "attCancelClass": "ক্লাস বাতিল করুন",
+  "attHoliday": "ছুটির দিন হিসেবে চিহ্নিত করুন",
+  "attReason": "কারণ (ঐচ্ছিক)",
+  "attRestore": "ক্লাস আবার চালু করুন",
+  "attCancelledBanner": "এই ক্লাস বাতিল করা হয়েছে",
+  "attHolidayBanner": "এই দিন ছুটি",
+  "attMarked": "চিহ্নিত {done}/{total}",
+  "@attMarked": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "homeToday": "আজ",
+  "homeClasses": "ক্লাস",
+  "homeNoClasses": "এই দিনে কোনো ক্লাস নেই",
+  "classNotTaken": "নেওয়া হয়নি",
+  "classTaken": "নেওয়া হয়েছে",
+  "classCancelled": "বাতিল",
+  "classHoliday": "ছুটি",
+  "classAttended": "উপস্থিত {attended}/{total}",
+  "@classAttended": {
+    "placeholders": {
+      "attended": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "classExtra": "অতিরিক্ত",
+  "homePrevDay": "আগের দিন",
+  "homeNextDay": "পরের দিন",
+  "homePickDate": "তারিখ বাছুন",
+  "homeAddExtra": "অতিরিক্ত ক্লাস",
+  "homeExtraTitle": "অতিরিক্ত ক্লাস যোগ করুন",
+  "homeExtraBatches": "ব্যাচ",
+  "homeExtraStudents": "একক শিক্ষার্থী",
+  "homeExtraNone": "কিছু পাওয়া যায়নি",
+  "homeExtraTime": "শুরুর সময় (ঐচ্ছিক)",
+  "homeMonthTitle": "এই মাস",
+  "homeExpected": "প্রত্যাশিত",
+  "homeCollected": "আদায়",
+  "homeOutstanding": "বাকি",
+  "homeOverdueStudents": "{count} জন বিলম্বিত",
+  "@homeOverdueStudents": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTotalOwed": "সব মাস মিলিয়ে বাকি: {amount}",
+  "@homeTotalOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUpcoming": "এই সপ্তাহে ফি দেওয়ার তারিখ",
+  "homeUpcomingNone": "এই সপ্তাহে কোনো ফি দেওয়ার তারিখ নেই",
+  "homeSeeAll": "সব দেখুন",
+  "attClassesCount": "মোট ক্লাস",
+  "attRate": "হার",
+  "attNoClasses": "এই মাসে কোনো ক্লাসের তথ্য নেই",
+  "calPrevMonth": "আগের মাস",
+  "calNextMonth": "পরের মাস",
+  "attShare": "অভিভাবকের জন্য শেয়ার করুন",
+  "shareAttTitle": "{name} — {month}-এর উপস্থিতি",
+  "@shareAttTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttClasses": "মোট ক্লাস: {count}",
+  "@shareAttClasses": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttBreakdown": "উপস্থিত {present} · দেরি {late} · অনুপস্থিত {absent} · ছুটি {excused}",
+  "@shareAttBreakdown": {
+    "placeholders": {
+      "present": {
+        "type": "String"
+      },
+      "late": {
+        "type": "String"
+      },
+      "absent": {
+        "type": "String"
+      },
+      "excused": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttRate": "উপস্থিতির হার: {percent}",
+  "@shareAttRate": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttNone": "এই মাসে কোনো ক্লাস হয়নি",
+  "shareFooter": "— {name}",
+  "@shareFooter": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCollectionRate": "আদায়ের হার",
+  "reportCash": "এই মাসে হাতে পাওয়া",
+  "reportBatches": "ব্যাচ অনুযায়ী",
+  "reportNoBatch": "কোনো ব্যাচ নয়",
+  "reportStudents": "শিক্ষার্থী: {count}",
+  "@reportStudents": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportAttendance": "উপস্থিতি {percent}",
+  "@reportAttendance": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNote": "একাধিক ব্যাচের শিক্ষার্থী প্রথম যে ব্যাচে যোগ দিয়েছেন সেখানে গোনা হয়।",
+  "reportIncomeTitle": "মাসওয়ারি আয় (শেষ ১২ মাস)",
+  "reportNoData": "এই মাসে কোনো তথ্য নেই",
+  "receiptTitle": "রসিদ",
+  "receiptAction": "রসিদ",
+  "receiptShareAction": "রসিদ শেয়ার করুন",
+  "receiptStudent": "শিক্ষার্থী",
+  "receiptGuardian": "অভিভাবক",
+  "receiptFor": "যে মাসের জন্য",
+  "receiptTotal": "মোট জমা",
+  "receiptThanks": "ধন্যবাদ",
+  "receiptShareImage": "ছবি হিসেবে শেয়ার করুন",
+  "receiptSharePdf": "PDF হিসেবে শেয়ার করুন",
+  "receiptShareFailed": "শেয়ার করা যায়নি",
+  "tutorSection": "শিক্ষকের তথ্য",
+  "tutorSectionHint": "রসিদ ও শেয়ার করা বার্তায় দেখানো হবে",
+  "tutorName": "শিক্ষকের নাম",
+  "tutorInstitution": "প্রতিষ্ঠানের নাম",
+  "tutorPhone": "ফোন নম্বর"
 }

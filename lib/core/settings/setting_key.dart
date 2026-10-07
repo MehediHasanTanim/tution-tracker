@@ -57,3 +57,11 @@ SettingKey<int> intKey(String name, int defaultValue, {int? min, int? max}) =>
         }
       },
     );
+
+/// Free text, stored trimmed. The default is empty.
+SettingKey<String> stringKey(String name) => SettingKey<String>(
+  name: name,
+  defaultValue: '',
+  encode: (v) => v.trim(),
+  decode: (raw) => raw,
+);

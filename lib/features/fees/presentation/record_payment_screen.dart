@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -202,9 +204,14 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
         );
       }
       if (!mounted) return;
-      await _showResult(result);
+      final wantsReceipt = await _showResult(result);
       messenger.showSnackBar(SnackBar(content: Text(l10n.paySaved)));
-      if (router.canPop()) router.pop();
+      if (wantsReceipt == true) {
+        // Replace this screen so Back returns to where the tutor came from.
+        unawaited(router.pushReplacement('/fees/receipt/${result.payment.id}'));
+      } else if (router.canPop()) {
+        router.pop();
+      }
     } on PaymentException {
       if (mounted) setState(() => _amountError = l10n.payAmountRequired);
     } finally {
@@ -212,7 +219,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
     }
   }
 
-  Future<void> _showResult(RecordedPayment result) {
+  Future<bool?> _showResult(RecordedPayment result) {
     final l10n = AppLocalizations.of(context);
     // Read everything the dialog needs now: its builder can run again while
     // this screen is closing, when `ref` and `context` are no longer valid.
@@ -220,7 +227,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
       result.payment.receiptNo,
       ref.read(numeralStyleProvider).value ?? NumeralStyle.bangla,
     );
-    return showDialog<void>(
+    return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
@@ -239,8 +246,12 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
           ],
         ),
         actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: Text(l10n.receiptShareAction),
+          ),
           FilledButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(context, false),
             child: Text(l10n.payDone),
           ),
         ],

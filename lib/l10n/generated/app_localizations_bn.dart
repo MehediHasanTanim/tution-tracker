@@ -615,4 +615,279 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get genericError => 'কিছু ভুল হয়েছে';
+
+  @override
+  String get attStatusPresent => 'উপস্থিত';
+
+  @override
+  String get attStatusAbsent => 'অনুপস্থিত';
+
+  @override
+  String get attStatusLate => 'দেরি';
+
+  @override
+  String get attStatusExcused => 'ছুটি';
+
+  @override
+  String get attMarkAllPresent => 'সবাইকে উপস্থিত করুন';
+
+  @override
+  String get attTopic => 'আজকের পাঠ (ঐচ্ছিক)';
+
+  @override
+  String get attSaved => 'উপস্থিতি সংরক্ষিত হয়েছে';
+
+  @override
+  String get attDiscardTitle => 'পরিবর্তন সংরক্ষণ করবেন?';
+
+  @override
+  String get attDiscardBody =>
+      'আপনি উপস্থিতিতে পরিবর্তন করেছেন যা এখনও সংরক্ষিত হয়নি।';
+
+  @override
+  String get attDiscard => 'বাদ দিন';
+
+  @override
+  String get attNoStudents => 'এই ক্লাসে কোনো শিক্ষার্থী নেই';
+
+  @override
+  String get attCancelClass => 'ক্লাস বাতিল করুন';
+
+  @override
+  String get attHoliday => 'ছুটির দিন হিসেবে চিহ্নিত করুন';
+
+  @override
+  String get attReason => 'কারণ (ঐচ্ছিক)';
+
+  @override
+  String get attRestore => 'ক্লাস আবার চালু করুন';
+
+  @override
+  String get attCancelledBanner => 'এই ক্লাস বাতিল করা হয়েছে';
+
+  @override
+  String get attHolidayBanner => 'এই দিন ছুটি';
+
+  @override
+  String attMarked(String done, String total) {
+    return 'চিহ্নিত $done/$total';
+  }
+
+  @override
+  String get homeToday => 'আজ';
+
+  @override
+  String get homeClasses => 'ক্লাস';
+
+  @override
+  String get homeNoClasses => 'এই দিনে কোনো ক্লাস নেই';
+
+  @override
+  String get classNotTaken => 'নেওয়া হয়নি';
+
+  @override
+  String get classTaken => 'নেওয়া হয়েছে';
+
+  @override
+  String get classCancelled => 'বাতিল';
+
+  @override
+  String get classHoliday => 'ছুটি';
+
+  @override
+  String classAttended(String attended, String total) {
+    return 'উপস্থিত $attended/$total';
+  }
+
+  @override
+  String get classExtra => 'অতিরিক্ত';
+
+  @override
+  String get homePrevDay => 'আগের দিন';
+
+  @override
+  String get homeNextDay => 'পরের দিন';
+
+  @override
+  String get homePickDate => 'তারিখ বাছুন';
+
+  @override
+  String get homeAddExtra => 'অতিরিক্ত ক্লাস';
+
+  @override
+  String get homeExtraTitle => 'অতিরিক্ত ক্লাস যোগ করুন';
+
+  @override
+  String get homeExtraBatches => 'ব্যাচ';
+
+  @override
+  String get homeExtraStudents => 'একক শিক্ষার্থী';
+
+  @override
+  String get homeExtraNone => 'কিছু পাওয়া যায়নি';
+
+  @override
+  String get homeExtraTime => 'শুরুর সময় (ঐচ্ছিক)';
+
+  @override
+  String get homeMonthTitle => 'এই মাস';
+
+  @override
+  String get homeExpected => 'প্রত্যাশিত';
+
+  @override
+  String get homeCollected => 'আদায়';
+
+  @override
+  String get homeOutstanding => 'বাকি';
+
+  @override
+  String homeOverdueStudents(String count) {
+    return '$count জন বিলম্বিত';
+  }
+
+  @override
+  String homeTotalOwed(String amount) {
+    return 'সব মাস মিলিয়ে বাকি: $amount';
+  }
+
+  @override
+  String get homeUpcoming => 'এই সপ্তাহে ফি দেওয়ার তারিখ';
+
+  @override
+  String get homeUpcomingNone => 'এই সপ্তাহে কোনো ফি দেওয়ার তারিখ নেই';
+
+  @override
+  String get homeSeeAll => 'সব দেখুন';
+
+  @override
+  String get attClassesCount => 'মোট ক্লাস';
+
+  @override
+  String get attRate => 'হার';
+
+  @override
+  String get attNoClasses => 'এই মাসে কোনো ক্লাসের তথ্য নেই';
+
+  @override
+  String get calPrevMonth => 'আগের মাস';
+
+  @override
+  String get calNextMonth => 'পরের মাস';
+
+  @override
+  String get attShare => 'অভিভাবকের জন্য শেয়ার করুন';
+
+  @override
+  String shareAttTitle(String name, String month) {
+    return '$name — $month-এর উপস্থিতি';
+  }
+
+  @override
+  String shareAttClasses(String count) {
+    return 'মোট ক্লাস: $count';
+  }
+
+  @override
+  String shareAttBreakdown(
+    String present,
+    String late,
+    String absent,
+    String excused,
+  ) {
+    return 'উপস্থিত $present · দেরি $late · অনুপস্থিত $absent · ছুটি $excused';
+  }
+
+  @override
+  String shareAttRate(String percent) {
+    return 'উপস্থিতির হার: $percent';
+  }
+
+  @override
+  String get shareAttNone => 'এই মাসে কোনো ক্লাস হয়নি';
+
+  @override
+  String shareFooter(String name) {
+    return '— $name';
+  }
+
+  @override
+  String get reportCollectionRate => 'আদায়ের হার';
+
+  @override
+  String get reportCash => 'এই মাসে হাতে পাওয়া';
+
+  @override
+  String get reportBatches => 'ব্যাচ অনুযায়ী';
+
+  @override
+  String get reportNoBatch => 'কোনো ব্যাচ নয়';
+
+  @override
+  String reportStudents(String count) {
+    return 'শিক্ষার্থী: $count';
+  }
+
+  @override
+  String reportAttendance(String percent) {
+    return 'উপস্থিতি $percent';
+  }
+
+  @override
+  String get reportNote =>
+      'একাধিক ব্যাচের শিক্ষার্থী প্রথম যে ব্যাচে যোগ দিয়েছেন সেখানে গোনা হয়।';
+
+  @override
+  String get reportIncomeTitle => 'মাসওয়ারি আয় (শেষ ১২ মাস)';
+
+  @override
+  String get reportNoData => 'এই মাসে কোনো তথ্য নেই';
+
+  @override
+  String get receiptTitle => 'রসিদ';
+
+  @override
+  String get receiptAction => 'রসিদ';
+
+  @override
+  String get receiptShareAction => 'রসিদ শেয়ার করুন';
+
+  @override
+  String get receiptStudent => 'শিক্ষার্থী';
+
+  @override
+  String get receiptGuardian => 'অভিভাবক';
+
+  @override
+  String get receiptFor => 'যে মাসের জন্য';
+
+  @override
+  String get receiptTotal => 'মোট জমা';
+
+  @override
+  String get receiptThanks => 'ধন্যবাদ';
+
+  @override
+  String get receiptShareImage => 'ছবি হিসেবে শেয়ার করুন';
+
+  @override
+  String get receiptSharePdf => 'PDF হিসেবে শেয়ার করুন';
+
+  @override
+  String get receiptShareFailed => 'শেয়ার করা যায়নি';
+
+  @override
+  String get tutorSection => 'শিক্ষকের তথ্য';
+
+  @override
+  String get tutorSectionHint => 'রসিদ ও শেয়ার করা বার্তায় দেখানো হবে';
+
+  @override
+  String get tutorName => 'শিক্ষকের নাম';
+
+  @override
+  String get tutorInstitution => 'প্রতিষ্ঠানের নাম';
+
+  @override
+  String get tutorPhone => 'ফোন নম্বর';
 }
