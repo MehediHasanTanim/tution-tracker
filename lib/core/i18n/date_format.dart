@@ -73,6 +73,35 @@ const _weekdaysEn = [
   'Sunday',
 ];
 
+const _monthsBnShort = [
+  'জানু',
+  'ফেব্রু',
+  'মার্চ',
+  'এপ্রিল',
+  'মে',
+  'জুন',
+  'জুলাই',
+  'আগস্ট',
+  'সেপ্টে',
+  'অক্টো',
+  'নভে',
+  'ডিসে',
+];
+
+const _weekdaysBnShort = ['সোম', 'মঙ্গল', 'বুধ', 'বৃহ', 'শুক্র', 'শনি', 'রবি'];
+
+const _weekdaysEnShort = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+/// A short month name for tight spaces such as chart axes.
+String monthShortName(int month, AppLanguage language) =>
+    (language == AppLanguage.bn ? _monthsBnShort : _monthsEnShort)[month - 1];
+
+/// A short weekday name for calendar headers. [isoWeekday]: 1 = Monday.
+String weekdayShortName(int isoWeekday, AppLanguage language) =>
+    (language == AppLanguage.bn
+    ? _weekdaysBnShort
+    : _weekdaysEnShort)[isoWeekday - 1];
+
 String monthName(int month, AppLanguage language) =>
     (language == AppLanguage.bn ? _monthsBn : _monthsEn)[month - 1];
 

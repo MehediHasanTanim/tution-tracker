@@ -47,4 +47,15 @@ void main() {
     expect(weekdayName(7, AppLanguage.en), 'Sunday');
     expect(weekdayName(5, AppLanguage.bn), 'শুক্রবার');
   });
+
+  test('short names exist for every month and weekday in both languages', () {
+    for (var m = 1; m <= 12; m++) {
+      expect(monthShortName(m, AppLanguage.bn), isNotEmpty);
+      expect(monthShortName(m, AppLanguage.en).length, 3);
+    }
+    expect(monthShortName(10, AppLanguage.bn), 'অক্টো');
+    expect(weekdayShortName(1, AppLanguage.en), 'Mon');
+    expect(weekdayShortName(6, AppLanguage.bn), 'শনি');
+    expect(weekdayShortName(7, AppLanguage.en), 'Sun');
+  });
 }

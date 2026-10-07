@@ -163,6 +163,20 @@ class AttendanceRepository {
     return rows.isEmpty ? null : _record(rows.first);
   }
 
+  /// The batch or student name for [owner], or null if it no longer exists.
+  Future<String?> ownerName(ClassOwner owner) async {
+    if (owner.kind == OwnerKind.batch) {
+      final b = await (_db.select(
+        _db.batches,
+      )..where((t) => t.id.equals(owner.id))).getSingleOrNull();
+      return b?.name;
+    }
+    final s = await (_db.select(
+      _db.students,
+    )..where((t) => t.id.equals(owner.id))).getSingleOrNull();
+    return s?.name;
+  }
+
   // ---- roster -----------------------------------------------------------
 
   /// Who is on the sheet for this class: those enrolled on [date], plus

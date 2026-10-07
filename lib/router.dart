@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/navigation/app_shell.dart';
+import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
+import 'package:tution_tracker/features/attendance/presentation/attendance_sheet_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_detail_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_form_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
@@ -34,7 +36,23 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
         builder: (context, state, shell) => AppShell(shell: shell),
         branches: [
           StatefulShellBranch(
-            routes: [tab(AppRoutes.home, const HomeScreen())],
+            routes: [
+              GoRoute(
+                path: AppRoutes.home,
+                builder: (context, state) => const HomeScreen(),
+              ),
+              GoRoute(
+                path: '/attendance',
+                builder: (context, state) {
+                  final args = parseAttendanceLocation(
+                    state.uri.queryParameters,
+                  );
+                  return args == null
+                      ? const SizedBox.shrink()
+                      : AttendanceSheetScreen(args: args);
+                },
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [
