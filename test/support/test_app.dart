@@ -20,9 +20,10 @@ Widget testApp(
   List<Override> overrides = const [],
   PhotoStore? photoStore,
   PhotoPicker? photoPicker,
+  AppFlavor flavor = AppFlavor.dev,
 }) => ProviderScope(
   overrides: [
-    appFlavorProvider.overrideWithValue(AppFlavor.dev),
+    appFlavorProvider.overrideWithValue(flavor),
     databaseProvider.overrideWith((ref) async => db),
     photoStoreProvider.overrideWith(
       (ref) async =>
@@ -36,7 +37,7 @@ Widget testApp(
     if (clock != null) clockProvider.overrideWithValue(clock),
     ...overrides,
   ],
-  child: const TuitionTrackerApp(flavor: AppFlavor.dev),
+  child: TuitionTrackerApp(flavor: flavor),
 );
 
 /// Mounts the app on [db]. Pair with [shutdownApp] at the end of the test.
@@ -47,10 +48,12 @@ Future<void> pumpApp(
   List<Override> overrides = const [],
   PhotoStore? photoStore,
   PhotoPicker? photoPicker,
+  AppFlavor flavor = AppFlavor.dev,
 }) async {
   await tester.pumpWidget(
     testApp(
       db,
+      flavor: flavor,
       clock: clock,
       overrides: overrides,
       photoStore: photoStore,

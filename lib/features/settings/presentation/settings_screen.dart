@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/app.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
+import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
+import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -65,6 +67,7 @@ Future<void> _runConsistencyCheck(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   final checker = await ref.read(consistencyCheckerProvider.future);
   final issues = await checker.run();
+  final numerals = ref.read(numeralStyleProvider).value ?? NumeralStyle.bangla;
   if (!context.mounted) return;
   await showDialog<void>(
     context: context,
@@ -77,7 +80,11 @@ Future<void> _runConsistencyCheck(BuildContext context, WidgetRef ref) async {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(l10n.devConsistencyIssues('${issues.length}')),
+                  Text(
+                    l10n.devConsistencyIssues(
+                      formatCount(issues.length, numerals),
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   for (final i in issues) Text('• $i'),
                 ],
