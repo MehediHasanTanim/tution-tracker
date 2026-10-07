@@ -48,13 +48,13 @@ void main() {
     await pumpApp(tester, db);
     await tester.tap(find.byTooltip('পরের দিন'));
     await tester.pump();
-    expect(find.text('আজ'), findsNothing);
+    expect(find.widgetWithText(TextButton, 'আজ'), findsOneWidget);
 
     await tester.tap(_navLabel('ফি'));
     await settle(tester);
     await tester.tap(_navLabel('হোম'));
     await settle(tester);
-    expect(find.text('আজ'), findsNothing);
+    expect(find.widgetWithText(TextButton, 'আজ'), findsOneWidget);
   });
 
   appTest('switching locale in Settings changes strings', (tester) async {
