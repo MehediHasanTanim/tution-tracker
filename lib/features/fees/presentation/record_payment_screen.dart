@@ -214,6 +214,12 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
 
   Future<void> _showResult(RecordedPayment result) {
     final l10n = AppLocalizations.of(context);
+    // Read everything the dialog needs now: its builder can run again while
+    // this screen is closing, when `ref` and `context` are no longer valid.
+    final receiptNo = formatCount(
+      result.payment.receiptNo,
+      ref.read(numeralStyleProvider).value ?? NumeralStyle.bangla,
+    );
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -225,12 +231,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              l10n.payReceiptNo(
-                formatCount(
-                  result.payment.receiptNo,
-                  ref.read(numeralStyleProvider).value ?? NumeralStyle.bangla,
-                ),
-              ),
+              l10n.payReceiptNo(receiptNo),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 12),
