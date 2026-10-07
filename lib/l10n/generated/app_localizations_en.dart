@@ -1419,4 +1419,72 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get rstWorking => 'Deleting…';
+
+  @override
+  String get setAppearance => 'Language & appearance';
+
+  @override
+  String get setNumerals => 'Digits';
+
+  @override
+  String get setNumeralsBangla => 'Bangla (১২৩)';
+
+  @override
+  String get setNumeralsWestern => 'English (123)';
+
+  @override
+  String get setGrouping => 'Money grouping';
+
+  @override
+  String get setGroupingLakh => 'Lakh (12,34,567)';
+
+  @override
+  String get setGroupingWestern => 'Million (1,234,567)';
+
+  @override
+  String get setTheme => 'Theme';
+
+  @override
+  String get setThemeSystem => 'Same as phone';
+
+  @override
+  String get setThemeLight => 'Light';
+
+  @override
+  String get setThemeDark => 'Dark';
+
+  @override
+  String get setFees => 'Fees';
+
+  @override
+  String get setDefaultDueDay => 'Default fee due day';
+
+  @override
+  String setDueDayValue(String day) {
+    return 'Day $day of each month';
+  }
+
+  @override
+  String get setProration => 'Fee for the joining month';
+
+  @override
+  String get setProrationFull => 'Full month';
+
+  @override
+  String get setProrationDays => 'Pro-rated by days';
+
+  @override
+  String get setProrationNext => 'From the next month';
+
+  @override
+  String get setProrationHint =>
+      'Applies to students added from now on. Existing fees do not change.';
+
+  @override
+  String get setData => 'Data & messages';
+
+  @override
+  String setAbout(String version) {
+    return 'Version $version';
+  }
 }

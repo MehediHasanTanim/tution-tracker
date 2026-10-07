@@ -796,5 +796,40 @@
   "rstWord": "মুছুন",
   "rstDelete": "সব মুছে ফেলুন",
   "rstDone": "সব তথ্য মুছে ফেলা হয়েছে",
-  "rstWorking": "মোছা হচ্ছে…"
+  "rstWorking": "মোছা হচ্ছে…",
+  "setAppearance": "চেহারা ও ভাষা",
+  "setNumerals": "সংখ্যার ধরন",
+  "setNumeralsBangla": "বাংলা (১২৩)",
+  "setNumeralsWestern": "ইংরেজি (123)",
+  "setGrouping": "টাকার কমা",
+  "setGroupingLakh": "লাখ (১২,৩৪,৫৬৭)",
+  "setGroupingWestern": "মিলিয়ন (১,২৩৪,৫৬৭)",
+  "setTheme": "থিম",
+  "setThemeSystem": "ফোনের মতো",
+  "setThemeLight": "হালকা",
+  "setThemeDark": "গাঢ়",
+  "setFees": "ফি",
+  "setDefaultDueDay": "নতুন শিক্ষার্থীর ফি আদায়ের দিন",
+  "setDueDayValue": "প্রতি মাসের {day} তারিখ",
+  "@setDueDayValue": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "setProration": "যোগদানের মাসের ফি",
+  "setProrationFull": "পুরো মাসের ফি",
+  "setProrationDays": "দিন হিসাবে আনুপাতিক",
+  "setProrationNext": "পরের মাস থেকে",
+  "setProrationHint": "এখন থেকে যোগ হওয়া শিক্ষার্থীদের জন্য প্রযোজ্য। আগের ফি বদলাবে না।",
+  "setData": "তথ্য ও বার্তা",
+  "setAbout": "সংস্করণ {version}",
+  "@setAbout": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  }
 }

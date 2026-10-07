@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/app.dart';
+import 'package:tution_tracker/core/app_info.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/settings/setting_key.dart';
@@ -9,6 +10,7 @@ import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
+import 'package:tution_tracker/features/fees/domain/proration_rule.dart';
 import 'package:tution_tracker/features/reminders/presentation/reminder_actions.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -19,15 +21,27 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
     final locale = ref.watch(localeProvider);
+    final numerals = ref.watchSetting(SettingKeys.numerals);
+    final grouping = ref.watchSetting(SettingKeys.grouping);
+    final themeMode = ref.watchSetting(SettingKeys.themeMode);
+    final dueDay = ref.watchSetting(SettingKeys.defaultDueDay);
+    final proration = ref.watchSetting(SettingKeys.proration);
+
+    Widget heading(String text) => Padding(
+      padding: const EdgeInsets.only(top: 24, bottom: 8),
+      child: Text(text, style: theme.textTheme.titleMedium),
+    );
+
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l10n.language, style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.language, style: theme.textTheme.titleMedium),
             const SizedBox(height: 8),
             SegmentedButton<Locale>(
               segments: [
@@ -44,15 +58,85 @@ class SettingsScreen extends ConsumerWidget {
               onSelectionChanged: (s) =>
                   ref.read(localeProvider.notifier).setLocale(s.first),
             ),
-            const SizedBox(height: 24),
-            const _TutorProfileSection(),
-            const SizedBox(height: 8),
+            heading(l10n.setNumerals),
+            SegmentedButton<NumeralStyle>(
+              segments: [
+                ButtonSegment(
+                  value: NumeralStyle.bangla,
+                  label: Text(l10n.setNumeralsBangla),
+                ),
+                ButtonSegment(
+                  value: NumeralStyle.western,
+                  label: Text(l10n.setNumeralsWestern),
+                ),
+              ],
+              selected: {numerals},
+              onSelectionChanged: (s) =>
+                  writeSetting(ref, SettingKeys.numerals, s.first),
+            ),
+            heading(l10n.setGrouping),
+            SegmentedButton<GroupingStyle>(
+              segments: [
+                ButtonSegment(
+                  value: GroupingStyle.lakh,
+                  label: Text(l10n.setGroupingLakh),
+                ),
+                ButtonSegment(
+                  value: GroupingStyle.western,
+                  label: Text(l10n.setGroupingWestern),
+                ),
+              ],
+              selected: {grouping},
+              onSelectionChanged: (s) =>
+                  writeSetting(ref, SettingKeys.grouping, s.first),
+            ),
+            heading(l10n.setTheme),
+            SegmentedButton<AppThemeMode>(
+              segments: [
+                ButtonSegment(
+                  value: AppThemeMode.system,
+                  label: Text(l10n.setThemeSystem),
+                ),
+                ButtonSegment(
+                  value: AppThemeMode.light,
+                  label: Text(l10n.setThemeLight),
+                ),
+                ButtonSegment(
+                  value: AppThemeMode.dark,
+                  label: Text(l10n.setThemeDark),
+                ),
+              ],
+              selected: {themeMode},
+              onSelectionChanged: (s) =>
+                  writeSetting(ref, SettingKeys.themeMode, s.first),
+            ),
+            heading(l10n.setFees),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.backup_outlined),
-              title: Text(l10n.bkTitle),
+              title: Text(l10n.setDefaultDueDay),
+              subtitle: Text(
+                l10n.setDueDayValue(formatCount(dueDay, numerals)),
+              ),
+              trailing: const Icon(Icons.expand_more),
+              onTap: () => _pickDueDay(context, ref, dueDay, numerals),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(l10n.setProration),
+              subtitle: Text(_prorationLabel(l10n, proration)),
+              trailing: const Icon(Icons.expand_more),
+              onTap: () => _pickProration(context, ref, proration),
+            ),
+            Text(l10n.setProrationHint, style: theme.textTheme.bodySmall),
+            const SizedBox(height: 8),
+            const _TutorProfileSection(),
+            heading(l10n.setData),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.notifications_outlined),
+              title: Text(l10n.remSettingsTitle),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/settings/backup'),
+              onTap: () => context.push(ReminderRoutes.settings),
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -63,20 +147,22 @@ class SettingsScreen extends ConsumerWidget {
             ),
             ListTile(
               contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.notifications_outlined),
-              title: Text(l10n.remSettingsTitle),
+              leading: const Icon(Icons.backup_outlined),
+              title: Text(l10n.bkTitle),
+              subtitle: Text(l10n.bkPrivacy),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push(ReminderRoutes.settings),
+              onTap: () => context.push('/settings/backup'),
             ),
-            const SizedBox(height: 24),
-            Text(l10n.sampleConjuncts),
+            const SizedBox(height: 16),
+            Text(
+              l10n.setAbout(appVersion),
+              style: theme.textTheme.bodySmall,
+              textAlign: TextAlign.center,
+            ),
             if (ref.watch(appFlavorProvider) == AppFlavor.dev) ...[
               const SizedBox(height: 24),
               const Divider(),
-              Text(
-                l10n.devSection,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
+              Text(l10n.devSection, style: theme.textTheme.titleMedium),
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: const Icon(Icons.fact_check_outlined),
@@ -88,6 +174,70 @@ class SettingsScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+}
+
+String _prorationLabel(AppLocalizations l10n, ProrationRule rule) =>
+    switch (rule) {
+      ProrationRule.fullMonth => l10n.setProrationFull,
+      ProrationRule.byDays => l10n.setProrationDays,
+      ProrationRule.nextMonth => l10n.setProrationNext,
+    };
+
+Future<void> _pickDueDay(
+  BuildContext context,
+  WidgetRef ref,
+  int current,
+  NumeralStyle numerals,
+) async {
+  final picked = await showDialog<int>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      children: [
+        SizedBox(
+          width: double.maxFinite,
+          height: 320,
+          child: ListView(
+            children: [
+              for (var d = 1; d <= 31; d++)
+                ListTile(
+                  title: Text(formatCount(d, numerals)),
+                  trailing: d == current ? const Icon(Icons.check) : null,
+                  onTap: () => Navigator.pop(context, d),
+                ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+  if (picked != null) {
+    await writeSetting(ref, SettingKeys.defaultDueDay, picked);
+  }
+}
+
+Future<void> _pickProration(
+  BuildContext context,
+  WidgetRef ref,
+  ProrationRule current,
+) async {
+  final l10n = AppLocalizations.of(context);
+  final picked = await showDialog<ProrationRule>(
+    context: context,
+    builder: (context) => SimpleDialog(
+      title: Text(l10n.setProration),
+      children: [
+        for (final rule in ProrationRule.values)
+          ListTile(
+            title: Text(_prorationLabel(l10n, rule)),
+            trailing: rule == current ? const Icon(Icons.check) : null,
+            onTap: () => Navigator.pop(context, rule),
+          ),
+      ],
+    ),
+  );
+  if (picked != null) {
+    await writeSetting(ref, SettingKeys.proration, picked);
   }
 }
 

@@ -5,6 +5,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
+import 'package:tution_tracker/core/settings/settings_keys.dart';
+import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/theme/app_theme.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/reminders/data/reminder_coordinator.dart';
@@ -71,6 +73,11 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
       routerConfig: ref.watch(routerProvider),
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: widget.flavor == AppFlavor.dev,
+      themeMode: switch (ref.watchSetting(SettingKeys.themeMode)) {
+        AppThemeMode.system => ThemeMode.system,
+        AppThemeMode.light => ThemeMode.light,
+        AppThemeMode.dark => ThemeMode.dark,
+      },
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
       locale: ref.watch(localeProvider),

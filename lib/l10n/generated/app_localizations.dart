@@ -2670,6 +2670,132 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'মোছা হচ্ছে…'**
   String get rstWorking;
+
+  /// No description provided for @setAppearance.
+  ///
+  /// In bn, this message translates to:
+  /// **'চেহারা ও ভাষা'**
+  String get setAppearance;
+
+  /// No description provided for @setNumerals.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংখ্যার ধরন'**
+  String get setNumerals;
+
+  /// No description provided for @setNumeralsBangla.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাংলা (১২৩)'**
+  String get setNumeralsBangla;
+
+  /// No description provided for @setNumeralsWestern.
+  ///
+  /// In bn, this message translates to:
+  /// **'ইংরেজি (123)'**
+  String get setNumeralsWestern;
+
+  /// No description provided for @setGrouping.
+  ///
+  /// In bn, this message translates to:
+  /// **'টাকার কমা'**
+  String get setGrouping;
+
+  /// No description provided for @setGroupingLakh.
+  ///
+  /// In bn, this message translates to:
+  /// **'লাখ (১২,৩৪,৫৬৭)'**
+  String get setGroupingLakh;
+
+  /// No description provided for @setGroupingWestern.
+  ///
+  /// In bn, this message translates to:
+  /// **'মিলিয়ন (১,২৩৪,৫৬৭)'**
+  String get setGroupingWestern;
+
+  /// No description provided for @setTheme.
+  ///
+  /// In bn, this message translates to:
+  /// **'থিম'**
+  String get setTheme;
+
+  /// No description provided for @setThemeSystem.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফোনের মতো'**
+  String get setThemeSystem;
+
+  /// No description provided for @setThemeLight.
+  ///
+  /// In bn, this message translates to:
+  /// **'হালকা'**
+  String get setThemeLight;
+
+  /// No description provided for @setThemeDark.
+  ///
+  /// In bn, this message translates to:
+  /// **'গাঢ়'**
+  String get setThemeDark;
+
+  /// No description provided for @setFees.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি'**
+  String get setFees;
+
+  /// No description provided for @setDefaultDueDay.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন শিক্ষার্থীর ফি আদায়ের দিন'**
+  String get setDefaultDueDay;
+
+  /// No description provided for @setDueDayValue.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতি মাসের {day} তারিখ'**
+  String setDueDayValue(String day);
+
+  /// No description provided for @setProration.
+  ///
+  /// In bn, this message translates to:
+  /// **'যোগদানের মাসের ফি'**
+  String get setProration;
+
+  /// No description provided for @setProrationFull.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো মাসের ফি'**
+  String get setProrationFull;
+
+  /// No description provided for @setProrationDays.
+  ///
+  /// In bn, this message translates to:
+  /// **'দিন হিসাবে আনুপাতিক'**
+  String get setProrationDays;
+
+  /// No description provided for @setProrationNext.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরের মাস থেকে'**
+  String get setProrationNext;
+
+  /// No description provided for @setProrationHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন থেকে যোগ হওয়া শিক্ষার্থীদের জন্য প্রযোজ্য। আগের ফি বদলাবে না।'**
+  String get setProrationHint;
+
+  /// No description provided for @setData.
+  ///
+  /// In bn, this message translates to:
+  /// **'তথ্য ও বার্তা'**
+  String get setData;
+
+  /// No description provided for @setAbout.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংস্করণ {version}'**
+  String setAbout(String version);
 }
 
 class _AppLocalizationsDelegate

@@ -1415,4 +1415,72 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get rstWorking => 'মোছা হচ্ছে…';
+
+  @override
+  String get setAppearance => 'চেহারা ও ভাষা';
+
+  @override
+  String get setNumerals => 'সংখ্যার ধরন';
+
+  @override
+  String get setNumeralsBangla => 'বাংলা (১২৩)';
+
+  @override
+  String get setNumeralsWestern => 'ইংরেজি (123)';
+
+  @override
+  String get setGrouping => 'টাকার কমা';
+
+  @override
+  String get setGroupingLakh => 'লাখ (১২,৩৪,৫৬৭)';
+
+  @override
+  String get setGroupingWestern => 'মিলিয়ন (১,২৩৪,৫৬৭)';
+
+  @override
+  String get setTheme => 'থিম';
+
+  @override
+  String get setThemeSystem => 'ফোনের মতো';
+
+  @override
+  String get setThemeLight => 'হালকা';
+
+  @override
+  String get setThemeDark => 'গাঢ়';
+
+  @override
+  String get setFees => 'ফি';
+
+  @override
+  String get setDefaultDueDay => 'নতুন শিক্ষার্থীর ফি আদায়ের দিন';
+
+  @override
+  String setDueDayValue(String day) {
+    return 'প্রতি মাসের $day তারিখ';
+  }
+
+  @override
+  String get setProration => 'যোগদানের মাসের ফি';
+
+  @override
+  String get setProrationFull => 'পুরো মাসের ফি';
+
+  @override
+  String get setProrationDays => 'দিন হিসাবে আনুপাতিক';
+
+  @override
+  String get setProrationNext => 'পরের মাস থেকে';
+
+  @override
+  String get setProrationHint =>
+      'এখন থেকে যোগ হওয়া শিক্ষার্থীদের জন্য প্রযোজ্য। আগের ফি বদলাবে না।';
+
+  @override
+  String get setData => 'তথ্য ও বার্তা';
+
+  @override
+  String setAbout(String version) {
+    return 'সংস্করণ $version';
+  }
 }
