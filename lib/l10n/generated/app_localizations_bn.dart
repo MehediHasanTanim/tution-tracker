@@ -171,4 +171,71 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get none => 'নেই';
+
+  @override
+  String get tabOverview => 'সারসংক্ষেপ';
+
+  @override
+  String get tabAttendance => 'উপস্থিতি';
+
+  @override
+  String get tabFees => 'ফি';
+
+  @override
+  String get tabNotes => 'নোট';
+
+  @override
+  String get comingSoon => 'শীঘ্রই আসছে';
+
+  @override
+  String get actionCall => 'কল';
+
+  @override
+  String get actionSms => 'এসএমএস';
+
+  @override
+  String get actionWhatsapp => 'হোয়াটসঅ্যাপ';
+
+  @override
+  String get noPhoneNumber => 'ফোন নম্বর নেই';
+
+  @override
+  String get contactLaunchFailed => 'খুলতে পারেনি। অ্যাপটি ইনস্টল করা আছে কি?';
+
+  @override
+  String get actionEdit => 'সম্পাদনা';
+
+  @override
+  String get actionArchive => 'আর্কাইভ করুন';
+
+  @override
+  String get actionRestore => 'পুনরুদ্ধার করুন';
+
+  @override
+  String get actionDelete => 'স্থায়ীভাবে মুছুন';
+
+  @override
+  String get actionCancel => 'বাতিল';
+
+  @override
+  String get deleteStudentTitle => 'শিক্ষার্থী মুছবেন?';
+
+  @override
+  String get deleteStudentBody =>
+      'এই শিক্ষার্থীর সব হিসাব (ফি, পেমেন্ট, উপস্থিতি) চিরতরে মুছে যাবে। এটি ফেরানো যাবে না। হিসাব রাখতে চাইলে আর্কাইভ করুন।';
+
+  @override
+  String get studentDeleted => 'শিক্ষার্থী মুছে ফেলা হয়েছে';
+
+  @override
+  String get studentArchived => 'শিক্ষার্থী আর্কাইভ করা হয়েছে';
+
+  @override
+  String get studentRestored => 'শিক্ষার্থী পুনরুদ্ধার করা হয়েছে';
+
+  @override
+  String get profileMonthlyFee => 'মাসিক ফি';
+
+  @override
+  String get profileDueDay => 'ফি দেওয়ার দিন';
 }

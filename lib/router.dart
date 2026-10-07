@@ -7,7 +7,7 @@ import 'package:tution_tracker/features/home/presentation/home_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
 import 'package:tution_tracker/features/settings/presentation/settings_screen.dart';
 import 'package:tution_tracker/features/students/presentation/student_form_screen.dart';
-import 'package:tution_tracker/features/students/presentation/student_placeholders.dart';
+import 'package:tution_tracker/features/students/presentation/student_profile_screen.dart';
 import 'package:tution_tracker/features/students/presentation/students_screen.dart';
 
 abstract final class AppRoutes {
@@ -45,7 +45,7 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                   ),
                   GoRoute(
                     path: ':id',
-                    builder: (context, state) => StudentProfilePlaceholder(
+                    builder: (context, state) => StudentProfileScreen(
                       studentId: state.pathParameters['id']!,
                     ),
                     routes: [

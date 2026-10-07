@@ -172,4 +172,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get none => 'None';
+
+  @override
+  String get tabOverview => 'Overview';
+
+  @override
+  String get tabAttendance => 'Attendance';
+
+  @override
+  String get tabFees => 'Fees';
+
+  @override
+  String get tabNotes => 'Notes';
+
+  @override
+  String get comingSoon => 'Coming soon';
+
+  @override
+  String get actionCall => 'Call';
+
+  @override
+  String get actionSms => 'SMS';
+
+  @override
+  String get actionWhatsapp => 'WhatsApp';
+
+  @override
+  String get noPhoneNumber => 'No phone number';
+
+  @override
+  String get contactLaunchFailed => 'Could not open it. Is the app installed?';
+
+  @override
+  String get actionEdit => 'Edit';
+
+  @override
+  String get actionArchive => 'Archive';
+
+  @override
+  String get actionRestore => 'Restore';
+
+  @override
+  String get actionDelete => 'Delete permanently';
+
+  @override
+  String get actionCancel => 'Cancel';
+
+  @override
+  String get deleteStudentTitle => 'Delete student?';
+
+  @override
+  String get deleteStudentBody =>
+      'All of this student\'s records (fees, payments, attendance) will be erased for good. This cannot be undone. To keep the records, archive instead.';
+
+  @override
+  String get studentDeleted => 'Student deleted';
+
+  @override
+  String get studentArchived => 'Student archived';
+
+  @override
+  String get studentRestored => 'Student restored';
+
+  @override
+  String get profileMonthlyFee => 'Monthly fee';
+
+  @override
+  String get profileDueDay => 'Fee due day';
 }

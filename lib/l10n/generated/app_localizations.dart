@@ -415,6 +415,138 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'নেই'**
   String get none;
+
+  /// No description provided for @tabOverview.
+  ///
+  /// In bn, this message translates to:
+  /// **'সারসংক্ষেপ'**
+  String get tabOverview;
+
+  /// No description provided for @tabAttendance.
+  ///
+  /// In bn, this message translates to:
+  /// **'উপস্থিতি'**
+  String get tabAttendance;
+
+  /// No description provided for @tabFees.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি'**
+  String get tabFees;
+
+  /// No description provided for @tabNotes.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোট'**
+  String get tabNotes;
+
+  /// No description provided for @comingSoon.
+  ///
+  /// In bn, this message translates to:
+  /// **'শীঘ্রই আসছে'**
+  String get comingSoon;
+
+  /// No description provided for @actionCall.
+  ///
+  /// In bn, this message translates to:
+  /// **'কল'**
+  String get actionCall;
+
+  /// No description provided for @actionSms.
+  ///
+  /// In bn, this message translates to:
+  /// **'এসএমএস'**
+  String get actionSms;
+
+  /// No description provided for @actionWhatsapp.
+  ///
+  /// In bn, this message translates to:
+  /// **'হোয়াটসঅ্যাপ'**
+  String get actionWhatsapp;
+
+  /// No description provided for @noPhoneNumber.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফোন নম্বর নেই'**
+  String get noPhoneNumber;
+
+  /// No description provided for @contactLaunchFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'খুলতে পারেনি। অ্যাপটি ইনস্টল করা আছে কি?'**
+  String get contactLaunchFailed;
+
+  /// No description provided for @actionEdit.
+  ///
+  /// In bn, this message translates to:
+  /// **'সম্পাদনা'**
+  String get actionEdit;
+
+  /// No description provided for @actionArchive.
+  ///
+  /// In bn, this message translates to:
+  /// **'আর্কাইভ করুন'**
+  String get actionArchive;
+
+  /// No description provided for @actionRestore.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুনরুদ্ধার করুন'**
+  String get actionRestore;
+
+  /// No description provided for @actionDelete.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্থায়ীভাবে মুছুন'**
+  String get actionDelete;
+
+  /// No description provided for @actionCancel.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাতিল'**
+  String get actionCancel;
+
+  /// No description provided for @deleteStudentTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী মুছবেন?'**
+  String get deleteStudentTitle;
+
+  /// No description provided for @deleteStudentBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই শিক্ষার্থীর সব হিসাব (ফি, পেমেন্ট, উপস্থিতি) চিরতরে মুছে যাবে। এটি ফেরানো যাবে না। হিসাব রাখতে চাইলে আর্কাইভ করুন।'**
+  String get deleteStudentBody;
+
+  /// No description provided for @studentDeleted.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী মুছে ফেলা হয়েছে'**
+  String get studentDeleted;
+
+  /// No description provided for @studentArchived.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী আর্কাইভ করা হয়েছে'**
+  String get studentArchived;
+
+  /// No description provided for @studentRestored.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী পুনরুদ্ধার করা হয়েছে'**
+  String get studentRestored;
+
+  /// No description provided for @profileMonthlyFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসিক ফি'**
+  String get profileMonthlyFee;
+
+  /// No description provided for @profileDueDay.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি দেওয়ার দিন'**
+  String get profileDueDay;
 }
 
 class _AppLocalizationsDelegate

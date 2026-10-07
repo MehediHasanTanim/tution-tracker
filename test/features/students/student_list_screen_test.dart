@@ -256,7 +256,8 @@ void main() {
     await openStudentsTab(tester);
     await tester.tap(find.text('Rahim'));
     await settle(tester);
-    expect(find.text('শিক্ষার্থীর প্রোফাইল'), findsOneWidget);
+    expect(find.widgetWithText(Tab, 'সারসংক্ষেপ'), findsOneWidget);
+    expect(find.text('Rahim'), findsWidgets);
   });
 
   appTest('the add button opens the form route', (tester) async {

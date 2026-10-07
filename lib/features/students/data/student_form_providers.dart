@@ -17,3 +17,10 @@ final defaultDueDayProvider = FutureProvider.autoDispose<int>((ref) async {
   final store = await ref.watch(settingsStoreProvider.future);
   return store.get(SettingKeys.defaultDueDay);
 });
+
+/// A student that updates live as it is edited, archived or restored.
+final studentStreamProvider = StreamProvider.autoDispose
+    .family<Student?, String>((ref, id) async* {
+      final repo = await ref.watch(studentRepositoryProvider.future);
+      yield* repo.watchById(id);
+    });

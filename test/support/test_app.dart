@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tution_tracker/app.dart';
 import 'package:tution_tracker/core/clock.dart';
@@ -8,8 +9,13 @@ import 'package:tution_tracker/core/db/connection.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
 
 /// The real app wired to an in-memory [db] instead of the on-device file.
-Widget testApp(AppDatabase db, {DateTime Function()? clock}) => ProviderScope(
+Widget testApp(
+  AppDatabase db, {
+  DateTime Function()? clock,
+  List<Override> overrides = const [],
+}) => ProviderScope(
   overrides: [
+    ...overrides,
     databaseProvider.overrideWith((ref) async => db),
     if (clock != null) clockProvider.overrideWithValue(clock),
   ],
@@ -21,8 +27,9 @@ Future<void> pumpApp(
   WidgetTester tester,
   AppDatabase db, {
   DateTime Function()? clock,
+  List<Override> overrides = const [],
 }) async {
-  await tester.pumpWidget(testApp(db, clock: clock));
+  await tester.pumpWidget(testApp(db, clock: clock, overrides: overrides));
   await settle(tester);
 }
 
