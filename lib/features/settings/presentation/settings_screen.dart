@@ -49,6 +49,13 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             ListTile(
               contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.message_outlined),
+              title: Text(l10n.tplTitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/settings/templates'),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.notifications_outlined),
               title: Text(l10n.remSettingsTitle),
               trailing: const Icon(Icons.chevron_right),

@@ -12,6 +12,7 @@ import 'package:tution_tracker/core/utils/phone.dart';
 import 'package:tution_tracker/features/fees/data/fee_repository.dart';
 import 'package:tution_tracker/features/fees/domain/fee_status.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
+import 'package:tution_tracker/features/messaging/presentation/reminder_sheet.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -34,7 +35,16 @@ class FeesScreen extends ConsumerWidget {
         formatTaka(Taka(amount), numerals: numerals, grouping: grouping);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.navFees)),
+      appBar: AppBar(
+        title: Text(l10n.navFees),
+        actions: [
+          IconButton(
+            tooltip: l10n.remindBulkTitle,
+            icon: const Icon(Icons.campaign_outlined),
+            onPressed: () => context.push('/fees/remind'),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           all.maybeWhen(
@@ -268,6 +278,11 @@ class _DueTile extends ConsumerWidget {
               fontWeight: FontWeight.bold,
               color: late > 0 ? theme.colorScheme.error : null,
             ),
+          ),
+          IconButton(
+            tooltip: l10n.remindGuardian,
+            icon: const Icon(Icons.message_outlined),
+            onPressed: () => showReminderSheet(context, entry),
           ),
           IconButton(
             tooltip: l10n.actionCall,

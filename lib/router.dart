@@ -9,6 +9,8 @@ import 'package:tution_tracker/features/batches/presentation/batch_form_screen.d
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
+import 'package:tution_tracker/features/messaging/presentation/bulk_reminder_screen.dart';
+import 'package:tution_tracker/features/messaging/presentation/template_editor_screen.dart';
 import 'package:tution_tracker/features/receipts/presentation/receipt_screen.dart';
 import 'package:tution_tracker/features/reminders/presentation/battery_guide_screen.dart';
 import 'package:tution_tracker/features/reminders/presentation/reminder_permission_screen.dart';
@@ -122,6 +124,10 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                     ),
                   ),
                   GoRoute(
+                    path: 'remind',
+                    builder: (context, state) => const BulkReminderScreen(),
+                  ),
+                  GoRoute(
                     path: 'payments/:paymentId/edit',
                     builder: (context, state) => RecordPaymentScreen(
                       paymentId: state.pathParameters['paymentId'],
@@ -140,6 +146,10 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                 path: AppRoutes.settings,
                 builder: (context, state) => const SettingsScreen(),
                 routes: [
+                  GoRoute(
+                    path: 'templates',
+                    builder: (context, state) => const TemplateEditorScreen(),
+                  ),
                   GoRoute(
                     path: 'reminders',
                     builder: (context, state) =>

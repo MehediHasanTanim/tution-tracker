@@ -2124,6 +2124,234 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে'**
   String get remTestSent;
+
+  /// No description provided for @tplTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেসেজ টেমপ্লেট'**
+  String get tplTitle;
+
+  /// No description provided for @tplFeeReminder.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি-র রিমাইন্ডার'**
+  String get tplFeeReminder;
+
+  /// No description provided for @tplPreview.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রিভিউ'**
+  String get tplPreview;
+
+  /// No description provided for @tplVariables.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভেরিয়েবল (চাপলে যোগ হবে)'**
+  String get tplVariables;
+
+  /// No description provided for @tplReset.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিফল্টে ফিরুন'**
+  String get tplReset;
+
+  /// No description provided for @tplSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'টেমপ্লেট সংরক্ষিত হয়েছে'**
+  String get tplSaved;
+
+  /// No description provided for @tplEmpty.
+  ///
+  /// In bn, this message translates to:
+  /// **'টেমপ্লেট খালি রাখা যাবে না'**
+  String get tplEmpty;
+
+  /// No description provided for @tplBodyLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেসেজের লেখা'**
+  String get tplBodyLabel;
+
+  /// No description provided for @tplSampleStudent.
+  ///
+  /// In bn, this message translates to:
+  /// **'রহিম'**
+  String get tplSampleStudent;
+
+  /// No description provided for @tplVarStudent.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীর নাম'**
+  String get tplVarStudent;
+
+  /// No description provided for @tplVarGuardian.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবকের নাম'**
+  String get tplVarGuardian;
+
+  /// No description provided for @tplVarMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাস'**
+  String get tplVarMonth;
+
+  /// No description provided for @tplVarAmount.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি টাকা'**
+  String get tplVarAmount;
+
+  /// No description provided for @tplVarDue.
+  ///
+  /// In bn, this message translates to:
+  /// **'নির্ধারিত তারিখ'**
+  String get tplVarDue;
+
+  /// No description provided for @tplVarMonths.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি মাসের সংখ্যা'**
+  String get tplVarMonths;
+
+  /// No description provided for @tplVarTutor.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার নাম'**
+  String get tplVarTutor;
+
+  /// No description provided for @tplVarInstitution.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিষ্ঠান'**
+  String get tplVarInstitution;
+
+  /// No description provided for @tplVarSignature.
+  ///
+  /// In bn, this message translates to:
+  /// **'সই (— আপনার নাম)'**
+  String get tplVarSignature;
+
+  /// No description provided for @remindGuardian.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবককে রিমাইন্ডার'**
+  String get remindGuardian;
+
+  /// No description provided for @remindSms.
+  ///
+  /// In bn, this message translates to:
+  /// **'SMS'**
+  String get remindSms;
+
+  /// No description provided for @remindWhatsApp.
+  ///
+  /// In bn, this message translates to:
+  /// **'WhatsApp'**
+  String get remindWhatsApp;
+
+  /// No description provided for @remindNoPhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই শিক্ষার্থীর ফোন নম্বর নেই'**
+  String get remindNoPhone;
+
+  /// No description provided for @remindEditHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাঠানোর আগে লেখা বদলাতে পারেন'**
+  String get remindEditHint;
+
+  /// No description provided for @remindEditTemplate.
+  ///
+  /// In bn, this message translates to:
+  /// **'টেমপ্লেট বদলান'**
+  String get remindEditTemplate;
+
+  /// No description provided for @remindBulkTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাইকে রিমাইন্ডার'**
+  String get remindBulkTitle;
+
+  /// No description provided for @remindBulkProgress.
+  ///
+  /// In bn, this message translates to:
+  /// **'{done}/{total} জন সম্পন্ন'**
+  String remindBulkProgress(String done, String total);
+
+  /// No description provided for @remindMarkDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ড করা হয়েছে'**
+  String get remindMarkDone;
+
+  /// No description provided for @remindSkip.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাদ দিন'**
+  String get remindSkip;
+
+  /// No description provided for @remindUndo.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিরিয়ে নিন'**
+  String get remindUndo;
+
+  /// No description provided for @remindMarked.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ড হিসেবে চিহ্নিত করা হয়েছে'**
+  String get remindMarked;
+
+  /// No description provided for @remindDoneAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাইকে রিমাইন্ড করা হয়েছে'**
+  String get remindDoneAll;
+
+  /// No description provided for @remindNothing.
+  ///
+  /// In bn, this message translates to:
+  /// **'কেউ মেয়াদ পেরিয়ে বাকি নেই'**
+  String get remindNothing;
+
+  /// No description provided for @remindLast.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বশেষ রিমাইন্ড: {date}'**
+  String remindLast(String date);
+
+  /// No description provided for @remindReminded.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ড করা হয়েছে'**
+  String get remindReminded;
+
+  /// No description provided for @remindClear.
+  ///
+  /// In bn, this message translates to:
+  /// **'চিহ্ন মুছে আবার শুরু করুন'**
+  String get remindClear;
+
+  /// No description provided for @remindNext.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরের জন'**
+  String get remindNext;
+
+  /// No description provided for @remindPrevious.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের জন'**
+  String get remindPrevious;
+
+  /// No description provided for @remindAwaiting.
+  ///
+  /// In bn, this message translates to:
+  /// **'মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন'**
+  String get remindAwaiting;
 }
 
 class _AppLocalizationsDelegate

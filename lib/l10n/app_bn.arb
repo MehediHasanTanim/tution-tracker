@@ -632,5 +632,60 @@
       }
     }
   },
-  "remTestSent": "পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে"
+  "remTestSent": "পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে",
+  "tplTitle": "মেসেজ টেমপ্লেট",
+  "tplFeeReminder": "ফি-র রিমাইন্ডার",
+  "tplPreview": "প্রিভিউ",
+  "tplVariables": "ভেরিয়েবল (চাপলে যোগ হবে)",
+  "tplReset": "ডিফল্টে ফিরুন",
+  "tplSaved": "টেমপ্লেট সংরক্ষিত হয়েছে",
+  "tplEmpty": "টেমপ্লেট খালি রাখা যাবে না",
+  "tplBodyLabel": "মেসেজের লেখা",
+  "tplSampleStudent": "রহিম",
+  "tplVarStudent": "শিক্ষার্থীর নাম",
+  "tplVarGuardian": "অভিভাবকের নাম",
+  "tplVarMonth": "মাস",
+  "tplVarAmount": "বাকি টাকা",
+  "tplVarDue": "নির্ধারিত তারিখ",
+  "tplVarMonths": "বাকি মাসের সংখ্যা",
+  "tplVarTutor": "আপনার নাম",
+  "tplVarInstitution": "প্রতিষ্ঠান",
+  "tplVarSignature": "সই (— আপনার নাম)",
+  "remindGuardian": "অভিভাবককে রিমাইন্ডার",
+  "remindSms": "SMS",
+  "remindWhatsApp": "WhatsApp",
+  "remindNoPhone": "এই শিক্ষার্থীর ফোন নম্বর নেই",
+  "remindEditHint": "পাঠানোর আগে লেখা বদলাতে পারেন",
+  "remindEditTemplate": "টেমপ্লেট বদলান",
+  "remindBulkTitle": "সবাইকে রিমাইন্ডার",
+  "remindBulkProgress": "{done}/{total} জন সম্পন্ন",
+  "@remindBulkProgress": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "remindMarkDone": "রিমাইন্ড করা হয়েছে",
+  "remindSkip": "বাদ দিন",
+  "remindUndo": "ফিরিয়ে নিন",
+  "remindMarked": "রিমাইন্ড হিসেবে চিহ্নিত করা হয়েছে",
+  "remindDoneAll": "সবাইকে রিমাইন্ড করা হয়েছে",
+  "remindNothing": "কেউ মেয়াদ পেরিয়ে বাকি নেই",
+  "remindLast": "সর্বশেষ রিমাইন্ড: {date}",
+  "@remindLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "remindReminded": "রিমাইন্ড করা হয়েছে",
+  "remindClear": "চিহ্ন মুছে আবার শুরু করুন",
+  "remindNext": "পরের জন",
+  "remindPrevious": "আগের জন",
+  "remindAwaiting": "মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন"
 }

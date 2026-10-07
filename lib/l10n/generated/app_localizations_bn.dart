@@ -1114,4 +1114,122 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get remTestSent => 'পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে';
+
+  @override
+  String get tplTitle => 'মেসেজ টেমপ্লেট';
+
+  @override
+  String get tplFeeReminder => 'ফি-র রিমাইন্ডার';
+
+  @override
+  String get tplPreview => 'প্রিভিউ';
+
+  @override
+  String get tplVariables => 'ভেরিয়েবল (চাপলে যোগ হবে)';
+
+  @override
+  String get tplReset => 'ডিফল্টে ফিরুন';
+
+  @override
+  String get tplSaved => 'টেমপ্লেট সংরক্ষিত হয়েছে';
+
+  @override
+  String get tplEmpty => 'টেমপ্লেট খালি রাখা যাবে না';
+
+  @override
+  String get tplBodyLabel => 'মেসেজের লেখা';
+
+  @override
+  String get tplSampleStudent => 'রহিম';
+
+  @override
+  String get tplVarStudent => 'শিক্ষার্থীর নাম';
+
+  @override
+  String get tplVarGuardian => 'অভিভাবকের নাম';
+
+  @override
+  String get tplVarMonth => 'মাস';
+
+  @override
+  String get tplVarAmount => 'বাকি টাকা';
+
+  @override
+  String get tplVarDue => 'নির্ধারিত তারিখ';
+
+  @override
+  String get tplVarMonths => 'বাকি মাসের সংখ্যা';
+
+  @override
+  String get tplVarTutor => 'আপনার নাম';
+
+  @override
+  String get tplVarInstitution => 'প্রতিষ্ঠান';
+
+  @override
+  String get tplVarSignature => 'সই (— আপনার নাম)';
+
+  @override
+  String get remindGuardian => 'অভিভাবককে রিমাইন্ডার';
+
+  @override
+  String get remindSms => 'SMS';
+
+  @override
+  String get remindWhatsApp => 'WhatsApp';
+
+  @override
+  String get remindNoPhone => 'এই শিক্ষার্থীর ফোন নম্বর নেই';
+
+  @override
+  String get remindEditHint => 'পাঠানোর আগে লেখা বদলাতে পারেন';
+
+  @override
+  String get remindEditTemplate => 'টেমপ্লেট বদলান';
+
+  @override
+  String get remindBulkTitle => 'সবাইকে রিমাইন্ডার';
+
+  @override
+  String remindBulkProgress(String done, String total) {
+    return '$done/$total জন সম্পন্ন';
+  }
+
+  @override
+  String get remindMarkDone => 'রিমাইন্ড করা হয়েছে';
+
+  @override
+  String get remindSkip => 'বাদ দিন';
+
+  @override
+  String get remindUndo => 'ফিরিয়ে নিন';
+
+  @override
+  String get remindMarked => 'রিমাইন্ড হিসেবে চিহ্নিত করা হয়েছে';
+
+  @override
+  String get remindDoneAll => 'সবাইকে রিমাইন্ড করা হয়েছে';
+
+  @override
+  String get remindNothing => 'কেউ মেয়াদ পেরিয়ে বাকি নেই';
+
+  @override
+  String remindLast(String date) {
+    return 'সর্বশেষ রিমাইন্ড: $date';
+  }
+
+  @override
+  String get remindReminded => 'রিমাইন্ড করা হয়েছে';
+
+  @override
+  String get remindClear => 'চিহ্ন মুছে আবার শুরু করুন';
+
+  @override
+  String get remindNext => 'পরের জন';
+
+  @override
+  String get remindPrevious => 'আগের জন';
+
+  @override
+  String get remindAwaiting => 'মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন';
 }

@@ -1115,4 +1115,123 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remTestSent => 'Test notification sent';
+
+  @override
+  String get tplTitle => 'Message templates';
+
+  @override
+  String get tplFeeReminder => 'Fee reminder';
+
+  @override
+  String get tplPreview => 'Preview';
+
+  @override
+  String get tplVariables => 'Variables (tap to insert)';
+
+  @override
+  String get tplReset => 'Reset to default';
+
+  @override
+  String get tplSaved => 'Template saved';
+
+  @override
+  String get tplEmpty => 'The template cannot be empty';
+
+  @override
+  String get tplBodyLabel => 'Message text';
+
+  @override
+  String get tplSampleStudent => 'Rahim';
+
+  @override
+  String get tplVarStudent => 'Student name';
+
+  @override
+  String get tplVarGuardian => 'Guardian name';
+
+  @override
+  String get tplVarMonth => 'Month';
+
+  @override
+  String get tplVarAmount => 'Amount owed';
+
+  @override
+  String get tplVarDue => 'Due date';
+
+  @override
+  String get tplVarMonths => 'Months owed';
+
+  @override
+  String get tplVarTutor => 'Your name';
+
+  @override
+  String get tplVarInstitution => 'Institution';
+
+  @override
+  String get tplVarSignature => 'Signature (— your name)';
+
+  @override
+  String get remindGuardian => 'Remind guardian';
+
+  @override
+  String get remindSms => 'SMS';
+
+  @override
+  String get remindWhatsApp => 'WhatsApp';
+
+  @override
+  String get remindNoPhone => 'This student has no phone number';
+
+  @override
+  String get remindEditHint => 'You can edit the text before sending';
+
+  @override
+  String get remindEditTemplate => 'Edit template';
+
+  @override
+  String get remindBulkTitle => 'Remind everyone';
+
+  @override
+  String remindBulkProgress(String done, String total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get remindMarkDone => 'Mark as reminded';
+
+  @override
+  String get remindSkip => 'Skip';
+
+  @override
+  String get remindUndo => 'Undo';
+
+  @override
+  String get remindMarked => 'Marked as reminded';
+
+  @override
+  String get remindDoneAll => 'Everyone has been reminded';
+
+  @override
+  String get remindNothing => 'Nobody is overdue';
+
+  @override
+  String remindLast(String date) {
+    return 'Last reminded: $date';
+  }
+
+  @override
+  String get remindReminded => 'Reminded';
+
+  @override
+  String get remindClear => 'Clear marks and start again';
+
+  @override
+  String get remindNext => 'Next';
+
+  @override
+  String get remindPrevious => 'Previous';
+
+  @override
+  String get remindAwaiting =>
+      'Tap “Mark as reminded” once the message is sent';
 }
