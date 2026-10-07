@@ -1,10 +1,9 @@
-import 'package:drift/drift.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
-import 'package:tution_tracker/core/db/database_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/features/batches/data/batch_providers.dart';
 import 'package:tution_tracker/features/students/data/student_providers.dart';
 import 'package:tution_tracker/features/students/domain/student_filter.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
@@ -65,17 +64,13 @@ final classLevelsProvider = StreamProvider.autoDispose<List<String>>((
 
 typedef BatchOption = ({String id, String name});
 
-/// Active batches for the filter picker. Moves into the batch repository
-/// with S1-14.
+/// Active batches for the filter picker.
 final batchOptionsProvider = StreamProvider.autoDispose<List<BatchOption>>((
   ref,
 ) async* {
-  final db = await ref.watch(databaseProvider.future);
-  final query = db.select(db.batches)
-    ..where((b) => b.status.equals('active'))
-    ..orderBy([(b) => OrderingTerm.asc(b.name.collate(Collate.noCase))]);
-  yield* query.watch().map(
-    (rows) => [for (final b in rows) (id: b.id, name: b.name)],
+  final repo = await ref.watch(batchRepositoryProvider.future);
+  yield* repo.watchSummaries().map(
+    (list) => [for (final s in list) (id: s.batch.id, name: s.batch.name)],
   );
 });
 

@@ -256,4 +256,106 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get photoFailed => 'ছবিটি ব্যবহার করা গেল না';
+
+  @override
+  String get tabAllStudents => 'সব শিক্ষার্থী';
+
+  @override
+  String get tabBatches => 'ব্যাচসমূহ';
+
+  @override
+  String get batchesAdd => 'ব্যাচ যোগ করুন';
+
+  @override
+  String get batchEditTitle => 'ব্যাচ সম্পাদনা';
+
+  @override
+  String get batchesEmptyTitle => 'এখনও কোনো ব্যাচ নেই';
+
+  @override
+  String get batchesEmptyBody => 'প্রথম ব্যাচ তৈরি করুন';
+
+  @override
+  String get batchShowArchived => 'আর্কাইভ দেখান';
+
+  @override
+  String get batchFieldName => 'ব্যাচের নাম';
+
+  @override
+  String get batchFieldSubject => 'বিষয়';
+
+  @override
+  String get batchFieldDuration => 'সময়কাল (মিনিট)';
+
+  @override
+  String get batchFieldDefaultFee => 'ডিফল্ট মাসিক ফি (৳)';
+
+  @override
+  String get errorScheduleRequired => 'অন্তত একটি দিন বাছাই করুন';
+
+  @override
+  String get errorDurationInvalid => 'সঠিক সময়কাল দিন';
+
+  @override
+  String get batchSaved => 'ব্যাচ সংরক্ষিত হয়েছে';
+
+  @override
+  String batchMemberCount(String count) {
+    return 'সদস্য: $count';
+  }
+
+  @override
+  String get batchMembersTitle => 'সদস্য';
+
+  @override
+  String get batchNoMembers => 'এই ব্যাচে এখনও কেউ নেই';
+
+  @override
+  String get batchAddMembers => 'শিক্ষার্থী যোগ করুন';
+
+  @override
+  String get batchNoAddable => 'যোগ করার মতো আর কোনো শিক্ষার্থী নেই';
+
+  @override
+  String batchAddSelected(String count) {
+    return '$count জনকে যোগ করুন';
+  }
+
+  @override
+  String get batchMembersAdded => 'শিক্ষার্থী যোগ করা হয়েছে';
+
+  @override
+  String batchMemberFee(String amount) {
+    return 'ফি: $amount';
+  }
+
+  @override
+  String get batchMemberCustomFee => 'আলাদা ফি';
+
+  @override
+  String get batchSetCustomFee => 'আলাদা ফি নির্ধারণ';
+
+  @override
+  String get batchCustomFeeLabel => 'আলাদা মাসিক ফি (৳)';
+
+  @override
+  String get batchCustomFeeHint => 'ফাঁকা রাখলে ব্যাচের ডিফল্ট ফি প্রযোজ্য';
+
+  @override
+  String get batchRemoveMember => 'ব্যাচ থেকে সরান';
+
+  @override
+  String get batchMemberRemoved => 'শিক্ষার্থীকে ব্যাচ থেকে সরানো হয়েছে';
+
+  @override
+  String get batchArchived => 'ব্যাচ আর্কাইভ করা হয়েছে';
+
+  @override
+  String get batchRestored => 'ব্যাচ পুনরুদ্ধার করা হয়েছে';
+
+  @override
+  String get batchDefaultFee => 'ডিফল্ট ফি';
+
+  @override
+  String get profileBatches => 'ব্যাচ';
 }

@@ -100,3 +100,16 @@ void appTestWidgets(
     }
   });
 }
+
+/// Scrolls [target] to the middle of its scroll view, then taps it.
+///
+/// Unfocuses first so text-field handles do not cover it, and avoids the top
+/// edge, where a tap can miss behind the app bar.
+Future<void> tapCentered(WidgetTester tester, Finder target) async {
+  FocusManager.instance.primaryFocus?.unfocus();
+  await tester.pumpAndSettle();
+  await Scrollable.ensureVisible(tester.element(target), alignment: 0.5);
+  await tester.pump();
+  await tester.tap(target);
+  await tester.pump();
+}

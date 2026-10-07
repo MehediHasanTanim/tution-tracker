@@ -257,4 +257,106 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get photoFailed => 'Could not use that photo';
+
+  @override
+  String get tabAllStudents => 'All students';
+
+  @override
+  String get tabBatches => 'Batches';
+
+  @override
+  String get batchesAdd => 'Add batch';
+
+  @override
+  String get batchEditTitle => 'Edit batch';
+
+  @override
+  String get batchesEmptyTitle => 'No batches yet';
+
+  @override
+  String get batchesEmptyBody => 'Create your first batch';
+
+  @override
+  String get batchShowArchived => 'Show archived';
+
+  @override
+  String get batchFieldName => 'Batch name';
+
+  @override
+  String get batchFieldSubject => 'Subject';
+
+  @override
+  String get batchFieldDuration => 'Duration (minutes)';
+
+  @override
+  String get batchFieldDefaultFee => 'Default monthly fee (৳)';
+
+  @override
+  String get errorScheduleRequired => 'Pick at least one day';
+
+  @override
+  String get errorDurationInvalid => 'Enter a valid duration';
+
+  @override
+  String get batchSaved => 'Batch saved';
+
+  @override
+  String batchMemberCount(String count) {
+    return 'Members: $count';
+  }
+
+  @override
+  String get batchMembersTitle => 'Members';
+
+  @override
+  String get batchNoMembers => 'No students in this batch yet';
+
+  @override
+  String get batchAddMembers => 'Add students';
+
+  @override
+  String get batchNoAddable => 'No more students to add';
+
+  @override
+  String batchAddSelected(String count) {
+    return 'Add $count';
+  }
+
+  @override
+  String get batchMembersAdded => 'Students added';
+
+  @override
+  String batchMemberFee(String amount) {
+    return 'Fee: $amount';
+  }
+
+  @override
+  String get batchMemberCustomFee => 'Custom fee';
+
+  @override
+  String get batchSetCustomFee => 'Set custom fee';
+
+  @override
+  String get batchCustomFeeLabel => 'Custom monthly fee (৳)';
+
+  @override
+  String get batchCustomFeeHint => 'Leave empty to use the batch default fee';
+
+  @override
+  String get batchRemoveMember => 'Remove from batch';
+
+  @override
+  String get batchMemberRemoved => 'Student removed from the batch';
+
+  @override
+  String get batchArchived => 'Batch archived';
+
+  @override
+  String get batchRestored => 'Batch restored';
+
+  @override
+  String get batchDefaultFee => 'Default fee';
+
+  @override
+  String get profileBatches => 'Batches';
 }

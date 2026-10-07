@@ -94,5 +94,58 @@
   "photoTake": "ছবি তুলুন",
   "photoChoose": "গ্যালারি থেকে বাছাই করুন",
   "photoRemove": "ছবি সরান",
-  "photoFailed": "ছবিটি ব্যবহার করা গেল না"
+  "photoFailed": "ছবিটি ব্যবহার করা গেল না",
+  "tabAllStudents": "সব শিক্ষার্থী",
+  "tabBatches": "ব্যাচসমূহ",
+  "batchesAdd": "ব্যাচ যোগ করুন",
+  "batchEditTitle": "ব্যাচ সম্পাদনা",
+  "batchesEmptyTitle": "এখনও কোনো ব্যাচ নেই",
+  "batchesEmptyBody": "প্রথম ব্যাচ তৈরি করুন",
+  "batchShowArchived": "আর্কাইভ দেখান",
+  "batchFieldName": "ব্যাচের নাম",
+  "batchFieldSubject": "বিষয়",
+  "batchFieldDuration": "সময়কাল (মিনিট)",
+  "batchFieldDefaultFee": "ডিফল্ট মাসিক ফি (৳)",
+  "errorScheduleRequired": "অন্তত একটি দিন বাছাই করুন",
+  "errorDurationInvalid": "সঠিক সময়কাল দিন",
+  "batchSaved": "ব্যাচ সংরক্ষিত হয়েছে",
+  "batchMemberCount": "সদস্য: {count}",
+  "@batchMemberCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "batchMembersTitle": "সদস্য",
+  "batchNoMembers": "এই ব্যাচে এখনও কেউ নেই",
+  "batchAddMembers": "শিক্ষার্থী যোগ করুন",
+  "batchNoAddable": "যোগ করার মতো আর কোনো শিক্ষার্থী নেই",
+  "batchAddSelected": "{count} জনকে যোগ করুন",
+  "@batchAddSelected": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "batchMembersAdded": "শিক্ষার্থী যোগ করা হয়েছে",
+  "batchMemberFee": "ফি: {amount}",
+  "@batchMemberFee": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "batchMemberCustomFee": "আলাদা ফি",
+  "batchSetCustomFee": "আলাদা ফি নির্ধারণ",
+  "batchCustomFeeLabel": "আলাদা মাসিক ফি (৳)",
+  "batchCustomFeeHint": "ফাঁকা রাখলে ব্যাচের ডিফল্ট ফি প্রযোজ্য",
+  "batchRemoveMember": "ব্যাচ থেকে সরান",
+  "batchMemberRemoved": "শিক্ষার্থীকে ব্যাচ থেকে সরানো হয়েছে",
+  "batchArchived": "ব্যাচ আর্কাইভ করা হয়েছে",
+  "batchRestored": "ব্যাচ পুনরুদ্ধার করা হয়েছে",
+  "batchDefaultFee": "ডিফল্ট ফি",
+  "profileBatches": "ব্যাচ"
 }

@@ -583,6 +583,198 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ছবিটি ব্যবহার করা গেল না'**
   String get photoFailed;
+
+  /// No description provided for @tabAllStudents.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব শিক্ষার্থী'**
+  String get tabAllStudents;
+
+  /// No description provided for @tabBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচসমূহ'**
+  String get tabBatches;
+
+  /// No description provided for @batchesAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ যোগ করুন'**
+  String get batchesAdd;
+
+  /// No description provided for @batchEditTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ সম্পাদনা'**
+  String get batchEditTitle;
+
+  /// No description provided for @batchesEmptyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনও কোনো ব্যাচ নেই'**
+  String get batchesEmptyTitle;
+
+  /// No description provided for @batchesEmptyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রথম ব্যাচ তৈরি করুন'**
+  String get batchesEmptyBody;
+
+  /// No description provided for @batchShowArchived.
+  ///
+  /// In bn, this message translates to:
+  /// **'আর্কাইভ দেখান'**
+  String get batchShowArchived;
+
+  /// No description provided for @batchFieldName.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচের নাম'**
+  String get batchFieldName;
+
+  /// No description provided for @batchFieldSubject.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিষয়'**
+  String get batchFieldSubject;
+
+  /// No description provided for @batchFieldDuration.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়কাল (মিনিট)'**
+  String get batchFieldDuration;
+
+  /// No description provided for @batchFieldDefaultFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিফল্ট মাসিক ফি (৳)'**
+  String get batchFieldDefaultFee;
+
+  /// No description provided for @errorScheduleRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্তত একটি দিন বাছাই করুন'**
+  String get errorScheduleRequired;
+
+  /// No description provided for @errorDurationInvalid.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক সময়কাল দিন'**
+  String get errorDurationInvalid;
+
+  /// No description provided for @batchSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ সংরক্ষিত হয়েছে'**
+  String get batchSaved;
+
+  /// No description provided for @batchMemberCount.
+  ///
+  /// In bn, this message translates to:
+  /// **'সদস্য: {count}'**
+  String batchMemberCount(String count);
+
+  /// No description provided for @batchMembersTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সদস্য'**
+  String get batchMembersTitle;
+
+  /// No description provided for @batchNoMembers.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ব্যাচে এখনও কেউ নেই'**
+  String get batchNoMembers;
+
+  /// No description provided for @batchAddMembers.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী যোগ করুন'**
+  String get batchAddMembers;
+
+  /// No description provided for @batchNoAddable.
+  ///
+  /// In bn, this message translates to:
+  /// **'যোগ করার মতো আর কোনো শিক্ষার্থী নেই'**
+  String get batchNoAddable;
+
+  /// No description provided for @batchAddSelected.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} জনকে যোগ করুন'**
+  String batchAddSelected(String count);
+
+  /// No description provided for @batchMembersAdded.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী যোগ করা হয়েছে'**
+  String get batchMembersAdded;
+
+  /// No description provided for @batchMemberFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি: {amount}'**
+  String batchMemberFee(String amount);
+
+  /// No description provided for @batchMemberCustomFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলাদা ফি'**
+  String get batchMemberCustomFee;
+
+  /// No description provided for @batchSetCustomFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলাদা ফি নির্ধারণ'**
+  String get batchSetCustomFee;
+
+  /// No description provided for @batchCustomFeeLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'আলাদা মাসিক ফি (৳)'**
+  String get batchCustomFeeLabel;
+
+  /// No description provided for @batchCustomFeeHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাঁকা রাখলে ব্যাচের ডিফল্ট ফি প্রযোজ্য'**
+  String get batchCustomFeeHint;
+
+  /// No description provided for @batchRemoveMember.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ থেকে সরান'**
+  String get batchRemoveMember;
+
+  /// No description provided for @batchMemberRemoved.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীকে ব্যাচ থেকে সরানো হয়েছে'**
+  String get batchMemberRemoved;
+
+  /// No description provided for @batchArchived.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ আর্কাইভ করা হয়েছে'**
+  String get batchArchived;
+
+  /// No description provided for @batchRestored.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ পুনরুদ্ধার করা হয়েছে'**
+  String get batchRestored;
+
+  /// No description provided for @batchDefaultFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডিফল্ট ফি'**
+  String get batchDefaultFee;
+
+  /// No description provided for @profileBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ'**
+  String get profileBatches;
 }
 
 class _AppLocalizationsDelegate

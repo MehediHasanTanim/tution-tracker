@@ -4,20 +4,72 @@ import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/features/batches/presentation/batch_list_view.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
-class StudentsScreen extends ConsumerStatefulWidget {
+/// The Students tab: the student list and the batch list side by side.
+class StudentsScreen extends StatelessWidget {
   const StudentsScreen({super.key});
 
   @override
-  ConsumerState<StudentsScreen> createState() => _StudentsScreenState();
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    return DefaultTabController(
+      length: 2,
+      child: Builder(
+        builder: (context) {
+          final tabs = DefaultTabController.of(context);
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(l10n.navStudents),
+              bottom: TabBar(
+                tabs: [
+                  Tab(text: l10n.tabAllStudents),
+                  Tab(text: l10n.tabBatches),
+                ],
+              ),
+            ),
+            // The button follows the visible tab.
+            floatingActionButton: ListenableBuilder(
+              listenable: tabs,
+              builder: (context, _) => tabs.index == 0
+                  ? FloatingActionButton.extended(
+                      onPressed: () => context.push('/students/new'),
+                      icon: const Icon(Icons.person_add),
+                      label: Text(l10n.studentsAdd),
+                    )
+                  : FloatingActionButton.extended(
+                      onPressed: () => context.push('/batches/new'),
+                      icon: const Icon(Icons.group_add),
+                      label: Text(l10n.batchesAdd),
+                    ),
+            ),
+            body: const TabBarView(
+              children: [StudentListBody(), BatchListView()],
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
 
-class _StudentsScreenState extends ConsumerState<StudentsScreen> {
+class StudentListBody extends ConsumerStatefulWidget {
+  const StudentListBody({super.key});
+
+  @override
+  ConsumerState<StudentListBody> createState() => _StudentListBodyState();
+}
+
+class _StudentListBodyState extends ConsumerState<StudentListBody>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true; // keep the search text across tab switches
+
   final _search = TextEditingController();
 
   @override
@@ -41,88 +93,74 @@ class _StudentsScreenState extends ConsumerState<StudentsScreen> {
     final grouping =
         ref.watch(groupingStyleProvider).value ?? GroupingStyle.lakh;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.navStudents)),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push('/students/new'),
-        icon: const Icon(Icons.person_add),
-        label: Text(l10n.studentsAdd),
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
-            child: TextField(
-              controller: _search,
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                hintText: l10n.studentsSearchHint,
-                border: const OutlineInputBorder(),
-                isDense: true,
-                suffixIcon: ValueListenableBuilder<TextEditingValue>(
-                  valueListenable: _search,
-                  builder: (context, value, _) => value.text.isEmpty
-                      ? const SizedBox.shrink()
-                      : IconButton(
-                          tooltip: l10n.studentsClearSearch,
-                          icon: const Icon(Icons.close),
-                          onPressed: () {
-                            _search.clear();
-                            ref
-                                .read(studentFilterProvider.notifier)
-                                .setQuery('');
-                          },
-                        ),
-                ),
+    super.build(context);
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+          child: TextField(
+            controller: _search,
+            textInputAction: TextInputAction.search,
+            decoration: InputDecoration(
+              prefixIcon: const Icon(Icons.search),
+              hintText: l10n.studentsSearchHint,
+              border: const OutlineInputBorder(),
+              isDense: true,
+              suffixIcon: ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _search,
+                builder: (context, value, _) => value.text.isEmpty
+                    ? const SizedBox.shrink()
+                    : IconButton(
+                        tooltip: l10n.studentsClearSearch,
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          _search.clear();
+                          ref.read(studentFilterProvider.notifier).setQuery('');
+                        },
+                      ),
               ),
-              onChanged: ref.read(studentFilterProvider.notifier).setQuery,
             ),
+            onChanged: ref.read(studentFilterProvider.notifier).setQuery,
           ),
-          const _FilterBar(),
-          Expanded(
-            child: students.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('$e')),
-              data: (list) {
-                if (list.isEmpty) {
-                  return _EmptyState(
-                    filtered: filterActive,
-                    onClear: _clearAll,
-                  );
-                }
-                return Column(
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-                        child: Text(
-                          l10n.studentsCount(
-                            formatCount(list.length, numerals),
-                          ),
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
+        ),
+        const _FilterBar(),
+        Expanded(
+          child: students.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Center(child: Text('$e')),
+            data: (list) {
+              if (list.isEmpty) {
+                return _EmptyState(filtered: filterActive, onClear: _clearAll);
+              }
+              return Column(
+                children: [
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                      child: Text(
+                        l10n.studentsCount(formatCount(list.length, numerals)),
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        padding: const EdgeInsets.only(bottom: 88),
-                        itemCount: list.length,
-                        itemBuilder: (context, i) => _StudentTile(
-                          student: list[i],
-                          numerals: numerals,
-                          grouping: grouping,
-                        ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: const EdgeInsets.only(bottom: 88),
+                      itemCount: list.length,
+                      itemBuilder: (context, i) => _StudentTile(
+                        student: list[i],
+                        numerals: numerals,
+                        grouping: grouping,
                       ),
                     ),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

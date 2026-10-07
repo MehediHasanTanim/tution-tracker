@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/navigation/app_shell.dart';
+import 'package:tution_tracker/features/batches/presentation/batch_detail_screen.dart';
+import 'package:tution_tracker/features/batches/presentation/batch_form_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
@@ -56,6 +58,23 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                         ),
                       ),
                     ],
+                  ),
+                ],
+              ),
+              // Batches live under the Students tab (spec section 4.1).
+              GoRoute(
+                path: '/batches/new',
+                builder: (context, state) => const BatchFormScreen(),
+              ),
+              GoRoute(
+                path: '/batches/:id',
+                builder: (context, state) =>
+                    BatchDetailScreen(batchId: state.pathParameters['id']!),
+                routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (context, state) =>
+                        BatchFormScreen(batchId: state.pathParameters['id']),
                   ),
                 ],
               ),
