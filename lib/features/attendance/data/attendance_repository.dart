@@ -129,6 +129,24 @@ class AttendanceRepository {
       .watch()
       .map((rows) => [for (final r in rows) _record(r)]);
 
+  /// Saved classes from [from] through [to], for planning reminders.
+  Future<List<SessionRecord>> sessionsBetween(
+    LocalDate from,
+    LocalDate to,
+  ) async {
+    final rows = await _db
+        .customSelect(
+          '$_sessionSql WHERE s.date BETWEEN ? AND ?',
+          variables: [
+            Variable.withString(from.toIso()),
+            Variable.withString(to.toIso()),
+          ],
+          readsFrom: _sessionTables,
+        )
+        .get();
+    return [for (final r in rows) _record(r)];
+  }
+
   Future<SessionRecord?> findSession(
     ClassOwner owner,
     LocalDate date,

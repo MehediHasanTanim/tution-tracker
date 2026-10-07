@@ -65,3 +65,23 @@ SettingKey<String> stringKey(String name) => SettingKey<String>(
   encode: (v) => v.trim(),
   decode: (raw) => raw,
 );
+
+SettingKey<bool> boolKey(String name, {bool defaultValue = false}) =>
+    SettingKey<bool>(
+      name: name,
+      defaultValue: defaultValue,
+      encode: (v) => v ? '1' : '0',
+      decode: (raw) => switch (raw) {
+        '1' => true,
+        '0' => false,
+        _ => throw FormatException('Not a flag', raw),
+      },
+    );
+
+/// A moment in time, or null when never set. Stored as UTC ISO text.
+SettingKey<DateTime?> dateTimeKey(String name) => SettingKey<DateTime?>(
+  name: name,
+  defaultValue: null,
+  encode: (v) => v!.toUtc().toIso8601String(),
+  decode: (raw) => DateTime.parse(raw).toLocal(),
+);

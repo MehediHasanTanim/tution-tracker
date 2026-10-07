@@ -891,4 +891,228 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tutorPhone => 'Phone number';
+
+  @override
+  String get chClasses => 'Class reminders';
+
+  @override
+  String get chClassesAbout => 'Reminds you before a class starts';
+
+  @override
+  String get chFees => 'Fee reminders';
+
+  @override
+  String get chFeesAbout => 'On days when fees fall due';
+
+  @override
+  String get chSummary => 'Weekly summary';
+
+  @override
+  String get chSummaryAbout => 'Weekly total of what is still owed';
+
+  @override
+  String get chBackup => 'Backup reminders';
+
+  @override
+  String get chBackupAbout => 'Reminds you to back up your data';
+
+  @override
+  String remClassTitle(String name) {
+    return 'Class: $name';
+  }
+
+  @override
+  String remClassBody(String time) {
+    return 'Starts at $time';
+  }
+
+  @override
+  String remFeesTitle(String count) {
+    return '$count students have fees due today';
+  }
+
+  @override
+  String remFeesBody(String amount) {
+    return 'Total due $amount';
+  }
+
+  @override
+  String get remWeeklyTitle => 'Weekly dues summary';
+
+  @override
+  String remWeeklyBody(String count, String amount) {
+    return '$count students owe $amount in total';
+  }
+
+  @override
+  String get remBackupTitle => 'Time for a backup';
+
+  @override
+  String get remBackupBody => 'Export a backup to keep your data safe';
+
+  @override
+  String get remKeepOnTitle => 'Keep reminders on';
+
+  @override
+  String get remKeepOnBody =>
+      'Open the app once to schedule the next two weeks';
+
+  @override
+  String get remTestTitle => 'Test notification';
+
+  @override
+  String get remTestBody => 'Reminders are working';
+
+  @override
+  String get remPermTitle => 'Turn on reminders';
+
+  @override
+  String get remPermWhy =>
+      'To remind you before classes and on fee days, the app needs permission to show notifications. Your data never leaves this phone.';
+
+  @override
+  String get remPermAllow => 'Allow notifications';
+
+  @override
+  String get remPermNotNow => 'Not now';
+
+  @override
+  String get remPermDenied =>
+      'Notifications are blocked, so reminders cannot be sent. Allow them in phone settings to get reminders.';
+
+  @override
+  String get remPermOpenSettings => 'Open settings';
+
+  @override
+  String get remPermGranted => 'Reminders are on';
+
+  @override
+  String get remTestSend => 'Send a test notification';
+
+  @override
+  String get oemTitle => 'Battery settings';
+
+  @override
+  String get oemIntro =>
+      'Some phones close apps to save battery, and then reminders do not arrive. Follow the steps below once.';
+
+  @override
+  String oemDetected(String maker) {
+    return 'Your phone: $maker';
+  }
+
+  @override
+  String get oemMakerXiaomi => 'Xiaomi / Redmi / POCO';
+
+  @override
+  String get oemMakerOppo => 'Oppo / OnePlus';
+
+  @override
+  String get oemMakerVivo => 'Vivo / iQOO';
+
+  @override
+  String get oemMakerRealme => 'Realme';
+
+  @override
+  String get oemMakerSamsung => 'Samsung';
+
+  @override
+  String get oemMakerOther => 'Other phones';
+
+  @override
+  String get oemStepsXiaomi =>
+      'Open Settings › Apps › Manage apps › Tuition Khata\nTurn on “Autostart”\nUnder “Battery saver” choose “No restrictions”';
+
+  @override
+  String get oemStepsOppo =>
+      'Open Settings › Battery › App battery management › Tuition Khata\nAllow “Background activity”\nTurn on “Auto-launch”';
+
+  @override
+  String get oemStepsVivo =>
+      'Open Settings › Battery › Background power consumption › Tuition Khata\nAllow “High background power consumption”\nTurn on “Autostart”';
+
+  @override
+  String get oemStepsRealme =>
+      'Open Settings › Battery › App battery management › Tuition Khata\nAllow “Background activity”\nTurn on “Auto-launch”';
+
+  @override
+  String get oemStepsSamsung =>
+      'Open Settings › Battery › Background usage limits\nAdd Tuition Khata to “Never sleeping apps”';
+
+  @override
+  String get oemStepsOther =>
+      'Open Settings › Apps › Tuition Khata › Battery\nChoose “Unrestricted” or “Don’t optimise”';
+
+  @override
+  String get oemOpenBattery => 'Open battery settings';
+
+  @override
+  String get oemDone => 'Got it';
+
+  @override
+  String get remHealth => 'Reminder health';
+
+  @override
+  String get remHealthOff => 'Off';
+
+  @override
+  String get remHealthBlocked => 'Notifications are blocked';
+
+  @override
+  String remHealthOk(String count) {
+    return 'OK — $count reminders scheduled';
+  }
+
+  @override
+  String get remHealthNone => 'Nothing is scheduled right now';
+
+  @override
+  String get remHealthGuide => 'See the battery guide';
+
+  @override
+  String get remHealthTapEnable => 'Tap to turn on';
+
+  @override
+  String get remSettingsTitle => 'Reminders';
+
+  @override
+  String get remMasterTitle => 'Reminders';
+
+  @override
+  String get remMasterHint => 'Class, fee and backup reminders';
+
+  @override
+  String get remClassOn => 'Before each class';
+
+  @override
+  String remMinutes(String minutes) {
+    return '$minutes min before';
+  }
+
+  @override
+  String get remFeeOn => 'On fee due days';
+
+  @override
+  String remAt(String time) {
+    return 'At $time';
+  }
+
+  @override
+  String get remWeeklyOn => 'Weekly dues summary';
+
+  @override
+  String remWeeklyWhen(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String get remBackupOn => 'Backup reminder';
+
+  @override
+  String remBackupAfter(String days) {
+    return 'When the last backup is older than $days days';
+  }
+
+  @override
+  String get remTestSent => 'Test notification sent';
 }

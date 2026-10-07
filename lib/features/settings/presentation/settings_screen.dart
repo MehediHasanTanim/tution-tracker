@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/app.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
@@ -8,6 +9,7 @@ import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
+import 'package:tution_tracker/features/reminders/presentation/reminder_actions.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -44,6 +46,14 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 24),
             const _TutorProfileSection(),
+            const SizedBox(height: 8),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.notifications_outlined),
+              title: Text(l10n.remSettingsTitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push(ReminderRoutes.settings),
+            ),
             const SizedBox(height: 24),
             Text(l10n.sampleConjuncts),
             if (ref.watch(appFlavorProvider) == AppFlavor.dev) ...[

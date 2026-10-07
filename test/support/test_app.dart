@@ -9,9 +9,13 @@ import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/db/connection.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
+import 'package:tution_tracker/core/platform/battery_guide_service.dart';
+import 'package:tution_tracker/core/platform/notification_service.dart';
 import 'package:tution_tracker/core/platform/photo_picker.dart';
 import 'package:tution_tracker/features/students/data/photo_processing.dart';
 import 'package:tution_tracker/features/students/data/photo_store.dart';
+
+import 'fake_notifications.dart';
 
 /// The real app wired to an in-memory [db] instead of the on-device file.
 Widget testApp(
@@ -20,6 +24,8 @@ Widget testApp(
   List<Override> overrides = const [],
   PhotoStore? photoStore,
   PhotoPicker? photoPicker,
+  NotificationService? notifications,
+  BatteryGuideService? batteryGuide,
   AppFlavor flavor = AppFlavor.dev,
 }) => ProviderScope(
   overrides: [
@@ -35,6 +41,11 @@ Widget testApp(
       (bytes) async => compressPhoto(bytes),
     ),
     if (clock != null) clockProvider.overrideWithValue(clock),
+    notificationServiceProvider.overrideWithValue(
+      notifications ?? FakeNotifications(),
+    ),
+    if (batteryGuide != null)
+      batteryGuideServiceProvider.overrideWithValue(batteryGuide),
     ...overrides,
   ],
   child: TuitionTrackerApp(flavor: flavor),
@@ -48,6 +59,8 @@ Future<void> pumpApp(
   List<Override> overrides = const [],
   PhotoStore? photoStore,
   PhotoPicker? photoPicker,
+  NotificationService? notifications,
+  BatteryGuideService? batteryGuide,
   AppFlavor flavor = AppFlavor.dev,
 }) async {
   await tester.pumpWidget(
@@ -58,6 +71,8 @@ Future<void> pumpApp(
       overrides: overrides,
       photoStore: photoStore,
       photoPicker: photoPicker,
+      notifications: notifications,
+      batteryGuide: batteryGuide,
     ),
   );
   await settle(tester);

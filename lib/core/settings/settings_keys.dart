@@ -56,4 +56,58 @@ abstract final class SettingKeys {
 
   /// The receipt number the next payment will get (design 7.4, 10.5).
   static final nextReceiptNo = intKey('next_receipt_no', 1, min: 1);
+
+  // ---- reminders (spec section 3.8, design 9) ----------------------------
+
+  /// Master switch. Turning it on goes through the permission flow.
+  static final remindersEnabled = boolKey('reminders_enabled');
+  static final classReminders = boolKey('reminders_class', defaultValue: true);
+  static final feeReminders = boolKey('reminders_fees', defaultValue: true);
+  static final weeklySummary = boolKey('reminders_weekly', defaultValue: true);
+  static final backupReminders = boolKey(
+    'reminders_backup',
+    defaultValue: true,
+  );
+
+  /// ISO weekday of the weekly dues summary (default Friday).
+  static final weeklySummaryDay = intKey(
+    'weekly_summary_day',
+    5,
+    min: 1,
+    max: 7,
+  );
+  static final weeklySummaryTime = SettingKey<ClockTime>(
+    name: 'weekly_summary_time',
+    defaultValue: const ClockTime(18, 0),
+    encode: (v) => v.toKey(),
+    decode: ClockTime.parse,
+  );
+
+  /// Whether the one-time battery-settings guide has been shown.
+  static final oemGuideShown = boolKey('oem_guide_shown');
+
+  // ---- backup ---------------------------------------------------------------
+
+  static final lastBackupAt = dateTimeKey('last_backup_at');
+
+  /// Ask for a backup when the last one is older than this many days.
+  static final backupReminderDays = intKey(
+    'backup_reminder_days',
+    14,
+    min: 1,
+    max: 365,
+  );
+
+  // ---- look ------------------------------------------------------------------
+
+  static final themeMode = enumKey(
+    'theme_mode',
+    AppThemeMode.values,
+    AppThemeMode.system,
+  );
+
+  /// Guardian fee reminders already sent, as JSON `{"studentId|YYYY-MM": "date"}`.
+  static final feeRemindersSent = stringKey('fee_reminders_sent');
 }
+
+enum AppThemeMode { system, light, dark }

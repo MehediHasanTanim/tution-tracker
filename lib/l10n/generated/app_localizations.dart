@@ -1740,6 +1740,390 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ফোন নম্বর'**
   String get tutorPhone;
+
+  /// No description provided for @chClasses.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাসের রিমাইন্ডার'**
+  String get chClasses;
+
+  /// No description provided for @chClassesAbout.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস শুরুর আগে মনে করিয়ে দেয়'**
+  String get chClassesAbout;
+
+  /// No description provided for @chFees.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি-র রিমাইন্ডার'**
+  String get chFees;
+
+  /// No description provided for @chFeesAbout.
+  ///
+  /// In bn, this message translates to:
+  /// **'যেদিন ফি আদায়ের দিন'**
+  String get chFeesAbout;
+
+  /// No description provided for @chSummary.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাপ্তাহিক সারসংক্ষেপ'**
+  String get chSummary;
+
+  /// No description provided for @chSummaryAbout.
+  ///
+  /// In bn, this message translates to:
+  /// **'সপ্তাহের বাকি টাকার হিসাব'**
+  String get chSummaryAbout;
+
+  /// No description provided for @chBackup.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ রিমাইন্ডার'**
+  String get chBackup;
+
+  /// No description provided for @chBackupAbout.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ নেওয়ার কথা মনে করায়'**
+  String get chBackupAbout;
+
+  /// No description provided for @remClassTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস: {name}'**
+  String remClassTitle(String name);
+
+  /// No description provided for @remClassBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুরু {time}'**
+  String remClassBody(String time);
+
+  /// No description provided for @remFeesTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজ {count} জনের ফি আদায়ের দিন'**
+  String remFeesTitle(String count);
+
+  /// No description provided for @remFeesBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট বাকি {amount}'**
+  String remFeesBody(String amount);
+
+  /// No description provided for @remWeeklyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাপ্তাহিক বাকির হিসাব'**
+  String get remWeeklyTitle;
+
+  /// No description provided for @remWeeklyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} জনের কাছে মোট {amount} বাকি'**
+  String remWeeklyBody(String count, String amount);
+
+  /// No description provided for @remBackupTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ নেওয়ার সময় হয়েছে'**
+  String get remBackupTitle;
+
+  /// No description provided for @remBackupBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'তথ্য নিরাপদ রাখতে এখনই ব্যাকআপ নিন'**
+  String get remBackupBody;
+
+  /// No description provided for @remKeepOnTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডার চালু রাখুন'**
+  String get remKeepOnTitle;
+
+  /// No description provided for @remKeepOnBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরবর্তী দুই সপ্তাহের রিমাইন্ডারের জন্য অ্যাপটি একবার খুলুন'**
+  String get remKeepOnBody;
+
+  /// No description provided for @remTestTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরীক্ষামূলক নোটিফিকেশন'**
+  String get remTestTitle;
+
+  /// No description provided for @remTestBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডার ঠিকমতো কাজ করছে'**
+  String get remTestBody;
+
+  /// No description provided for @remPermTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডার চালু করুন'**
+  String get remPermTitle;
+
+  /// No description provided for @remPermWhy.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস শুরুর আগে এবং ফি আদায়ের দিনে আপনাকে মনে করিয়ে দিতে অ্যাপের নোটিফিকেশন পাঠানোর অনুমতি দরকার। আপনার তথ্য ফোনের বাইরে যায় না।'**
+  String get remPermWhy;
+
+  /// No description provided for @remPermAllow.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনুমতি দিন'**
+  String get remPermAllow;
+
+  /// No description provided for @remPermNotNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন নয়'**
+  String get remPermNotNow;
+
+  /// No description provided for @remPermDenied.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোটিফিকেশনের অনুমতি দেওয়া হয়নি, তাই রিমাইন্ডার পাঠানো যাবে না। ফোনের সেটিংস থেকে অনুমতি দিলে রিমাইন্ডার কাজ করবে।'**
+  String get remPermDenied;
+
+  /// No description provided for @remPermOpenSettings.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস খুলুন'**
+  String get remPermOpenSettings;
+
+  /// No description provided for @remPermGranted.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডার চালু হয়েছে'**
+  String get remPermGranted;
+
+  /// No description provided for @remTestSend.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরীক্ষামূলক নোটিফিকেশন পাঠান'**
+  String get remTestSend;
+
+  /// No description provided for @oemTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাটারি সেটিংস'**
+  String get oemTitle;
+
+  /// No description provided for @oemIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'কিছু ফোন ব্যাটারি বাঁচাতে অ্যাপ বন্ধ করে দেয়, তাতে রিমাইন্ডার আসে না। নিচের ধাপগুলো একবার করে নিন।'**
+  String get oemIntro;
+
+  /// No description provided for @oemDetected.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার ফোন: {maker}'**
+  String oemDetected(String maker);
+
+  /// No description provided for @oemMakerXiaomi.
+  ///
+  /// In bn, this message translates to:
+  /// **'Xiaomi / Redmi / POCO'**
+  String get oemMakerXiaomi;
+
+  /// No description provided for @oemMakerOppo.
+  ///
+  /// In bn, this message translates to:
+  /// **'Oppo / OnePlus'**
+  String get oemMakerOppo;
+
+  /// No description provided for @oemMakerVivo.
+  ///
+  /// In bn, this message translates to:
+  /// **'Vivo / iQOO'**
+  String get oemMakerVivo;
+
+  /// No description provided for @oemMakerRealme.
+  ///
+  /// In bn, this message translates to:
+  /// **'Realme'**
+  String get oemMakerRealme;
+
+  /// No description provided for @oemMakerSamsung.
+  ///
+  /// In bn, this message translates to:
+  /// **'Samsung'**
+  String get oemMakerSamsung;
+
+  /// No description provided for @oemMakerOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য ফোন'**
+  String get oemMakerOther;
+
+  /// No description provided for @oemStepsXiaomi.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস › অ্যাপস › অ্যাপ ম্যানেজ › টিউশন খাতা খুলুন\n“অটোস্টার্ট” চালু করুন\n“ব্যাটারি সেভার” থেকে “কোনো সীমাবদ্ধতা নেই” বেছে নিন'**
+  String get oemStepsXiaomi;
+
+  /// No description provided for @oemStepsOppo.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন'**
+  String get oemStepsOppo;
+
+  /// No description provided for @oemStepsVivo.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার › টিউশন খাতা খুলুন\n“উচ্চ ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার” অনুমোদন করুন\n“অটোস্টার্ট” চালু করুন'**
+  String get oemStepsVivo;
+
+  /// No description provided for @oemStepsRealme.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন'**
+  String get oemStepsRealme;
+
+  /// No description provided for @oemStepsSamsung.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড ব্যবহারের সীমা খুলুন\n“কখনো ঘুমায় না এমন অ্যাপ” তালিকায় টিউশন খাতা যোগ করুন'**
+  String get oemStepsSamsung;
+
+  /// No description provided for @oemStepsOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'সেটিংস › অ্যাপস › টিউশন খাতা › ব্যাটারি খুলুন\n“সীমাবদ্ধতা নেই” বা “অপ্টিমাইজ করবেন না” বেছে নিন'**
+  String get oemStepsOther;
+
+  /// No description provided for @oemOpenBattery.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাটারি সেটিংস খুলুন'**
+  String get oemOpenBattery;
+
+  /// No description provided for @oemDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'বুঝেছি'**
+  String get oemDone;
+
+  /// No description provided for @remHealth.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডারের অবস্থা'**
+  String get remHealth;
+
+  /// No description provided for @remHealthOff.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ আছে'**
+  String get remHealthOff;
+
+  /// No description provided for @remHealthBlocked.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোটিফিকেশন বন্ধ করা আছে'**
+  String get remHealthBlocked;
+
+  /// No description provided for @remHealthOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'ঠিক আছে — {count}টি রিমাইন্ডার নির্ধারিত'**
+  String remHealthOk(String count);
+
+  /// No description provided for @remHealthNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখন কোনো রিমাইন্ডার নির্ধারিত নেই'**
+  String get remHealthNone;
+
+  /// No description provided for @remHealthGuide.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাটারি গাইড দেখুন'**
+  String get remHealthGuide;
+
+  /// No description provided for @remHealthTapEnable.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালু করতে এখানে চাপুন'**
+  String get remHealthTapEnable;
+
+  /// No description provided for @remSettingsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডার'**
+  String get remSettingsTitle;
+
+  /// No description provided for @remMasterTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিমাইন্ডার'**
+  String get remMasterTitle;
+
+  /// No description provided for @remMasterHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস, ফি ও ব্যাকআপের কথা মনে করিয়ে দেবে'**
+  String get remMasterHint;
+
+  /// No description provided for @remClassOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস শুরুর আগে'**
+  String get remClassOn;
+
+  /// No description provided for @remMinutes.
+  ///
+  /// In bn, this message translates to:
+  /// **'{minutes} মিনিট আগে'**
+  String remMinutes(String minutes);
+
+  /// No description provided for @remFeeOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি আদায়ের দিনে'**
+  String get remFeeOn;
+
+  /// No description provided for @remAt.
+  ///
+  /// In bn, this message translates to:
+  /// **'সময়: {time}'**
+  String remAt(String time);
+
+  /// No description provided for @remWeeklyOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাপ্তাহিক বাকির হিসাব'**
+  String get remWeeklyOn;
+
+  /// No description provided for @remWeeklyWhen.
+  ///
+  /// In bn, this message translates to:
+  /// **'{day}, {time}'**
+  String remWeeklyWhen(String day, String time);
+
+  /// No description provided for @remBackupOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপের রিমাইন্ডার'**
+  String get remBackupOn;
+
+  /// No description provided for @remBackupAfter.
+  ///
+  /// In bn, this message translates to:
+  /// **'{days} দিনের বেশি পুরনো হলে'**
+  String remBackupAfter(String days);
+
+  /// No description provided for @remTestSent.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে'**
+  String get remTestSent;
 }
 
 class _AppLocalizationsDelegate

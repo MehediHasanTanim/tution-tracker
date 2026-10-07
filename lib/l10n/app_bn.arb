@@ -485,5 +485,152 @@
   "tutorSectionHint": "রসিদ ও শেয়ার করা বার্তায় দেখানো হবে",
   "tutorName": "শিক্ষকের নাম",
   "tutorInstitution": "প্রতিষ্ঠানের নাম",
-  "tutorPhone": "ফোন নম্বর"
+  "tutorPhone": "ফোন নম্বর",
+  "chClasses": "ক্লাসের রিমাইন্ডার",
+  "chClassesAbout": "ক্লাস শুরুর আগে মনে করিয়ে দেয়",
+  "chFees": "ফি-র রিমাইন্ডার",
+  "chFeesAbout": "যেদিন ফি আদায়ের দিন",
+  "chSummary": "সাপ্তাহিক সারসংক্ষেপ",
+  "chSummaryAbout": "সপ্তাহের বাকি টাকার হিসাব",
+  "chBackup": "ব্যাকআপ রিমাইন্ডার",
+  "chBackupAbout": "ব্যাকআপ নেওয়ার কথা মনে করায়",
+  "remClassTitle": "ক্লাস: {name}",
+  "@remClassTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "remClassBody": "শুরু {time}",
+  "@remClassBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remFeesTitle": "আজ {count} জনের ফি আদায়ের দিন",
+  "@remFeesTitle": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "remFeesBody": "মোট বাকি {amount}",
+  "@remFeesBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "remWeeklyTitle": "সাপ্তাহিক বাকির হিসাব",
+  "remWeeklyBody": "{count} জনের কাছে মোট {amount} বাকি",
+  "@remWeeklyBody": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "remBackupTitle": "ব্যাকআপ নেওয়ার সময় হয়েছে",
+  "remBackupBody": "তথ্য নিরাপদ রাখতে এখনই ব্যাকআপ নিন",
+  "remKeepOnTitle": "রিমাইন্ডার চালু রাখুন",
+  "remKeepOnBody": "পরবর্তী দুই সপ্তাহের রিমাইন্ডারের জন্য অ্যাপটি একবার খুলুন",
+  "remTestTitle": "পরীক্ষামূলক নোটিফিকেশন",
+  "remTestBody": "রিমাইন্ডার ঠিকমতো কাজ করছে",
+  "remPermTitle": "রিমাইন্ডার চালু করুন",
+  "remPermWhy": "ক্লাস শুরুর আগে এবং ফি আদায়ের দিনে আপনাকে মনে করিয়ে দিতে অ্যাপের নোটিফিকেশন পাঠানোর অনুমতি দরকার। আপনার তথ্য ফোনের বাইরে যায় না।",
+  "remPermAllow": "অনুমতি দিন",
+  "remPermNotNow": "এখন নয়",
+  "remPermDenied": "নোটিফিকেশনের অনুমতি দেওয়া হয়নি, তাই রিমাইন্ডার পাঠানো যাবে না। ফোনের সেটিংস থেকে অনুমতি দিলে রিমাইন্ডার কাজ করবে।",
+  "remPermOpenSettings": "সেটিংস খুলুন",
+  "remPermGranted": "রিমাইন্ডার চালু হয়েছে",
+  "remTestSend": "পরীক্ষামূলক নোটিফিকেশন পাঠান",
+  "oemTitle": "ব্যাটারি সেটিংস",
+  "oemIntro": "কিছু ফোন ব্যাটারি বাঁচাতে অ্যাপ বন্ধ করে দেয়, তাতে রিমাইন্ডার আসে না। নিচের ধাপগুলো একবার করে নিন।",
+  "oemDetected": "আপনার ফোন: {maker}",
+  "@oemDetected": {
+    "placeholders": {
+      "maker": {
+        "type": "String"
+      }
+    }
+  },
+  "oemMakerXiaomi": "Xiaomi / Redmi / POCO",
+  "oemMakerOppo": "Oppo / OnePlus",
+  "oemMakerVivo": "Vivo / iQOO",
+  "oemMakerRealme": "Realme",
+  "oemMakerSamsung": "Samsung",
+  "oemMakerOther": "অন্যান্য ফোন",
+  "oemStepsXiaomi": "সেটিংস › অ্যাপস › অ্যাপ ম্যানেজ › টিউশন খাতা খুলুন\n“অটোস্টার্ট” চালু করুন\n“ব্যাটারি সেভার” থেকে “কোনো সীমাবদ্ধতা নেই” বেছে নিন",
+  "oemStepsOppo": "সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন",
+  "oemStepsVivo": "সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার › টিউশন খাতা খুলুন\n“উচ্চ ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার” অনুমোদন করুন\n“অটোস্টার্ট” চালু করুন",
+  "oemStepsRealme": "সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন",
+  "oemStepsSamsung": "সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড ব্যবহারের সীমা খুলুন\n“কখনো ঘুমায় না এমন অ্যাপ” তালিকায় টিউশন খাতা যোগ করুন",
+  "oemStepsOther": "সেটিংস › অ্যাপস › টিউশন খাতা › ব্যাটারি খুলুন\n“সীমাবদ্ধতা নেই” বা “অপ্টিমাইজ করবেন না” বেছে নিন",
+  "oemOpenBattery": "ব্যাটারি সেটিংস খুলুন",
+  "oemDone": "বুঝেছি",
+  "remHealth": "রিমাইন্ডারের অবস্থা",
+  "remHealthOff": "বন্ধ আছে",
+  "remHealthBlocked": "নোটিফিকেশন বন্ধ করা আছে",
+  "remHealthOk": "ঠিক আছে — {count}টি রিমাইন্ডার নির্ধারিত",
+  "@remHealthOk": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "remHealthNone": "এখন কোনো রিমাইন্ডার নির্ধারিত নেই",
+  "remHealthGuide": "ব্যাটারি গাইড দেখুন",
+  "remHealthTapEnable": "চালু করতে এখানে চাপুন",
+  "remSettingsTitle": "রিমাইন্ডার",
+  "remMasterTitle": "রিমাইন্ডার",
+  "remMasterHint": "ক্লাস, ফি ও ব্যাকআপের কথা মনে করিয়ে দেবে",
+  "remClassOn": "ক্লাস শুরুর আগে",
+  "remMinutes": "{minutes} মিনিট আগে",
+  "@remMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "remFeeOn": "ফি আদায়ের দিনে",
+  "remAt": "সময়: {time}",
+  "@remAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remWeeklyOn": "সাপ্তাহিক বাকির হিসাব",
+  "remWeeklyWhen": "{day}, {time}",
+  "@remWeeklyWhen": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remBackupOn": "ব্যাকআপের রিমাইন্ডার",
+  "remBackupAfter": "{days} দিনের বেশি পুরনো হলে",
+  "@remBackupAfter": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "remTestSent": "পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে"
 }

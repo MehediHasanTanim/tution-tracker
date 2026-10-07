@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/theme/app_theme.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
+import 'package:tution_tracker/features/reminders/data/reminder_coordinator.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 import 'package:tution_tracker/router.dart';
 
@@ -32,6 +33,7 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     unawaited(_generateDues());
+    unawaited(ref.read(reminderCoordinatorProvider).start());
   }
 
   @override
@@ -43,7 +45,10 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // A new month may have started while the app was in the background.
-    if (state == AppLifecycleState.resumed) unawaited(_generateDues());
+    if (state == AppLifecycleState.resumed) {
+      unawaited(_generateDues());
+      unawaited(ref.read(reminderCoordinatorProvider).refresh());
+    }
   }
 
   /// Fills in any dues that are missing up to this month (design 7.1). Safe

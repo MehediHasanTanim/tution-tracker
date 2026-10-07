@@ -890,4 +890,228 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get tutorPhone => 'ফোন নম্বর';
+
+  @override
+  String get chClasses => 'ক্লাসের রিমাইন্ডার';
+
+  @override
+  String get chClassesAbout => 'ক্লাস শুরুর আগে মনে করিয়ে দেয়';
+
+  @override
+  String get chFees => 'ফি-র রিমাইন্ডার';
+
+  @override
+  String get chFeesAbout => 'যেদিন ফি আদায়ের দিন';
+
+  @override
+  String get chSummary => 'সাপ্তাহিক সারসংক্ষেপ';
+
+  @override
+  String get chSummaryAbout => 'সপ্তাহের বাকি টাকার হিসাব';
+
+  @override
+  String get chBackup => 'ব্যাকআপ রিমাইন্ডার';
+
+  @override
+  String get chBackupAbout => 'ব্যাকআপ নেওয়ার কথা মনে করায়';
+
+  @override
+  String remClassTitle(String name) {
+    return 'ক্লাস: $name';
+  }
+
+  @override
+  String remClassBody(String time) {
+    return 'শুরু $time';
+  }
+
+  @override
+  String remFeesTitle(String count) {
+    return 'আজ $count জনের ফি আদায়ের দিন';
+  }
+
+  @override
+  String remFeesBody(String amount) {
+    return 'মোট বাকি $amount';
+  }
+
+  @override
+  String get remWeeklyTitle => 'সাপ্তাহিক বাকির হিসাব';
+
+  @override
+  String remWeeklyBody(String count, String amount) {
+    return '$count জনের কাছে মোট $amount বাকি';
+  }
+
+  @override
+  String get remBackupTitle => 'ব্যাকআপ নেওয়ার সময় হয়েছে';
+
+  @override
+  String get remBackupBody => 'তথ্য নিরাপদ রাখতে এখনই ব্যাকআপ নিন';
+
+  @override
+  String get remKeepOnTitle => 'রিমাইন্ডার চালু রাখুন';
+
+  @override
+  String get remKeepOnBody =>
+      'পরবর্তী দুই সপ্তাহের রিমাইন্ডারের জন্য অ্যাপটি একবার খুলুন';
+
+  @override
+  String get remTestTitle => 'পরীক্ষামূলক নোটিফিকেশন';
+
+  @override
+  String get remTestBody => 'রিমাইন্ডার ঠিকমতো কাজ করছে';
+
+  @override
+  String get remPermTitle => 'রিমাইন্ডার চালু করুন';
+
+  @override
+  String get remPermWhy =>
+      'ক্লাস শুরুর আগে এবং ফি আদায়ের দিনে আপনাকে মনে করিয়ে দিতে অ্যাপের নোটিফিকেশন পাঠানোর অনুমতি দরকার। আপনার তথ্য ফোনের বাইরে যায় না।';
+
+  @override
+  String get remPermAllow => 'অনুমতি দিন';
+
+  @override
+  String get remPermNotNow => 'এখন নয়';
+
+  @override
+  String get remPermDenied =>
+      'নোটিফিকেশনের অনুমতি দেওয়া হয়নি, তাই রিমাইন্ডার পাঠানো যাবে না। ফোনের সেটিংস থেকে অনুমতি দিলে রিমাইন্ডার কাজ করবে।';
+
+  @override
+  String get remPermOpenSettings => 'সেটিংস খুলুন';
+
+  @override
+  String get remPermGranted => 'রিমাইন্ডার চালু হয়েছে';
+
+  @override
+  String get remTestSend => 'পরীক্ষামূলক নোটিফিকেশন পাঠান';
+
+  @override
+  String get oemTitle => 'ব্যাটারি সেটিংস';
+
+  @override
+  String get oemIntro =>
+      'কিছু ফোন ব্যাটারি বাঁচাতে অ্যাপ বন্ধ করে দেয়, তাতে রিমাইন্ডার আসে না। নিচের ধাপগুলো একবার করে নিন।';
+
+  @override
+  String oemDetected(String maker) {
+    return 'আপনার ফোন: $maker';
+  }
+
+  @override
+  String get oemMakerXiaomi => 'Xiaomi / Redmi / POCO';
+
+  @override
+  String get oemMakerOppo => 'Oppo / OnePlus';
+
+  @override
+  String get oemMakerVivo => 'Vivo / iQOO';
+
+  @override
+  String get oemMakerRealme => 'Realme';
+
+  @override
+  String get oemMakerSamsung => 'Samsung';
+
+  @override
+  String get oemMakerOther => 'অন্যান্য ফোন';
+
+  @override
+  String get oemStepsXiaomi =>
+      'সেটিংস › অ্যাপস › অ্যাপ ম্যানেজ › টিউশন খাতা খুলুন\n“অটোস্টার্ট” চালু করুন\n“ব্যাটারি সেভার” থেকে “কোনো সীমাবদ্ধতা নেই” বেছে নিন';
+
+  @override
+  String get oemStepsOppo =>
+      'সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন';
+
+  @override
+  String get oemStepsVivo =>
+      'সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার › টিউশন খাতা খুলুন\n“উচ্চ ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার” অনুমোদন করুন\n“অটোস্টার্ট” চালু করুন';
+
+  @override
+  String get oemStepsRealme =>
+      'সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন';
+
+  @override
+  String get oemStepsSamsung =>
+      'সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড ব্যবহারের সীমা খুলুন\n“কখনো ঘুমায় না এমন অ্যাপ” তালিকায় টিউশন খাতা যোগ করুন';
+
+  @override
+  String get oemStepsOther =>
+      'সেটিংস › অ্যাপস › টিউশন খাতা › ব্যাটারি খুলুন\n“সীমাবদ্ধতা নেই” বা “অপ্টিমাইজ করবেন না” বেছে নিন';
+
+  @override
+  String get oemOpenBattery => 'ব্যাটারি সেটিংস খুলুন';
+
+  @override
+  String get oemDone => 'বুঝেছি';
+
+  @override
+  String get remHealth => 'রিমাইন্ডারের অবস্থা';
+
+  @override
+  String get remHealthOff => 'বন্ধ আছে';
+
+  @override
+  String get remHealthBlocked => 'নোটিফিকেশন বন্ধ করা আছে';
+
+  @override
+  String remHealthOk(String count) {
+    return 'ঠিক আছে — $countটি রিমাইন্ডার নির্ধারিত';
+  }
+
+  @override
+  String get remHealthNone => 'এখন কোনো রিমাইন্ডার নির্ধারিত নেই';
+
+  @override
+  String get remHealthGuide => 'ব্যাটারি গাইড দেখুন';
+
+  @override
+  String get remHealthTapEnable => 'চালু করতে এখানে চাপুন';
+
+  @override
+  String get remSettingsTitle => 'রিমাইন্ডার';
+
+  @override
+  String get remMasterTitle => 'রিমাইন্ডার';
+
+  @override
+  String get remMasterHint => 'ক্লাস, ফি ও ব্যাকআপের কথা মনে করিয়ে দেবে';
+
+  @override
+  String get remClassOn => 'ক্লাস শুরুর আগে';
+
+  @override
+  String remMinutes(String minutes) {
+    return '$minutes মিনিট আগে';
+  }
+
+  @override
+  String get remFeeOn => 'ফি আদায়ের দিনে';
+
+  @override
+  String remAt(String time) {
+    return 'সময়: $time';
+  }
+
+  @override
+  String get remWeeklyOn => 'সাপ্তাহিক বাকির হিসাব';
+
+  @override
+  String remWeeklyWhen(String day, String time) {
+    return '$day, $time';
+  }
+
+  @override
+  String get remBackupOn => 'ব্যাকআপের রিমাইন্ডার';
+
+  @override
+  String remBackupAfter(String days) {
+    return '$days দিনের বেশি পুরনো হলে';
+  }
+
+  @override
+  String get remTestSent => 'পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে';
 }

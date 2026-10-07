@@ -10,6 +10,9 @@ import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
 import 'package:tution_tracker/features/receipts/presentation/receipt_screen.dart';
+import 'package:tution_tracker/features/reminders/presentation/battery_guide_screen.dart';
+import 'package:tution_tracker/features/reminders/presentation/reminder_permission_screen.dart';
+import 'package:tution_tracker/features/reminders/presentation/reminders_settings_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
 import 'package:tution_tracker/features/settings/presentation/settings_screen.dart';
 import 'package:tution_tracker/features/students/presentation/student_form_screen.dart';
@@ -132,7 +135,30 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
             routes: [tab(AppRoutes.reports, const ReportsScreen())],
           ),
           StatefulShellBranch(
-            routes: [tab(AppRoutes.settings, const SettingsScreen())],
+            routes: [
+              GoRoute(
+                path: AppRoutes.settings,
+                builder: (context, state) => const SettingsScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'reminders',
+                    builder: (context, state) =>
+                        const RemindersSettingsScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'permission',
+                        builder: (context, state) =>
+                            const ReminderPermissionScreen(),
+                      ),
+                      GoRoute(
+                        path: 'battery',
+                        builder: (context, state) => const BatteryGuideScreen(),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),

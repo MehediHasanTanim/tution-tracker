@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
+import 'package:tution_tracker/core/settings/setting_key.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_store.dart';
 
@@ -31,3 +32,24 @@ final tutorProfileProvider = StreamProvider<TutorProfile>((ref) async* {
     );
   }
 });
+
+/// Any setting, live. Key instances come from `SettingKeys`, so the family
+/// shares one stream per setting.
+final settingValueProvider = StreamProvider.autoDispose
+    .family<Object?, SettingKey<Object?>>((ref, key) async* {
+      final store = await ref.watch(settingsStoreProvider.future);
+      yield* store.watch(key);
+    });
+
+/// Changes a setting. The write goes through the same store the rest of the
+/// app reads, so every watcher updates at once.
+Future<void> writeSetting<T>(WidgetRef ref, SettingKey<T> key, T value) async {
+  final store = await ref.read(settingsStoreProvider.future);
+  await store.set(key, value);
+}
+
+extension WatchSetting on WidgetRef {
+  /// The setting's current value, or its default until it has loaded.
+  T watchSetting<T>(SettingKey<T> key) =>
+      (watch(settingValueProvider(key)).value as T?) ?? key.defaultValue;
+}
