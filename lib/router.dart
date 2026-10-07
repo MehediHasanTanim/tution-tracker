@@ -6,6 +6,7 @@ import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
 import 'package:tution_tracker/features/settings/presentation/settings_screen.dart';
+import 'package:tution_tracker/features/students/presentation/student_form_screen.dart';
 import 'package:tution_tracker/features/students/presentation/student_placeholders.dart';
 import 'package:tution_tracker/features/students/presentation/students_screen.dart';
 
@@ -40,13 +41,21 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                   // `new` must come before `:id` so it is not read as an id.
                   GoRoute(
                     path: 'new',
-                    builder: (context, state) => const StudentFormPlaceholder(),
+                    builder: (context, state) => const StudentFormScreen(),
                   ),
                   GoRoute(
                     path: ':id',
                     builder: (context, state) => StudentProfilePlaceholder(
                       studentId: state.pathParameters['id']!,
                     ),
+                    routes: [
+                      GoRoute(
+                        path: 'edit',
+                        builder: (context, state) => StudentFormScreen(
+                          studentId: state.pathParameters['id'],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

@@ -112,6 +112,28 @@ class Students extends Table with TableInfo<Students, Student> {
     requiredDuringInsert: false,
     $customConstraints: '',
   );
+  static const VerificationMeta _classDaysMeta = const VerificationMeta(
+    'classDays',
+  );
+  late final GeneratedColumn<String> classDays = GeneratedColumn<String>(
+    'class_days',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _classTimeMeta = const VerificationMeta(
+    'classTime',
+  );
+  late final GeneratedColumn<String> classTime = GeneratedColumn<String>(
+    'class_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
   static const VerificationMeta _joinedOnMeta = const VerificationMeta(
     'joinedOn',
   );
@@ -200,6 +222,8 @@ class Students extends Table with TableInfo<Students, Student> {
     address,
     photoPath,
     subjects,
+    classDays,
+    classTime,
     joinedOn,
     status,
     monthlyFee,
@@ -288,6 +312,18 @@ class Students extends Table with TableInfo<Students, Student> {
       context.handle(
         _subjectsMeta,
         subjects.isAcceptableOrUnknown(data['subjects']!, _subjectsMeta),
+      );
+    }
+    if (data.containsKey('class_days')) {
+      context.handle(
+        _classDaysMeta,
+        classDays.isAcceptableOrUnknown(data['class_days']!, _classDaysMeta),
+      );
+    }
+    if (data.containsKey('class_time')) {
+      context.handle(
+        _classTimeMeta,
+        classTime.isAcceptableOrUnknown(data['class_time']!, _classTimeMeta),
       );
     }
     if (data.containsKey('joined_on')) {
@@ -389,6 +425,14 @@ class Students extends Table with TableInfo<Students, Student> {
         DriftSqlType.string,
         data['${effectivePrefix}subjects'],
       ),
+      classDays: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}class_days'],
+      ),
+      classTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}class_time'],
+      ),
       joinedOn: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}joined_on'],
@@ -442,6 +486,12 @@ class Student extends DataClass implements Insertable<Student> {
   final String? subjects;
 
   /// JSON array
+  final String? classDays;
+
+  /// JSON [1,3,5] ISO weekdays (one-to-one classes)
+  final String? classTime;
+
+  /// HH:mm
   final String joinedOn;
   final String status;
   final int monthlyFee;
@@ -460,6 +510,8 @@ class Student extends DataClass implements Insertable<Student> {
     this.address,
     this.photoPath,
     this.subjects,
+    this.classDays,
+    this.classTime,
     required this.joinedOn,
     required this.status,
     required this.monthlyFee,
@@ -496,6 +548,12 @@ class Student extends DataClass implements Insertable<Student> {
     }
     if (!nullToAbsent || subjects != null) {
       map['subjects'] = Variable<String>(subjects);
+    }
+    if (!nullToAbsent || classDays != null) {
+      map['class_days'] = Variable<String>(classDays);
+    }
+    if (!nullToAbsent || classTime != null) {
+      map['class_time'] = Variable<String>(classTime);
     }
     map['joined_on'] = Variable<String>(joinedOn);
     map['status'] = Variable<String>(status);
@@ -537,6 +595,12 @@ class Student extends DataClass implements Insertable<Student> {
       subjects: subjects == null && nullToAbsent
           ? const Value.absent()
           : Value(subjects),
+      classDays: classDays == null && nullToAbsent
+          ? const Value.absent()
+          : Value(classDays),
+      classTime: classTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(classTime),
       joinedOn: Value(joinedOn),
       status: Value(status),
       monthlyFee: Value(monthlyFee),
@@ -565,6 +629,8 @@ class Student extends DataClass implements Insertable<Student> {
       address: serializer.fromJson<String?>(json['address']),
       photoPath: serializer.fromJson<String?>(json['photo_path']),
       subjects: serializer.fromJson<String?>(json['subjects']),
+      classDays: serializer.fromJson<String?>(json['class_days']),
+      classTime: serializer.fromJson<String?>(json['class_time']),
       joinedOn: serializer.fromJson<String>(json['joined_on']),
       status: serializer.fromJson<String>(json['status']),
       monthlyFee: serializer.fromJson<int>(json['monthly_fee']),
@@ -588,6 +654,8 @@ class Student extends DataClass implements Insertable<Student> {
       'address': serializer.toJson<String?>(address),
       'photo_path': serializer.toJson<String?>(photoPath),
       'subjects': serializer.toJson<String?>(subjects),
+      'class_days': serializer.toJson<String?>(classDays),
+      'class_time': serializer.toJson<String?>(classTime),
       'joined_on': serializer.toJson<String>(joinedOn),
       'status': serializer.toJson<String>(status),
       'monthly_fee': serializer.toJson<int>(monthlyFee),
@@ -609,6 +677,8 @@ class Student extends DataClass implements Insertable<Student> {
     Value<String?> address = const Value.absent(),
     Value<String?> photoPath = const Value.absent(),
     Value<String?> subjects = const Value.absent(),
+    Value<String?> classDays = const Value.absent(),
+    Value<String?> classTime = const Value.absent(),
     String? joinedOn,
     String? status,
     int? monthlyFee,
@@ -629,6 +699,8 @@ class Student extends DataClass implements Insertable<Student> {
     address: address.present ? address.value : this.address,
     photoPath: photoPath.present ? photoPath.value : this.photoPath,
     subjects: subjects.present ? subjects.value : this.subjects,
+    classDays: classDays.present ? classDays.value : this.classDays,
+    classTime: classTime.present ? classTime.value : this.classTime,
     joinedOn: joinedOn ?? this.joinedOn,
     status: status ?? this.status,
     monthlyFee: monthlyFee ?? this.monthlyFee,
@@ -657,6 +729,8 @@ class Student extends DataClass implements Insertable<Student> {
       address: data.address.present ? data.address.value : this.address,
       photoPath: data.photoPath.present ? data.photoPath.value : this.photoPath,
       subjects: data.subjects.present ? data.subjects.value : this.subjects,
+      classDays: data.classDays.present ? data.classDays.value : this.classDays,
+      classTime: data.classTime.present ? data.classTime.value : this.classTime,
       joinedOn: data.joinedOn.present ? data.joinedOn.value : this.joinedOn,
       status: data.status.present ? data.status.value : this.status,
       monthlyFee: data.monthlyFee.present
@@ -682,6 +756,8 @@ class Student extends DataClass implements Insertable<Student> {
           ..write('address: $address, ')
           ..write('photoPath: $photoPath, ')
           ..write('subjects: $subjects, ')
+          ..write('classDays: $classDays, ')
+          ..write('classTime: $classTime, ')
           ..write('joinedOn: $joinedOn, ')
           ..write('status: $status, ')
           ..write('monthlyFee: $monthlyFee, ')
@@ -705,6 +781,8 @@ class Student extends DataClass implements Insertable<Student> {
     address,
     photoPath,
     subjects,
+    classDays,
+    classTime,
     joinedOn,
     status,
     monthlyFee,
@@ -727,6 +805,8 @@ class Student extends DataClass implements Insertable<Student> {
           other.address == this.address &&
           other.photoPath == this.photoPath &&
           other.subjects == this.subjects &&
+          other.classDays == this.classDays &&
+          other.classTime == this.classTime &&
           other.joinedOn == this.joinedOn &&
           other.status == this.status &&
           other.monthlyFee == this.monthlyFee &&
@@ -747,6 +827,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
   final Value<String?> address;
   final Value<String?> photoPath;
   final Value<String?> subjects;
+  final Value<String?> classDays;
+  final Value<String?> classTime;
   final Value<String> joinedOn;
   final Value<String> status;
   final Value<int> monthlyFee;
@@ -766,6 +848,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     this.address = const Value.absent(),
     this.photoPath = const Value.absent(),
     this.subjects = const Value.absent(),
+    this.classDays = const Value.absent(),
+    this.classTime = const Value.absent(),
     this.joinedOn = const Value.absent(),
     this.status = const Value.absent(),
     this.monthlyFee = const Value.absent(),
@@ -786,6 +870,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     this.address = const Value.absent(),
     this.photoPath = const Value.absent(),
     this.subjects = const Value.absent(),
+    this.classDays = const Value.absent(),
+    this.classTime = const Value.absent(),
     required String joinedOn,
     this.status = const Value.absent(),
     required int monthlyFee,
@@ -811,6 +897,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     Expression<String>? address,
     Expression<String>? photoPath,
     Expression<String>? subjects,
+    Expression<String>? classDays,
+    Expression<String>? classTime,
     Expression<String>? joinedOn,
     Expression<String>? status,
     Expression<int>? monthlyFee,
@@ -831,6 +919,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
       if (address != null) 'address': address,
       if (photoPath != null) 'photo_path': photoPath,
       if (subjects != null) 'subjects': subjects,
+      if (classDays != null) 'class_days': classDays,
+      if (classTime != null) 'class_time': classTime,
       if (joinedOn != null) 'joined_on': joinedOn,
       if (status != null) 'status': status,
       if (monthlyFee != null) 'monthly_fee': monthlyFee,
@@ -853,6 +943,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     Value<String?>? address,
     Value<String?>? photoPath,
     Value<String?>? subjects,
+    Value<String?>? classDays,
+    Value<String?>? classTime,
     Value<String>? joinedOn,
     Value<String>? status,
     Value<int>? monthlyFee,
@@ -873,6 +965,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
       address: address ?? this.address,
       photoPath: photoPath ?? this.photoPath,
       subjects: subjects ?? this.subjects,
+      classDays: classDays ?? this.classDays,
+      classTime: classTime ?? this.classTime,
       joinedOn: joinedOn ?? this.joinedOn,
       status: status ?? this.status,
       monthlyFee: monthlyFee ?? this.monthlyFee,
@@ -917,6 +1011,12 @@ class StudentsCompanion extends UpdateCompanion<Student> {
     if (subjects.present) {
       map['subjects'] = Variable<String>(subjects.value);
     }
+    if (classDays.present) {
+      map['class_days'] = Variable<String>(classDays.value);
+    }
+    if (classTime.present) {
+      map['class_time'] = Variable<String>(classTime.value);
+    }
     if (joinedOn.present) {
       map['joined_on'] = Variable<String>(joinedOn.value);
     }
@@ -957,6 +1057,8 @@ class StudentsCompanion extends UpdateCompanion<Student> {
           ..write('address: $address, ')
           ..write('photoPath: $photoPath, ')
           ..write('subjects: $subjects, ')
+          ..write('classDays: $classDays, ')
+          ..write('classTime: $classTime, ')
           ..write('joinedOn: $joinedOn, ')
           ..write('status: $status, ')
           ..write('monthlyFee: $monthlyFee, ')
@@ -6182,6 +6284,8 @@ typedef $StudentsCreateCompanionBuilder = StudentsCompanion Function({
   Value<String?> address,
   Value<String?> photoPath,
   Value<String?> subjects,
+  Value<String?> classDays,
+  Value<String?> classTime,
   required String joinedOn,
   Value<String> status,
   required int monthlyFee,
@@ -6202,6 +6306,8 @@ typedef $StudentsUpdateCompanionBuilder = StudentsCompanion Function({
   Value<String?> address,
   Value<String?> photoPath,
   Value<String?> subjects,
+  Value<String?> classDays,
+  Value<String?> classTime,
   Value<String> joinedOn,
   Value<String> status,
   Value<int> monthlyFee,
@@ -6423,6 +6529,16 @@ class $StudentsFilterComposer extends Composer<_$AppDatabase, Students> {
 
   ColumnFilters<String> get subjects => $composableBuilder(
     column: $table.subjects,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get classDays => $composableBuilder(
+    column: $table.classDays,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get classTime => $composableBuilder(
+    column: $table.classTime,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6720,6 +6836,16 @@ class $StudentsOrderingComposer extends Composer<_$AppDatabase, Students> {
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get classDays => $composableBuilder(
+    column: $table.classDays,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get classTime => $composableBuilder(
+    column: $table.classTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get joinedOn => $composableBuilder(
     column: $table.joinedOn,
     builder: (column) => ColumnOrderings(column),
@@ -6801,6 +6927,12 @@ class $StudentsAnnotationComposer extends Composer<_$AppDatabase, Students> {
 
   GeneratedColumn<String> get subjects =>
       $composableBuilder(column: $table.subjects, builder: (column) => column);
+
+  GeneratedColumn<String> get classDays =>
+      $composableBuilder(column: $table.classDays, builder: (column) => column);
+
+  GeneratedColumn<String> get classTime =>
+      $composableBuilder(column: $table.classTime, builder: (column) => column);
 
   GeneratedColumn<String> get joinedOn =>
       $composableBuilder(column: $table.joinedOn, builder: (column) => column);
@@ -7073,6 +7205,8 @@ class $StudentsTableManager
                 Value<String?> address = const Value.absent(),
                 Value<String?> photoPath = const Value.absent(),
                 Value<String?> subjects = const Value.absent(),
+                Value<String?> classDays = const Value.absent(),
+                Value<String?> classTime = const Value.absent(),
                 Value<String> joinedOn = const Value.absent(),
                 Value<String> status = const Value.absent(),
                 Value<int> monthlyFee = const Value.absent(),
@@ -7092,6 +7226,8 @@ class $StudentsTableManager
                 address: address,
                 photoPath: photoPath,
                 subjects: subjects,
+                classDays: classDays,
+                classTime: classTime,
                 joinedOn: joinedOn,
                 status: status,
                 monthlyFee: monthlyFee,
@@ -7113,6 +7249,8 @@ class $StudentsTableManager
                 Value<String?> address = const Value.absent(),
                 Value<String?> photoPath = const Value.absent(),
                 Value<String?> subjects = const Value.absent(),
+                Value<String?> classDays = const Value.absent(),
+                Value<String?> classTime = const Value.absent(),
                 required String joinedOn,
                 Value<String> status = const Value.absent(),
                 required int monthlyFee,
@@ -7132,6 +7270,8 @@ class $StudentsTableManager
                 address: address,
                 photoPath: photoPath,
                 subjects: subjects,
+                classDays: classDays,
+                classTime: classTime,
                 joinedOn: joinedOn,
                 status: status,
                 monthlyFee: monthlyFee,

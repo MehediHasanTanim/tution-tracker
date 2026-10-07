@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
+import 'package:tution_tracker/core/dates/clock_time.dart';
 import 'package:tution_tracker/core/dates/year_month.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/digits.dart';
@@ -18,6 +19,18 @@ extension StudentRow on Student {
     final raw = subjects;
     if (raw == null || raw.isEmpty) return const [];
     return (jsonDecode(raw) as List<dynamic>).cast<String>();
+  }
+
+  /// ISO weekdays of the student's own classes, ascending.
+  List<int> get classDayList {
+    final raw = classDays;
+    if (raw == null || raw.isEmpty) return const [];
+    return (jsonDecode(raw) as List<dynamic>).cast<int>();
+  }
+
+  ClockTime? get classTimeValue {
+    final raw = classTime;
+    return raw == null ? null : ClockTime.parse(raw);
   }
 }
 
@@ -60,6 +73,8 @@ class StudentRepository {
               address: Value(_text(draft.address)),
               photoPath: Value(draft.photoPath),
               subjects: Value(_subjects(draft.subjects)),
+              classDays: Value(_days(draft.classDays)),
+              classTime: Value(draft.classTime?.toKey()),
               notes: Value(_text(draft.notes)),
               createdAt: ts,
               updatedAt: ts,
@@ -98,6 +113,8 @@ class StudentRepository {
             address: Value(_text(draft.address)),
             photoPath: Value(draft.photoPath),
             subjects: Value(_subjects(draft.subjects)),
+            classDays: Value(_days(draft.classDays)),
+            classTime: Value(draft.classTime?.toKey()),
             notes: Value(_text(draft.notes)),
             updatedAt: Value(_timestamp),
           ),
@@ -245,6 +262,11 @@ class StudentRepository {
   String? _phone(String? value) {
     if (value == null || value.trim().isEmpty) return null;
     return parseBdPhone(value)!.local;
+  }
+
+  String? _days(List<int> days) {
+    final cleaned = ({...days}.where((d) => d >= 1 && d <= 7).toList())..sort();
+    return cleaned.isEmpty ? null : jsonEncode(cleaned);
   }
 
   String? _subjects(List<String> subjects) {

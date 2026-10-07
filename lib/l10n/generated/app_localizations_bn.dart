@@ -93,4 +93,82 @@ class AppLocalizationsBn extends AppLocalizations {
   String studentFeePerMonth(String amount) {
     return '$amount / মাস';
   }
+
+  @override
+  String get studentEditTitle => 'শিক্ষার্থী সম্পাদনা';
+
+  @override
+  String get fieldName => 'নাম';
+
+  @override
+  String get fieldMonthlyFee => 'মাসিক ফি (৳)';
+
+  @override
+  String get feeLockedHint => 'ফি পরিবর্তন করতে ফি সমন্বয় ব্যবহার করুন';
+
+  @override
+  String get moreDetails => 'আরও তথ্য যোগ করুন';
+
+  @override
+  String get fewerDetails => 'কম তথ্য দেখান';
+
+  @override
+  String get fieldDueDay => 'ফি দেওয়ার দিন (মাসের তারিখ)';
+
+  @override
+  String get fieldClassLevel => 'শ্রেণি';
+
+  @override
+  String get fieldSchool => 'স্কুল / প্রতিষ্ঠান';
+
+  @override
+  String get fieldGuardianName => 'অভিভাবকের নাম';
+
+  @override
+  String get fieldGuardianPhone => 'অভিভাবকের ফোন';
+
+  @override
+  String get fieldStudentPhone => 'শিক্ষার্থীর ফোন';
+
+  @override
+  String get fieldAddress => 'ঠিকানা / এলাকা';
+
+  @override
+  String get fieldSubjects => 'বিষয়';
+
+  @override
+  String get fieldOtherSubject => 'অন্য বিষয় যোগ করুন';
+
+  @override
+  String get fieldJoinedOn => 'ভর্তির তারিখ';
+
+  @override
+  String get fieldClassDays => 'ক্লাসের দিন';
+
+  @override
+  String get fieldClassTime => 'ক্লাসের সময়';
+
+  @override
+  String get fieldNotes => 'নোট';
+
+  @override
+  String get actionSave => 'সংরক্ষণ করুন';
+
+  @override
+  String get actionClear => 'মুছুন';
+
+  @override
+  String get errorNameRequired => 'নাম লিখুন';
+
+  @override
+  String get errorFeeRequired => 'মাসিক ফি লিখুন';
+
+  @override
+  String get errorPhoneInvalid => 'সঠিক মোবাইল নম্বর দিন (যেমন ০১৭১২৩৪৫৬৭৮)';
+
+  @override
+  String get studentSaved => 'শিক্ষার্থী সংরক্ষিত হয়েছে';
+
+  @override
+  String get none => 'নেই';
 }

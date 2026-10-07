@@ -89,6 +89,22 @@ class Students extends Table with TableInfo {
     requiredDuringInsert: false,
     $customConstraints: '',
   );
+  late final GeneratedColumn<String> classDays = GeneratedColumn<String>(
+    'class_days',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  late final GeneratedColumn<String> classTime = GeneratedColumn<String>(
+    'class_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
   late final GeneratedColumn<String> joinedOn = GeneratedColumn<String>(
     'joined_on',
     aliasedName,
@@ -160,6 +176,8 @@ class Students extends Table with TableInfo {
     address,
     photoPath,
     subjects,
+    classDays,
+    classTime,
     joinedOn,
     status,
     monthlyFee,

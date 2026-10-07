@@ -259,6 +259,162 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'{amount} / মাস'**
   String studentFeePerMonth(String amount);
+
+  /// No description provided for @studentEditTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী সম্পাদনা'**
+  String get studentEditTitle;
+
+  /// No description provided for @fieldName.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম'**
+  String get fieldName;
+
+  /// No description provided for @fieldMonthlyFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসিক ফি (৳)'**
+  String get fieldMonthlyFee;
+
+  /// No description provided for @feeLockedHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি পরিবর্তন করতে ফি সমন্বয় ব্যবহার করুন'**
+  String get feeLockedHint;
+
+  /// No description provided for @moreDetails.
+  ///
+  /// In bn, this message translates to:
+  /// **'আরও তথ্য যোগ করুন'**
+  String get moreDetails;
+
+  /// No description provided for @fewerDetails.
+  ///
+  /// In bn, this message translates to:
+  /// **'কম তথ্য দেখান'**
+  String get fewerDetails;
+
+  /// No description provided for @fieldDueDay.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি দেওয়ার দিন (মাসের তারিখ)'**
+  String get fieldDueDay;
+
+  /// No description provided for @fieldClassLevel.
+  ///
+  /// In bn, this message translates to:
+  /// **'শ্রেণি'**
+  String get fieldClassLevel;
+
+  /// No description provided for @fieldSchool.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্কুল / প্রতিষ্ঠান'**
+  String get fieldSchool;
+
+  /// No description provided for @fieldGuardianName.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবকের নাম'**
+  String get fieldGuardianName;
+
+  /// No description provided for @fieldGuardianPhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবকের ফোন'**
+  String get fieldGuardianPhone;
+
+  /// No description provided for @fieldStudentPhone.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীর ফোন'**
+  String get fieldStudentPhone;
+
+  /// No description provided for @fieldAddress.
+  ///
+  /// In bn, this message translates to:
+  /// **'ঠিকানা / এলাকা'**
+  String get fieldAddress;
+
+  /// No description provided for @fieldSubjects.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিষয়'**
+  String get fieldSubjects;
+
+  /// No description provided for @fieldOtherSubject.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য বিষয় যোগ করুন'**
+  String get fieldOtherSubject;
+
+  /// No description provided for @fieldJoinedOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভর্তির তারিখ'**
+  String get fieldJoinedOn;
+
+  /// No description provided for @fieldClassDays.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাসের দিন'**
+  String get fieldClassDays;
+
+  /// No description provided for @fieldClassTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাসের সময়'**
+  String get fieldClassTime;
+
+  /// No description provided for @fieldNotes.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোট'**
+  String get fieldNotes;
+
+  /// No description provided for @actionSave.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংরক্ষণ করুন'**
+  String get actionSave;
+
+  /// No description provided for @actionClear.
+  ///
+  /// In bn, this message translates to:
+  /// **'মুছুন'**
+  String get actionClear;
+
+  /// No description provided for @errorNameRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম লিখুন'**
+  String get errorNameRequired;
+
+  /// No description provided for @errorFeeRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসিক ফি লিখুন'**
+  String get errorFeeRequired;
+
+  /// No description provided for @errorPhoneInvalid.
+  ///
+  /// In bn, this message translates to:
+  /// **'সঠিক মোবাইল নম্বর দিন (যেমন ০১৭১২৩৪৫৬৭৮)'**
+  String get errorPhoneInvalid;
+
+  /// No description provided for @studentSaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী সংরক্ষিত হয়েছে'**
+  String get studentSaved;
+
+  /// No description provided for @none.
+  ///
+  /// In bn, this message translates to:
+  /// **'নেই'**
+  String get none;
 }
 
 class _AppLocalizationsDelegate

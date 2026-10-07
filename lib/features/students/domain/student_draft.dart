@@ -1,3 +1,4 @@
+import 'package:tution_tracker/core/dates/clock_time.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/i18n/text_normalizer.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
@@ -25,6 +26,8 @@ class StudentDraft {
     this.address,
     this.photoPath,
     this.subjects = const [],
+    this.classDays = const [],
+    this.classTime,
     this.notes,
   });
 
@@ -42,6 +45,8 @@ class StudentDraft {
        address = null,
        photoPath = null,
        subjects = const [],
+       classDays = const [],
+       classTime = null,
        notes = null;
 
   final String name;
@@ -56,6 +61,10 @@ class StudentDraft {
   final String? address;
   final String? photoPath;
   final List<String> subjects;
+
+  /// ISO weekdays (1 = Monday .. 7 = Sunday) of this student's own classes.
+  final List<int> classDays;
+  final ClockTime? classTime;
   final String? notes;
 
   /// All problems with this draft; empty means it can be saved.

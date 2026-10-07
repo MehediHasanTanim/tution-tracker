@@ -40,5 +40,31 @@
         "type": "String"
       }
     }
-  }
+  },
+  "studentEditTitle": "শিক্ষার্থী সম্পাদনা",
+  "fieldName": "নাম",
+  "fieldMonthlyFee": "মাসিক ফি (৳)",
+  "feeLockedHint": "ফি পরিবর্তন করতে ফি সমন্বয় ব্যবহার করুন",
+  "moreDetails": "আরও তথ্য যোগ করুন",
+  "fewerDetails": "কম তথ্য দেখান",
+  "fieldDueDay": "ফি দেওয়ার দিন (মাসের তারিখ)",
+  "fieldClassLevel": "শ্রেণি",
+  "fieldSchool": "স্কুল / প্রতিষ্ঠান",
+  "fieldGuardianName": "অভিভাবকের নাম",
+  "fieldGuardianPhone": "অভিভাবকের ফোন",
+  "fieldStudentPhone": "শিক্ষার্থীর ফোন",
+  "fieldAddress": "ঠিকানা / এলাকা",
+  "fieldSubjects": "বিষয়",
+  "fieldOtherSubject": "অন্য বিষয় যোগ করুন",
+  "fieldJoinedOn": "ভর্তির তারিখ",
+  "fieldClassDays": "ক্লাসের দিন",
+  "fieldClassTime": "ক্লাসের সময়",
+  "fieldNotes": "নোট",
+  "actionSave": "সংরক্ষণ করুন",
+  "actionClear": "মুছুন",
+  "errorNameRequired": "নাম লিখুন",
+  "errorFeeRequired": "মাসিক ফি লিখুন",
+  "errorPhoneInvalid": "সঠিক মোবাইল নম্বর দিন (যেমন ০১৭১২৩৪৫৬৭৮)",
+  "studentSaved": "শিক্ষার্থী সংরক্ষিত হয়েছে",
+  "none": "নেই"
 }

@@ -118,6 +118,26 @@
             "dsl_features": []
           },
           {
+            "name": "class_days",
+            "getter_name": "classDays",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "class_time",
+            "getter_name": "classTime",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
             "name": "joined_on",
             "getter_name": "joinedOn",
             "moor_type": "string",
@@ -1575,7 +1595,7 @@
       "sql": [
         {
           "dialect": "sqlite",
-          "sql": "CREATE TABLE IF NOT EXISTS \"students\" (\"id\" TEXT NOT NULL PRIMARY KEY, \"name\" TEXT NOT NULL, \"class_level\" TEXT, \"school\" TEXT, \"guardian_name\" TEXT, \"guardian_phone\" TEXT, \"student_phone\" TEXT, \"address\" TEXT, \"photo_path\" TEXT, \"subjects\" TEXT, \"joined_on\" TEXT NOT NULL, \"status\" TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'paused', 'left')), \"monthly_fee\" INTEGER NOT NULL CHECK (monthly_fee >= 0), \"fee_due_day\" INTEGER NOT NULL DEFAULT 10 CHECK (fee_due_day BETWEEN 1 AND 31), \"notes\" TEXT, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL);"
+          "sql": "CREATE TABLE IF NOT EXISTS \"students\" (\"id\" TEXT NOT NULL PRIMARY KEY, \"name\" TEXT NOT NULL, \"class_level\" TEXT, \"school\" TEXT, \"guardian_name\" TEXT, \"guardian_phone\" TEXT, \"student_phone\" TEXT, \"address\" TEXT, \"photo_path\" TEXT, \"subjects\" TEXT, \"class_days\" TEXT, \"class_time\" TEXT, \"joined_on\" TEXT NOT NULL, \"status\" TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'paused', 'left')), \"monthly_fee\" INTEGER NOT NULL CHECK (monthly_fee >= 0), \"fee_due_day\" INTEGER NOT NULL DEFAULT 10 CHECK (fee_due_day BETWEEN 1 AND 31), \"notes\" TEXT, \"created_at\" INTEGER NOT NULL, \"updated_at\" INTEGER NOT NULL);"
         }
       ]
     },

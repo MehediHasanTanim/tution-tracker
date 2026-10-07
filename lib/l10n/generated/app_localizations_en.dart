@@ -93,4 +93,83 @@ class AppLocalizationsEn extends AppLocalizations {
   String studentFeePerMonth(String amount) {
     return '$amount / month';
   }
+
+  @override
+  String get studentEditTitle => 'Edit student';
+
+  @override
+  String get fieldName => 'Name';
+
+  @override
+  String get fieldMonthlyFee => 'Monthly fee (৳)';
+
+  @override
+  String get feeLockedHint => 'To change the fee, use fee adjustments';
+
+  @override
+  String get moreDetails => 'Add more details';
+
+  @override
+  String get fewerDetails => 'Show fewer details';
+
+  @override
+  String get fieldDueDay => 'Fee due day (day of month)';
+
+  @override
+  String get fieldClassLevel => 'Class';
+
+  @override
+  String get fieldSchool => 'School / institution';
+
+  @override
+  String get fieldGuardianName => 'Guardian name';
+
+  @override
+  String get fieldGuardianPhone => 'Guardian phone';
+
+  @override
+  String get fieldStudentPhone => 'Student phone';
+
+  @override
+  String get fieldAddress => 'Address / area';
+
+  @override
+  String get fieldSubjects => 'Subjects';
+
+  @override
+  String get fieldOtherSubject => 'Add another subject';
+
+  @override
+  String get fieldJoinedOn => 'Joining date';
+
+  @override
+  String get fieldClassDays => 'Class days';
+
+  @override
+  String get fieldClassTime => 'Class time';
+
+  @override
+  String get fieldNotes => 'Notes';
+
+  @override
+  String get actionSave => 'Save';
+
+  @override
+  String get actionClear => 'Clear';
+
+  @override
+  String get errorNameRequired => 'Enter a name';
+
+  @override
+  String get errorFeeRequired => 'Enter the monthly fee';
+
+  @override
+  String get errorPhoneInvalid =>
+      'Enter a valid mobile number (e.g. 01712345678)';
+
+  @override
+  String get studentSaved => 'Student saved';
+
+  @override
+  String get none => 'None';
 }

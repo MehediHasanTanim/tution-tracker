@@ -2,18 +2,27 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tution_tracker/app.dart';
+import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
+import 'package:tution_tracker/core/db/connection.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
 
 /// The real app wired to an in-memory [db] instead of the on-device file.
-Widget testApp(AppDatabase db) => ProviderScope(
-  overrides: [databaseProvider.overrideWith((ref) async => db)],
+Widget testApp(AppDatabase db, {DateTime Function()? clock}) => ProviderScope(
+  overrides: [
+    databaseProvider.overrideWith((ref) async => db),
+    if (clock != null) clockProvider.overrideWithValue(clock),
+  ],
   child: const TuitionTrackerApp(flavor: AppFlavor.dev),
 );
 
 /// Mounts the app on [db]. Pair with [shutdownApp] at the end of the test.
-Future<void> pumpApp(WidgetTester tester, AppDatabase db) async {
-  await tester.pumpWidget(testApp(db));
+Future<void> pumpApp(
+  WidgetTester tester,
+  AppDatabase db, {
+  DateTime Function()? clock,
+}) async {
+  await tester.pumpWidget(testApp(db, clock: clock));
   await settle(tester);
 }
 
@@ -42,4 +51,19 @@ Future<void> settle(WidgetTester tester) async {
     );
     await tester.pump(const Duration(milliseconds: 50));
   }
+}
+
+/// A widget test with its own in-memory database, shut down cleanly after.
+void appTestWidgets(
+  String description,
+  Future<void> Function(WidgetTester tester, AppDatabase db) body,
+) {
+  testWidgets(description, (tester) async {
+    final db = openInMemoryDatabase();
+    try {
+      await body(tester, db);
+    } finally {
+      await shutdownApp(tester, db);
+    }
+  });
 }
