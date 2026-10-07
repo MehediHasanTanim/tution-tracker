@@ -132,6 +132,16 @@ class StudentRepository {
     );
   }
 
+  /// Sets or clears the stored photo path (relative to the photo folder).
+  Future<void> setPhotoPath(String id, String? relativePath) async {
+    await (_db.update(_db.students)..where((t) => t.id.equals(id))).write(
+      StudentsCompanion(
+        photoPath: Value(relativePath),
+        updatedAt: Value(_timestamp),
+      ),
+    );
+  }
+
   /// Hides the student from the default list; all history is kept.
   Future<void> archive(String id) => setStatus(id, StudentStatus.left);
 

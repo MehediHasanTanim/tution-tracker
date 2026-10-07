@@ -10,10 +10,12 @@ import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
+import 'package:tution_tracker/features/students/data/photo_store.dart';
 import 'package:tution_tracker/features/students/data/student_form_providers.dart';
 import 'package:tution_tracker/features/students/data/student_providers.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
+import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -162,8 +164,9 @@ class _ProfileView extends ConsumerWidget {
           ),
         );
         if (confirmed != true) return;
-        // The photo file is removed with the photo feature (S1-13).
-        await repo.deleteForever(student.id);
+        final photoPath = await repo.deleteForever(student.id);
+        final photos = await ref.read(photoStoreProvider.future);
+        await photos.delete(photoPath);
         messenger.showSnackBar(SnackBar(content: Text(l10n.studentDeleted)));
         if (router.canPop()) router.pop();
     }
@@ -196,12 +199,10 @@ class _Header extends ConsumerWidget {
         children: [
           Row(
             children: [
-              CircleAvatar(
+              StudentAvatar(
+                name: student.name,
+                photoPath: student.photoPath,
                 radius: 32,
-                child: Text(
-                  student.name.characters.first,
-                  style: theme.textTheme.headlineSmall,
-                ),
               ),
               const SizedBox(width: 16),
               Expanded(

@@ -74,5 +74,11 @@
   "studentArchived": "Student archived",
   "studentRestored": "Student restored",
   "profileMonthlyFee": "Monthly fee",
-  "profileDueDay": "Fee due day"
+  "profileDueDay": "Fee due day",
+  "photoAdd": "Add photo",
+  "photoChange": "Change photo",
+  "photoTake": "Take photo",
+  "photoChoose": "Choose from gallery",
+  "photoRemove": "Remove photo",
+  "photoFailed": "Could not use that photo"
 }

@@ -45,6 +45,8 @@ dependencies:
   uuid: ^4.6.0
   sqlite3: ^3.7.0
   url_launcher: ^6.3.3
+  image_picker: ^1.2.4
+  image: ^4.10.1
 
 dev_dependencies:
   flutter_test:

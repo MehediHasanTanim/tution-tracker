@@ -11,13 +11,17 @@ import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/i18n/text_normalizer.dart';
+import 'package:tution_tracker/core/platform/photo_picker.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
+import 'package:tution_tracker/features/students/data/photo_processing.dart';
+import 'package:tution_tracker/features/students/data/photo_store.dart';
 import 'package:tution_tracker/features/students/data/student_form_providers.dart';
 import 'package:tution_tracker/features/students/data/student_providers.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
 import 'package:tution_tracker/features/students/domain/student_draft.dart';
 import 'package:tution_tracker/features/students/domain/student_options.dart';
+import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -51,6 +55,9 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
   bool _loaded = false;
   bool _saving = false;
   String? _classLevel;
+  String? _photoPath; // already saved
+  Uint8List? _newPhoto; // compressed, picked, not saved yet
+  bool _removePhoto = false;
   int? _dueDay; // null = use the settings default
   LocalDate? _joinedOn; // null = today
   final Set<String> _subjects = {};
@@ -85,6 +92,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
     _address.text = s.address ?? '';
     _notes.text = s.notes ?? '';
     _classLevel = s.classLevel;
+    _photoPath = s.photoPath;
     _dueDay = s.feeDueDay;
     _joinedOn = LocalDate.parse(s.joinedOn);
     _subjects.addAll(s.subjectList);
@@ -113,6 +121,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
       guardianPhone: _guardianPhone.text,
       studentPhone: _studentPhone.text,
       address: _address.text,
+      photoPath: _removePhoto ? null : _photoPath,
       subjects: _subjects.toList(),
       classDays: _classDays.toList(),
       classTime: _classTime,
@@ -122,11 +131,10 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
     setState(() => _saving = true);
     try {
       final repo = await ref.read(studentRepositoryProvider.future);
-      if (_editing) {
-        await repo.update(widget.studentId!, draft);
-      } else {
-        await repo.create(draft);
-      }
+      final saved = _editing
+          ? await repo.update(widget.studentId!, draft)
+          : await repo.create(draft);
+      await _savePhoto(repo, saved);
       messenger.showSnackBar(SnackBar(content: Text(l10n.studentSaved)));
       if (router.canPop()) {
         router.pop();
@@ -139,6 +147,120 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
     } finally {
       if (mounted) setState(() => _saving = false);
     }
+  }
+
+  /// Writes or removes the photo file and updates the student's path.
+  Future<void> _savePhoto(StudentRepository repo, Student saved) async {
+    final newPhoto = _newPhoto;
+    if (newPhoto == null && !_removePhoto) return;
+    final photos = await ref.read(photoStoreProvider.future);
+    // Not saved.photoPath: when removing, the draft already cleared it.
+    final oldPath = _photoPath;
+    final newPath = newPhoto == null
+        ? null
+        : await photos.save(saved.id, newPhoto);
+    await repo.setPhotoPath(saved.id, newPath);
+    await photos.delete(oldPath);
+  }
+
+  Future<void> _pickPhoto(PhotoSource source) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    try {
+      final raw = await ref.read(photoPickerProvider).pick(source);
+      if (raw == null) return; // cancelled
+      final compressed = await ref.read(photoCompressorProvider)(raw);
+      if (!mounted) return;
+      setState(() {
+        _newPhoto = compressed;
+        _removePhoto = false;
+      });
+    } on Object {
+      messenger.showSnackBar(SnackBar(content: Text(l10n.photoFailed)));
+    }
+  }
+
+  Future<void> _photoMenu() async {
+    final l10n = AppLocalizations.of(context);
+    final hasPhoto = _newPhoto != null || (_photoPath != null && !_removePhoto);
+    final choice = await showModalBottomSheet<String>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.photo_camera),
+              title: Text(l10n.photoTake),
+              onTap: () => Navigator.pop(context, 'camera'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: Text(l10n.photoChoose),
+              onTap: () => Navigator.pop(context, 'gallery'),
+            ),
+            if (hasPhoto)
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: Text(l10n.photoRemove),
+                onTap: () => Navigator.pop(context, 'remove'),
+              ),
+          ],
+        ),
+      ),
+    );
+    switch (choice) {
+      case 'camera':
+        await _pickPhoto(PhotoSource.camera);
+      case 'gallery':
+        await _pickPhoto(PhotoSource.gallery);
+      case 'remove':
+        setState(() {
+          _newPhoto = null;
+          _removePhoto = true;
+        });
+    }
+  }
+
+  Widget _photoPicker(AppLocalizations l10n) {
+    final hasPhoto = _newPhoto != null || (_photoPath != null && !_removePhoto);
+    return Center(
+      child: Column(
+        children: [
+          InkWell(
+            customBorder: const CircleBorder(),
+            onTap: _photoMenu,
+            child: Stack(
+              children: [
+                StudentAvatar(
+                  name: _name.text.trim().isEmpty ? '?' : _name.text.trim(),
+                  photoPath: _removePhoto ? null : _photoPath,
+                  previewBytes: _newPhoto,
+                  radius: 44,
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: CircleAvatar(
+                    radius: 14,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    child: Icon(
+                      Icons.photo_camera,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          TextButton(
+            onPressed: _photoMenu,
+            child: Text(hasPhoto ? l10n.photoChange : l10n.photoAdd),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -184,6 +306,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              if (_full) ...[_photoPicker(l10n), const SizedBox(height: 8)],
               TextFormField(
                 controller: _name,
                 autofocus: !_editing,

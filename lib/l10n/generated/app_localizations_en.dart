@@ -239,4 +239,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileDueDay => 'Fee due day';
+
+  @override
+  String get photoAdd => 'Add photo';
+
+  @override
+  String get photoChange => 'Change photo';
+
+  @override
+  String get photoTake => 'Take photo';
+
+  @override
+  String get photoChoose => 'Choose from gallery';
+
+  @override
+  String get photoRemove => 'Remove photo';
+
+  @override
+  String get photoFailed => 'Could not use that photo';
 }

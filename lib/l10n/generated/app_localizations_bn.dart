@@ -238,4 +238,22 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get profileDueDay => 'ফি দেওয়ার দিন';
+
+  @override
+  String get photoAdd => 'ছবি যোগ করুন';
+
+  @override
+  String get photoChange => 'ছবি পরিবর্তন করুন';
+
+  @override
+  String get photoTake => 'ছবি তুলুন';
+
+  @override
+  String get photoChoose => 'গ্যালারি থেকে বাছাই করুন';
+
+  @override
+  String get photoRemove => 'ছবি সরান';
+
+  @override
+  String get photoFailed => 'ছবিটি ব্যবহার করা গেল না';
 }

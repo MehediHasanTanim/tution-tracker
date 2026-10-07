@@ -547,6 +547,42 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ফি দেওয়ার দিন'**
   String get profileDueDay;
+
+  /// No description provided for @photoAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি যোগ করুন'**
+  String get photoAdd;
+
+  /// No description provided for @photoChange.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি পরিবর্তন করুন'**
+  String get photoChange;
+
+  /// No description provided for @photoTake.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি তুলুন'**
+  String get photoTake;
+
+  /// No description provided for @photoChoose.
+  ///
+  /// In bn, this message translates to:
+  /// **'গ্যালারি থেকে বাছাই করুন'**
+  String get photoChoose;
+
+  /// No description provided for @photoRemove.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি সরান'**
+  String get photoRemove;
+
+  /// No description provided for @photoFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবিটি ব্যবহার করা গেল না'**
+  String get photoFailed;
 }
 
 class _AppLocalizationsDelegate

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -7,17 +9,31 @@ import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/db/connection.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
+import 'package:tution_tracker/core/platform/photo_picker.dart';
+import 'package:tution_tracker/features/students/data/photo_processing.dart';
+import 'package:tution_tracker/features/students/data/photo_store.dart';
 
 /// The real app wired to an in-memory [db] instead of the on-device file.
 Widget testApp(
   AppDatabase db, {
   DateTime Function()? clock,
   List<Override> overrides = const [],
+  PhotoStore? photoStore,
+  PhotoPicker? photoPicker,
 }) => ProviderScope(
   overrides: [
-    ...overrides,
     databaseProvider.overrideWith((ref) async => db),
+    photoStoreProvider.overrideWith(
+      (ref) async =>
+          photoStore ??
+          PhotoStore(Directory.systemTemp.createTempSync('tk_ph_')),
+    ),
+    if (photoPicker != null) photoPickerProvider.overrideWithValue(photoPicker),
+    photoCompressorProvider.overrideWithValue(
+      (bytes) async => compressPhoto(bytes),
+    ),
     if (clock != null) clockProvider.overrideWithValue(clock),
+    ...overrides,
   ],
   child: const TuitionTrackerApp(flavor: AppFlavor.dev),
 );
@@ -28,8 +44,18 @@ Future<void> pumpApp(
   AppDatabase db, {
   DateTime Function()? clock,
   List<Override> overrides = const [],
+  PhotoStore? photoStore,
+  PhotoPicker? photoPicker,
 }) async {
-  await tester.pumpWidget(testApp(db, clock: clock, overrides: overrides));
+  await tester.pumpWidget(
+    testApp(
+      db,
+      clock: clock,
+      overrides: overrides,
+      photoStore: photoStore,
+      photoPicker: photoPicker,
+    ),
+  );
   await settle(tester);
 }
 

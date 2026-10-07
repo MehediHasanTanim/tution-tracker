@@ -88,5 +88,11 @@
   "studentArchived": "শিক্ষার্থী আর্কাইভ করা হয়েছে",
   "studentRestored": "শিক্ষার্থী পুনরুদ্ধার করা হয়েছে",
   "profileMonthlyFee": "মাসিক ফি",
-  "profileDueDay": "ফি দেওয়ার দিন"
+  "profileDueDay": "ফি দেওয়ার দিন",
+  "photoAdd": "ছবি যোগ করুন",
+  "photoChange": "ছবি পরিবর্তন করুন",
+  "photoTake": "ছবি তুলুন",
+  "photoChoose": "গ্যালারি থেকে বাছাই করুন",
+  "photoRemove": "ছবি সরান",
+  "photoFailed": "ছবিটি ব্যবহার করা গেল না"
 }

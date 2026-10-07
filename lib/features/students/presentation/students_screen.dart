@@ -6,6 +6,7 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
+import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -240,7 +241,7 @@ class _StudentTile extends StatelessWidget {
     );
     final classLevel = student.classLevel;
     return ListTile(
-      leading: CircleAvatar(child: Text(student.name.characters.first)),
+      leading: StudentAvatar(name: student.name, photoPath: student.photoPath),
       // Long Bangla names wrap rather than truncate (spec section 7).
       title: Text(student.name, maxLines: 2, overflow: TextOverflow.ellipsis),
       subtitle: Text(classLevel == null ? fee : '$classLevel · $fee'),
