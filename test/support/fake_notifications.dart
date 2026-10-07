@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:tution_tracker/core/platform/battery_guide_service.dart';
+import 'package:tution_tracker/core/platform/biometric_auth.dart';
 import 'package:tution_tracker/core/platform/file_picker_service.dart';
 import 'package:tution_tracker/core/platform/notification_service.dart';
+import 'package:tution_tracker/core/platform/screen_security.dart';
 import 'package:tution_tracker/core/platform/share_service.dart';
 
 /// An in-memory [NotificationService] that records what was scheduled.
@@ -125,4 +127,30 @@ class FakeShare implements ShareService {
 
   @override
   Future<bool> shareText(String text, {String? subject}) async => result;
+}
+
+/// A [BiometricAuth] for tests.
+class FakeBiometric implements BiometricAuth {
+  FakeBiometric({this.available = true, this.succeeds = true});
+
+  bool available;
+  bool succeeds;
+  int prompts = 0;
+
+  @override
+  Future<bool> isAvailable() async => available;
+
+  @override
+  Future<bool> authenticate(String reason) async {
+    prompts++;
+    return succeeds;
+  }
+}
+
+/// A [ScreenSecurity] that records the last setting.
+class FakeScreenSecurity implements ScreenSecurity {
+  bool? last;
+
+  @override
+  Future<void> setProtected({required bool enabled}) async => last = enabled;
 }

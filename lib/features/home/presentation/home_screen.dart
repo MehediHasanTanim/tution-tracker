@@ -12,6 +12,7 @@ import 'package:tution_tracker/features/attendance/data/attendance_providers.dar
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
 import 'package:tution_tracker/features/backup/presentation/backup_banner.dart';
 import 'package:tution_tracker/features/home/presentation/extra_class_sheet.dart';
+import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/features/reports/data/report_providers.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -34,6 +35,7 @@ class HomeScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
         children: const [
+          _SampleBanner(),
           BackupBanner(),
           _MonthCard(),
           SizedBox(height: 16),
@@ -355,6 +357,40 @@ class _UpcomingSection extends ConsumerWidget {
             onTap: () => context.push('/fees/pay/${d.studentId}'),
           ),
       ],
+    );
+  }
+}
+
+/// Shown while sample data is loaded, with one-tap removal (spec ON-5).
+class _SampleBanner extends ConsumerWidget {
+  const _SampleBanner();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!(ref.watch(sampleLoadedProvider).value ?? false)) {
+      return const SizedBox.shrink();
+    }
+    final l10n = AppLocalizations.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Card(
+        color: Theme.of(context).colorScheme.secondaryContainer,
+        child: ListTile(
+          leading: const Icon(Icons.auto_awesome_outlined),
+          title: Text(l10n.sampleBanner),
+          trailing: TextButton(
+            onPressed: () async {
+              final messenger = ScaffoldMessenger.of(context);
+              final service = await ref.read(sampleDataServiceProvider.future);
+              await service.remove();
+              messenger.showSnackBar(
+                SnackBar(content: Text(l10n.sampleRemoved)),
+              );
+            },
+            child: Text(l10n.sampleRemove),
+          ),
+        ),
+      ),
     );
   }
 }

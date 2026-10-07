@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
+import 'package:tution_tracker/core/navigation/app_gate.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/theme/app_theme.dart';
@@ -71,6 +72,7 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider),
+      builder: (context, child) => AppGate(child: child ?? const SizedBox()),
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: widget.flavor == AppFlavor.dev,
       themeMode: switch (ref.watchSetting(SettingKeys.themeMode)) {

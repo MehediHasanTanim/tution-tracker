@@ -106,6 +106,17 @@ abstract final class SettingKeys {
     AppThemeMode.system,
   );
 
+  // ---- first run and sample data --------------------------------------------
+
+  static final onboardingDone = boolKey('onboarding_done');
+
+  /// The receipt counter before sample data used some, to put back.
+  static final samplePriorReceiptNo = intKey(
+    'sample_prior_receipt_no',
+    1,
+    min: 1,
+  );
+
   /// Guardian fee reminders already sent, as JSON `{"studentId|YYYY-MM": "date"}`.
   static final feeRemindersSent = stringKey('fee_reminders_sent');
 }

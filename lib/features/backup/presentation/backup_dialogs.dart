@@ -173,3 +173,59 @@ Future<void> showMessage(BuildContext context, String title, String body) {
     ),
   );
 }
+
+/// The second confirmation: the delete button stays off until the word is
+/// typed, so it cannot be hit by accident.
+class TypeToConfirmDialog extends StatefulWidget {
+  const TypeToConfirmDialog({super.key});
+
+  @override
+  State<TypeToConfirmDialog> createState() => _TypeToConfirmDialogState();
+}
+
+class _TypeToConfirmDialogState extends State<TypeToConfirmDialog> {
+  final _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final word = l10n.rstWord;
+    return AlertDialog(
+      title: Text(l10n.rstSecondTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(l10n.rstSecondBody(word)),
+          TextField(controller: _controller, autofocus: true),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context, false),
+          child: Text(l10n.actionCancel),
+        ),
+        FilledButton(
+          style: FilledButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+          onPressed: _controller.text.trim() == word
+              ? () => Navigator.pop(context, true)
+              : null,
+          child: Text(l10n.rstDelete),
+        ),
+      ],
+    );
+  }
+}

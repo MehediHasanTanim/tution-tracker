@@ -61,6 +61,9 @@ kotlin {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // The launch theme extends an AppCompat theme (needed by the biometric
+    // prompt on Android 8 and below).
+    implementation("androidx.appcompat:appcompat:1.7.0")
 }
 
 flutter {

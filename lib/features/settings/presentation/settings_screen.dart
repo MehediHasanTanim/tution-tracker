@@ -11,6 +11,7 @@ import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/domain/proration_rule.dart';
+import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/features/reminders/presentation/reminder_actions.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -145,6 +146,15 @@ class SettingsScreen extends ConsumerWidget {
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push('/settings/templates'),
             ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.lock_outline),
+              title: Text(l10n.lockSettingsTitle),
+              subtitle: Text(l10n.lockSettingsHint),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/settings/lock'),
+            ),
+            const _SampleDataTile(),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.backup_outlined),
@@ -375,6 +385,34 @@ class _TutorProfileSectionState extends ConsumerState<_TutorProfileSection> {
           onChanged: (v) => _save(SettingKeys.tutorPhone, v),
         ),
       ],
+    );
+  }
+}
+
+/// Add or remove the sample data (spec ON-5).
+class _SampleDataTile extends ConsumerWidget {
+  const _SampleDataTile();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final loaded = ref.watch(sampleLoadedProvider).value ?? false;
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: const Icon(Icons.auto_awesome_outlined),
+      title: Text(loaded ? l10n.sampleRemove : l10n.sampleLoad),
+      subtitle: Text(l10n.sampleSettingsHint),
+      onTap: () async {
+        final messenger = ScaffoldMessenger.of(context);
+        final service = await ref.read(sampleDataServiceProvider.future);
+        if (loaded) {
+          await service.remove();
+          messenger.showSnackBar(SnackBar(content: Text(l10n.sampleRemoved)));
+        } else {
+          await service.load(ref.read(appLanguageProvider));
+          messenger.showSnackBar(SnackBar(content: Text(l10n.sampleLoaded)));
+        }
+      },
     );
   }
 }

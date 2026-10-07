@@ -1483,4 +1483,165 @@ class AppLocalizationsBn extends AppLocalizations {
   String setAbout(String version) {
     return 'সংস্করণ $version';
   }
+
+  @override
+  String get obWelcome => 'টিউশন খাতায় স্বাগতম';
+
+  @override
+  String get obPickLanguage => 'আপনার ভাষা বেছে নিন';
+
+  @override
+  String get obPrivacy => 'আপনার তথ্য এই ফোনেই থাকে। কোনো সাইন-আপ লাগে না।';
+
+  @override
+  String get obIntro1Title => 'শিক্ষার্থী';
+
+  @override
+  String get obIntro1Body => 'নাম আর ফি দিয়ে এক মিনিটেই শিক্ষার্থী যোগ করুন';
+
+  @override
+  String get obIntro2Title => 'হাজিরা';
+
+  @override
+  String get obIntro2Body =>
+      'সবাই উপস্থিত ধরা থাকে — শুধু অনুপস্থিতদের ছুঁয়ে দিন';
+
+  @override
+  String get obIntro3Title => 'ফি ও রসিদ';
+
+  @override
+  String get obIntro3Body => 'কার কত বাকি, এক নজরে। পেমেন্ট নিন আর রসিদ পাঠান';
+
+  @override
+  String get obSkip => 'এড়িয়ে যান';
+
+  @override
+  String get obNext => 'পরের ধাপ';
+
+  @override
+  String get obSampleTitle => 'নমুনা তথ্য দিয়ে দেখবেন?';
+
+  @override
+  String get obSampleBody =>
+      'কয়েকজন উদাহরণ শিক্ষার্থী, হাজিরা ও পেমেন্ট যোগ হবে। এক চাপেই মুছে ফেলা যায়।';
+
+  @override
+  String get obSampleYes => 'নমুনা তথ্য যোগ করুন';
+
+  @override
+  String get obSampleNo => 'খালি অ্যাপ দিয়ে শুরু করুন';
+
+  @override
+  String get obLoading => 'তৈরি করা হচ্ছে…';
+
+  @override
+  String get sampleBanner => 'আপনি নমুনা তথ্য দেখছেন';
+
+  @override
+  String get sampleRemove => 'নমুনা মুছুন';
+
+  @override
+  String get sampleRemoved => 'নমুনা তথ্য মুছে ফেলা হয়েছে';
+
+  @override
+  String get sampleLoad => 'নমুনা তথ্য যোগ করুন';
+
+  @override
+  String get sampleLoaded => 'নমুনা তথ্য যোগ হয়েছে';
+
+  @override
+  String get sampleSettingsHint =>
+      'উদাহরণ দিয়ে অ্যাপ ঘুরে দেখুন, এক চাপে মুছে ফেলুন';
+
+  @override
+  String get lockEnterPin => 'পিন দিন';
+
+  @override
+  String lockWrong(String count) {
+    return 'ভুল পিন। অপেক্ষার আগে আর $countটি চেষ্টা বাকি';
+  }
+
+  @override
+  String lockBlocked(String seconds) {
+    return 'অনেকবার ভুল হয়েছে। $seconds সেকেন্ড পরে চেষ্টা করুন';
+  }
+
+  @override
+  String get lockBiometric => 'আঙুলের ছাপ বা মুখ দিয়ে খুলুন';
+
+  @override
+  String get lockBiometricReason => 'টিউশন খাতা খুলুন';
+
+  @override
+  String get lockForgot => 'পিন ভুলে গেছেন?';
+
+  @override
+  String get lockForgotBody =>
+      'পিন ছাড়া অ্যাপ খোলার কোনো উপায় নেই। চাইলে অ্যাপের সব তথ্য মুছে নতুন করে শুরু করতে পারেন; তারপর আগের ব্যাকআপ থেকে তথ্য ফিরিয়ে আনা যাবে। ব্যাকআপ না থাকলে তথ্য আর ফেরত পাওয়া যাবে না।';
+
+  @override
+  String get lockSettingsTitle => 'অ্যাপ লক';
+
+  @override
+  String get lockSettingsHint => 'পিন দিয়ে অ্যাপ সুরক্ষিত রাখুন';
+
+  @override
+  String get lockOn => 'পিন দিয়ে লক';
+
+  @override
+  String get lockSetPin => 'পিন ঠিক করুন';
+
+  @override
+  String get lockPinHint => '৪ থেকে ৮টি সংখ্যা';
+
+  @override
+  String get lockPinAgain => 'পিন আবার দিন';
+
+  @override
+  String get lockPinMismatch => 'পিন দুটি মেলেনি';
+
+  @override
+  String get lockPinInvalid => '৪ থেকে ৮টি সংখ্যা দিন';
+
+  @override
+  String get lockChangePin => 'পিন বদলান';
+
+  @override
+  String get lockCurrentPin => 'বর্তমান পিন';
+
+  @override
+  String get lockTurnOff => 'লক বন্ধ করুন';
+
+  @override
+  String get lockTimeout => 'কতক্ষণ পরে আবার লক হবে';
+
+  @override
+  String get lockTimeoutNow => 'সাথে সাথে';
+
+  @override
+  String lockTimeoutMinutes(String minutes) {
+    return '$minutes মিনিট';
+  }
+
+  @override
+  String get lockBiometricOn => 'আঙুলের ছাপ বা মুখ দিয়ে খোলা';
+
+  @override
+  String get lockBiometricNone => 'এই ফোনে চালু করা নেই';
+
+  @override
+  String get lockProtect => 'স্ক্রিনশট ও সাম্প্রতিক অ্যাপের প্রিভিউ আটকান';
+
+  @override
+  String get lockOnDone => 'অ্যাপ লক চালু হয়েছে';
+
+  @override
+  String get lockOffDone => 'অ্যাপ লক বন্ধ হয়েছে';
+
+  @override
+  String get lockRemember =>
+      'পিন ভুলে গেলে সব তথ্য মুছে নতুন করে শুরু করতে হবে, তাই নিয়মিত ব্যাকআপ রাখুন।';
+
+  @override
+  String get lockWrongCurrent => 'বর্তমান পিন ভুল';
 }

@@ -133,6 +133,10 @@ void main() {
       ProrationRule.byDays,
     );
 
+    // Close the app first: writing students while screens are watching them
+    // stalls under fake time (a limit of the test harness, not of the app).
+    await tester.pumpWidget(const SizedBox());
+
     // A student joining on 15 March pays for 17 of 31 days.
     final s = await seedStudent(
       tester,

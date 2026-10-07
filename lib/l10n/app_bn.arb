@@ -831,5 +831,76 @@
         "type": "String"
       }
     }
-  }
+  },
+  "obWelcome": "টিউশন খাতায় স্বাগতম",
+  "obPickLanguage": "আপনার ভাষা বেছে নিন",
+  "obPrivacy": "আপনার তথ্য এই ফোনেই থাকে। কোনো সাইন-আপ লাগে না।",
+  "obIntro1Title": "শিক্ষার্থী",
+  "obIntro1Body": "নাম আর ফি দিয়ে এক মিনিটেই শিক্ষার্থী যোগ করুন",
+  "obIntro2Title": "হাজিরা",
+  "obIntro2Body": "সবাই উপস্থিত ধরা থাকে — শুধু অনুপস্থিতদের ছুঁয়ে দিন",
+  "obIntro3Title": "ফি ও রসিদ",
+  "obIntro3Body": "কার কত বাকি, এক নজরে। পেমেন্ট নিন আর রসিদ পাঠান",
+  "obSkip": "এড়িয়ে যান",
+  "obNext": "পরের ধাপ",
+  "obSampleTitle": "নমুনা তথ্য দিয়ে দেখবেন?",
+  "obSampleBody": "কয়েকজন উদাহরণ শিক্ষার্থী, হাজিরা ও পেমেন্ট যোগ হবে। এক চাপেই মুছে ফেলা যায়।",
+  "obSampleYes": "নমুনা তথ্য যোগ করুন",
+  "obSampleNo": "খালি অ্যাপ দিয়ে শুরু করুন",
+  "obLoading": "তৈরি করা হচ্ছে…",
+  "sampleBanner": "আপনি নমুনা তথ্য দেখছেন",
+  "sampleRemove": "নমুনা মুছুন",
+  "sampleRemoved": "নমুনা তথ্য মুছে ফেলা হয়েছে",
+  "sampleLoad": "নমুনা তথ্য যোগ করুন",
+  "sampleLoaded": "নমুনা তথ্য যোগ হয়েছে",
+  "sampleSettingsHint": "উদাহরণ দিয়ে অ্যাপ ঘুরে দেখুন, এক চাপে মুছে ফেলুন",
+  "lockEnterPin": "পিন দিন",
+  "lockWrong": "ভুল পিন। অপেক্ষার আগে আর {count}টি চেষ্টা বাকি",
+  "@lockWrong": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lockBlocked": "অনেকবার ভুল হয়েছে। {seconds} সেকেন্ড পরে চেষ্টা করুন",
+  "@lockBlocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "lockBiometric": "আঙুলের ছাপ বা মুখ দিয়ে খুলুন",
+  "lockBiometricReason": "টিউশন খাতা খুলুন",
+  "lockForgot": "পিন ভুলে গেছেন?",
+  "lockForgotBody": "পিন ছাড়া অ্যাপ খোলার কোনো উপায় নেই। চাইলে অ্যাপের সব তথ্য মুছে নতুন করে শুরু করতে পারেন; তারপর আগের ব্যাকআপ থেকে তথ্য ফিরিয়ে আনা যাবে। ব্যাকআপ না থাকলে তথ্য আর ফেরত পাওয়া যাবে না।",
+  "lockSettingsTitle": "অ্যাপ লক",
+  "lockSettingsHint": "পিন দিয়ে অ্যাপ সুরক্ষিত রাখুন",
+  "lockOn": "পিন দিয়ে লক",
+  "lockSetPin": "পিন ঠিক করুন",
+  "lockPinHint": "৪ থেকে ৮টি সংখ্যা",
+  "lockPinAgain": "পিন আবার দিন",
+  "lockPinMismatch": "পিন দুটি মেলেনি",
+  "lockPinInvalid": "৪ থেকে ৮টি সংখ্যা দিন",
+  "lockChangePin": "পিন বদলান",
+  "lockCurrentPin": "বর্তমান পিন",
+  "lockTurnOff": "লক বন্ধ করুন",
+  "lockTimeout": "কতক্ষণ পরে আবার লক হবে",
+  "lockTimeoutNow": "সাথে সাথে",
+  "lockTimeoutMinutes": "{minutes} মিনিট",
+  "@lockTimeoutMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "lockBiometricOn": "আঙুলের ছাপ বা মুখ দিয়ে খোলা",
+  "lockBiometricNone": "এই ফোনে চালু করা নেই",
+  "lockProtect": "স্ক্রিনশট ও সাম্প্রতিক অ্যাপের প্রিভিউ আটকান",
+  "lockOnDone": "অ্যাপ লক চালু হয়েছে",
+  "lockOffDone": "অ্যাপ লক বন্ধ হয়েছে",
+  "lockRemember": "পিন ভুলে গেলে সব তথ্য মুছে নতুন করে শুরু করতে হবে, তাই নিয়মিত ব্যাকআপ রাখুন।",
+  "lockWrongCurrent": "বর্তমান পিন ভুল"
 }

@@ -2796,6 +2796,306 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'সংস্করণ {version}'**
   String setAbout(String version);
+
+  /// No description provided for @obWelcome.
+  ///
+  /// In bn, this message translates to:
+  /// **'টিউশন খাতায় স্বাগতম'**
+  String get obWelcome;
+
+  /// No description provided for @obPickLanguage.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার ভাষা বেছে নিন'**
+  String get obPickLanguage;
+
+  /// No description provided for @obPrivacy.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার তথ্য এই ফোনেই থাকে। কোনো সাইন-আপ লাগে না।'**
+  String get obPrivacy;
+
+  /// No description provided for @obIntro1Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী'**
+  String get obIntro1Title;
+
+  /// No description provided for @obIntro1Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম আর ফি দিয়ে এক মিনিটেই শিক্ষার্থী যোগ করুন'**
+  String get obIntro1Body;
+
+  /// No description provided for @obIntro2Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'হাজিরা'**
+  String get obIntro2Title;
+
+  /// No description provided for @obIntro2Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাই উপস্থিত ধরা থাকে — শুধু অনুপস্থিতদের ছুঁয়ে দিন'**
+  String get obIntro2Body;
+
+  /// No description provided for @obIntro3Title.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি ও রসিদ'**
+  String get obIntro3Title;
+
+  /// No description provided for @obIntro3Body.
+  ///
+  /// In bn, this message translates to:
+  /// **'কার কত বাকি, এক নজরে। পেমেন্ট নিন আর রসিদ পাঠান'**
+  String get obIntro3Body;
+
+  /// No description provided for @obSkip.
+  ///
+  /// In bn, this message translates to:
+  /// **'এড়িয়ে যান'**
+  String get obSkip;
+
+  /// No description provided for @obNext.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরের ধাপ'**
+  String get obNext;
+
+  /// No description provided for @obSampleTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'নমুনা তথ্য দিয়ে দেখবেন?'**
+  String get obSampleTitle;
+
+  /// No description provided for @obSampleBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'কয়েকজন উদাহরণ শিক্ষার্থী, হাজিরা ও পেমেন্ট যোগ হবে। এক চাপেই মুছে ফেলা যায়।'**
+  String get obSampleBody;
+
+  /// No description provided for @obSampleYes.
+  ///
+  /// In bn, this message translates to:
+  /// **'নমুনা তথ্য যোগ করুন'**
+  String get obSampleYes;
+
+  /// No description provided for @obSampleNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'খালি অ্যাপ দিয়ে শুরু করুন'**
+  String get obSampleNo;
+
+  /// No description provided for @obLoading.
+  ///
+  /// In bn, this message translates to:
+  /// **'তৈরি করা হচ্ছে…'**
+  String get obLoading;
+
+  /// No description provided for @sampleBanner.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনি নমুনা তথ্য দেখছেন'**
+  String get sampleBanner;
+
+  /// No description provided for @sampleRemove.
+  ///
+  /// In bn, this message translates to:
+  /// **'নমুনা মুছুন'**
+  String get sampleRemove;
+
+  /// No description provided for @sampleRemoved.
+  ///
+  /// In bn, this message translates to:
+  /// **'নমুনা তথ্য মুছে ফেলা হয়েছে'**
+  String get sampleRemoved;
+
+  /// No description provided for @sampleLoad.
+  ///
+  /// In bn, this message translates to:
+  /// **'নমুনা তথ্য যোগ করুন'**
+  String get sampleLoad;
+
+  /// No description provided for @sampleLoaded.
+  ///
+  /// In bn, this message translates to:
+  /// **'নমুনা তথ্য যোগ হয়েছে'**
+  String get sampleLoaded;
+
+  /// No description provided for @sampleSettingsHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'উদাহরণ দিয়ে অ্যাপ ঘুরে দেখুন, এক চাপে মুছে ফেলুন'**
+  String get sampleSettingsHint;
+
+  /// No description provided for @lockEnterPin.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন দিন'**
+  String get lockEnterPin;
+
+  /// No description provided for @lockWrong.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভুল পিন। অপেক্ষার আগে আর {count}টি চেষ্টা বাকি'**
+  String lockWrong(String count);
+
+  /// No description provided for @lockBlocked.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনেকবার ভুল হয়েছে। {seconds} সেকেন্ড পরে চেষ্টা করুন'**
+  String lockBlocked(String seconds);
+
+  /// No description provided for @lockBiometric.
+  ///
+  /// In bn, this message translates to:
+  /// **'আঙুলের ছাপ বা মুখ দিয়ে খুলুন'**
+  String get lockBiometric;
+
+  /// No description provided for @lockBiometricReason.
+  ///
+  /// In bn, this message translates to:
+  /// **'টিউশন খাতা খুলুন'**
+  String get lockBiometricReason;
+
+  /// No description provided for @lockForgot.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন ভুলে গেছেন?'**
+  String get lockForgot;
+
+  /// No description provided for @lockForgotBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন ছাড়া অ্যাপ খোলার কোনো উপায় নেই। চাইলে অ্যাপের সব তথ্য মুছে নতুন করে শুরু করতে পারেন; তারপর আগের ব্যাকআপ থেকে তথ্য ফিরিয়ে আনা যাবে। ব্যাকআপ না থাকলে তথ্য আর ফেরত পাওয়া যাবে না।'**
+  String get lockForgotBody;
+
+  /// No description provided for @lockSettingsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাপ লক'**
+  String get lockSettingsTitle;
+
+  /// No description provided for @lockSettingsHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন দিয়ে অ্যাপ সুরক্ষিত রাখুন'**
+  String get lockSettingsHint;
+
+  /// No description provided for @lockOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন দিয়ে লক'**
+  String get lockOn;
+
+  /// No description provided for @lockSetPin.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন ঠিক করুন'**
+  String get lockSetPin;
+
+  /// No description provided for @lockPinHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'৪ থেকে ৮টি সংখ্যা'**
+  String get lockPinHint;
+
+  /// No description provided for @lockPinAgain.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন আবার দিন'**
+  String get lockPinAgain;
+
+  /// No description provided for @lockPinMismatch.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন দুটি মেলেনি'**
+  String get lockPinMismatch;
+
+  /// No description provided for @lockPinInvalid.
+  ///
+  /// In bn, this message translates to:
+  /// **'৪ থেকে ৮টি সংখ্যা দিন'**
+  String get lockPinInvalid;
+
+  /// No description provided for @lockChangePin.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন বদলান'**
+  String get lockChangePin;
+
+  /// No description provided for @lockCurrentPin.
+  ///
+  /// In bn, this message translates to:
+  /// **'বর্তমান পিন'**
+  String get lockCurrentPin;
+
+  /// No description provided for @lockTurnOff.
+  ///
+  /// In bn, this message translates to:
+  /// **'লক বন্ধ করুন'**
+  String get lockTurnOff;
+
+  /// No description provided for @lockTimeout.
+  ///
+  /// In bn, this message translates to:
+  /// **'কতক্ষণ পরে আবার লক হবে'**
+  String get lockTimeout;
+
+  /// No description provided for @lockTimeoutNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'সাথে সাথে'**
+  String get lockTimeoutNow;
+
+  /// No description provided for @lockTimeoutMinutes.
+  ///
+  /// In bn, this message translates to:
+  /// **'{minutes} মিনিট'**
+  String lockTimeoutMinutes(String minutes);
+
+  /// No description provided for @lockBiometricOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'আঙুলের ছাপ বা মুখ দিয়ে খোলা'**
+  String get lockBiometricOn;
+
+  /// No description provided for @lockBiometricNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফোনে চালু করা নেই'**
+  String get lockBiometricNone;
+
+  /// No description provided for @lockProtect.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্ক্রিনশট ও সাম্প্রতিক অ্যাপের প্রিভিউ আটকান'**
+  String get lockProtect;
+
+  /// No description provided for @lockOnDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাপ লক চালু হয়েছে'**
+  String get lockOnDone;
+
+  /// No description provided for @lockOffDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাপ লক বন্ধ হয়েছে'**
+  String get lockOffDone;
+
+  /// No description provided for @lockRemember.
+  ///
+  /// In bn, this message translates to:
+  /// **'পিন ভুলে গেলে সব তথ্য মুছে নতুন করে শুরু করতে হবে, তাই নিয়মিত ব্যাকআপ রাখুন।'**
+  String get lockRemember;
+
+  /// No description provided for @lockWrongCurrent.
+  ///
+  /// In bn, this message translates to:
+  /// **'বর্তমান পিন ভুল'**
+  String get lockWrongCurrent;
 }
 
 class _AppLocalizationsDelegate

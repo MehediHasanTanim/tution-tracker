@@ -58,6 +58,8 @@ dependencies:
   android_intent_plus: ^6.1.0
   device_info_plus: ^13.3.0
   crypto: ^3.0.7
+  local_auth: ^3.0.2
+  flutter_secure_storage: ^11.2.0
 
 dev_dependencies:
   flutter_test:

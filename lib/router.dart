@@ -10,6 +10,7 @@ import 'package:tution_tracker/features/batches/presentation/batch_form_screen.d
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
+import 'package:tution_tracker/features/lock/presentation/lock_settings_screen.dart';
 import 'package:tution_tracker/features/messaging/presentation/bulk_reminder_screen.dart';
 import 'package:tution_tracker/features/messaging/presentation/template_editor_screen.dart';
 import 'package:tution_tracker/features/receipts/presentation/receipt_screen.dart';
@@ -147,6 +148,10 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                 path: AppRoutes.settings,
                 builder: (context, state) => const SettingsScreen(),
                 routes: [
+                  GoRoute(
+                    path: 'lock',
+                    builder: (context, state) => const LockSettingsScreen(),
+                  ),
                   GoRoute(
                     path: 'backup',
                     builder: (context, state) => const BackupScreen(),

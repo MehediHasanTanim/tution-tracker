@@ -1487,4 +1487,167 @@ class AppLocalizationsEn extends AppLocalizations {
   String setAbout(String version) {
     return 'Version $version';
   }
+
+  @override
+  String get obWelcome => 'Welcome to Tuition Khata';
+
+  @override
+  String get obPickLanguage => 'Choose your language';
+
+  @override
+  String get obPrivacy => 'Your data stays on this phone. No sign-up needed.';
+
+  @override
+  String get obIntro1Title => 'Students';
+
+  @override
+  String get obIntro1Body =>
+      'Add a student in a minute with just a name and a fee';
+
+  @override
+  String get obIntro2Title => 'Attendance';
+
+  @override
+  String get obIntro2Body =>
+      'Everyone starts present. Just tap the ones who are absent';
+
+  @override
+  String get obIntro3Title => 'Fees and receipts';
+
+  @override
+  String get obIntro3Body =>
+      'See who owes what at a glance. Take payments and send receipts';
+
+  @override
+  String get obSkip => 'Skip';
+
+  @override
+  String get obNext => 'Next';
+
+  @override
+  String get obSampleTitle => 'Explore with sample data?';
+
+  @override
+  String get obSampleBody =>
+      'A few example students, attendance and payments will be added. You can remove them with one tap.';
+
+  @override
+  String get obSampleYes => 'Add sample data';
+
+  @override
+  String get obSampleNo => 'Start with an empty app';
+
+  @override
+  String get obLoading => 'Setting up…';
+
+  @override
+  String get sampleBanner => 'You are looking at sample data';
+
+  @override
+  String get sampleRemove => 'Remove sample';
+
+  @override
+  String get sampleRemoved => 'Sample data removed';
+
+  @override
+  String get sampleLoad => 'Add sample data';
+
+  @override
+  String get sampleLoaded => 'Sample data added';
+
+  @override
+  String get sampleSettingsHint =>
+      'Try the app with examples, remove them with one tap';
+
+  @override
+  String get lockEnterPin => 'Enter your PIN';
+
+  @override
+  String lockWrong(String count) {
+    return 'Wrong PIN. $count tries left before a wait';
+  }
+
+  @override
+  String lockBlocked(String seconds) {
+    return 'Too many wrong tries. Try again in $seconds s';
+  }
+
+  @override
+  String get lockBiometric => 'Unlock with fingerprint or face';
+
+  @override
+  String get lockBiometricReason => 'Unlock Tuition Khata';
+
+  @override
+  String get lockForgot => 'Forgot your PIN?';
+
+  @override
+  String get lockForgotBody =>
+      'There is no way into the app without the PIN. You can erase all data and start fresh, then restore from a backup you made earlier. Without a backup the data cannot be recovered.';
+
+  @override
+  String get lockSettingsTitle => 'App lock';
+
+  @override
+  String get lockSettingsHint => 'Protect the app with a PIN';
+
+  @override
+  String get lockOn => 'Lock with a PIN';
+
+  @override
+  String get lockSetPin => 'Set a PIN';
+
+  @override
+  String get lockPinHint => '4 to 8 digits';
+
+  @override
+  String get lockPinAgain => 'Repeat the PIN';
+
+  @override
+  String get lockPinMismatch => 'The PINs do not match';
+
+  @override
+  String get lockPinInvalid => 'Use 4 to 8 digits';
+
+  @override
+  String get lockChangePin => 'Change PIN';
+
+  @override
+  String get lockCurrentPin => 'Current PIN';
+
+  @override
+  String get lockTurnOff => 'Turn the lock off';
+
+  @override
+  String get lockTimeout => 'Lock again after';
+
+  @override
+  String get lockTimeoutNow => 'Immediately';
+
+  @override
+  String lockTimeoutMinutes(String minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get lockBiometricOn => 'Fingerprint or face unlock';
+
+  @override
+  String get lockBiometricNone => 'Not set up on this phone';
+
+  @override
+  String get lockProtect => 'Block screenshots and the recent-apps preview';
+
+  @override
+  String get lockOnDone => 'App lock is on';
+
+  @override
+  String get lockOffDone => 'App lock is off';
+
+  @override
+  String get lockRemember =>
+      'If you forget the PIN you must erase all data and start fresh, so keep backups.';
+
+  @override
+  String get lockWrongCurrent => 'The current PIN is wrong';
 }

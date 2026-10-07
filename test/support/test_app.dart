@@ -10,8 +10,14 @@ import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/db/connection.dart';
 import 'package:tution_tracker/core/db/database_provider.dart';
 import 'package:tution_tracker/core/platform/battery_guide_service.dart';
+import 'package:tution_tracker/core/platform/biometric_auth.dart';
 import 'package:tution_tracker/core/platform/notification_service.dart';
 import 'package:tution_tracker/core/platform/photo_picker.dart';
+import 'package:tution_tracker/core/platform/screen_security.dart';
+import 'package:tution_tracker/core/platform/secure_store.dart';
+import 'package:tution_tracker/features/lock/data/app_lock_service.dart';
+import 'package:tution_tracker/features/lock/data/lock_controller.dart';
+import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/features/students/data/photo_processing.dart';
 import 'package:tution_tracker/features/students/data/photo_store.dart';
 
@@ -27,6 +33,10 @@ Widget testApp(
   NotificationService? notifications,
   BatteryGuideService? batteryGuide,
   Future<AppDatabase> Function()? reopenDb,
+  SecureKeyValueStore? secureStore,
+  BiometricAuth? biometric,
+  ScreenSecurity? screenSecurity,
+  bool? onboardingDone = true,
   AppFlavor flavor = AppFlavor.dev,
 }) => ProviderScope(
   overrides: [
@@ -50,6 +60,28 @@ Widget testApp(
       (bytes) async => compressPhoto(bytes),
     ),
     if (clock != null) clockProvider.overrideWithValue(clock),
+    // First run and the lock are covered by their own tests; every other test
+    // starts with the app set up and unlocked.
+    // Pass null to use the real first-run flag.
+    if (onboardingDone != null)
+      onboardingDoneProvider.overrideWith(
+        (ref) => Stream.value(onboardingDone),
+      ),
+    // A cheap PIN hash: the real one is slow on purpose.
+    appLockServiceProvider.overrideWith(
+      (ref) => AppLockService(
+        ref.watch(secureStoreProvider),
+        now: ref.read(clockProvider),
+        iterations: 100,
+      ),
+    ),
+    secureStoreProvider.overrideWithValue(
+      secureStore ?? MemorySecureKeyValueStore(),
+    ),
+    biometricAuthProvider.overrideWithValue(biometric ?? FakeBiometric()),
+    screenSecurityProvider.overrideWithValue(
+      screenSecurity ?? FakeScreenSecurity(),
+    ),
     notificationServiceProvider.overrideWithValue(
       notifications ?? FakeNotifications(),
     ),
@@ -71,6 +103,10 @@ Future<void> pumpApp(
   NotificationService? notifications,
   BatteryGuideService? batteryGuide,
   Future<AppDatabase> Function()? reopenDb,
+  SecureKeyValueStore? secureStore,
+  BiometricAuth? biometric,
+  ScreenSecurity? screenSecurity,
+  bool? onboardingDone = true,
   AppFlavor flavor = AppFlavor.dev,
 }) async {
   await tester.pumpWidget(
@@ -84,6 +120,10 @@ Future<void> pumpApp(
       notifications: notifications,
       batteryGuide: batteryGuide,
       reopenDb: reopenDb,
+      secureStore: secureStore,
+      biometric: biometric,
+      screenSecurity: screenSecurity,
+      onboardingDone: onboardingDone,
     ),
   );
   await settle(tester);
