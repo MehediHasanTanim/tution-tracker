@@ -28,8 +28,10 @@ final reminderSchedulerProvider = FutureProvider<ReminderScheduler>((
 final replanRemindersProvider = Provider<Future<void> Function()>((ref) {
   return () async {
     try {
-      final scheduler = await ref.read(reminderSchedulerProvider.future);
-      await scheduler.replan();
+      await ref.read(databaseLockProvider).run(() async {
+        final scheduler = await ref.read(reminderSchedulerProvider.future);
+        await scheduler.replan();
+      });
     } on Object {
       // Intentionally ignored; the next trigger tries again.
     }

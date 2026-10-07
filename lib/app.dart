@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tution_tracker/core/db/database_provider.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/theme/app_theme.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
@@ -55,8 +56,10 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
   /// to repeat: it only creates what is not there yet.
   Future<void> _generateDues() async {
     try {
-      final dues = await ref.read(dueServiceProvider.future);
-      await dues.generateForAll();
+      await ref.read(databaseLockProvider).run(() async {
+        final dues = await ref.read(dueServiceProvider.future);
+        await dues.generateForAll();
+      });
     } on Object {
       // Nothing to show the user; the next start or resume tries again.
     }

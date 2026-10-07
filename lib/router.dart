@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/navigation/app_shell.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/presentation/attendance_sheet_screen.dart';
+import 'package:tution_tracker/features/backup/presentation/backup_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_detail_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_form_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
@@ -146,6 +147,10 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                 path: AppRoutes.settings,
                 builder: (context, state) => const SettingsScreen(),
                 routes: [
+                  GoRoute(
+                    path: 'backup',
+                    builder: (context, state) => const BackupScreen(),
+                  ),
                   GoRoute(
                     path: 'templates',
                     builder: (context, state) => const TemplateEditorScreen(),

@@ -10,6 +10,7 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
+import 'package:tution_tracker/features/backup/presentation/backup_banner.dart';
 import 'package:tution_tracker/features/home/presentation/extra_class_sheet.dart';
 import 'package:tution_tracker/features/reports/data/report_providers.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
@@ -33,6 +34,7 @@ class HomeScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
         children: const [
+          BackupBanner(),
           _MonthCard(),
           SizedBox(height: 16),
           _ClassesSection(),

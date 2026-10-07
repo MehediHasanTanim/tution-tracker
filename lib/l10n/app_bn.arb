@@ -687,5 +687,114 @@
   "remindClear": "চিহ্ন মুছে আবার শুরু করুন",
   "remindNext": "পরের জন",
   "remindPrevious": "আগের জন",
-  "remindAwaiting": "মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন"
+  "remindAwaiting": "মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন",
+  "bkTitle": "ব্যাকআপ ও রিস্টোর",
+  "bkLast": "সর্বশেষ ব্যাকআপ: {when}",
+  "@bkLast": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bkNever": "এখনো কোনো ব্যাকআপ নেওয়া হয়নি",
+  "bkPrivacy": "আপনার তথ্য এই ফোনেই থাকে। নিয়মিত ব্যাকআপ নিন।",
+  "bkNow": "ব্যাকআপ নিন",
+  "bkEncrypt": "পাসওয়ার্ড দিয়ে সুরক্ষিত করুন",
+  "bkEncryptHint": "ব্যাকআপে শিক্ষার্থী ও অভিভাবকের তথ্য থাকে। পাসওয়ার্ড ভুলে গেলে ফাইল খোলা যাবে না।",
+  "bkPassword": "পাসওয়ার্ড",
+  "bkPasswordConfirm": "পাসওয়ার্ড আবার লিখুন",
+  "bkPasswordMismatch": "পাসওয়ার্ড দুটি মেলেনি",
+  "bkPasswordShort": "কমপক্ষে ৬টি অক্ষর দিন",
+  "bkWorking": "ব্যাকআপ তৈরি হচ্ছে…",
+  "bkFailed": "ব্যাকআপ তৈরি করা যায়নি",
+  "bkSavedHint": "ফাইলটি নিরাপদ জায়গায় (Google Drive, ইমেইল বা অন্য ফোনে) পাঠিয়ে রাখুন",
+  "bkRestore": "ব্যাকআপ থেকে রিস্টোর",
+  "bkRestoreHint": "বর্তমান সব তথ্য ব্যাকআপের তথ্য দিয়ে বদলে যাবে",
+  "rsEnterPassword": "ব্যাকআপের পাসওয়ার্ড দিন",
+  "rsChecking": "ফাইল যাচাই করা হচ্ছে…",
+  "rsPreviewTitle": "এই ব্যাকআপ রিস্টোর করবেন?",
+  "rsPreviewStudents": "শিক্ষার্থী: {count}",
+  "@rsPreviewStudents": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewPayments": "পেমেন্ট: {count}",
+  "@rsPreviewPayments": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewLatest": "সর্বশেষ পেমেন্ট: {date}",
+  "@rsPreviewLatest": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewDate": "ব্যাকআপের তারিখ: {date}",
+  "@rsPreviewDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewNoPayments": "কোনো পেমেন্ট নেই",
+  "rsWarn": "এই ফোনের বর্তমান সব তথ্য মুছে ব্যাকআপের তথ্য বসবে। তার আগে একটি নিরাপত্তা কপি রাখা হবে।",
+  "rsConfirm": "রিস্টোর করুন",
+  "rsWorking": "রিস্টোর হচ্ছে… অ্যাপ বন্ধ করবেন না",
+  "rsDone": "রিস্টোর সম্পন্ন হয়েছে",
+  "bkErrNotABackup": "এটি টিউশন খাতার ব্যাকআপ ফাইল নয়",
+  "bkErrDamaged": "ব্যাকআপ ফাইলটি নষ্ট বা অসম্পূর্ণ",
+  "bkErrNewer": "এই ব্যাকআপ অ্যাপের নতুন সংস্করণে তৈরি। আগে অ্যাপ আপডেট করুন",
+  "bkErrChecksum": "ব্যাকআপের ভেতরের ফাইল বদলে গেছে বা নষ্ট হয়েছে",
+  "bkErrIntegrity": "ব্যাকআপের ডাটাবেস নষ্ট",
+  "bkErrPasswordRequired": "এই ব্যাকআপ খুলতে পাসওয়ার্ড লাগবে",
+  "bkErrWrongPassword": "পাসওয়ার্ড ভুল, অথবা ফাইলটি নষ্ট",
+  "bkErrRolledBack": "রিস্টোর সফল হয়নি। আপনার আগের তথ্য যেমন ছিল তেমনই ফিরিয়ে দেওয়া হয়েছে",
+  "bkErrNoRollback": "রিস্টোর সফল হয়নি এবং আগের তথ্য নিজে থেকে ফেরানো যায়নি। অ্যাপ বন্ধ করে আবার খুলুন; নিরাপত্তা কপি ফোনে আছে",
+  "bkBannerNever": "এখনো ব্যাকআপ নেওয়া হয়নি",
+  "bkBannerOld": "সর্বশেষ ব্যাকআপ {days} দিন আগে",
+  "@bkBannerOld": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "bkBannerAction": "ব্যাকআপ নিন",
+  "bkReminderEvery": "ব্যাকআপের রিমাইন্ডার",
+  "bkReminderDays": "{days} দিন",
+  "@bkReminderDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "rstTitle": "সব তথ্য মুছে ফেলুন",
+  "rstHint": "শিক্ষার্থী, ব্যাচ, পেমেন্ট, উপস্থিতি ও সেটিংস — সব মুছে যাবে",
+  "rstFirstTitle": "সব তথ্য মুছে ফেলবেন?",
+  "rstFirstBody": "এই ফোনের সব তথ্য মুছে যাবে। ব্যাকআপ না নিয়ে থাকলে আর ফেরত পাওয়া যাবে না। মোছার আগে একটি নিরাপত্তা কপি ফোনে রাখা হবে।",
+  "rstContinue": "চালিয়ে যান",
+  "rstSecondTitle": "শেষবার নিশ্চিত করুন",
+  "rstSecondBody": "নিশ্চিত করতে নিচে “{word}” লিখুন",
+  "@rstSecondBody": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "rstWord": "মুছুন",
+  "rstDelete": "সব মুছে ফেলুন",
+  "rstDone": "সব তথ্য মুছে ফেলা হয়েছে",
+  "rstWorking": "মোছা হচ্ছে…"
 }

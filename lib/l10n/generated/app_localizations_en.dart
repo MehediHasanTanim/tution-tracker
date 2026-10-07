@@ -1234,4 +1234,189 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get remindAwaiting =>
       'Tap “Mark as reminded” once the message is sent';
+
+  @override
+  String get bkTitle => 'Backup & restore';
+
+  @override
+  String bkLast(String when) {
+    return 'Last backup: $when';
+  }
+
+  @override
+  String get bkNever => 'No backup has been made yet';
+
+  @override
+  String get bkPrivacy =>
+      'Your data stays on this phone. Back it up regularly.';
+
+  @override
+  String get bkNow => 'Back up now';
+
+  @override
+  String get bkEncrypt => 'Protect with a password';
+
+  @override
+  String get bkEncryptHint =>
+      'A backup holds student and guardian details. If you forget the password the file cannot be opened.';
+
+  @override
+  String get bkPassword => 'Password';
+
+  @override
+  String get bkPasswordConfirm => 'Repeat the password';
+
+  @override
+  String get bkPasswordMismatch => 'The passwords do not match';
+
+  @override
+  String get bkPasswordShort => 'Use at least 6 characters';
+
+  @override
+  String get bkWorking => 'Making the backup…';
+
+  @override
+  String get bkFailed => 'The backup could not be made';
+
+  @override
+  String get bkSavedHint =>
+      'Send the file somewhere safe (Google Drive, email or another phone)';
+
+  @override
+  String get bkRestore => 'Restore from a backup';
+
+  @override
+  String get bkRestoreHint => 'All current data will be replaced by the backup';
+
+  @override
+  String get rsEnterPassword => 'Enter the backup password';
+
+  @override
+  String get rsChecking => 'Checking the file…';
+
+  @override
+  String get rsPreviewTitle => 'Restore this backup?';
+
+  @override
+  String rsPreviewStudents(String count) {
+    return 'Students: $count';
+  }
+
+  @override
+  String rsPreviewPayments(String count) {
+    return 'Payments: $count';
+  }
+
+  @override
+  String rsPreviewLatest(String date) {
+    return 'Latest payment: $date';
+  }
+
+  @override
+  String rsPreviewDate(String date) {
+    return 'Backup made: $date';
+  }
+
+  @override
+  String get rsPreviewNoPayments => 'No payments yet';
+
+  @override
+  String get rsWarn =>
+      'Everything on this phone will be replaced by the backup. A safety copy is kept first.';
+
+  @override
+  String get rsConfirm => 'Restore';
+
+  @override
+  String get rsWorking => 'Restoring… do not close the app';
+
+  @override
+  String get rsDone => 'Restore complete';
+
+  @override
+  String get bkErrNotABackup => 'This is not a Tuition Khata backup file';
+
+  @override
+  String get bkErrDamaged => 'This backup file is damaged or incomplete';
+
+  @override
+  String get bkErrNewer =>
+      'This backup was made by a newer version of the app. Update the app first';
+
+  @override
+  String get bkErrChecksum =>
+      'A file inside the backup has changed or is corrupted';
+
+  @override
+  String get bkErrIntegrity => 'The database in the backup is corrupted';
+
+  @override
+  String get bkErrPasswordRequired => 'This backup needs a password';
+
+  @override
+  String get bkErrWrongPassword => 'Wrong password, or the file is damaged';
+
+  @override
+  String get bkErrRolledBack =>
+      'The restore failed. Your previous data has been put back as it was';
+
+  @override
+  String get bkErrNoRollback =>
+      'The restore failed and your previous data could not be put back automatically. Close and reopen the app; a safety copy is still on the phone';
+
+  @override
+  String get bkBannerNever => 'You have not backed up yet';
+
+  @override
+  String bkBannerOld(String days) {
+    return 'Your last backup was $days days ago';
+  }
+
+  @override
+  String get bkBannerAction => 'Back up';
+
+  @override
+  String get bkReminderEvery => 'Backup reminder after';
+
+  @override
+  String bkReminderDays(String days) {
+    return '$days days';
+  }
+
+  @override
+  String get rstTitle => 'Delete all data';
+
+  @override
+  String get rstHint =>
+      'Students, batches, payments, attendance and settings: all gone';
+
+  @override
+  String get rstFirstTitle => 'Delete all data?';
+
+  @override
+  String get rstFirstBody =>
+      'Everything on this phone will be deleted. Unless you have a backup it cannot be brought back. A safety copy is kept on the phone first.';
+
+  @override
+  String get rstContinue => 'Continue';
+
+  @override
+  String get rstSecondTitle => 'Confirm one last time';
+
+  @override
+  String rstSecondBody(String word) {
+    return 'To confirm, type “$word” below';
+  }
+
+  @override
+  String get rstWord => 'DELETE';
+
+  @override
+  String get rstDelete => 'Delete everything';
+
+  @override
+  String get rstDone => 'All data has been deleted';
+
+  @override
+  String get rstWorking => 'Deleting…';
 }

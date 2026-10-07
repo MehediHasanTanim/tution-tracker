@@ -32,7 +32,7 @@ class BackupService {
     DateTime Function()? now,
     Future<BackupManifest> Function(BuildRequest request)? build,
   }) : _now = now ?? DateTime.now,
-       _build = build ?? ((r) => Isolate.run(() => buildBackupFile(r)));
+       _build = build ?? _buildInIsolate;
 
   final AppDatabase _db;
   final SettingsStore _settings;
@@ -99,3 +99,7 @@ class BackupService {
   Future<void> recordBackup() =>
       _settings.set(SettingKeys.lastBackupAt, _now());
 }
+
+/// See `_inspectInIsolate`: top-level so the isolate message stays small.
+Future<BackupManifest> _buildInIsolate(BuildRequest request) =>
+    Isolate.run(() => buildBackupFile(request));

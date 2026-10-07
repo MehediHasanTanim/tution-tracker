@@ -43,7 +43,7 @@ class FileDatabaseSwapper implements DatabaseSwapper {
   Future<void> close() async {
     final db = _db;
     _db = null;
-    await db?.close();
+    if (db != null) await closeDatabase(db);
   }
 
   @override

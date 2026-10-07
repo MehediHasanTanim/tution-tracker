@@ -26,11 +26,20 @@ Widget testApp(
   PhotoPicker? photoPicker,
   NotificationService? notifications,
   BatteryGuideService? batteryGuide,
+  Future<AppDatabase> Function()? reopenDb,
   AppFlavor flavor = AppFlavor.dev,
 }) => ProviderScope(
   overrides: [
     appFlavorProvider.overrideWithValue(flavor),
-    databaseProvider.overrideWith((ref) async => db),
+    databaseProvider.overrideWith((ref) async {
+      // With [reopenDb] the database can be closed and opened again, as a
+      // restore does; otherwise one in-memory instance is used throughout.
+      if (reopenDb == null) return db;
+      await ref.read(databaseLockProvider).whenUnlocked;
+      final opened = await reopenDb();
+      ref.onDispose(() => closeDatabase(opened));
+      return opened;
+    }),
     photoStoreProvider.overrideWith(
       (ref) async =>
           photoStore ??
@@ -61,6 +70,7 @@ Future<void> pumpApp(
   PhotoPicker? photoPicker,
   NotificationService? notifications,
   BatteryGuideService? batteryGuide,
+  Future<AppDatabase> Function()? reopenDb,
   AppFlavor flavor = AppFlavor.dev,
 }) async {
   await tester.pumpWidget(
@@ -73,6 +83,7 @@ Future<void> pumpApp(
       photoPicker: photoPicker,
       notifications: notifications,
       batteryGuide: batteryGuide,
+      reopenDb: reopenDb,
     ),
   );
   await settle(tester);

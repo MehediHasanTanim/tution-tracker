@@ -1232,4 +1232,187 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get remindAwaiting => 'মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন';
+
+  @override
+  String get bkTitle => 'ব্যাকআপ ও রিস্টোর';
+
+  @override
+  String bkLast(String when) {
+    return 'সর্বশেষ ব্যাকআপ: $when';
+  }
+
+  @override
+  String get bkNever => 'এখনো কোনো ব্যাকআপ নেওয়া হয়নি';
+
+  @override
+  String get bkPrivacy => 'আপনার তথ্য এই ফোনেই থাকে। নিয়মিত ব্যাকআপ নিন।';
+
+  @override
+  String get bkNow => 'ব্যাকআপ নিন';
+
+  @override
+  String get bkEncrypt => 'পাসওয়ার্ড দিয়ে সুরক্ষিত করুন';
+
+  @override
+  String get bkEncryptHint =>
+      'ব্যাকআপে শিক্ষার্থী ও অভিভাবকের তথ্য থাকে। পাসওয়ার্ড ভুলে গেলে ফাইল খোলা যাবে না।';
+
+  @override
+  String get bkPassword => 'পাসওয়ার্ড';
+
+  @override
+  String get bkPasswordConfirm => 'পাসওয়ার্ড আবার লিখুন';
+
+  @override
+  String get bkPasswordMismatch => 'পাসওয়ার্ড দুটি মেলেনি';
+
+  @override
+  String get bkPasswordShort => 'কমপক্ষে ৬টি অক্ষর দিন';
+
+  @override
+  String get bkWorking => 'ব্যাকআপ তৈরি হচ্ছে…';
+
+  @override
+  String get bkFailed => 'ব্যাকআপ তৈরি করা যায়নি';
+
+  @override
+  String get bkSavedHint =>
+      'ফাইলটি নিরাপদ জায়গায় (Google Drive, ইমেইল বা অন্য ফোনে) পাঠিয়ে রাখুন';
+
+  @override
+  String get bkRestore => 'ব্যাকআপ থেকে রিস্টোর';
+
+  @override
+  String get bkRestoreHint => 'বর্তমান সব তথ্য ব্যাকআপের তথ্য দিয়ে বদলে যাবে';
+
+  @override
+  String get rsEnterPassword => 'ব্যাকআপের পাসওয়ার্ড দিন';
+
+  @override
+  String get rsChecking => 'ফাইল যাচাই করা হচ্ছে…';
+
+  @override
+  String get rsPreviewTitle => 'এই ব্যাকআপ রিস্টোর করবেন?';
+
+  @override
+  String rsPreviewStudents(String count) {
+    return 'শিক্ষার্থী: $count';
+  }
+
+  @override
+  String rsPreviewPayments(String count) {
+    return 'পেমেন্ট: $count';
+  }
+
+  @override
+  String rsPreviewLatest(String date) {
+    return 'সর্বশেষ পেমেন্ট: $date';
+  }
+
+  @override
+  String rsPreviewDate(String date) {
+    return 'ব্যাকআপের তারিখ: $date';
+  }
+
+  @override
+  String get rsPreviewNoPayments => 'কোনো পেমেন্ট নেই';
+
+  @override
+  String get rsWarn =>
+      'এই ফোনের বর্তমান সব তথ্য মুছে ব্যাকআপের তথ্য বসবে। তার আগে একটি নিরাপত্তা কপি রাখা হবে।';
+
+  @override
+  String get rsConfirm => 'রিস্টোর করুন';
+
+  @override
+  String get rsWorking => 'রিস্টোর হচ্ছে… অ্যাপ বন্ধ করবেন না';
+
+  @override
+  String get rsDone => 'রিস্টোর সম্পন্ন হয়েছে';
+
+  @override
+  String get bkErrNotABackup => 'এটি টিউশন খাতার ব্যাকআপ ফাইল নয়';
+
+  @override
+  String get bkErrDamaged => 'ব্যাকআপ ফাইলটি নষ্ট বা অসম্পূর্ণ';
+
+  @override
+  String get bkErrNewer =>
+      'এই ব্যাকআপ অ্যাপের নতুন সংস্করণে তৈরি। আগে অ্যাপ আপডেট করুন';
+
+  @override
+  String get bkErrChecksum => 'ব্যাকআপের ভেতরের ফাইল বদলে গেছে বা নষ্ট হয়েছে';
+
+  @override
+  String get bkErrIntegrity => 'ব্যাকআপের ডাটাবেস নষ্ট';
+
+  @override
+  String get bkErrPasswordRequired => 'এই ব্যাকআপ খুলতে পাসওয়ার্ড লাগবে';
+
+  @override
+  String get bkErrWrongPassword => 'পাসওয়ার্ড ভুল, অথবা ফাইলটি নষ্ট';
+
+  @override
+  String get bkErrRolledBack =>
+      'রিস্টোর সফল হয়নি। আপনার আগের তথ্য যেমন ছিল তেমনই ফিরিয়ে দেওয়া হয়েছে';
+
+  @override
+  String get bkErrNoRollback =>
+      'রিস্টোর সফল হয়নি এবং আগের তথ্য নিজে থেকে ফেরানো যায়নি। অ্যাপ বন্ধ করে আবার খুলুন; নিরাপত্তা কপি ফোনে আছে';
+
+  @override
+  String get bkBannerNever => 'এখনো ব্যাকআপ নেওয়া হয়নি';
+
+  @override
+  String bkBannerOld(String days) {
+    return 'সর্বশেষ ব্যাকআপ $days দিন আগে';
+  }
+
+  @override
+  String get bkBannerAction => 'ব্যাকআপ নিন';
+
+  @override
+  String get bkReminderEvery => 'ব্যাকআপের রিমাইন্ডার';
+
+  @override
+  String bkReminderDays(String days) {
+    return '$days দিন';
+  }
+
+  @override
+  String get rstTitle => 'সব তথ্য মুছে ফেলুন';
+
+  @override
+  String get rstHint =>
+      'শিক্ষার্থী, ব্যাচ, পেমেন্ট, উপস্থিতি ও সেটিংস — সব মুছে যাবে';
+
+  @override
+  String get rstFirstTitle => 'সব তথ্য মুছে ফেলবেন?';
+
+  @override
+  String get rstFirstBody =>
+      'এই ফোনের সব তথ্য মুছে যাবে। ব্যাকআপ না নিয়ে থাকলে আর ফেরত পাওয়া যাবে না। মোছার আগে একটি নিরাপত্তা কপি ফোনে রাখা হবে।';
+
+  @override
+  String get rstContinue => 'চালিয়ে যান';
+
+  @override
+  String get rstSecondTitle => 'শেষবার নিশ্চিত করুন';
+
+  @override
+  String rstSecondBody(String word) {
+    return 'নিশ্চিত করতে নিচে “$word” লিখুন';
+  }
+
+  @override
+  String get rstWord => 'মুছুন';
+
+  @override
+  String get rstDelete => 'সব মুছে ফেলুন';
+
+  @override
+  String get rstDone => 'সব তথ্য মুছে ফেলা হয়েছে';
+
+  @override
+  String get rstWorking => 'মোছা হচ্ছে…';
 }

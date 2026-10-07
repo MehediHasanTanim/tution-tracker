@@ -49,6 +49,13 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             ListTile(
               contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.backup_outlined),
+              title: Text(l10n.bkTitle),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => context.push('/settings/backup'),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.message_outlined),
               title: Text(l10n.tplTitle),
               trailing: const Icon(Icons.chevron_right),
@@ -145,11 +152,20 @@ class _TutorProfileSectionState extends ConsumerState<_TutorProfileSection> {
   }
 
   Future<void> _load() async {
-    final store = await ref.read(settingsStoreProvider.future);
-    _name.text = await store.get(SettingKeys.tutorName);
-    _institution.text = await store.get(SettingKeys.institutionName);
-    _phone.text = await store.get(SettingKeys.tutorPhone);
-    if (mounted) setState(() => _loaded = true);
+    try {
+      final store = await ref.read(settingsStoreProvider.future);
+      final name = await store.get(SettingKeys.tutorName);
+      final institution = await store.get(SettingKeys.institutionName);
+      final phone = await store.get(SettingKeys.tutorPhone);
+      if (!mounted) return;
+      _name.text = name;
+      _institution.text = institution;
+      _phone.text = phone;
+      setState(() => _loaded = true);
+    } on Object {
+      // The screen went away, or the database was swapped by a restore while
+      // this was reading. Nothing to show; the next visit loads again.
+    }
   }
 
   @override

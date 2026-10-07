@@ -3,7 +3,9 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:path/path.dart' as p;
+import 'package:tution_tracker/core/app_info.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
+import 'package:tution_tracker/core/db/connection.dart';
 import 'package:tution_tracker/core/settings/settings_store.dart';
 import 'package:tution_tracker/features/backup/data/backup_archive.dart';
 import 'package:tution_tracker/features/backup/data/database_swapper.dart';
@@ -49,7 +51,7 @@ class RestoreService {
     Future<InspectedBackup> Function(InspectRequest request)? inspector,
   }) : schemaVersion = schemaVersion ?? AppDatabase.currentSchemaVersion,
        _now = now ?? DateTime.now,
-       _inspect = inspector ?? ((r) => Isolate.run(() => inspectBackupFile(r)));
+       _inspect = inspector ?? _inspectInIsolate;
 
   final DatabaseSwapper swapper;
 
@@ -94,6 +96,46 @@ class RestoreService {
     } on Object {
       await _delete(work);
       rethrow;
+    }
+  }
+
+  /// Deletes every record and photo (the "delete all data" setting).
+  ///
+  /// It is a restore of an empty database, so it gets the same safety copy
+  /// and the same rollback: nothing is lost if it fails half-way, and the
+  /// previous data stays on the phone in `pre_restore_*.db`.
+  Future<void> resetToEmpty() async {
+    final work = Directory(
+      p.join(workRoot.path, 'reset_${_now().microsecondsSinceEpoch}'),
+    )..createSync(recursive: true);
+    try {
+      final blank = File(p.join(work.path, 'data.db'));
+      final db = await openDatabaseFile(blank);
+      await db.close();
+      final manifest = BackupManifest(
+        schemaVersion: schemaVersion,
+        appVersion: appVersion,
+        createdAt: _now().toUtc(),
+        students: 0,
+        payments: 0,
+        sessions: 0,
+        dbSha256: '',
+      );
+      await apply(
+        RestorePreview(
+          manifest: manifest,
+          latestPaymentOn: null,
+          inspected: InspectedBackup(
+            manifest: manifest,
+            databasePath: blank.path,
+            photoPaths: const {},
+            latestPaymentOn: null,
+          ),
+          workDir: work,
+        ),
+      );
+    } finally {
+      await _delete(work);
     }
   }
 
@@ -263,4 +305,11 @@ class RestoreService {
   Future<void> _delete(Directory dir) async {
     if (dir.existsSync()) await dir.delete(recursive: true);
   }
+}
+
+/// A top-level function, so the closure sent to the isolate carries nothing
+/// but the request. A closure made inside the constructor could drag the
+/// whole service (and the app state it points at) along with it.
+Future<InspectedBackup> _inspectInIsolate(InspectRequest request) {
+  return Isolate.run(() => inspectBackupFile(request));
 }

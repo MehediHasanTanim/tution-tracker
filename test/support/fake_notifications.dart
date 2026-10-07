@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:tution_tracker/core/platform/battery_guide_service.dart';
+import 'package:tution_tracker/core/platform/file_picker_service.dart';
 import 'package:tution_tracker/core/platform/notification_service.dart';
+import 'package:tution_tracker/core/platform/share_service.dart';
 
 /// An in-memory [NotificationService] that records what was scheduled.
 class FakeNotifications implements NotificationService {
@@ -86,4 +89,40 @@ class FakeBatteryGuide implements BatteryGuideService {
     opened.add(maker);
     return true;
   }
+}
+
+/// A [FilePickerService] that returns a preset file (or null: cancelled).
+class FakeFilePicker implements FilePickerService {
+  FakeFilePicker([this.file]);
+
+  File? file;
+  int picks = 0;
+
+  @override
+  Future<File?> pickFile() async {
+    picks++;
+    return file;
+  }
+}
+
+/// A [ShareService] that records what was shared.
+class FakeShare implements ShareService {
+  FakeShare({this.result = true});
+
+  final bool result;
+  final files = <({String path, String mime})>[];
+
+  @override
+  Future<bool> shareFile(
+    String path, {
+    required String mimeType,
+    String? text,
+    String? subject,
+  }) async {
+    files.add((path: path, mime: mimeType));
+    return result;
+  }
+
+  @override
+  Future<bool> shareText(String text, {String? subject}) async => result;
 }

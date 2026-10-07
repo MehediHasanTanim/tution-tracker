@@ -2352,6 +2352,324 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন'**
   String get remindAwaiting;
+
+  /// No description provided for @bkTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ ও রিস্টোর'**
+  String get bkTitle;
+
+  /// No description provided for @bkLast.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বশেষ ব্যাকআপ: {when}'**
+  String bkLast(String when);
+
+  /// No description provided for @bkNever.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো কোনো ব্যাকআপ নেওয়া হয়নি'**
+  String get bkNever;
+
+  /// No description provided for @bkPrivacy.
+  ///
+  /// In bn, this message translates to:
+  /// **'আপনার তথ্য এই ফোনেই থাকে। নিয়মিত ব্যাকআপ নিন।'**
+  String get bkPrivacy;
+
+  /// No description provided for @bkNow.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ নিন'**
+  String get bkNow;
+
+  /// No description provided for @bkEncrypt.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাসওয়ার্ড দিয়ে সুরক্ষিত করুন'**
+  String get bkEncrypt;
+
+  /// No description provided for @bkEncryptHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপে শিক্ষার্থী ও অভিভাবকের তথ্য থাকে। পাসওয়ার্ড ভুলে গেলে ফাইল খোলা যাবে না।'**
+  String get bkEncryptHint;
+
+  /// No description provided for @bkPassword.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাসওয়ার্ড'**
+  String get bkPassword;
+
+  /// No description provided for @bkPasswordConfirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাসওয়ার্ড আবার লিখুন'**
+  String get bkPasswordConfirm;
+
+  /// No description provided for @bkPasswordMismatch.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাসওয়ার্ড দুটি মেলেনি'**
+  String get bkPasswordMismatch;
+
+  /// No description provided for @bkPasswordShort.
+  ///
+  /// In bn, this message translates to:
+  /// **'কমপক্ষে ৬টি অক্ষর দিন'**
+  String get bkPasswordShort;
+
+  /// No description provided for @bkWorking.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ তৈরি হচ্ছে…'**
+  String get bkWorking;
+
+  /// No description provided for @bkFailed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ তৈরি করা যায়নি'**
+  String get bkFailed;
+
+  /// No description provided for @bkSavedHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইলটি নিরাপদ জায়গায় (Google Drive, ইমেইল বা অন্য ফোনে) পাঠিয়ে রাখুন'**
+  String get bkSavedHint;
+
+  /// No description provided for @bkRestore.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ থেকে রিস্টোর'**
+  String get bkRestore;
+
+  /// No description provided for @bkRestoreHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'বর্তমান সব তথ্য ব্যাকআপের তথ্য দিয়ে বদলে যাবে'**
+  String get bkRestoreHint;
+
+  /// No description provided for @rsEnterPassword.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপের পাসওয়ার্ড দিন'**
+  String get rsEnterPassword;
+
+  /// No description provided for @rsChecking.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফাইল যাচাই করা হচ্ছে…'**
+  String get rsChecking;
+
+  /// No description provided for @rsPreviewTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ব্যাকআপ রিস্টোর করবেন?'**
+  String get rsPreviewTitle;
+
+  /// No description provided for @rsPreviewStudents.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী: {count}'**
+  String rsPreviewStudents(String count);
+
+  /// No description provided for @rsPreviewPayments.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট: {count}'**
+  String rsPreviewPayments(String count);
+
+  /// No description provided for @rsPreviewLatest.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বশেষ পেমেন্ট: {date}'**
+  String rsPreviewLatest(String date);
+
+  /// No description provided for @rsPreviewDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপের তারিখ: {date}'**
+  String rsPreviewDate(String date);
+
+  /// No description provided for @rsPreviewNoPayments.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো পেমেন্ট নেই'**
+  String get rsPreviewNoPayments;
+
+  /// No description provided for @rsWarn.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফোনের বর্তমান সব তথ্য মুছে ব্যাকআপের তথ্য বসবে। তার আগে একটি নিরাপত্তা কপি রাখা হবে।'**
+  String get rsWarn;
+
+  /// No description provided for @rsConfirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর করুন'**
+  String get rsConfirm;
+
+  /// No description provided for @rsWorking.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর হচ্ছে… অ্যাপ বন্ধ করবেন না'**
+  String get rsWorking;
+
+  /// No description provided for @rsDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর সম্পন্ন হয়েছে'**
+  String get rsDone;
+
+  /// No description provided for @bkErrNotABackup.
+  ///
+  /// In bn, this message translates to:
+  /// **'এটি টিউশন খাতার ব্যাকআপ ফাইল নয়'**
+  String get bkErrNotABackup;
+
+  /// No description provided for @bkErrDamaged.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ ফাইলটি নষ্ট বা অসম্পূর্ণ'**
+  String get bkErrDamaged;
+
+  /// No description provided for @bkErrNewer.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ব্যাকআপ অ্যাপের নতুন সংস্করণে তৈরি। আগে অ্যাপ আপডেট করুন'**
+  String get bkErrNewer;
+
+  /// No description provided for @bkErrChecksum.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপের ভেতরের ফাইল বদলে গেছে বা নষ্ট হয়েছে'**
+  String get bkErrChecksum;
+
+  /// No description provided for @bkErrIntegrity.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপের ডাটাবেস নষ্ট'**
+  String get bkErrIntegrity;
+
+  /// No description provided for @bkErrPasswordRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ব্যাকআপ খুলতে পাসওয়ার্ড লাগবে'**
+  String get bkErrPasswordRequired;
+
+  /// No description provided for @bkErrWrongPassword.
+  ///
+  /// In bn, this message translates to:
+  /// **'পাসওয়ার্ড ভুল, অথবা ফাইলটি নষ্ট'**
+  String get bkErrWrongPassword;
+
+  /// No description provided for @bkErrRolledBack.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর সফল হয়নি। আপনার আগের তথ্য যেমন ছিল তেমনই ফিরিয়ে দেওয়া হয়েছে'**
+  String get bkErrRolledBack;
+
+  /// No description provided for @bkErrNoRollback.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর সফল হয়নি এবং আগের তথ্য নিজে থেকে ফেরানো যায়নি। অ্যাপ বন্ধ করে আবার খুলুন; নিরাপত্তা কপি ফোনে আছে'**
+  String get bkErrNoRollback;
+
+  /// No description provided for @bkBannerNever.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনো ব্যাকআপ নেওয়া হয়নি'**
+  String get bkBannerNever;
+
+  /// No description provided for @bkBannerOld.
+  ///
+  /// In bn, this message translates to:
+  /// **'সর্বশেষ ব্যাকআপ {days} দিন আগে'**
+  String bkBannerOld(String days);
+
+  /// No description provided for @bkBannerAction.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ নিন'**
+  String get bkBannerAction;
+
+  /// No description provided for @bkReminderEvery.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপের রিমাইন্ডার'**
+  String get bkReminderEvery;
+
+  /// No description provided for @bkReminderDays.
+  ///
+  /// In bn, this message translates to:
+  /// **'{days} দিন'**
+  String bkReminderDays(String days);
+
+  /// No description provided for @rstTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব তথ্য মুছে ফেলুন'**
+  String get rstTitle;
+
+  /// No description provided for @rstHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী, ব্যাচ, পেমেন্ট, উপস্থিতি ও সেটিংস — সব মুছে যাবে'**
+  String get rstHint;
+
+  /// No description provided for @rstFirstTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব তথ্য মুছে ফেলবেন?'**
+  String get rstFirstTitle;
+
+  /// No description provided for @rstFirstBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ফোনের সব তথ্য মুছে যাবে। ব্যাকআপ না নিয়ে থাকলে আর ফেরত পাওয়া যাবে না। মোছার আগে একটি নিরাপত্তা কপি ফোনে রাখা হবে।'**
+  String get rstFirstBody;
+
+  /// No description provided for @rstContinue.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালিয়ে যান'**
+  String get rstContinue;
+
+  /// No description provided for @rstSecondTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেষবার নিশ্চিত করুন'**
+  String get rstSecondTitle;
+
+  /// No description provided for @rstSecondBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'নিশ্চিত করতে নিচে “{word}” লিখুন'**
+  String rstSecondBody(String word);
+
+  /// No description provided for @rstWord.
+  ///
+  /// In bn, this message translates to:
+  /// **'মুছুন'**
+  String get rstWord;
+
+  /// No description provided for @rstDelete.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব মুছে ফেলুন'**
+  String get rstDelete;
+
+  /// No description provided for @rstDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব তথ্য মুছে ফেলা হয়েছে'**
+  String get rstDone;
+
+  /// No description provided for @rstWorking.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোছা হচ্ছে…'**
+  String get rstWorking;
 }
 
 class _AppLocalizationsDelegate

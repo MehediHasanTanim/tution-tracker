@@ -617,6 +617,82 @@ void main() {
     });
   });
 
+  group('delete all data', () {
+    test('empties the database and the photos', () async {
+      final phone = newPhone();
+      await phone.seed(students: 4, withPhotos: 3);
+      await phone.restoreService().resetToEmpty();
+
+      final tables = await phone.dump();
+      for (final name in [
+        'students',
+        'payments',
+        'fee_records',
+        'class_sessions',
+        'attendance',
+        'settings',
+        'message_templates',
+      ]) {
+        expect(tables[name], isEmpty, reason: name);
+      }
+      expect(phone.photoBytes(), isEmpty);
+      final db = await phone.db;
+      await db.customSelect('SELECT 1').get();
+    });
+
+    test('keeps a safety copy of what was deleted', () async {
+      final phone = newPhone();
+      await phone.seed(students: 4);
+      await phone.restoreService().resetToEmpty();
+      final safety = phone.appDir
+          .listSync()
+          .whereType<File>()
+          .where((f) => p.basename(f.path).startsWith('pre_restore_'))
+          .single;
+      final copy = FileDatabaseSwapper(File(safety.path));
+      final db = await copy.open();
+      final n = await db
+          .customSelect('SELECT COUNT(*) c FROM students')
+          .getSingle();
+      expect(n.read<int>('c'), 4);
+      await copy.close();
+    });
+
+    test('a failure part-way puts everything back', () async {
+      final phone = newPhone();
+      await phone.seed(students: 4, withPhotos: 2);
+      final before = await phone.dump();
+      final photos = phone.photoBytes();
+      final service = phone.restoreService(
+        beforeStage: (stage) {
+          if (stage == RestoreStage.reopen) throw StateError('boom');
+        },
+      );
+      await expectLater(
+        service.resetToEmpty(),
+        _problem(BackupProblem.restoreFailedRolledBack),
+      );
+      expect(await phone.dump(), before);
+      expect(phone.photoBytes(), photos);
+    });
+
+    test('backup, delete everything, restore: identical data', () async {
+      final phone = newPhone();
+      await phone.seed(students: 6, withPhotos: 4);
+      final before = await phone.dump();
+      final photos = phone.photoBytes();
+      final file = (await (await phone.backupService()).createBackup()).file;
+
+      await phone.restoreService().resetToEmpty();
+      expect((await phone.dump())['students'], isEmpty);
+
+      final service = phone.restoreService();
+      await service.apply(await service.inspect(file));
+      expect(await phone.dump(), before);
+      expect(phone.photoBytes(), photos);
+    });
+  });
+
   group('receipt numbers after a restore', () {
     test('continue after the highest receipt, never backwards', () async {
       final a = newPhone();

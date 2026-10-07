@@ -134,7 +134,7 @@ class ReminderScheduler {
             channel: NotificationChannel.backup,
             title: l10n.remBackupTitle,
             body: l10n.remBackupBody,
-            payload: '/settings',
+            payload: '/settings/backup',
           ),
           ReminderKind.keepOn => ScheduledNotification(
             id: r.id,

@@ -34,6 +34,7 @@ class ReminderCoordinator {
   StreamSubscription<void>? _changes;
   Timer? _debounce;
   bool _started = false;
+  bool _disposed = false;
 
   /// How long to wait for a burst of edits to settle before replanning.
   static const settleDelay = Duration(seconds: 2);
@@ -44,12 +45,15 @@ class ReminderCoordinator {
     try {
       final scheduler = await _ref.read(reminderSchedulerProvider.future);
       await scheduler.prepare();
+      if (_disposed) return;
       final service = _ref.read(notificationServiceProvider);
       _taps = service.taps.listen(_open);
       final launch = await service.takeLaunchPayload();
+      if (_disposed) return;
       if (launch != null) _open(launch);
 
       final db = await _ref.read(databaseProvider.future);
+      if (_disposed) return;
       _changes = db
           .tableUpdates(
             TableUpdateQuery.onAllTables([
@@ -67,7 +71,7 @@ class ReminderCoordinator {
     } on Object {
       // Reminders are best effort; the app works without them.
     }
-    await refresh();
+    if (!_disposed) await refresh();
   }
 
   void _open(String payload) {
@@ -80,9 +84,13 @@ class ReminderCoordinator {
   }
 
   /// Replans straight away (start, resume).
-  Future<void> refresh() => _ref.read(replanRemindersProvider)();
+  Future<void> refresh() async {
+    if (_disposed) return;
+    await _ref.read(replanRemindersProvider)();
+  }
 
   void dispose() {
+    _disposed = true;
     _debounce?.cancel();
     unawaited(_taps?.cancel());
     unawaited(_changes?.cancel());

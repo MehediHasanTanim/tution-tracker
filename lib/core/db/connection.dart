@@ -14,17 +14,14 @@ const databaseFileName = 'tution_tracker.sqlite';
 ///
 /// If the file needs a schema upgrade, a snapshot is taken first. It is
 /// deleted once the upgraded database opens, and restored if that fails.
-Future<AppDatabase> openAppDatabase({File? file}) async {
-  final dbFile =
-      file ??
-      File(
-        p.join(
-          (await getApplicationDocumentsDirectory()).path,
-          databaseFileName,
-        ),
-      );
-  return openDatabaseFile(dbFile);
-}
+Future<AppDatabase> openAppDatabase({File? file}) async =>
+    openDatabaseFile(file ?? await defaultDatabaseFile());
+
+/// Where the database lives on the device: the app's private documents
+/// folder, next to the `photos` folder.
+Future<File> defaultDatabaseFile() async => File(
+  p.join((await getApplicationDocumentsDirectory()).path, databaseFileName),
+);
 
 /// [openAppDatabase] for an explicit file; split out so it is testable.
 Future<AppDatabase> openDatabaseFile(
@@ -32,6 +29,9 @@ Future<AppDatabase> openDatabaseFile(
   AppDatabase Function(QueryExecutor executor)? create,
   int targetVersion = AppDatabase.currentSchemaVersion,
 }) async {
+  // A restore closes the database and opens the same file again, which
+  // Drift would otherwise warn about as a second instance.
+  driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   final snapshot = await MigrationSnapshot.takeIfNeeded(
     dbFile,
     targetVersion: targetVersion,
@@ -54,6 +54,28 @@ Future<AppDatabase> openDatabaseFile(
   }
   await snapshot?.discard();
   return db;
+}
+
+final _closing = Expando<Future<void>>('closing database');
+
+/// Closes [db] once, however many callers ask and whenever they do.
+///
+/// A restore closes the database itself while Riverpod also closes it as the
+/// provider is dropped. Drift's `close` is not safe to run twice at once, and
+/// can trip over live queries that are still being cancelled, so the close is
+/// shared and retried briefly.
+Future<void> closeDatabase(AppDatabase db) => _closing[db] ??= _close(db);
+
+Future<void> _close(AppDatabase db) async {
+  for (var attempt = 0; ; attempt++) {
+    try {
+      await db.close();
+      return;
+    } on ConcurrentModificationError {
+      if (attempt >= 4) rethrow;
+      await Future<void>.delayed(const Duration(milliseconds: 20));
+    }
+  }
 }
 
 /// In-memory database for tests.
