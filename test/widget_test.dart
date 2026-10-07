@@ -29,7 +29,7 @@ void main() {
     for (final label in ['হোম', 'শিক্ষার্থী', 'ফি', 'রিপোর্ট', 'সেটিংস']) {
       expect(_navLabel(label), findsOneWidget);
     }
-    expect(find.text('হোম · 0'), findsOneWidget);
+    expect(find.text('আজ'), findsOneWidget);
   });
 
   appTest('all five tabs navigate', (tester) async {
@@ -46,15 +46,15 @@ void main() {
 
   appTest('tab state survives switching', (tester) async {
     await pumpApp(tester, db);
-    await tester.tap(find.text('হোম · 0'));
+    await tester.tap(find.byTooltip('পরের দিন'));
     await tester.pump();
-    expect(find.text('হোম · 1'), findsOneWidget);
+    expect(find.text('আজ'), findsNothing);
 
     await tester.tap(_navLabel('ফি'));
     await settle(tester);
     await tester.tap(_navLabel('হোম'));
     await settle(tester);
-    expect(find.text('হোম · 1'), findsOneWidget);
+    expect(find.text('আজ'), findsNothing);
   });
 
   appTest('switching locale in Settings changes strings', (tester) async {

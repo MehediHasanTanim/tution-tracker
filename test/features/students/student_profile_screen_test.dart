@@ -100,7 +100,7 @@ void main() {
 
       await tester.tap(find.widgetWithText(Tab, 'উপস্থিতি'));
       await tester.pumpAndSettle();
-      expect(find.text('শীঘ্রই আসছে'), findsOneWidget);
+      expect(find.text('এই মাসে কোনো ক্লাসের তথ্য নেই'), findsOneWidget);
 
       await tester.tap(find.widgetWithText(Tab, 'নোট'));
       await tester.pumpAndSettle();
