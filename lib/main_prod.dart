@@ -4,5 +4,10 @@ import 'package:tution_tracker/app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: TuitionTrackerApp(flavor: AppFlavor.prod)));
+  runApp(
+    ProviderScope(
+      overrides: [appFlavorProvider.overrideWithValue(AppFlavor.prod)],
+      child: const TuitionTrackerApp(flavor: AppFlavor.prod),
+    ),
+  );
 }

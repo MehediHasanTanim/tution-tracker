@@ -147,5 +147,166 @@
   "batchArchived": "ব্যাচ আর্কাইভ করা হয়েছে",
   "batchRestored": "ব্যাচ পুনরুদ্ধার করা হয়েছে",
   "batchDefaultFee": "ডিফল্ট ফি",
-  "profileBatches": "ব্যাচ"
+  "profileBatches": "ব্যাচ",
+  "feesOutstanding": "মোট বাকি",
+  "feesStudentsOwing": "{count} জন বাকি",
+  "@feesStudentsOwing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "filterAll": "সব",
+  "filterOverdue": "বিলম্বিত",
+  "filterDueWeek": "এই সপ্তাহে",
+  "sortByOverdue": "বিলম্ব অনুযায়ী",
+  "sortByAmount": "পরিমাণ অনুযায়ী",
+  "feesEmptyTitle": "কারও কোনো বাকি নেই",
+  "feesEmptyBody": "সব ফি আদায় হয়েছে",
+  "feesOpenMonths": "{count} মাস বাকি",
+  "@feesOpenMonths": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "feesOverdueDays": "{days} দিন বিলম্ব",
+  "@feesOverdueDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "feesDueOn": "শেষ তারিখ {date}",
+  "@feesDueOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "actionRecordPayment": "পেমেন্ট নিন",
+  "payEditTitle": "পেমেন্ট সম্পাদনা",
+  "payAmount": "পরিমাণ (৳)",
+  "payOutstanding": "মোট বাকি: {amount}",
+  "@payOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payCredit": "অগ্রিম জমা: {amount}",
+  "@payCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payMonths": "কোন মাসের জন্য",
+  "payMonthsHint": "না বাছলে পুরোনো মাস আগে পরিশোধ হবে",
+  "payMethod": "মাধ্যম",
+  "methodCash": "ক্যাশ",
+  "methodBkash": "বিকাশ",
+  "methodNagad": "নগদ",
+  "methodRocket": "রকেট",
+  "methodBank": "ব্যাংক",
+  "methodOther": "অন্যান্য",
+  "payReference": "ট্রানজ্যাকশন আইডি / রেফারেন্স",
+  "payDate": "তারিখ",
+  "payBreakdown": "যেভাবে প্রয়োগ হবে",
+  "payCreditLine": "অগ্রিম জমা",
+  "payAmountRequired": "পরিমাণ লিখুন",
+  "paySaved": "পেমেন্ট সংরক্ষিত হয়েছে",
+  "payReceiptNo": "রসিদ নং {no}",
+  "@payReceiptNo": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "payDone": "ঠিক আছে",
+  "tabFeesCredit": "অগ্রিম জমা",
+  "ledgerTitle": "মাসওয়ারি হিসাব",
+  "paymentsTitle": "পেমেন্টের ইতিহাস",
+  "noPayments": "কোনো পেমেন্ট নেই",
+  "noDues": "এখনও কোনো ফি তৈরি হয়নি",
+  "statusPaid": "পরিশোধিত",
+  "statusPartial": "আংশিক",
+  "statusDue": "বাকি",
+  "statusOverdue": "বিলম্বিত",
+  "statusWaived": "মওকুফ",
+  "ledgerAmounts": "ফি {payable} · জমা {paid} · বাকি {balance}",
+  "@ledgerAmounts": {
+    "placeholders": {
+      "payable": {
+        "type": "String"
+      },
+      "paid": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerRunning": "এ পর্যন্ত মোট বাকি {amount}",
+  "@ledgerRunning": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "actionAdjust": "ফি সমন্বয়",
+  "adjChangeFee": "মাসিক ফি পরিবর্তন",
+  "adjEffectiveMonth": "যে মাস থেকে কার্যকর",
+  "adjNewFee": "নতুন মাসিক ফি (৳)",
+  "adjFeeChanged": "ফি পরিবর্তন করা হয়েছে",
+  "adjPause": "ফি বন্ধ রাখুন",
+  "adjResume": "ফি আবার চালু করুন",
+  "adjPauseFrom": "যে মাস থেকে বন্ধ",
+  "adjResumeFrom": "যে মাস থেকে চালু",
+  "adjPaused": "ফি বন্ধ করা হয়েছে",
+  "adjResumed": "ফি চালু করা হয়েছে",
+  "adjOneTime": "এককালীন ফি যোগ করুন",
+  "adjOneTimeLabel": "বিবরণ (যেমন ভর্তি ফি)",
+  "adjOneTimeAmount": "পরিমাণ (৳)",
+  "adjOneTimeAdded": "এককালীন ফি যোগ করা হয়েছে",
+  "adjWaive": "মওকুফ করুন",
+  "adjUnwaive": "মওকুফ বাতিল করুন",
+  "adjDiscount": "ছাড় দিন",
+  "adjReason": "কারণ",
+  "adjReasonRequired": "কারণ লিখুন",
+  "adjDiscountAmount": "ছাড়ের পরিমাণ (৳)",
+  "adjDone": "সংরক্ষিত হয়েছে",
+  "payDelete": "পেমেন্ট মুছুন",
+  "payDeleteTitle": "পেমেন্ট মুছবেন?",
+  "payDeleteBody": "রসিদ নং {no} মুছে ফেললে সংশ্লিষ্ট মাসগুলো আবার বাকি হবে। রসিদ নম্বরটি আর ব্যবহার হবে না।",
+  "@payDeleteBody": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "payReceiptSharedWarning": "এই পেমেন্টের রসিদ আগে শেয়ার করা হয়েছে। পরিবর্তন করলে অভিভাবকের কাছে থাকা রসিদের সাথে মিলবে না।",
+  "payDeleted": "পেমেন্ট মুছে ফেলা হয়েছে",
+  "devSection": "ডেভেলপার",
+  "devConsistency": "হিসাব যাচাই চালান",
+  "devConsistencyOk": "কোনো সমস্যা পাওয়া যায়নি",
+  "devConsistencyIssues": "{count}টি সমস্যা পাওয়া গেছে",
+  "@devConsistencyIssues": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "genericError": "কিছু ভুল হয়েছে"
 }

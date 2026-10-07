@@ -358,4 +358,261 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get profileBatches => 'ব্যাচ';
+
+  @override
+  String get feesOutstanding => 'মোট বাকি';
+
+  @override
+  String feesStudentsOwing(String count) {
+    return '$count জন বাকি';
+  }
+
+  @override
+  String get filterAll => 'সব';
+
+  @override
+  String get filterOverdue => 'বিলম্বিত';
+
+  @override
+  String get filterDueWeek => 'এই সপ্তাহে';
+
+  @override
+  String get sortByOverdue => 'বিলম্ব অনুযায়ী';
+
+  @override
+  String get sortByAmount => 'পরিমাণ অনুযায়ী';
+
+  @override
+  String get feesEmptyTitle => 'কারও কোনো বাকি নেই';
+
+  @override
+  String get feesEmptyBody => 'সব ফি আদায় হয়েছে';
+
+  @override
+  String feesOpenMonths(String count) {
+    return '$count মাস বাকি';
+  }
+
+  @override
+  String feesOverdueDays(String days) {
+    return '$days দিন বিলম্ব';
+  }
+
+  @override
+  String feesDueOn(String date) {
+    return 'শেষ তারিখ $date';
+  }
+
+  @override
+  String get actionRecordPayment => 'পেমেন্ট নিন';
+
+  @override
+  String get payEditTitle => 'পেমেন্ট সম্পাদনা';
+
+  @override
+  String get payAmount => 'পরিমাণ (৳)';
+
+  @override
+  String payOutstanding(String amount) {
+    return 'মোট বাকি: $amount';
+  }
+
+  @override
+  String payCredit(String amount) {
+    return 'অগ্রিম জমা: $amount';
+  }
+
+  @override
+  String get payMonths => 'কোন মাসের জন্য';
+
+  @override
+  String get payMonthsHint => 'না বাছলে পুরোনো মাস আগে পরিশোধ হবে';
+
+  @override
+  String get payMethod => 'মাধ্যম';
+
+  @override
+  String get methodCash => 'ক্যাশ';
+
+  @override
+  String get methodBkash => 'বিকাশ';
+
+  @override
+  String get methodNagad => 'নগদ';
+
+  @override
+  String get methodRocket => 'রকেট';
+
+  @override
+  String get methodBank => 'ব্যাংক';
+
+  @override
+  String get methodOther => 'অন্যান্য';
+
+  @override
+  String get payReference => 'ট্রানজ্যাকশন আইডি / রেফারেন্স';
+
+  @override
+  String get payDate => 'তারিখ';
+
+  @override
+  String get payBreakdown => 'যেভাবে প্রয়োগ হবে';
+
+  @override
+  String get payCreditLine => 'অগ্রিম জমা';
+
+  @override
+  String get payAmountRequired => 'পরিমাণ লিখুন';
+
+  @override
+  String get paySaved => 'পেমেন্ট সংরক্ষিত হয়েছে';
+
+  @override
+  String payReceiptNo(String no) {
+    return 'রসিদ নং $no';
+  }
+
+  @override
+  String get payDone => 'ঠিক আছে';
+
+  @override
+  String get tabFeesCredit => 'অগ্রিম জমা';
+
+  @override
+  String get ledgerTitle => 'মাসওয়ারি হিসাব';
+
+  @override
+  String get paymentsTitle => 'পেমেন্টের ইতিহাস';
+
+  @override
+  String get noPayments => 'কোনো পেমেন্ট নেই';
+
+  @override
+  String get noDues => 'এখনও কোনো ফি তৈরি হয়নি';
+
+  @override
+  String get statusPaid => 'পরিশোধিত';
+
+  @override
+  String get statusPartial => 'আংশিক';
+
+  @override
+  String get statusDue => 'বাকি';
+
+  @override
+  String get statusOverdue => 'বিলম্বিত';
+
+  @override
+  String get statusWaived => 'মওকুফ';
+
+  @override
+  String ledgerAmounts(String payable, String paid, String balance) {
+    return 'ফি $payable · জমা $paid · বাকি $balance';
+  }
+
+  @override
+  String ledgerRunning(String amount) {
+    return 'এ পর্যন্ত মোট বাকি $amount';
+  }
+
+  @override
+  String get actionAdjust => 'ফি সমন্বয়';
+
+  @override
+  String get adjChangeFee => 'মাসিক ফি পরিবর্তন';
+
+  @override
+  String get adjEffectiveMonth => 'যে মাস থেকে কার্যকর';
+
+  @override
+  String get adjNewFee => 'নতুন মাসিক ফি (৳)';
+
+  @override
+  String get adjFeeChanged => 'ফি পরিবর্তন করা হয়েছে';
+
+  @override
+  String get adjPause => 'ফি বন্ধ রাখুন';
+
+  @override
+  String get adjResume => 'ফি আবার চালু করুন';
+
+  @override
+  String get adjPauseFrom => 'যে মাস থেকে বন্ধ';
+
+  @override
+  String get adjResumeFrom => 'যে মাস থেকে চালু';
+
+  @override
+  String get adjPaused => 'ফি বন্ধ করা হয়েছে';
+
+  @override
+  String get adjResumed => 'ফি চালু করা হয়েছে';
+
+  @override
+  String get adjOneTime => 'এককালীন ফি যোগ করুন';
+
+  @override
+  String get adjOneTimeLabel => 'বিবরণ (যেমন ভর্তি ফি)';
+
+  @override
+  String get adjOneTimeAmount => 'পরিমাণ (৳)';
+
+  @override
+  String get adjOneTimeAdded => 'এককালীন ফি যোগ করা হয়েছে';
+
+  @override
+  String get adjWaive => 'মওকুফ করুন';
+
+  @override
+  String get adjUnwaive => 'মওকুফ বাতিল করুন';
+
+  @override
+  String get adjDiscount => 'ছাড় দিন';
+
+  @override
+  String get adjReason => 'কারণ';
+
+  @override
+  String get adjReasonRequired => 'কারণ লিখুন';
+
+  @override
+  String get adjDiscountAmount => 'ছাড়ের পরিমাণ (৳)';
+
+  @override
+  String get adjDone => 'সংরক্ষিত হয়েছে';
+
+  @override
+  String get payDelete => 'পেমেন্ট মুছুন';
+
+  @override
+  String get payDeleteTitle => 'পেমেন্ট মুছবেন?';
+
+  @override
+  String payDeleteBody(String no) {
+    return 'রসিদ নং $no মুছে ফেললে সংশ্লিষ্ট মাসগুলো আবার বাকি হবে। রসিদ নম্বরটি আর ব্যবহার হবে না।';
+  }
+
+  @override
+  String get payReceiptSharedWarning =>
+      'এই পেমেন্টের রসিদ আগে শেয়ার করা হয়েছে। পরিবর্তন করলে অভিভাবকের কাছে থাকা রসিদের সাথে মিলবে না।';
+
+  @override
+  String get payDeleted => 'পেমেন্ট মুছে ফেলা হয়েছে';
+
+  @override
+  String get devSection => 'ডেভেলপার';
+
+  @override
+  String get devConsistency => 'হিসাব যাচাই চালান';
+
+  @override
+  String get devConsistencyOk => 'কোনো সমস্যা পাওয়া যায়নি';
+
+  @override
+  String devConsistencyIssues(String count) {
+    return '$countটি সমস্যা পাওয়া গেছে';
+  }
+
+  @override
+  String get genericError => 'কিছু ভুল হয়েছে';
 }

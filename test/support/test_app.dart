@@ -22,6 +22,7 @@ Widget testApp(
   PhotoPicker? photoPicker,
 }) => ProviderScope(
   overrides: [
+    appFlavorProvider.overrideWithValue(AppFlavor.dev),
     databaseProvider.overrideWith((ref) async => db),
     photoStoreProvider.overrideWith(
       (ref) async =>

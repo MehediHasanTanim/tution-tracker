@@ -775,6 +775,474 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ব্যাচ'**
   String get profileBatches;
+
+  /// No description provided for @feesOutstanding.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট বাকি'**
+  String get feesOutstanding;
+
+  /// No description provided for @feesStudentsOwing.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} জন বাকি'**
+  String feesStudentsOwing(String count);
+
+  /// No description provided for @filterAll.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব'**
+  String get filterAll;
+
+  /// No description provided for @filterOverdue.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিলম্বিত'**
+  String get filterOverdue;
+
+  /// No description provided for @filterDueWeek.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই সপ্তাহে'**
+  String get filterDueWeek;
+
+  /// No description provided for @sortByOverdue.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিলম্ব অনুযায়ী'**
+  String get sortByOverdue;
+
+  /// No description provided for @sortByAmount.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ অনুযায়ী'**
+  String get sortByAmount;
+
+  /// No description provided for @feesEmptyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'কারও কোনো বাকি নেই'**
+  String get feesEmptyTitle;
+
+  /// No description provided for @feesEmptyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব ফি আদায় হয়েছে'**
+  String get feesEmptyBody;
+
+  /// No description provided for @feesOpenMonths.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} মাস বাকি'**
+  String feesOpenMonths(String count);
+
+  /// No description provided for @feesOverdueDays.
+  ///
+  /// In bn, this message translates to:
+  /// **'{days} দিন বিলম্ব'**
+  String feesOverdueDays(String days);
+
+  /// No description provided for @feesDueOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'শেষ তারিখ {date}'**
+  String feesDueOn(String date);
+
+  /// No description provided for @actionRecordPayment.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট নিন'**
+  String get actionRecordPayment;
+
+  /// No description provided for @payEditTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট সম্পাদনা'**
+  String get payEditTitle;
+
+  /// No description provided for @payAmount.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ (৳)'**
+  String get payAmount;
+
+  /// No description provided for @payOutstanding.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট বাকি: {amount}'**
+  String payOutstanding(String amount);
+
+  /// No description provided for @payCredit.
+  ///
+  /// In bn, this message translates to:
+  /// **'অগ্রিম জমা: {amount}'**
+  String payCredit(String amount);
+
+  /// No description provided for @payMonths.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোন মাসের জন্য'**
+  String get payMonths;
+
+  /// No description provided for @payMonthsHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'না বাছলে পুরোনো মাস আগে পরিশোধ হবে'**
+  String get payMonthsHint;
+
+  /// No description provided for @payMethod.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাধ্যম'**
+  String get payMethod;
+
+  /// No description provided for @methodCash.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্যাশ'**
+  String get methodCash;
+
+  /// No description provided for @methodBkash.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিকাশ'**
+  String get methodBkash;
+
+  /// No description provided for @methodNagad.
+  ///
+  /// In bn, this message translates to:
+  /// **'নগদ'**
+  String get methodNagad;
+
+  /// No description provided for @methodRocket.
+  ///
+  /// In bn, this message translates to:
+  /// **'রকেট'**
+  String get methodRocket;
+
+  /// No description provided for @methodBank.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাংক'**
+  String get methodBank;
+
+  /// No description provided for @methodOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্যান্য'**
+  String get methodOther;
+
+  /// No description provided for @payReference.
+  ///
+  /// In bn, this message translates to:
+  /// **'ট্রানজ্যাকশন আইডি / রেফারেন্স'**
+  String get payReference;
+
+  /// No description provided for @payDate.
+  ///
+  /// In bn, this message translates to:
+  /// **'তারিখ'**
+  String get payDate;
+
+  /// No description provided for @payBreakdown.
+  ///
+  /// In bn, this message translates to:
+  /// **'যেভাবে প্রয়োগ হবে'**
+  String get payBreakdown;
+
+  /// No description provided for @payCreditLine.
+  ///
+  /// In bn, this message translates to:
+  /// **'অগ্রিম জমা'**
+  String get payCreditLine;
+
+  /// No description provided for @payAmountRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ লিখুন'**
+  String get payAmountRequired;
+
+  /// No description provided for @paySaved.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট সংরক্ষিত হয়েছে'**
+  String get paySaved;
+
+  /// No description provided for @payReceiptNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ নং {no}'**
+  String payReceiptNo(String no);
+
+  /// No description provided for @payDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'ঠিক আছে'**
+  String get payDone;
+
+  /// No description provided for @tabFeesCredit.
+  ///
+  /// In bn, this message translates to:
+  /// **'অগ্রিম জমা'**
+  String get tabFeesCredit;
+
+  /// No description provided for @ledgerTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসওয়ারি হিসাব'**
+  String get ledgerTitle;
+
+  /// No description provided for @paymentsTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্টের ইতিহাস'**
+  String get paymentsTitle;
+
+  /// No description provided for @noPayments.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো পেমেন্ট নেই'**
+  String get noPayments;
+
+  /// No description provided for @noDues.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনও কোনো ফি তৈরি হয়নি'**
+  String get noDues;
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিশোধিত'**
+  String get statusPaid;
+
+  /// No description provided for @statusPartial.
+  ///
+  /// In bn, this message translates to:
+  /// **'আংশিক'**
+  String get statusPartial;
+
+  /// No description provided for @statusDue.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাকি'**
+  String get statusDue;
+
+  /// No description provided for @statusOverdue.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিলম্বিত'**
+  String get statusOverdue;
+
+  /// No description provided for @statusWaived.
+  ///
+  /// In bn, this message translates to:
+  /// **'মওকুফ'**
+  String get statusWaived;
+
+  /// No description provided for @ledgerAmounts.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি {payable} · জমা {paid} · বাকি {balance}'**
+  String ledgerAmounts(String payable, String paid, String balance);
+
+  /// No description provided for @ledgerRunning.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ পর্যন্ত মোট বাকি {amount}'**
+  String ledgerRunning(String amount);
+
+  /// No description provided for @actionAdjust.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি সমন্বয়'**
+  String get actionAdjust;
+
+  /// No description provided for @adjChangeFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'মাসিক ফি পরিবর্তন'**
+  String get adjChangeFee;
+
+  /// No description provided for @adjEffectiveMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে মাস থেকে কার্যকর'**
+  String get adjEffectiveMonth;
+
+  /// No description provided for @adjNewFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন মাসিক ফি (৳)'**
+  String get adjNewFee;
+
+  /// No description provided for @adjFeeChanged.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি পরিবর্তন করা হয়েছে'**
+  String get adjFeeChanged;
+
+  /// No description provided for @adjPause.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি বন্ধ রাখুন'**
+  String get adjPause;
+
+  /// No description provided for @adjResume.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি আবার চালু করুন'**
+  String get adjResume;
+
+  /// No description provided for @adjPauseFrom.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে মাস থেকে বন্ধ'**
+  String get adjPauseFrom;
+
+  /// No description provided for @adjResumeFrom.
+  ///
+  /// In bn, this message translates to:
+  /// **'যে মাস থেকে চালু'**
+  String get adjResumeFrom;
+
+  /// No description provided for @adjPaused.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি বন্ধ করা হয়েছে'**
+  String get adjPaused;
+
+  /// No description provided for @adjResumed.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি চালু করা হয়েছে'**
+  String get adjResumed;
+
+  /// No description provided for @adjOneTime.
+  ///
+  /// In bn, this message translates to:
+  /// **'এককালীন ফি যোগ করুন'**
+  String get adjOneTime;
+
+  /// No description provided for @adjOneTimeLabel.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিবরণ (যেমন ভর্তি ফি)'**
+  String get adjOneTimeLabel;
+
+  /// No description provided for @adjOneTimeAmount.
+  ///
+  /// In bn, this message translates to:
+  /// **'পরিমাণ (৳)'**
+  String get adjOneTimeAmount;
+
+  /// No description provided for @adjOneTimeAdded.
+  ///
+  /// In bn, this message translates to:
+  /// **'এককালীন ফি যোগ করা হয়েছে'**
+  String get adjOneTimeAdded;
+
+  /// No description provided for @adjWaive.
+  ///
+  /// In bn, this message translates to:
+  /// **'মওকুফ করুন'**
+  String get adjWaive;
+
+  /// No description provided for @adjUnwaive.
+  ///
+  /// In bn, this message translates to:
+  /// **'মওকুফ বাতিল করুন'**
+  String get adjUnwaive;
+
+  /// No description provided for @adjDiscount.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছাড় দিন'**
+  String get adjDiscount;
+
+  /// No description provided for @adjReason.
+  ///
+  /// In bn, this message translates to:
+  /// **'কারণ'**
+  String get adjReason;
+
+  /// No description provided for @adjReasonRequired.
+  ///
+  /// In bn, this message translates to:
+  /// **'কারণ লিখুন'**
+  String get adjReasonRequired;
+
+  /// No description provided for @adjDiscountAmount.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছাড়ের পরিমাণ (৳)'**
+  String get adjDiscountAmount;
+
+  /// No description provided for @adjDone.
+  ///
+  /// In bn, this message translates to:
+  /// **'সংরক্ষিত হয়েছে'**
+  String get adjDone;
+
+  /// No description provided for @payDelete.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট মুছুন'**
+  String get payDelete;
+
+  /// No description provided for @payDeleteTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট মুছবেন?'**
+  String get payDeleteTitle;
+
+  /// No description provided for @payDeleteBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'রসিদ নং {no} মুছে ফেললে সংশ্লিষ্ট মাসগুলো আবার বাকি হবে। রসিদ নম্বরটি আর ব্যবহার হবে না।'**
+  String payDeleteBody(String no);
+
+  /// No description provided for @payReceiptSharedWarning.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই পেমেন্টের রসিদ আগে শেয়ার করা হয়েছে। পরিবর্তন করলে অভিভাবকের কাছে থাকা রসিদের সাথে মিলবে না।'**
+  String get payReceiptSharedWarning;
+
+  /// No description provided for @payDeleted.
+  ///
+  /// In bn, this message translates to:
+  /// **'পেমেন্ট মুছে ফেলা হয়েছে'**
+  String get payDeleted;
+
+  /// No description provided for @devSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'ডেভেলপার'**
+  String get devSection;
+
+  /// No description provided for @devConsistency.
+  ///
+  /// In bn, this message translates to:
+  /// **'হিসাব যাচাই চালান'**
+  String get devConsistency;
+
+  /// No description provided for @devConsistencyOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো সমস্যা পাওয়া যায়নি'**
+  String get devConsistencyOk;
+
+  /// No description provided for @devConsistencyIssues.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count}টি সমস্যা পাওয়া গেছে'**
+  String devConsistencyIssues(String count);
+
+  /// No description provided for @genericError.
+  ///
+  /// In bn, this message translates to:
+  /// **'কিছু ভুল হয়েছে'**
+  String get genericError;
 }
 
 class _AppLocalizationsDelegate

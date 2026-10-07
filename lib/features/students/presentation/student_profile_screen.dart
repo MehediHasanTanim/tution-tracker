@@ -11,6 +11,7 @@ import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
 import 'package:tution_tracker/features/batches/data/batch_providers.dart';
+import 'package:tution_tracker/features/fees/presentation/student_fees_tab.dart';
 import 'package:tution_tracker/features/students/data/photo_store.dart';
 import 'package:tution_tracker/features/students/data/student_form_providers.dart';
 import 'package:tution_tracker/features/students/data/student_providers.dart';
@@ -113,7 +114,7 @@ class _ProfileView extends ConsumerWidget {
                 children: [
                   _OverviewTab(student: student),
                   _Soon(label: l10n.comingSoon),
-                  _Soon(label: l10n.comingSoon),
+                  StudentFeesTab(student: student),
                   _NotesTab(student: student),
                 ],
               ),

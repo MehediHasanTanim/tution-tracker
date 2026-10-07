@@ -359,4 +359,261 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profileBatches => 'Batches';
+
+  @override
+  String get feesOutstanding => 'Total outstanding';
+
+  @override
+  String feesStudentsOwing(String count) {
+    return '$count owing';
+  }
+
+  @override
+  String get filterAll => 'All';
+
+  @override
+  String get filterOverdue => 'Overdue';
+
+  @override
+  String get filterDueWeek => 'Due this week';
+
+  @override
+  String get sortByOverdue => 'By overdue days';
+
+  @override
+  String get sortByAmount => 'By amount';
+
+  @override
+  String get feesEmptyTitle => 'Nobody owes anything';
+
+  @override
+  String get feesEmptyBody => 'All fees are collected';
+
+  @override
+  String feesOpenMonths(String count) {
+    return '$count open';
+  }
+
+  @override
+  String feesOverdueDays(String days) {
+    return '$days days overdue';
+  }
+
+  @override
+  String feesDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String get actionRecordPayment => 'Record payment';
+
+  @override
+  String get payEditTitle => 'Edit payment';
+
+  @override
+  String get payAmount => 'Amount (৳)';
+
+  @override
+  String payOutstanding(String amount) {
+    return 'Outstanding: $amount';
+  }
+
+  @override
+  String payCredit(String amount) {
+    return 'Advance credit: $amount';
+  }
+
+  @override
+  String get payMonths => 'Pay for month';
+
+  @override
+  String get payMonthsHint => 'Leave empty to pay the oldest month first';
+
+  @override
+  String get payMethod => 'Method';
+
+  @override
+  String get methodCash => 'Cash';
+
+  @override
+  String get methodBkash => 'bKash';
+
+  @override
+  String get methodNagad => 'Nagad';
+
+  @override
+  String get methodRocket => 'Rocket';
+
+  @override
+  String get methodBank => 'Bank';
+
+  @override
+  String get methodOther => 'Other';
+
+  @override
+  String get payReference => 'Transaction ID / reference';
+
+  @override
+  String get payDate => 'Date';
+
+  @override
+  String get payBreakdown => 'How it will be applied';
+
+  @override
+  String get payCreditLine => 'Advance credit';
+
+  @override
+  String get payAmountRequired => 'Enter an amount';
+
+  @override
+  String get paySaved => 'Payment saved';
+
+  @override
+  String payReceiptNo(String no) {
+    return 'Receipt no. $no';
+  }
+
+  @override
+  String get payDone => 'Done';
+
+  @override
+  String get tabFeesCredit => 'Advance credit';
+
+  @override
+  String get ledgerTitle => 'Monthly ledger';
+
+  @override
+  String get paymentsTitle => 'Payments';
+
+  @override
+  String get noPayments => 'No payments yet';
+
+  @override
+  String get noDues => 'No fees yet';
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get statusPartial => 'Partial';
+
+  @override
+  String get statusDue => 'Due';
+
+  @override
+  String get statusOverdue => 'Overdue';
+
+  @override
+  String get statusWaived => 'Waived';
+
+  @override
+  String ledgerAmounts(String payable, String paid, String balance) {
+    return 'Fee $payable · paid $paid · left $balance';
+  }
+
+  @override
+  String ledgerRunning(String amount) {
+    return 'Owed so far $amount';
+  }
+
+  @override
+  String get actionAdjust => 'Fee adjustments';
+
+  @override
+  String get adjChangeFee => 'Change monthly fee';
+
+  @override
+  String get adjEffectiveMonth => 'Effective from';
+
+  @override
+  String get adjNewFee => 'New monthly fee (৳)';
+
+  @override
+  String get adjFeeChanged => 'Fee changed';
+
+  @override
+  String get adjPause => 'Pause fees';
+
+  @override
+  String get adjResume => 'Resume fees';
+
+  @override
+  String get adjPauseFrom => 'Pause from';
+
+  @override
+  String get adjResumeFrom => 'Resume from';
+
+  @override
+  String get adjPaused => 'Fees paused';
+
+  @override
+  String get adjResumed => 'Fees resumed';
+
+  @override
+  String get adjOneTime => 'Add one-time fee';
+
+  @override
+  String get adjOneTimeLabel => 'Label (e.g. Admission fee)';
+
+  @override
+  String get adjOneTimeAmount => 'Amount (৳)';
+
+  @override
+  String get adjOneTimeAdded => 'One-time fee added';
+
+  @override
+  String get adjWaive => 'Waive';
+
+  @override
+  String get adjUnwaive => 'Undo waiver';
+
+  @override
+  String get adjDiscount => 'Give discount';
+
+  @override
+  String get adjReason => 'Reason';
+
+  @override
+  String get adjReasonRequired => 'Enter a reason';
+
+  @override
+  String get adjDiscountAmount => 'Discount amount (৳)';
+
+  @override
+  String get adjDone => 'Saved';
+
+  @override
+  String get payDelete => 'Delete payment';
+
+  @override
+  String get payDeleteTitle => 'Delete this payment?';
+
+  @override
+  String payDeleteBody(String no) {
+    return 'Deleting receipt no. $no makes its months owe again. The receipt number will not be used again.';
+  }
+
+  @override
+  String get payReceiptSharedWarning =>
+      'A receipt for this payment was shared before. Changing it will not match the copy the guardian has.';
+
+  @override
+  String get payDeleted => 'Payment deleted';
+
+  @override
+  String get devSection => 'Developer';
+
+  @override
+  String get devConsistency => 'Run consistency check';
+
+  @override
+  String get devConsistencyOk => 'No problems found';
+
+  @override
+  String devConsistencyIssues(String count) {
+    return '$count problems found';
+  }
+
+  @override
+  String get genericError => 'Something went wrong';
 }

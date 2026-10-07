@@ -5,6 +5,7 @@ import 'package:tution_tracker/core/navigation/app_shell.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_detail_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_form_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
+import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
 import 'package:tution_tracker/features/settings/presentation/settings_screen.dart';
@@ -81,7 +82,26 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
             ],
           ),
           StatefulShellBranch(
-            routes: [tab(AppRoutes.fees, const FeesScreen())],
+            routes: [
+              GoRoute(
+                path: AppRoutes.fees,
+                builder: (context, state) => const FeesScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'pay/:studentId',
+                    builder: (context, state) => RecordPaymentScreen(
+                      studentId: state.pathParameters['studentId'],
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'payments/:paymentId/edit',
+                    builder: (context, state) => RecordPaymentScreen(
+                      paymentId: state.pathParameters['paymentId'],
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [tab(AppRoutes.reports, const ReportsScreen())],

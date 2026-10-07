@@ -50,6 +50,17 @@ class PaymentEdit {
   final AllocationTarget target;
 }
 
+/// A due a payment could go to, with what the screens need to label it.
+class PayableDue {
+  const PayableDue({required this.due, required this.kind, this.label});
+
+  final OpenDue due;
+
+  /// `monthly` or `one_time`.
+  final String kind;
+  final String? label;
+}
+
 class RecordedPayment {
   const RecordedPayment(this.payment, this.lines);
 
@@ -145,6 +156,46 @@ class PaymentRepository {
           dueDate: LocalDate.parse(b.dueDate),
           balance: b.balance,
         ),
+    ];
+  }
+
+  /// The dues a payment could be applied to, oldest first, with labels.
+  ///
+  /// With [excludingPaymentId], that payment's own allocations are treated as
+  /// not yet made: the dues it covers show their balance as it would be
+  /// without it. This is what editing that payment allocates against.
+  Future<List<PayableDue>> payableDues(
+    String studentId, {
+    String? excludingPaymentId,
+  }) async {
+    final rows =
+        await (_db.select(_db.feeBalances)
+              ..where((b) => b.studentId.equals(studentId) & b.waived.equals(0))
+              ..orderBy([
+                (b) => OrderingTerm.asc(b.month),
+                (b) => OrderingTerm.asc(b.dueDate),
+              ]))
+            .get();
+    final own = <String, int>{};
+    if (excludingPaymentId != null) {
+      for (final a in await allocationsOf(excludingPaymentId)) {
+        final id = a.feeRecordId;
+        if (id != null) own[id] = (own[id] ?? 0) + a.amount;
+      }
+    }
+    return [
+      for (final b in rows)
+        if (b.balance + (own[b.feeRecordId] ?? 0) > 0)
+          PayableDue(
+            due: OpenDue(
+              id: b.feeRecordId,
+              month: YearMonth.parse(b.month),
+              dueDate: LocalDate.parse(b.dueDate),
+              balance: b.balance + (own[b.feeRecordId] ?? 0),
+            ),
+            kind: b.kind,
+            label: b.label,
+          ),
     ];
   }
 
