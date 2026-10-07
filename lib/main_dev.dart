@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const TuitionTrackerApp(flavor: AppFlavor.dev));
+  runApp(const ProviderScope(child: TuitionTrackerApp(flavor: AppFlavor.dev)));
 }

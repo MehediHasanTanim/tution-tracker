@@ -1,0 +1,13 @@
+{
+  "@@locale": "en",
+  "appTitle": "Tuition Khata",
+  "navHome": "Home",
+  "navStudents": "Students",
+  "navFees": "Fees",
+  "navReports": "Reports",
+  "navSettings": "Settings",
+  "language": "Language",
+  "languageBangla": "বাংলা",
+  "languageEnglish": "English",
+  "sampleConjuncts": "Sample text"
+}
