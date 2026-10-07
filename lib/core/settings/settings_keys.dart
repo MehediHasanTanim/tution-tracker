@@ -93,7 +93,7 @@ abstract final class SettingKeys {
   /// Ask for a backup when the last one is older than this many days.
   static final backupReminderDays = intKey(
     'backup_reminder_days',
-    14,
+    7,
     min: 1,
     max: 365,
   );

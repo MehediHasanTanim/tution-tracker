@@ -3132,6 +3132,36 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বুঝেছি'**
   String get dateJumpOk;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'সহায়তা ও গোপনীয়তা'**
+  String get helpTitle;
+
+  /// No description provided for @helpPrivacyPolicy.
+  ///
+  /// In bn, this message translates to:
+  /// **'গোপনীয়তা নীতি'**
+  String get helpPrivacyPolicy;
+
+  /// No description provided for @helpSupportWhatsApp.
+  ///
+  /// In bn, this message translates to:
+  /// **'WhatsApp-এ সহায়তা চান'**
+  String get helpSupportWhatsApp;
+
+  /// No description provided for @helpSupportEmail.
+  ///
+  /// In bn, this message translates to:
+  /// **'ইমেইলে সহায়তা চান'**
+  String get helpSupportEmail;
+
+  /// No description provided for @helpSupportMessage.
+  ///
+  /// In bn, this message translates to:
+  /// **'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — '**
+  String get helpSupportMessage;
 }
 
 class _AppLocalizationsDelegate

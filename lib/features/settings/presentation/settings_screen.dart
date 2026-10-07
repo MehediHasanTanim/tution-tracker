@@ -5,6 +5,7 @@ import 'package:tution_tracker/app.dart';
 import 'package:tution_tracker/core/app_info.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
+import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/settings/setting_key.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
@@ -163,6 +164,44 @@ class SettingsScreen extends ConsumerWidget {
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push('/settings/backup'),
             ),
+            // The privacy note is always here; the links appear when the build
+            // was given them (tool/release.sh).
+            heading(l10n.helpTitle),
+            Text(l10n.bkPrivacy, style: theme.textTheme.bodyMedium),
+            ...[
+              if (supportWhatsApp.isNotEmpty)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.chat_outlined),
+                  title: Text(l10n.helpSupportWhatsApp),
+                  onTap: () => ref
+                      .read(urlLauncherProvider)
+                      .open(
+                        Uri.parse(
+                          'https://wa.me/$supportWhatsApp?text='
+                          '${Uri.encodeComponent(l10n.helpSupportMessage)}',
+                        ),
+                      ),
+                ),
+              if (supportEmail.isNotEmpty)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.mail_outline),
+                  title: Text(l10n.helpSupportEmail),
+                  onTap: () => ref
+                      .read(urlLauncherProvider)
+                      .open(Uri.parse('mailto:$supportEmail')),
+                ),
+              if (privacyPolicyUrl.isNotEmpty)
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.privacy_tip_outlined),
+                  title: Text(l10n.helpPrivacyPolicy),
+                  onTap: () => ref
+                      .read(urlLauncherProvider)
+                      .open(Uri.parse(privacyPolicyUrl)),
+                ),
+            ],
             const SizedBox(height: 16),
             Text(
               l10n.setAbout(applyNumerals(appVersion, numerals)),

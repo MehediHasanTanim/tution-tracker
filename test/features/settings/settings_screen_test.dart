@@ -35,6 +35,19 @@ void main() {
     ); // digits follow the setting
   });
 
+  feeUiTest('the privacy note is in the app', (tester, h) async {
+    await _open(tester, h);
+    await tester.scrollUntilVisible(
+      find.text('সহায়তা ও গোপনীয়তা'),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(
+      find.text('আপনার তথ্য এই ফোনেই থাকে। নিয়মিত ব্যাকআপ নিন।'),
+      findsWidgets,
+    );
+  });
+
   feeUiTest('digits change at once and are remembered', (tester, h) async {
     await _open(tester, h);
     await tester.tap(find.text('ইংরেজি (123)'));

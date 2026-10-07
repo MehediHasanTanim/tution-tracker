@@ -1,0 +1,6 @@
+# Copy to android/key.properties (which git ignores) and fill in.
+# See docs/release/signing.md.
+storeFile=../../keystore/tuition-khata-upload.jks
+storePassword=CHANGE-ME
+keyAlias=upload
+keyPassword=CHANGE-ME

@@ -78,7 +78,7 @@ class ReminderConfig {
     this.weeklyDay = DateTime.friday,
     this.weeklyTime = const ClockTime(18, 0),
     this.backupReminders = true,
-    this.backupAfterDays = 14,
+    this.backupAfterDays = 7,
     this.lastBackup,
   });
 

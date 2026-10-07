@@ -504,5 +504,10 @@
   "firstMonthNone": "No fee for the joining month; billing starts next month",
   "dateJumpTitle": "The phone's date has gone back",
   "dateJumpBody": "The phone's date is {days} days earlier than the last time the app was used. A wrong date can put new fees and attendance on the wrong day. None of your data has been changed. Please fix the date in phone settings.",
-  "dateJumpOk": "Got it"
+  "dateJumpOk": "Got it",
+  "helpTitle": "Help & privacy",
+  "helpPrivacyPolicy": "Privacy policy",
+  "helpSupportWhatsApp": "Get help on WhatsApp",
+  "helpSupportEmail": "Get help by email",
+  "helpSupportMessage": "Tuition Khata: I have a problem — "
 }

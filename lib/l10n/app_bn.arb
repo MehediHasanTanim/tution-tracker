@@ -929,5 +929,10 @@
       }
     }
   },
-  "dateJumpOk": "বুঝেছি"
+  "dateJumpOk": "বুঝেছি",
+  "helpTitle": "সহায়তা ও গোপনীয়তা",
+  "helpPrivacyPolicy": "গোপনীয়তা নীতি",
+  "helpSupportWhatsApp": "WhatsApp-এ সহায়তা চান",
+  "helpSupportEmail": "ইমেইলে সহায়তা চান",
+  "helpSupportMessage": "টিউশন খাতা: আমার একটি সমস্যা হয়েছে — "
 }

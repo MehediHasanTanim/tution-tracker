@@ -1669,4 +1669,19 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get dateJumpOk => 'বুঝেছি';
+
+  @override
+  String get helpTitle => 'সহায়তা ও গোপনীয়তা';
+
+  @override
+  String get helpPrivacyPolicy => 'গোপনীয়তা নীতি';
+
+  @override
+  String get helpSupportWhatsApp => 'WhatsApp-এ সহায়তা চান';
+
+  @override
+  String get helpSupportEmail => 'ইমেইলে সহায়তা চান';
+
+  @override
+  String get helpSupportMessage => 'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — ';
 }

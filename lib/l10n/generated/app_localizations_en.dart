@@ -1675,4 +1675,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dateJumpOk => 'Got it';
+
+  @override
+  String get helpTitle => 'Help & privacy';
+
+  @override
+  String get helpPrivacyPolicy => 'Privacy policy';
+
+  @override
+  String get helpSupportWhatsApp => 'Get help on WhatsApp';
+
+  @override
+  String get helpSupportEmail => 'Get help by email';
+
+  @override
+  String get helpSupportMessage => 'Tuition Khata: I have a problem — ';
 }
