@@ -681,6 +681,14 @@ class FeeRecords extends Table with TableInfo {
     requiredDuringInsert: true,
     $customConstraints: 'NOT NULL',
   );
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
   late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
     'created_at',
     aliasedName,
@@ -700,6 +708,7 @@ class FeeRecords extends Table with TableInfo {
     discount,
     waived,
     dueDate,
+    note,
     createdAt,
   ];
   @override
@@ -809,6 +818,14 @@ class Payments extends Table with TableInfo {
     requiredDuringInsert: false,
     $customConstraints: '',
   );
+  late final GeneratedColumn<int> receiptSharedAt = GeneratedColumn<int>(
+    'receipt_shared_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -821,6 +838,7 @@ class Payments extends Table with TableInfo {
     note,
     createdAt,
     deletedAt,
+    receiptSharedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -915,6 +933,129 @@ class PaymentAllocations extends Table with TableInfo {
 
   @override
   bool get dontWriteConstraints => true;
+}
+
+class FeeBalances extends ViewInfo<FeeBalances, Never> implements HasResultSet {
+  final String? _alias;
+  @override
+  final DatabaseAtV1 attachedDatabase;
+  FeeBalances(this.attachedDatabase, [this._alias]);
+  @override
+  List<GeneratedColumn> get $columns => [
+    feeRecordId,
+    studentId,
+    month,
+    kind,
+    label,
+    dueDate,
+    waived,
+    amountDue,
+    discount,
+    payable,
+    paid,
+    balance,
+  ];
+  @override
+  String get aliasedName => _alias ?? entityName;
+  @override
+  String get entityName => 'fee_balances';
+  @override
+  Map<SqlDialect, String> get createViewStatements => {
+    SqlDialect.sqlite: 'CREATE VIEW fee_balances AS SELECT *, CASE WHEN waived = 1 THEN 0 ELSE payable - paid END AS balance FROM (SELECT f.id AS fee_record_id, f.student_id, f.month, f.kind, f.label, f.due_date, f.waived, f.amount_due, f.discount, f.amount_due - f.discount AS payable, COALESCE((SELECT SUM(a.amount) FROM payment_allocations AS a INNER JOIN payments AS p ON p.id = a.payment_id WHERE a.fee_record_id = f.id AND p.deleted_at IS NULL), 0) AS paid FROM fee_records AS f) AS FeeBalance',
+  };
+  @override
+  FeeBalances get asDslTable => this;
+  @override
+  Never map(Map<String, dynamic> data, {String? tablePrefix}) {
+    throw UnsupportedError('TableInfo.map in schema verification code');
+  }
+
+  late final GeneratedColumn<String> feeRecordId = GeneratedColumn<String>(
+    'fee_record_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> studentId = GeneratedColumn<String>(
+    'student_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> month = GeneratedColumn<String>(
+    'month',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> label = GeneratedColumn<String>(
+    'label',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<String> dueDate = GeneratedColumn<String>(
+    'due_date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+  );
+  late final GeneratedColumn<int> waived = GeneratedColumn<int>(
+    'waived',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> amountDue = GeneratedColumn<int>(
+    'amount_due',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> discount = GeneratedColumn<int>(
+    'discount',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> payable = GeneratedColumn<int>(
+    'payable',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> paid = GeneratedColumn<int>(
+    'paid',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  late final GeneratedColumn<int> balance = GeneratedColumn<int>(
+    'balance',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+  );
+  @override
+  FeeBalances createAlias(String alias) {
+    return FeeBalances(attachedDatabase, alias);
+  }
+
+  @override
+  Query? get query => null;
+  @override
+  Set<String> get readTables => const {
+    'fee_records',
+    'payment_allocations',
+    'payments',
+    'students',
+  };
 }
 
 class FeeChanges extends Table with TableInfo {
@@ -1307,6 +1448,7 @@ class DatabaseAtV1 extends GeneratedDatabase {
     'idx_alloc_student',
     'CREATE INDEX idx_alloc_student ON payment_allocations (student_id)',
   );
+  late final FeeBalances feeBalances = FeeBalances(this);
   late final FeeChanges feeChanges = FeeChanges(this);
   late final Pauses pauses = Pauses(this);
   late final Index idxPausesStudent = Index(
@@ -1348,6 +1490,7 @@ class DatabaseAtV1 extends GeneratedDatabase {
     idxAllocFee,
     idxAllocPayment,
     idxAllocStudent,
+    feeBalances,
     feeChanges,
     pauses,
     idxPausesStudent,

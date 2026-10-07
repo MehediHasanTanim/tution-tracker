@@ -879,6 +879,16 @@
             "dsl_features": []
           },
           {
+            "name": "note",
+            "getter_name": "note",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
             "name": "created_at",
             "getter_name": "createdAt",
             "moor_type": "int",
@@ -1055,6 +1065,16 @@
           {
             "name": "deleted_at",
             "getter_name": "deletedAt",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": "",
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "receipt_shared_at",
+            "getter_name": "receiptSharedAt",
             "moor_type": "int",
             "nullable": true,
             "customConstraints": "",
@@ -1247,6 +1267,142 @@
     {
       "id": 23,
       "references": [
+        12,
+        19,
+        16
+      ],
+      "type": "view",
+      "data": {
+        "name": "fee_balances",
+        "sql": "CREATE VIEW fee_balances AS SELECT *, CASE WHEN waived = 1 THEN 0 ELSE payable - paid END AS balance FROM (SELECT f.id AS fee_record_id, f.student_id, f.month, f.kind, f.label, f.due_date, f.waived, f.amount_due, f.discount, f.amount_due - f.discount AS payable, COALESCE((SELECT SUM(a.amount) FROM payment_allocations AS a INNER JOIN payments AS p ON p.id = a.payment_id WHERE a.fee_record_id = f.id AND p.deleted_at IS NULL), 0) AS paid FROM fee_records AS f) AS FeeBalance",
+        "dart_info_name": "FeeBalances",
+        "columns": [
+          {
+            "name": "fee_record_id",
+            "getter_name": "feeRecordId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "student_id",
+            "getter_name": "studentId",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "month",
+            "getter_name": "month",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "kind",
+            "getter_name": "kind",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "label",
+            "getter_name": "label",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "due_date",
+            "getter_name": "dueDate",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "waived",
+            "getter_name": "waived",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "amount_due",
+            "getter_name": "amountDue",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "discount",
+            "getter_name": "discount",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "payable",
+            "getter_name": "payable",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "paid",
+            "getter_name": "paid",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "balance",
+            "getter_name": "balance",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "references": [
         0
       ],
       "type": "table",
@@ -1323,7 +1479,7 @@
       }
     },
     {
-      "id": 24,
+      "id": 25,
       "references": [
         0
       ],
@@ -1393,13 +1549,13 @@
       }
     },
     {
-      "id": 25,
+      "id": 26,
       "references": [
-        24
+        25
       ],
       "type": "index",
       "data": {
-        "on": 24,
+        "on": 25,
         "name": "idx_pauses_student",
         "sql": "CREATE INDEX idx_pauses_student ON pauses (student_id);",
         "unique": false,
@@ -1407,7 +1563,7 @@
       }
     },
     {
-      "id": 26,
+      "id": 27,
       "references": [],
       "type": "table",
       "data": {
@@ -1443,7 +1599,7 @@
       }
     },
     {
-      "id": 27,
+      "id": 28,
       "references": [],
       "type": "table",
       "data": {
@@ -1499,7 +1655,7 @@
       }
     },
     {
-      "id": 28,
+      "id": 29,
       "references": [],
       "type": "table",
       "data": {
@@ -1575,13 +1731,13 @@
       }
     },
     {
-      "id": 29,
+      "id": 30,
       "references": [
-        28
+        29
       ],
       "type": "index",
       "data": {
-        "on": 28,
+        "on": 29,
         "name": "idx_audit_entity",
         "sql": "CREATE INDEX idx_audit_entity ON audit_log (entity, entity_id);",
         "unique": false,
@@ -1703,7 +1859,7 @@
       "sql": [
         {
           "dialect": "sqlite",
-          "sql": "CREATE TABLE IF NOT EXISTS \"fee_records\" (\"id\" TEXT NOT NULL PRIMARY KEY, \"student_id\" TEXT NOT NULL REFERENCES students(id), \"month\" TEXT NOT NULL, \"kind\" TEXT NOT NULL DEFAULT 'monthly' CHECK (kind IN ('monthly', 'one_time')), \"label\" TEXT, \"amount_due\" INTEGER NOT NULL CHECK (amount_due >= 0), \"discount\" INTEGER NOT NULL DEFAULT 0 CHECK (discount >= 0), \"waived\" INTEGER NOT NULL DEFAULT 0 CHECK (waived IN (0, 1)), \"due_date\" TEXT NOT NULL, \"created_at\" INTEGER NOT NULL);"
+          "sql": "CREATE TABLE IF NOT EXISTS \"fee_records\" (\"id\" TEXT NOT NULL PRIMARY KEY, \"student_id\" TEXT NOT NULL REFERENCES students(id), \"month\" TEXT NOT NULL, \"kind\" TEXT NOT NULL DEFAULT 'monthly' CHECK (kind IN ('monthly', 'one_time')), \"label\" TEXT, \"amount_due\" INTEGER NOT NULL CHECK (amount_due >= 0), \"discount\" INTEGER NOT NULL DEFAULT 0 CHECK (discount >= 0), \"waived\" INTEGER NOT NULL DEFAULT 0 CHECK (waived IN (0, 1)), \"due_date\" TEXT NOT NULL, \"note\" TEXT, \"created_at\" INTEGER NOT NULL);"
         }
       ]
     },
@@ -1739,7 +1895,7 @@
       "sql": [
         {
           "dialect": "sqlite",
-          "sql": "CREATE TABLE IF NOT EXISTS \"payments\" (\"id\" TEXT NOT NULL PRIMARY KEY, \"student_id\" TEXT NOT NULL REFERENCES students(id), \"amount\" INTEGER NOT NULL CHECK (amount > 0), \"received_on\" TEXT NOT NULL, \"method\" TEXT NOT NULL DEFAULT 'cash' CHECK (method IN ('cash', 'bkash', 'nagad', 'rocket', 'bank', 'other')), \"reference\" TEXT, \"receipt_no\" INTEGER NOT NULL UNIQUE, \"note\" TEXT, \"created_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER);"
+          "sql": "CREATE TABLE IF NOT EXISTS \"payments\" (\"id\" TEXT NOT NULL PRIMARY KEY, \"student_id\" TEXT NOT NULL REFERENCES students(id), \"amount\" INTEGER NOT NULL CHECK (amount > 0), \"received_on\" TEXT NOT NULL, \"method\" TEXT NOT NULL DEFAULT 'cash' CHECK (method IN ('cash', 'bkash', 'nagad', 'rocket', 'bank', 'other')), \"reference\" TEXT, \"receipt_no\" INTEGER NOT NULL UNIQUE, \"note\" TEXT, \"created_at\" INTEGER NOT NULL, \"deleted_at\" INTEGER, \"receipt_shared_at\" INTEGER);"
         }
       ]
     },
@@ -1794,6 +1950,15 @@
         {
           "dialect": "sqlite",
           "sql": "CREATE INDEX idx_alloc_student ON payment_allocations (student_id)"
+        }
+      ]
+    },
+    {
+      "name": "fee_balances",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE VIEW fee_balances AS SELECT *, CASE WHEN waived = 1 THEN 0 ELSE payable - paid END AS balance FROM (SELECT f.id AS fee_record_id, f.student_id, f.month, f.kind, f.label, f.due_date, f.waived, f.amount_due, f.discount, f.amount_due - f.discount AS payable, COALESCE((SELECT SUM(a.amount) FROM payment_allocations AS a INNER JOIN payments AS p ON p.id = a.payment_id WHERE a.fee_record_id = f.id AND p.deleted_at IS NULL), 0) AS paid FROM fee_records AS f) AS FeeBalance"
         }
       ]
     },

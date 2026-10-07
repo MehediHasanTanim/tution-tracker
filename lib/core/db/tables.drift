@@ -98,6 +98,7 @@ CREATE TABLE fee_records (
   discount   INTEGER NOT NULL DEFAULT 0 CHECK (discount >= 0),
   waived     INTEGER NOT NULL DEFAULT 0 CHECK (waived IN (0, 1)),
   due_date   TEXT NOT NULL,
+  note       TEXT,                                       -- reason for a waiver or discount
   created_at INTEGER NOT NULL
 ) AS FeeRecord;
 CREATE UNIQUE INDEX uq_fee_monthly
@@ -116,7 +117,8 @@ CREATE TABLE payments (
   receipt_no  INTEGER NOT NULL UNIQUE,
   note        TEXT,
   created_at  INTEGER NOT NULL,
-  deleted_at  INTEGER
+  deleted_at  INTEGER,
+  receipt_shared_at INTEGER                              -- set when a receipt was shared
 ) AS Payment;
 CREATE INDEX idx_pay_student ON payments (student_id);
 CREATE INDEX idx_pay_date    ON payments (received_on);
@@ -131,6 +133,33 @@ CREATE TABLE payment_allocations (
 CREATE INDEX idx_alloc_fee     ON payment_allocations (fee_record_id);
 CREATE INDEX idx_alloc_payment ON payment_allocations (payment_id);
 CREATE INDEX idx_alloc_student ON payment_allocations (student_id);
+
+-- One row per due with what was paid against it. Allocations of soft-deleted
+-- payments are excluded here too, so a balance never depends on delete order.
+-- A waived due has balance 0. A negative balance means over-allocation and is
+-- reported by the consistency checker.
+CREATE VIEW fee_balances AS
+SELECT *,
+       CASE WHEN waived = 1 THEN 0 ELSE payable - paid END AS balance
+FROM (
+  SELECT f.id AS fee_record_id,
+         f.student_id,
+         f.month,
+         f.kind,
+         f.label,
+         f.due_date,
+         f.waived,
+         f.amount_due,
+         f.discount,
+         f.amount_due - f.discount AS payable,
+         COALESCE((
+           SELECT SUM(a.amount)
+           FROM payment_allocations a
+           INNER JOIN payments p ON p.id = a.payment_id
+           WHERE a.fee_record_id = f.id AND p.deleted_at IS NULL
+         ), 0) AS paid
+  FROM fee_records f
+) AS FeeBalance;
 
 CREATE TABLE fee_changes (
   id              TEXT NOT NULL PRIMARY KEY,
