@@ -2,11 +2,13 @@ import 'dart:convert';
 
 import 'package:drift/drift.dart';
 import 'package:tution_tracker/core/dates/clock_time.dart';
+import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/dates/year_month.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/text_normalizer.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
+import 'package:tution_tracker/features/fees/data/audit_log.dart';
 import 'package:tution_tracker/features/students/domain/student_draft.dart';
 import 'package:tution_tracker/features/students/domain/student_filter.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
@@ -39,12 +41,17 @@ class StudentRepository {
     this._db, {
     DateTime Function()? now,
     String Function()? newId,
+    this._onStudentChanged,
   }) : _now = now ?? DateTime.now,
        _newId = newId ?? (() => const Uuid().v4());
 
   final AppDatabase _db;
   final DateTime Function() _now;
   final String Function() _newId;
+
+  /// Called after a student is created, edited or restored, so dues follow
+  /// (wired to the due service by the app; null in plain data tests).
+  final Future<void> Function(String studentId)? _onStudentChanged;
 
   int get _timestamp => _now().toUtc().millisecondsSinceEpoch;
 
@@ -53,7 +60,7 @@ class StudentRepository {
   /// Throws [StudentValidationException] for an invalid [draft].
   Future<Student> create(StudentDraft draft) async {
     _check(draft);
-    return _db.transaction(() async {
+    final created = await _db.transaction(() async {
       final id = _newId();
       final ts = _timestamp;
       await _db
@@ -92,6 +99,8 @@ class StudentRepository {
           );
       return (await getById(id))!;
     });
+    await _onStudentChanged?.call(created.id);
+    return created;
   }
 
   /// Updates every field except the monthly fee. Fee changes are dated
@@ -120,6 +129,7 @@ class StudentRepository {
           ),
         );
     if (updated == 0) throw StateError('No student with id $id');
+    await _onStudentChanged?.call(id);
     return (await getById(id))!;
   }
 
@@ -142,10 +152,72 @@ class StudentRepository {
     );
   }
 
-  /// Hides the student from the default list; all history is kept.
-  Future<void> archive(String id) => setStatus(id, StudentStatus.left);
+  /// Hides the student from the default list; all history is kept. The date
+  /// is logged so a later [restore] knows which months were skipped.
+  Future<void> archive(String id) {
+    return _db.transaction(() async {
+      await setStatus(id, StudentStatus.left);
+      await writeAudit(
+        _db,
+        entity: 'student',
+        entityId: id,
+        action: 'archive',
+        at: _timestamp,
+        newId: _newId,
+      );
+    });
+  }
 
-  Future<void> restore(String id) => setStatus(id, StudentStatus.active);
+  /// Brings an archived student back. Months between the archive and now get
+  /// no dues: they are covered by a closed pause, so a long absence is not
+  /// billed retroactively. Dues then resume from the current month.
+  Future<void> restore(String id) async {
+    await _db.transaction(() async {
+      final archived =
+          await (_db.select(_db.auditLog)
+                ..where(
+                  (a) =>
+                      a.entity.equals('student') &
+                      a.entityId.equals(id) &
+                      a.action.equals('archive'),
+                )
+                ..orderBy([(a) => OrderingTerm.desc(a.at)])
+                ..limit(1))
+              .getSingleOrNull();
+      await setStatus(id, StudentStatus.active);
+      if (archived != null) {
+        final archivedOn = LocalDate.fromDateTime(
+          DateTime.fromMillisecondsSinceEpoch(
+            archived.at,
+            isUtc: true,
+          ).toLocal(),
+        );
+        final from = YearMonth.from(archivedOn).next();
+        final to = YearMonth.from(LocalDate.fromDateTime(_now())).previous();
+        if (from <= to) {
+          await _db
+              .into(_db.pauses)
+              .insert(
+                PausesCompanion.insert(
+                  id: _newId(),
+                  studentId: id,
+                  fromMonth: from.toKey(),
+                  toMonth: Value(to.toKey()),
+                ),
+              );
+        }
+      }
+      await writeAudit(
+        _db,
+        entity: 'student',
+        entityId: id,
+        action: 'restore',
+        at: _timestamp,
+        newId: _newId,
+      );
+    });
+    await _onStudentChanged?.call(id);
+  }
 
   /// Permanently removes the student and everything recorded for them
   /// (spec ST-6). Returns the photo path so the caller can delete the file.
