@@ -38,4 +38,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sampleConjuncts => 'Sample text';
+
+  @override
+  String get studentsSearchHint => 'Search by name, guardian or phone';
+
+  @override
+  String get studentsClearSearch => 'Clear';
+
+  @override
+  String get studentsFilterClass => 'Class';
+
+  @override
+  String get studentsAllClasses => 'All classes';
+
+  @override
+  String get studentsFilterBatch => 'Batch';
+
+  @override
+  String get studentsAllBatches => 'All batches';
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusPaused => 'Paused';
+
+  @override
+  String get statusArchived => 'Archived';
+
+  @override
+  String studentsCount(String count) {
+    return 'Students: $count';
+  }
+
+  @override
+  String get studentsEmptyTitle => 'No students yet';
+
+  @override
+  String get studentsEmptyBody => 'Add your first student';
+
+  @override
+  String get studentsNoMatch => 'No students match';
+
+  @override
+  String get studentsClearFilters => 'Clear filters';
+
+  @override
+  String get studentsAdd => 'Add student';
+
+  @override
+  String get studentProfileTitle => 'Student profile';
+
+  @override
+  String studentFeePerMonth(String amount) {
+    return '$amount / month';
+  }
 }

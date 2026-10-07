@@ -9,5 +9,22 @@
   "language": "Language",
   "languageBangla": "বাংলা",
   "languageEnglish": "English",
-  "sampleConjuncts": "Sample text"
+  "sampleConjuncts": "Sample text",
+  "studentsSearchHint": "Search by name, guardian or phone",
+  "studentsClearSearch": "Clear",
+  "studentsFilterClass": "Class",
+  "studentsAllClasses": "All classes",
+  "studentsFilterBatch": "Batch",
+  "studentsAllBatches": "All batches",
+  "statusActive": "Active",
+  "statusPaused": "Paused",
+  "statusArchived": "Archived",
+  "studentsCount": "Students: {count}",
+  "studentsEmptyTitle": "No students yet",
+  "studentsEmptyBody": "Add your first student",
+  "studentsNoMatch": "No students match",
+  "studentsClearFilters": "Clear filters",
+  "studentsAdd": "Add student",
+  "studentProfileTitle": "Student profile",
+  "studentFeePerMonth": "{amount} / month"
 }

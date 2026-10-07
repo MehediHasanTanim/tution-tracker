@@ -6,6 +6,7 @@ import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
 import 'package:tution_tracker/features/reports/presentation/reports_screen.dart';
 import 'package:tution_tracker/features/settings/presentation/settings_screen.dart';
+import 'package:tution_tracker/features/students/presentation/student_placeholders.dart';
 import 'package:tution_tracker/features/students/presentation/students_screen.dart';
 
 abstract final class AppRoutes {
@@ -31,7 +32,25 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
             routes: [tab(AppRoutes.home, const HomeScreen())],
           ),
           StatefulShellBranch(
-            routes: [tab(AppRoutes.students, const StudentsScreen())],
+            routes: [
+              GoRoute(
+                path: AppRoutes.students,
+                builder: (context, state) => const StudentsScreen(),
+                routes: [
+                  // `new` must come before `:id` so it is not read as an id.
+                  GoRoute(
+                    path: 'new',
+                    builder: (context, state) => const StudentFormPlaceholder(),
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    builder: (context, state) => StudentProfilePlaceholder(
+                      studentId: state.pathParameters['id']!,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [tab(AppRoutes.fees, const FeesScreen())],

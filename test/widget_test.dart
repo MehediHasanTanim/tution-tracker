@@ -1,48 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tution_tracker/app.dart';
+import 'package:tution_tracker/core/db/app_database.dart';
+import 'package:tution_tracker/core/db/connection.dart';
 
-Widget _app() =>
-    const ProviderScope(child: TuitionTrackerApp(flavor: AppFlavor.dev));
+import 'support/test_app.dart';
 
-Future<void> _openSettings(WidgetTester tester) async {
-  await tester.tap(
-    find.descendant(
-      of: find.byType(NavigationBar),
-      matching: find.text('সেটিংস'),
-    ),
-  );
-  await tester.pumpAndSettle();
-}
+Finder _navLabel(String label) =>
+    find.descendant(of: find.byType(NavigationBar), matching: find.text(label));
 
 void main() {
-  testWidgets('starts in Bangla on the Home tab', (tester) async {
-    await tester.pumpWidget(_app());
-    await tester.pumpAndSettle();
-    final bar = find.byType(NavigationBar);
-    expect(bar, findsOneWidget);
+  late AppDatabase db;
+
+  setUp(() => db = openInMemoryDatabase());
+
+  void appTest(String description, Future<void> Function(WidgetTester) body) {
+    testWidgets(description, (tester) async {
+      try {
+        await body(tester);
+      } finally {
+        await shutdownApp(tester, db);
+      }
+    });
+  }
+
+  appTest('starts in Bangla on the Home tab', (tester) async {
+    await pumpApp(tester, db);
+    expect(find.byType(NavigationBar), findsOneWidget);
     for (final label in ['হোম', 'শিক্ষার্থী', 'ফি', 'রিপোর্ট', 'সেটিংস']) {
-      expect(
-        find.descendant(of: bar, matching: find.text(label)),
-        findsOneWidget,
-      );
+      expect(_navLabel(label), findsOneWidget);
     }
     expect(find.text('হোম · 0'), findsOneWidget);
   });
 
-  testWidgets('all five tabs navigate', (tester) async {
-    await tester.pumpWidget(_app());
-    await tester.pumpAndSettle();
+  appTest('all five tabs navigate', (tester) async {
+    await pumpApp(tester, db);
     for (final label in ['শিক্ষার্থী', 'ফি', 'রিপোর্ট', 'সেটিংস', 'হোম']) {
-      await tester.tap(
-        find.descendant(
-          of: find.byType(NavigationBar),
-          matching: find.text(label),
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(find.byType(AppBar), findsOneWidget);
+      await tester.tap(_navLabel(label));
+      await settle(tester);
       expect(
         find.descendant(of: find.byType(AppBar), matching: find.text(label)),
         findsOneWidget,
@@ -50,37 +44,26 @@ void main() {
     }
   });
 
-  testWidgets('tab state survives switching', (tester) async {
-    await tester.pumpWidget(_app());
-    await tester.pumpAndSettle();
+  appTest('tab state survives switching', (tester) async {
+    await pumpApp(tester, db);
     await tester.tap(find.text('হোম · 0'));
     await tester.pump();
     expect(find.text('হোম · 1'), findsOneWidget);
 
-    await tester.tap(
-      find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('ফি'),
-      ),
-    );
-    await tester.pumpAndSettle();
-    await tester.tap(
-      find.descendant(
-        of: find.byType(NavigationBar),
-        matching: find.text('হোম'),
-      ),
-    );
-    await tester.pumpAndSettle();
+    await tester.tap(_navLabel('ফি'));
+    await settle(tester);
+    await tester.tap(_navLabel('হোম'));
+    await settle(tester);
     expect(find.text('হোম · 1'), findsOneWidget);
   });
 
-  testWidgets('switching locale in Settings changes strings', (tester) async {
-    await tester.pumpWidget(_app());
-    await tester.pumpAndSettle();
-    await _openSettings(tester);
+  appTest('switching locale in Settings changes strings', (tester) async {
+    await pumpApp(tester, db);
+    await tester.tap(_navLabel('সেটিংস'));
+    await settle(tester);
 
     await tester.tap(find.text('English'));
-    await tester.pumpAndSettle();
+    await settle(tester);
 
     expect(find.text('Language'), findsOneWidget);
     expect(find.text('Settings'), findsWidgets);

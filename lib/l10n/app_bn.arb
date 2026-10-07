@@ -9,5 +9,36 @@
   "language": "ভাষা",
   "languageBangla": "বাংলা",
   "languageEnglish": "English",
-  "sampleConjuncts": "ক্ষমতা, বিজ্ঞান, সংখ্যা, শ্রদ্ধা, দুর্গাপুর"
+  "sampleConjuncts": "ক্ষমতা, বিজ্ঞান, সংখ্যা, শ্রদ্ধা, দুর্গাপুর",
+  "studentsSearchHint": "নাম, অভিভাবক বা ফোন দিয়ে খুঁজুন",
+  "studentsClearSearch": "মুছুন",
+  "studentsFilterClass": "শ্রেণি",
+  "studentsAllClasses": "সব শ্রেণি",
+  "studentsFilterBatch": "ব্যাচ",
+  "studentsAllBatches": "সব ব্যাচ",
+  "statusActive": "সক্রিয়",
+  "statusPaused": "বিরতিতে",
+  "statusArchived": "আর্কাইভ",
+  "studentsCount": "শিক্ষার্থী: {count}",
+  "@studentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "studentsEmptyTitle": "এখনও কোনো শিক্ষার্থী নেই",
+  "studentsEmptyBody": "প্রথম শিক্ষার্থী যোগ করুন",
+  "studentsNoMatch": "কোনো শিক্ষার্থী মেলেনি",
+  "studentsClearFilters": "ফিল্টার মুছুন",
+  "studentsAdd": "শিক্ষার্থী যোগ করুন",
+  "studentProfileTitle": "শিক্ষার্থীর প্রোফাইল",
+  "studentFeePerMonth": "{amount} / মাস",
+  "@studentFeePerMonth": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
 }

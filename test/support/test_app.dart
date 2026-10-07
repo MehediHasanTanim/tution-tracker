@@ -1,0 +1,45 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:tution_tracker/app.dart';
+import 'package:tution_tracker/core/db/app_database.dart';
+import 'package:tution_tracker/core/db/database_provider.dart';
+
+/// The real app wired to an in-memory [db] instead of the on-device file.
+Widget testApp(AppDatabase db) => ProviderScope(
+  overrides: [databaseProvider.overrideWith((ref) async => db)],
+  child: const TuitionTrackerApp(flavor: AppFlavor.dev),
+);
+
+/// Mounts the app on [db]. Pair with [shutdownApp] at the end of the test.
+Future<void> pumpApp(WidgetTester tester, AppDatabase db) async {
+  await tester.pumpWidget(testApp(db));
+  await settle(tester);
+}
+
+/// Unmounts the app and closes [db].
+///
+/// Stream queries must be unmounted before the database closes, and closing
+/// has to happen in real time, not fake time, or the test hangs. Call this
+/// inside the test body: Flutter checks for pending timers right after the
+/// body, before any `tearDown`.
+Future<void> shutdownApp(WidgetTester tester, AppDatabase db) async {
+  await tester.pumpWidget(const SizedBox());
+  // Drift schedules a zero-length timer when a stream is cancelled; fire it
+  // so the test does not end with a pending timer.
+  await tester.pump(const Duration(milliseconds: 10));
+  await tester.runAsync(db.close);
+}
+
+/// Lets real async work (SQLite, streams) finish, then rebuilds the UI.
+///
+/// Widget tests run on fake time, so database futures only complete inside
+/// [WidgetTester.runAsync].
+Future<void> settle(WidgetTester tester) async {
+  for (var i = 0; i < 3; i++) {
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 30)),
+    );
+    await tester.pump(const Duration(milliseconds: 50));
+  }
+}

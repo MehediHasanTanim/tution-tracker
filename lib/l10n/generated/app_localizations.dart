@@ -157,6 +157,108 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ক্ষমতা, বিজ্ঞান, সংখ্যা, শ্রদ্ধা, দুর্গাপুর'**
   String get sampleConjuncts;
+
+  /// No description provided for @studentsSearchHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'নাম, অভিভাবক বা ফোন দিয়ে খুঁজুন'**
+  String get studentsSearchHint;
+
+  /// No description provided for @studentsClearSearch.
+  ///
+  /// In bn, this message translates to:
+  /// **'মুছুন'**
+  String get studentsClearSearch;
+
+  /// No description provided for @studentsFilterClass.
+  ///
+  /// In bn, this message translates to:
+  /// **'শ্রেণি'**
+  String get studentsFilterClass;
+
+  /// No description provided for @studentsAllClasses.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব শ্রেণি'**
+  String get studentsAllClasses;
+
+  /// No description provided for @studentsFilterBatch.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ'**
+  String get studentsFilterBatch;
+
+  /// No description provided for @studentsAllBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব ব্যাচ'**
+  String get studentsAllBatches;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In bn, this message translates to:
+  /// **'সক্রিয়'**
+  String get statusActive;
+
+  /// No description provided for @statusPaused.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিরতিতে'**
+  String get statusPaused;
+
+  /// No description provided for @statusArchived.
+  ///
+  /// In bn, this message translates to:
+  /// **'আর্কাইভ'**
+  String get statusArchived;
+
+  /// No description provided for @studentsCount.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী: {count}'**
+  String studentsCount(String count);
+
+  /// No description provided for @studentsEmptyTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনও কোনো শিক্ষার্থী নেই'**
+  String get studentsEmptyTitle;
+
+  /// No description provided for @studentsEmptyBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রথম শিক্ষার্থী যোগ করুন'**
+  String get studentsEmptyBody;
+
+  /// No description provided for @studentsNoMatch.
+  ///
+  /// In bn, this message translates to:
+  /// **'কোনো শিক্ষার্থী মেলেনি'**
+  String get studentsNoMatch;
+
+  /// No description provided for @studentsClearFilters.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফিল্টার মুছুন'**
+  String get studentsClearFilters;
+
+  /// No description provided for @studentsAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থী যোগ করুন'**
+  String get studentsAdd;
+
+  /// No description provided for @studentProfileTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীর প্রোফাইল'**
+  String get studentProfileTitle;
+
+  /// No description provided for @studentFeePerMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'{amount} / মাস'**
+  String studentFeePerMonth(String amount);
 }
 
 class _AppLocalizationsDelegate
