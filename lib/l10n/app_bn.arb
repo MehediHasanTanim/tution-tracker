@@ -902,5 +902,32 @@
   "lockOnDone": "অ্যাপ লক চালু হয়েছে",
   "lockOffDone": "অ্যাপ লক বন্ধ হয়েছে",
   "lockRemember": "পিন ভুলে গেলে সব তথ্য মুছে নতুন করে শুরু করতে হবে, তাই নিয়মিত ব্যাকআপ রাখুন।",
-  "lockWrongCurrent": "বর্তমান পিন ভুল"
+  "lockWrongCurrent": "বর্তমান পিন ভুল",
+  "firstMonthFee": "প্রথম মাসের ফি: {amount}",
+  "@firstMonthFee": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "firstMonthProrated": "যোগদানের মাসের বাকি দিন অনুযায়ী ফি: {amount}",
+  "@firstMonthProrated": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "firstMonthNone": "যোগদানের মাসের জন্য কোনো ফি নেই; বিলিং পরের মাস থেকে শুরু",
+  "dateJumpTitle": "ফোনের তারিখ পিছিয়ে গেছে",
+  "dateJumpBody": "ফোনের তারিখ আগের চেয়ে {days} দিন পিছনে দেখাচ্ছে। তারিখ ভুল থাকলে নতুন ফি ও হাজিরা ভুল দিনে যোগ হতে পারে। আপনার কোনো তথ্য মোছা হয়নি। ফোনের সেটিংসে তারিখ ঠিক করে নিন।",
+  "@dateJumpBody": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "dateJumpOk": "বুঝেছি"
 }

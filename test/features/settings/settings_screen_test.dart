@@ -29,7 +29,10 @@ void main() {
     expect(find.text('নতুন শিক্ষার্থীর ফি আদায়ের দিন'), findsOneWidget);
     expect(find.text('প্রতি মাসের ১০ তারিখ'), findsOneWidget);
     expect(find.text('পুরো মাসের ফি'), findsOneWidget);
-    expect(find.text('সংস্করণ ১.০.০'), findsNothing); // digits follow setting
+    expect(
+      find.text('সংস্করণ ১.০.০'),
+      findsOneWidget,
+    ); // digits follow the setting
   });
 
   feeUiTest('digits change at once and are remembered', (tester, h) async {

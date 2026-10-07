@@ -1650,4 +1650,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lockWrongCurrent => 'The current PIN is wrong';
+
+  @override
+  String firstMonthFee(String amount) {
+    return 'First month\'s fee: $amount';
+  }
+
+  @override
+  String firstMonthProrated(String amount) {
+    return 'Pro-rated for the days left this month: $amount';
+  }
+
+  @override
+  String get firstMonthNone =>
+      'No fee for the joining month; billing starts next month';
+
+  @override
+  String get dateJumpTitle => 'The phone\'s date has gone back';
+
+  @override
+  String dateJumpBody(String days) {
+    return 'The phone\'s date is $days days earlier than the last time the app was used. A wrong date can put new fees and attendance on the wrong day. None of your data has been changed. Please fix the date in phone settings.';
+  }
+
+  @override
+  String get dateJumpOk => 'Got it';
 }

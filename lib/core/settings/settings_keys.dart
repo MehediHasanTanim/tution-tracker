@@ -106,6 +106,10 @@ abstract final class SettingKeys {
     AppThemeMode.system,
   );
 
+  /// The latest moment the app saw the phone's clock, to notice the date
+  /// being set backwards (spec section 7, case 7).
+  static final lastSeenAt = dateTimeKey('last_seen_at');
+
   // ---- first run and sample data --------------------------------------------
 
   static final onboardingDone = boolKey('onboarding_done');

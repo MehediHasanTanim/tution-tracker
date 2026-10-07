@@ -3096,6 +3096,42 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বর্তমান পিন ভুল'**
   String get lockWrongCurrent;
+
+  /// No description provided for @firstMonthFee.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রথম মাসের ফি: {amount}'**
+  String firstMonthFee(String amount);
+
+  /// No description provided for @firstMonthProrated.
+  ///
+  /// In bn, this message translates to:
+  /// **'যোগদানের মাসের বাকি দিন অনুযায়ী ফি: {amount}'**
+  String firstMonthProrated(String amount);
+
+  /// No description provided for @firstMonthNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'যোগদানের মাসের জন্য কোনো ফি নেই; বিলিং পরের মাস থেকে শুরু'**
+  String get firstMonthNone;
+
+  /// No description provided for @dateJumpTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফোনের তারিখ পিছিয়ে গেছে'**
+  String get dateJumpTitle;
+
+  /// No description provided for @dateJumpBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফোনের তারিখ আগের চেয়ে {days} দিন পিছনে দেখাচ্ছে। তারিখ ভুল থাকলে নতুন ফি ও হাজিরা ভুল দিনে যোগ হতে পারে। আপনার কোনো তথ্য মোছা হয়নি। ফোনের সেটিংসে তারিখ ঠিক করে নিন।'**
+  String dateJumpBody(String days);
+
+  /// No description provided for @dateJumpOk.
+  ///
+  /// In bn, this message translates to:
+  /// **'বুঝেছি'**
+  String get dateJumpOk;
 }
 
 class _AppLocalizationsDelegate

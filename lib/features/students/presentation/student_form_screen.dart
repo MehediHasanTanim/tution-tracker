@@ -11,9 +11,13 @@ import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/i18n/text_normalizer.dart';
+import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/photo_picker.dart';
+import 'package:tution_tracker/core/settings/settings_keys.dart';
+import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
+import 'package:tution_tracker/features/fees/domain/due_generation.dart';
 import 'package:tution_tracker/features/students/data/photo_processing.dart';
 import 'package:tution_tracker/features/students/data/photo_store.dart';
 import 'package:tution_tracker/features/students/data/student_form_providers.dart';
@@ -338,6 +342,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
                 validator: (v) =>
                     (v ?? '').trim().isEmpty ? l10n.errorFeeRequired : null,
               ),
+              if (!_editing) _firstMonthNote(l10n),
               const SizedBox(height: 8),
               if (!_editing)
                 Align(
@@ -353,6 +358,47 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  /// What the first month will cost, before saving (edge case 1): the full
+  /// fee, a pro-rated part of it, or nothing, by the proration setting.
+  Widget _firstMonthNote(AppLocalizations l10n) {
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
+    final grouping =
+        ref.watch(groupingStyleProvider).value ?? GroupingStyle.lakh;
+    final rule = ref.watchSetting(SettingKeys.proration);
+    final today = todayFrom(ref.watch(clockProvider));
+    final joined = _joinedOn ?? today;
+    return ListenableBuilder(
+      listenable: _fee,
+      builder: (context, _) {
+        final fee = int.tryParse(toWesternDigits(_fee.text.trim()));
+        if (fee == null || fee == 0) return const SizedBox.shrink();
+        final first = prorate(fee, joined, rule);
+        final String text;
+        if (first == null) {
+          text = l10n.firstMonthNone;
+        } else {
+          final amount = formatTaka(
+            Taka(first),
+            numerals: numerals,
+            grouping: grouping,
+          );
+          text = first == fee
+              ? l10n.firstMonthFee(amount)
+              : l10n.firstMonthProrated(amount);
+        }
+        return Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            text,
+            key: const Key('first-month-note'),
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        );
+      },
     );
   }
 

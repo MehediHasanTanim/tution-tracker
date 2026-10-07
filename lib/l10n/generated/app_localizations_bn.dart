@@ -1644,4 +1644,29 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get lockWrongCurrent => 'বর্তমান পিন ভুল';
+
+  @override
+  String firstMonthFee(String amount) {
+    return 'প্রথম মাসের ফি: $amount';
+  }
+
+  @override
+  String firstMonthProrated(String amount) {
+    return 'যোগদানের মাসের বাকি দিন অনুযায়ী ফি: $amount';
+  }
+
+  @override
+  String get firstMonthNone =>
+      'যোগদানের মাসের জন্য কোনো ফি নেই; বিলিং পরের মাস থেকে শুরু';
+
+  @override
+  String get dateJumpTitle => 'ফোনের তারিখ পিছিয়ে গেছে';
+
+  @override
+  String dateJumpBody(String days) {
+    return 'ফোনের তারিখ আগের চেয়ে $days দিন পিছনে দেখাচ্ছে। তারিখ ভুল থাকলে নতুন ফি ও হাজিরা ভুল দিনে যোগ হতে পারে। আপনার কোনো তথ্য মোছা হয়নি। ফোনের সেটিংসে তারিখ ঠিক করে নিন।';
+  }
+
+  @override
+  String get dateJumpOk => 'বুঝেছি';
 }

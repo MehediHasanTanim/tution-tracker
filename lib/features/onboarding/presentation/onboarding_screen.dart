@@ -50,80 +50,98 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: _step >= 1 && _step <= 3
-                    ? TextButton(
-                        onPressed: () => setState(() => _step = 4),
-                        child: Text(l10n.obSkip),
-                      )
-                    : const SizedBox(height: 48),
+        // Scrolls when the text is large and the screen small, so nothing is
+        // ever cut off; otherwise it fills the screen.
+        child: LayoutBuilder(
+          builder: (context, constraints) => SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight - 48,
               ),
-              const Spacer(),
-              Icon(icon, size: 88, color: theme.colorScheme.primary),
-              const SizedBox(height: 24),
-              Text(
-                title,
-                style: theme.textTheme.headlineSmall,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                body,
-                style: theme.textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
-              if (_step == 0) ...[
-                const SizedBox(height: 32),
-                Text(
-                  l10n.obPickLanguage,
-                  style: theme.textTheme.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 12),
-                SegmentedButton<Locale>(
-                  segments: const [
-                    ButtonSegment(value: Locale('bn'), label: Text('বাংলা')),
-                    ButtonSegment(value: Locale('en'), label: Text('English')),
-                  ],
-                  selected: {locale},
-                  onSelectionChanged: (s) =>
-                      ref.read(localeProvider.notifier).setLocale(s.first),
-                ),
-              ],
-              const Spacer(),
-              if (_step < 4) ...[
-                _Dots(current: _step, count: 5),
-                const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: () => setState(() => _step++),
-                  child: Text(l10n.obNext),
-                ),
-              ] else if (_busy)
-                Column(
+              child: IntrinsicHeight(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const CircularProgressIndicator(),
-                    const SizedBox(height: 8),
-                    Text(l10n.obLoading),
+                    Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: _step >= 1 && _step <= 3
+                          ? TextButton(
+                              onPressed: () => setState(() => _step = 4),
+                              child: Text(l10n.obSkip),
+                            )
+                          : const SizedBox(height: 48),
+                    ),
+                    const Spacer(),
+                    Icon(icon, size: 88, color: theme.colorScheme.primary),
+                    const SizedBox(height: 24),
+                    Text(
+                      title,
+                      style: theme.textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      body,
+                      style: theme.textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    if (_step == 0) ...[
+                      const SizedBox(height: 32),
+                      Text(
+                        l10n.obPickLanguage,
+                        style: theme.textTheme.titleMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      SegmentedButton<Locale>(
+                        segments: const [
+                          ButtonSegment(
+                            value: Locale('bn'),
+                            label: Text('বাংলা'),
+                          ),
+                          ButtonSegment(
+                            value: Locale('en'),
+                            label: Text('English'),
+                          ),
+                        ],
+                        selected: {locale},
+                        onSelectionChanged: (s) => ref
+                            .read(localeProvider.notifier)
+                            .setLocale(s.first),
+                      ),
+                    ],
+                    const Spacer(),
+                    if (_step < 4) ...[
+                      _Dots(current: _step, count: 5),
+                      const SizedBox(height: 16),
+                      FilledButton(
+                        onPressed: () => setState(() => _step++),
+                        child: Text(l10n.obNext),
+                      ),
+                    ] else if (_busy)
+                      Column(
+                        children: [
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: 8),
+                          Text(l10n.obLoading),
+                        ],
+                      )
+                    else ...[
+                      FilledButton(
+                        onPressed: () => _finish(withSample: true),
+                        child: Text(l10n.obSampleYes),
+                      ),
+                      const SizedBox(height: 8),
+                      OutlinedButton(
+                        onPressed: () => _finish(withSample: false),
+                        child: Text(l10n.obSampleNo),
+                      ),
+                    ],
                   ],
-                )
-              else ...[
-                FilledButton(
-                  onPressed: () => _finish(withSample: true),
-                  child: Text(l10n.obSampleYes),
                 ),
-                const SizedBox(height: 8),
-                OutlinedButton(
-                  onPressed: () => _finish(withSample: false),
-                  child: Text(l10n.obSampleNo),
-                ),
-              ],
-            ],
+              ),
+            ),
           ),
         ),
       ),

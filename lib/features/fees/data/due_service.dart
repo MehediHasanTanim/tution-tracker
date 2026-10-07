@@ -100,15 +100,31 @@ class DueService {
     });
   }
 
-  /// [generateForStudent] for every student. Returns the dues created.
+  /// [generateForStudent] for every student that could need it. Returns the
+  /// dues created.
+  ///
+  /// This runs at every app start and resume, so the common case (everyone is
+  /// up to date) must cost one query, not a handful per student. A student is
+  /// only looked at when they have no due yet for the current month (a new
+  /// month, a restored older backup, a pause) or hold advance credit still to
+  /// be applied.
   Future<int> generateForAll() {
     return _db.transaction(() async {
-      final students = await (_db.select(
-        _db.students,
-      )..where((s) => s.status.isNotValue('left'))).get();
+      final rows = await _db
+          .customSelect(
+            'SELECT s.id AS id FROM students s '
+            "WHERE s.status != 'left' AND ("
+            ' NOT EXISTS (SELECT 1 FROM fee_records f '
+            "  WHERE f.student_id = s.id AND f.kind = 'monthly' AND f.month >= ?)"
+            ' OR EXISTS (SELECT 1 FROM payment_allocations a '
+            '  WHERE a.student_id = s.id AND a.fee_record_id IS NULL))',
+            variables: [Variable.withString(currentMonth.toKey())],
+            readsFrom: {_db.students, _db.feeRecords, _db.paymentAllocations},
+          )
+          .get();
       var created = 0;
-      for (final s in students) {
-        created += await generateForStudent(s.id);
+      for (final r in rows) {
+        created += await generateForStudent(r.read<String>('id'));
       }
       return created;
     });

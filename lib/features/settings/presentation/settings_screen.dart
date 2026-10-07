@@ -165,7 +165,7 @@ class SettingsScreen extends ConsumerWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              l10n.setAbout(appVersion),
+              l10n.setAbout(applyNumerals(appVersion, numerals)),
               style: theme.textTheme.bodySmall,
               textAlign: TextAlign.center,
             ),
