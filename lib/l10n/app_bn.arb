@@ -340,6 +340,7 @@
   "homeToday": "আজ",
   "homeClasses": "ক্লাস",
   "homeNoClasses": "এই দিনে কোনো ক্লাস নেই",
+  "homeClassMenu": "ক্লাসের অপশন",
   "classNotTaken": "নেওয়া হয়নি",
   "classTaken": "নেওয়া হয়েছে",
   "classCancelled": "বাতিল",

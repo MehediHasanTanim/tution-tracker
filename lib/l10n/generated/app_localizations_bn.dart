@@ -683,6 +683,9 @@ class AppLocalizationsBn extends AppLocalizations {
   String get homeNoClasses => 'এই দিনে কোনো ক্লাস নেই';
 
   @override
+  String get homeClassMenu => 'ক্লাসের অপশন';
+
+  @override
   String get classNotTaken => 'নেওয়া হয়নি';
 
   @override

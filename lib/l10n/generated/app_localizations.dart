@@ -1370,6 +1370,12 @@ abstract class AppLocalizations {
   /// **'এই দিনে কোনো ক্লাস নেই'**
   String get homeNoClasses;
 
+  /// No description provided for @homeClassMenu.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাসের অপশন'**
+  String get homeClassMenu;
+
   /// No description provided for @classNotTaken.
   ///
   /// In bn, this message translates to:

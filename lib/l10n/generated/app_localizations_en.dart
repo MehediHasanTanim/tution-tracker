@@ -684,6 +684,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeNoClasses => 'No classes this day';
 
   @override
+  String get homeClassMenu => 'Class options';
+
+  @override
   String get classNotTaken => 'Not taken';
 
   @override

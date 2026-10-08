@@ -6,6 +6,7 @@ import 'package:tution_tracker/features/batches/domain/batch_draft.dart';
 
 import '../../support/fee_harness.dart';
 import '../../support/fee_ui.dart';
+import '../../support/test_app.dart';
 
 /// The harness clock is Sunday 2026-03-15. Seeds a Sunday batch "Math 9"
 /// with [names] enrolled and returns the batch id.
@@ -114,6 +115,50 @@ void main() {
     await tester.tap(find.text('ক্লাস আবার চালু করুন'));
     await waitFor(tester);
     expect(find.text('এই ক্লাস বাতিল করা হয়েছে'), findsNothing);
+  });
+
+  feeUiTest('Today card: cancel, mark a holiday and restore', (
+    tester,
+    h,
+  ) async {
+    await _seedBatch(tester, h, ['Aman']);
+    await pumpHarnessApp(tester, h);
+    await waitFor(tester);
+
+    Future<void> choose(String item) async {
+      // Let the last snackbar go; it sits over the menu button.
+      await tester.pump(const Duration(seconds: 6));
+      await tester.pumpAndSettle();
+      await tapCentered(tester, find.byTooltip('ক্লাসের অপশন'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(item).last);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> confirm() async {
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'),
+        ),
+      );
+      await waitFor(tester);
+    }
+
+    await choose('ক্লাস বাতিল করুন');
+    await confirm();
+    expect(find.text('বাতিল'), findsWidgets);
+    expect(find.text('নেওয়া হয়নি'), findsNothing);
+
+    // Restoring is the only option on a cancelled class.
+    await choose('ক্লাস আবার চালু করুন');
+    await waitFor(tester);
+    expect(find.text('নেওয়া হয়নি'), findsOneWidget);
+
+    await choose('ছুটির দিন হিসেবে চিহ্নিত করুন');
+    await confirm();
+    expect(find.text('নেওয়া হয়নি'), findsNothing);
+    expect(find.text('ছুটি'), findsWidgets);
   });
 
   feeUiTest('an extra class can be added for a batch', (tester, h) async {

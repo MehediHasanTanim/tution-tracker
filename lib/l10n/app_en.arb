@@ -212,6 +212,7 @@
   "homeToday": "Today",
   "homeClasses": "Classes",
   "homeNoClasses": "No classes this day",
+  "homeClassMenu": "Class options",
   "classNotTaken": "Not taken",
   "classTaken": "Taken",
   "classCancelled": "Cancelled",

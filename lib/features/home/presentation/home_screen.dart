@@ -11,6 +11,7 @@ import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
 import 'package:tution_tracker/features/backup/presentation/backup_banner.dart';
+import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
 import 'package:tution_tracker/features/home/presentation/extra_class_sheet.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/features/reports/data/report_providers.dart';
@@ -241,6 +242,53 @@ class _ClassCard extends ConsumerWidget {
   final ExpectedSession session;
   final LocalDate date;
 
+  bool get _isOff =>
+      session.state == ClassState.cancelled ||
+      session.state == ClassState.holiday;
+
+  /// Cancel, holiday and restore straight from the Today list (spec AT-4).
+  Future<void> _onMenu(BuildContext context, WidgetRef ref, String v) async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final repo = await ref.read(attendanceRepositoryProvider.future);
+    if (v == 'restore') {
+      await repo.reopen(session.record!.id);
+      return;
+    }
+    final status = v == 'cancel'
+        ? SessionStatus.cancelled
+        : SessionStatus.holiday;
+    if (!context.mounted) return;
+    final result = await showDialog<FieldsResult>(
+      context: context,
+      builder: (_) => FieldsDialog(
+        title: status == SessionStatus.cancelled
+            ? l10n.attCancelClass
+            : l10n.attHoliday,
+        fields: [
+          DialogField(key: 'reason', label: l10n.attReason, required: false),
+        ],
+      ),
+    );
+    if (result == null) return;
+    await repo.markOff(
+      owner: session.owner,
+      date: date,
+      startTime: session.startTime,
+      status: status,
+      reason: result.values['reason'],
+    );
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(
+          status == SessionStatus.cancelled
+              ? l10n.classCancelled
+              : l10n.classHoliday,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
@@ -288,11 +336,30 @@ class _ClassCard extends ConsumerWidget {
       child: ListTile(
         title: Text(session.owner.name),
         subtitle: detail.isEmpty ? null : Text(detail),
-        trailing: Chip(
-          avatar: Icon(icon, size: 18),
-          label: Text(label),
-          backgroundColor: color,
-          visualDensity: VisualDensity.compact,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Chip(
+              avatar: Icon(icon, size: 18),
+              label: Text(label),
+              backgroundColor: color,
+              visualDensity: VisualDensity.compact,
+            ),
+            PopupMenuButton<String>(
+              tooltip: l10n.homeClassMenu,
+              onSelected: (v) => _onMenu(context, ref, v),
+              itemBuilder: (context) => [
+                if (!_isOff) ...[
+                  PopupMenuItem(
+                    value: 'cancel',
+                    child: Text(l10n.attCancelClass),
+                  ),
+                  PopupMenuItem(value: 'holiday', child: Text(l10n.attHoliday)),
+                ] else if (session.record != null)
+                  PopupMenuItem(value: 'restore', child: Text(l10n.attRestore)),
+              ],
+            ),
+          ],
         ),
         onTap: () => context.push(
           attendanceLocation(session.owner, date, session.startTime),
