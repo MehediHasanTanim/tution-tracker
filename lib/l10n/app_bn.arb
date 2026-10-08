@@ -1,0 +1,948 @@
+{
+  "@@locale": "bn",
+  "appTitle": "টিউশন খাতা",
+  "navHome": "হোম",
+  "navStudents": "শিক্ষার্থী",
+  "navFees": "ফি",
+  "navReports": "রিপোর্ট",
+  "navSettings": "সেটিংস",
+  "language": "ভাষা",
+  "languageBangla": "বাংলা",
+  "languageEnglish": "English",
+  "sampleConjuncts": "ক্ষমতা, বিজ্ঞান, সংখ্যা, শ্রদ্ধা, দুর্গাপুর",
+  "studentsSearchHint": "নাম, অভিভাবক বা ফোন দিয়ে খুঁজুন",
+  "studentsClearSearch": "মুছুন",
+  "studentsFilterClass": "শ্রেণি",
+  "studentsAllClasses": "সব শ্রেণি",
+  "studentsFilterBatch": "ব্যাচ",
+  "studentsAllBatches": "সব ব্যাচ",
+  "statusActive": "সক্রিয়",
+  "statusPaused": "বিরতিতে",
+  "statusArchived": "আর্কাইভ",
+  "studentsCount": "শিক্ষার্থী: {count}",
+  "@studentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "studentsEmptyTitle": "এখনও কোনো শিক্ষার্থী নেই",
+  "studentsEmptyBody": "প্রথম শিক্ষার্থী যোগ করুন",
+  "studentsNoMatch": "কোনো শিক্ষার্থী মেলেনি",
+  "studentsClearFilters": "ফিল্টার মুছুন",
+  "studentsAdd": "শিক্ষার্থী যোগ করুন",
+  "studentProfileTitle": "শিক্ষার্থীর প্রোফাইল",
+  "studentFeePerMonth": "{amount} / মাস",
+  "@studentFeePerMonth": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "studentEditTitle": "শিক্ষার্থী সম্পাদনা",
+  "fieldName": "নাম",
+  "fieldMonthlyFee": "মাসিক ফি (৳)",
+  "feeLockedHint": "ফি পরিবর্তন করতে ফি সমন্বয় ব্যবহার করুন",
+  "moreDetails": "আরও তথ্য যোগ করুন",
+  "fewerDetails": "কম তথ্য দেখান",
+  "fieldDueDay": "ফি দেওয়ার দিন (মাসের তারিখ)",
+  "fieldClassLevel": "শ্রেণি",
+  "fieldSchool": "স্কুল / প্রতিষ্ঠান",
+  "fieldGuardianName": "অভিভাবকের নাম",
+  "fieldGuardianPhone": "অভিভাবকের ফোন",
+  "fieldStudentPhone": "শিক্ষার্থীর ফোন",
+  "fieldAddress": "ঠিকানা / এলাকা",
+  "fieldSubjects": "বিষয়",
+  "fieldOtherSubject": "অন্য বিষয় যোগ করুন",
+  "fieldJoinedOn": "ভর্তির তারিখ",
+  "fieldClassDays": "ক্লাসের দিন",
+  "fieldClassTime": "ক্লাসের সময়",
+  "fieldNotes": "নোট",
+  "actionSave": "সংরক্ষণ করুন",
+  "actionClear": "মুছুন",
+  "errorNameRequired": "নাম লিখুন",
+  "errorFeeRequired": "মাসিক ফি লিখুন",
+  "errorPhoneInvalid": "সঠিক মোবাইল নম্বর দিন (যেমন ০১৭১২৩৪৫৬৭৮)",
+  "studentSaved": "শিক্ষার্থী সংরক্ষিত হয়েছে",
+  "none": "নেই",
+  "tabOverview": "সারসংক্ষেপ",
+  "tabAttendance": "উপস্থিতি",
+  "tabFees": "ফি",
+  "tabNotes": "নোট",
+  "comingSoon": "শীঘ্রই আসছে",
+  "actionCall": "কল",
+  "actionSms": "এসএমএস",
+  "actionWhatsapp": "হোয়াটসঅ্যাপ",
+  "noPhoneNumber": "ফোন নম্বর নেই",
+  "contactLaunchFailed": "খুলতে পারেনি। অ্যাপটি ইনস্টল করা আছে কি?",
+  "actionEdit": "সম্পাদনা",
+  "actionArchive": "আর্কাইভ করুন",
+  "actionRestore": "পুনরুদ্ধার করুন",
+  "actionDelete": "স্থায়ীভাবে মুছুন",
+  "actionCancel": "বাতিল",
+  "deleteStudentTitle": "শিক্ষার্থী মুছবেন?",
+  "deleteStudentBody": "এই শিক্ষার্থীর সব হিসাব (ফি, পেমেন্ট, উপস্থিতি) চিরতরে মুছে যাবে। এটি ফেরানো যাবে না। হিসাব রাখতে চাইলে আর্কাইভ করুন।",
+  "studentDeleted": "শিক্ষার্থী মুছে ফেলা হয়েছে",
+  "studentArchived": "শিক্ষার্থী আর্কাইভ করা হয়েছে",
+  "studentRestored": "শিক্ষার্থী পুনরুদ্ধার করা হয়েছে",
+  "profileMonthlyFee": "মাসিক ফি",
+  "profileDueDay": "ফি দেওয়ার দিন",
+  "photoAdd": "ছবি যোগ করুন",
+  "photoChange": "ছবি পরিবর্তন করুন",
+  "photoTake": "ছবি তুলুন",
+  "photoChoose": "গ্যালারি থেকে বাছাই করুন",
+  "photoRemove": "ছবি সরান",
+  "photoFailed": "ছবিটি ব্যবহার করা গেল না",
+  "tabAllStudents": "সব শিক্ষার্থী",
+  "tabBatches": "ব্যাচসমূহ",
+  "batchesAdd": "ব্যাচ যোগ করুন",
+  "batchEditTitle": "ব্যাচ সম্পাদনা",
+  "batchesEmptyTitle": "এখনও কোনো ব্যাচ নেই",
+  "batchesEmptyBody": "প্রথম ব্যাচ তৈরি করুন",
+  "batchShowArchived": "আর্কাইভ দেখান",
+  "batchFieldName": "ব্যাচের নাম",
+  "batchFieldSubject": "বিষয়",
+  "batchFieldDuration": "সময়কাল (মিনিট)",
+  "batchFieldDefaultFee": "ডিফল্ট মাসিক ফি (৳)",
+  "errorScheduleRequired": "অন্তত একটি দিন বাছাই করুন",
+  "errorDurationInvalid": "সঠিক সময়কাল দিন",
+  "batchSaved": "ব্যাচ সংরক্ষিত হয়েছে",
+  "batchMemberCount": "সদস্য: {count}",
+  "@batchMemberCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "batchMembersTitle": "সদস্য",
+  "batchNoMembers": "এই ব্যাচে এখনও কেউ নেই",
+  "batchAddMembers": "শিক্ষার্থী যোগ করুন",
+  "batchNoAddable": "যোগ করার মতো আর কোনো শিক্ষার্থী নেই",
+  "batchAddSelected": "{count} জনকে যোগ করুন",
+  "@batchAddSelected": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "batchMembersAdded": "শিক্ষার্থী যোগ করা হয়েছে",
+  "batchMemberFee": "ফি: {amount}",
+  "@batchMemberFee": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "batchMemberCustomFee": "আলাদা ফি",
+  "batchSetCustomFee": "আলাদা ফি নির্ধারণ",
+  "batchCustomFeeLabel": "আলাদা মাসিক ফি (৳)",
+  "batchCustomFeeHint": "ফাঁকা রাখলে ব্যাচের ডিফল্ট ফি প্রযোজ্য",
+  "batchRemoveMember": "ব্যাচ থেকে সরান",
+  "batchMemberRemoved": "শিক্ষার্থীকে ব্যাচ থেকে সরানো হয়েছে",
+  "batchArchived": "ব্যাচ আর্কাইভ করা হয়েছে",
+  "batchRestored": "ব্যাচ পুনরুদ্ধার করা হয়েছে",
+  "batchDefaultFee": "ডিফল্ট ফি",
+  "profileBatches": "ব্যাচ",
+  "feesOutstanding": "মোট বাকি",
+  "feesStudentsOwing": "{count} জন বাকি",
+  "@feesStudentsOwing": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "filterAll": "সব",
+  "filterOverdue": "বিলম্বিত",
+  "filterDueWeek": "এই সপ্তাহে",
+  "sortByOverdue": "বিলম্ব অনুযায়ী",
+  "sortByAmount": "পরিমাণ অনুযায়ী",
+  "feesEmptyTitle": "কারও কোনো বাকি নেই",
+  "feesEmptyBody": "সব ফি আদায় হয়েছে",
+  "feesOpenMonths": "{count} মাস বাকি",
+  "@feesOpenMonths": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "feesOverdueDays": "{days} দিন বিলম্ব",
+  "@feesOverdueDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "feesDueOn": "শেষ তারিখ {date}",
+  "@feesDueOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "actionRecordPayment": "পেমেন্ট নিন",
+  "payEditTitle": "পেমেন্ট সম্পাদনা",
+  "payAmount": "পরিমাণ (৳)",
+  "payOutstanding": "মোট বাকি: {amount}",
+  "@payOutstanding": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payCredit": "অগ্রিম জমা: {amount}",
+  "@payCredit": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payMonths": "কোন মাসের জন্য",
+  "payMonthsHint": "না বাছলে পুরোনো মাস আগে পরিশোধ হবে",
+  "payMethod": "মাধ্যম",
+  "methodCash": "ক্যাশ",
+  "methodBkash": "বিকাশ",
+  "methodNagad": "নগদ",
+  "methodRocket": "রকেট",
+  "methodBank": "ব্যাংক",
+  "methodOther": "অন্যান্য",
+  "payReference": "ট্রানজ্যাকশন আইডি / রেফারেন্স",
+  "payDate": "তারিখ",
+  "payBreakdown": "যেভাবে প্রয়োগ হবে",
+  "payCreditLine": "অগ্রিম জমা",
+  "payAmountRequired": "পরিমাণ লিখুন",
+  "paySaved": "পেমেন্ট সংরক্ষিত হয়েছে",
+  "payReceiptNo": "রসিদ নং {no}",
+  "@payReceiptNo": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "payDone": "ঠিক আছে",
+  "tabFeesCredit": "অগ্রিম জমা",
+  "ledgerTitle": "মাসওয়ারি হিসাব",
+  "paymentsTitle": "পেমেন্টের ইতিহাস",
+  "noPayments": "কোনো পেমেন্ট নেই",
+  "noDues": "এখনও কোনো ফি তৈরি হয়নি",
+  "statusPaid": "পরিশোধিত",
+  "statusPartial": "আংশিক",
+  "statusDue": "বাকি",
+  "statusOverdue": "বিলম্বিত",
+  "statusWaived": "মওকুফ",
+  "ledgerAmounts": "ফি {payable} · জমা {paid} · বাকি {balance}",
+  "@ledgerAmounts": {
+    "placeholders": {
+      "payable": {
+        "type": "String"
+      },
+      "paid": {
+        "type": "String"
+      },
+      "balance": {
+        "type": "String"
+      }
+    }
+  },
+  "ledgerRunning": "এ পর্যন্ত মোট বাকি {amount}",
+  "@ledgerRunning": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "actionAdjust": "ফি সমন্বয়",
+  "adjChangeFee": "মাসিক ফি পরিবর্তন",
+  "adjEffectiveMonth": "যে মাস থেকে কার্যকর",
+  "adjNewFee": "নতুন মাসিক ফি (৳)",
+  "adjFeeChanged": "ফি পরিবর্তন করা হয়েছে",
+  "adjPause": "ফি বন্ধ রাখুন",
+  "adjResume": "ফি আবার চালু করুন",
+  "adjPauseFrom": "যে মাস থেকে বন্ধ",
+  "adjResumeFrom": "যে মাস থেকে চালু",
+  "adjPaused": "ফি বন্ধ করা হয়েছে",
+  "adjResumed": "ফি চালু করা হয়েছে",
+  "adjOneTime": "এককালীন ফি যোগ করুন",
+  "adjOneTimeLabel": "বিবরণ (যেমন ভর্তি ফি)",
+  "adjOneTimeAmount": "পরিমাণ (৳)",
+  "adjOneTimeAdded": "এককালীন ফি যোগ করা হয়েছে",
+  "adjWaive": "মওকুফ করুন",
+  "adjUnwaive": "মওকুফ বাতিল করুন",
+  "adjDiscount": "ছাড় দিন",
+  "adjReason": "কারণ",
+  "adjReasonRequired": "কারণ লিখুন",
+  "adjDiscountAmount": "ছাড়ের পরিমাণ (৳)",
+  "adjDone": "সংরক্ষিত হয়েছে",
+  "payDelete": "পেমেন্ট মুছুন",
+  "payDeleteTitle": "পেমেন্ট মুছবেন?",
+  "payDeleteBody": "রসিদ নং {no} মুছে ফেললে সংশ্লিষ্ট মাসগুলো আবার বাকি হবে। রসিদ নম্বরটি আর ব্যবহার হবে না।",
+  "@payDeleteBody": {
+    "placeholders": {
+      "no": {
+        "type": "String"
+      }
+    }
+  },
+  "payReceiptSharedWarning": "এই পেমেন্টের রসিদ আগে শেয়ার করা হয়েছে। পরিবর্তন করলে অভিভাবকের কাছে থাকা রসিদের সাথে মিলবে না।",
+  "payDeleted": "পেমেন্ট মুছে ফেলা হয়েছে",
+  "devSection": "ডেভেলপার",
+  "devConsistency": "হিসাব যাচাই চালান",
+  "devConsistencyOk": "কোনো সমস্যা পাওয়া যায়নি",
+  "devConsistencyIssues": "{count}টি সমস্যা পাওয়া গেছে",
+  "@devConsistencyIssues": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "genericError": "কিছু ভুল হয়েছে",
+  "attStatusPresent": "উপস্থিত",
+  "attStatusAbsent": "অনুপস্থিত",
+  "attStatusLate": "দেরি",
+  "attStatusExcused": "ছুটি",
+  "attMarkAllPresent": "সবাইকে উপস্থিত করুন",
+  "attTopic": "আজকের পাঠ (ঐচ্ছিক)",
+  "attSaved": "উপস্থিতি সংরক্ষিত হয়েছে",
+  "attDiscardTitle": "পরিবর্তন সংরক্ষণ করবেন?",
+  "attDiscardBody": "আপনি উপস্থিতিতে পরিবর্তন করেছেন যা এখনও সংরক্ষিত হয়নি।",
+  "attDiscard": "বাদ দিন",
+  "attNoStudents": "এই ক্লাসে কোনো শিক্ষার্থী নেই",
+  "attCancelClass": "ক্লাস বাতিল করুন",
+  "attHoliday": "ছুটির দিন হিসেবে চিহ্নিত করুন",
+  "attReason": "কারণ (ঐচ্ছিক)",
+  "attRestore": "ক্লাস আবার চালু করুন",
+  "attCancelledBanner": "এই ক্লাস বাতিল করা হয়েছে",
+  "attHolidayBanner": "এই দিন ছুটি",
+  "attMarked": "চিহ্নিত {done}/{total}",
+  "@attMarked": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "homeToday": "আজ",
+  "homeClasses": "ক্লাস",
+  "homeNoClasses": "এই দিনে কোনো ক্লাস নেই",
+  "homeClassMenu": "ক্লাসের অপশন",
+  "classNotTaken": "নেওয়া হয়নি",
+  "classTaken": "নেওয়া হয়েছে",
+  "classCancelled": "বাতিল",
+  "classHoliday": "ছুটি",
+  "classAttended": "উপস্থিত {attended}/{total}",
+  "@classAttended": {
+    "placeholders": {
+      "attended": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "classExtra": "অতিরিক্ত",
+  "homePrevDay": "আগের দিন",
+  "homeNextDay": "পরের দিন",
+  "homePickDate": "তারিখ বাছুন",
+  "homeAddExtra": "অতিরিক্ত ক্লাস",
+  "homeExtraTitle": "অতিরিক্ত ক্লাস যোগ করুন",
+  "homeExtraBatches": "ব্যাচ",
+  "homeExtraStudents": "একক শিক্ষার্থী",
+  "homeExtraNone": "কিছু পাওয়া যায়নি",
+  "homeExtraTime": "শুরুর সময় (ঐচ্ছিক)",
+  "homeMonthTitle": "এই মাস",
+  "homeExpected": "প্রত্যাশিত",
+  "homeCollected": "আদায়",
+  "homeOutstanding": "বাকি",
+  "homeOverdueStudents": "{count} জন বিলম্বিত",
+  "@homeOverdueStudents": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTotalOwed": "সব মাস মিলিয়ে বাকি: {amount}",
+  "@homeTotalOwed": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUpcoming": "এই সপ্তাহে ফি দেওয়ার তারিখ",
+  "homeUpcomingNone": "এই সপ্তাহে কোনো ফি দেওয়ার তারিখ নেই",
+  "homeSeeAll": "সব দেখুন",
+  "attClassesCount": "মোট ক্লাস",
+  "attRate": "হার",
+  "attNoClasses": "এই মাসে কোনো ক্লাসের তথ্য নেই",
+  "calPrevMonth": "আগের মাস",
+  "calNextMonth": "পরের মাস",
+  "attShare": "অভিভাবকের জন্য শেয়ার করুন",
+  "shareAttTitle": "{name} — {month}-এর উপস্থিতি",
+  "@shareAttTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttClasses": "মোট ক্লাস: {count}",
+  "@shareAttClasses": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttBreakdown": "উপস্থিত {present} · দেরি {late} · অনুপস্থিত {absent} · ছুটি {excused}",
+  "@shareAttBreakdown": {
+    "placeholders": {
+      "present": {
+        "type": "String"
+      },
+      "late": {
+        "type": "String"
+      },
+      "absent": {
+        "type": "String"
+      },
+      "excused": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttRate": "উপস্থিতির হার: {percent}",
+  "@shareAttRate": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "shareAttNone": "এই মাসে কোনো ক্লাস হয়নি",
+  "shareFooter": "— {name}",
+  "@shareFooter": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCollectionRate": "আদায়ের হার",
+  "reportCash": "এই মাসে হাতে পাওয়া",
+  "reportBatches": "ব্যাচ অনুযায়ী",
+  "reportNoBatch": "কোনো ব্যাচ নয়",
+  "reportStudents": "শিক্ষার্থী: {count}",
+  "@reportStudents": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportAttendance": "উপস্থিতি {percent}",
+  "@reportAttendance": {
+    "placeholders": {
+      "percent": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNote": "একাধিক ব্যাচের শিক্ষার্থী প্রথম যে ব্যাচে যোগ দিয়েছেন সেখানে গোনা হয়।",
+  "reportIncomeTitle": "মাসওয়ারি আয় (শেষ ১২ মাস)",
+  "reportNoData": "এই মাসে কোনো তথ্য নেই",
+  "receiptTitle": "রসিদ",
+  "receiptAction": "রসিদ",
+  "receiptShareAction": "রসিদ শেয়ার করুন",
+  "receiptStudent": "শিক্ষার্থী",
+  "receiptGuardian": "অভিভাবক",
+  "receiptFor": "যে মাসের জন্য",
+  "receiptTotal": "মোট জমা",
+  "receiptThanks": "ধন্যবাদ",
+  "receiptShareImage": "ছবি হিসেবে শেয়ার করুন",
+  "receiptSharePdf": "PDF হিসেবে শেয়ার করুন",
+  "receiptShareFailed": "শেয়ার করা যায়নি",
+  "tutorSection": "শিক্ষকের তথ্য",
+  "tutorSectionHint": "রসিদ ও শেয়ার করা বার্তায় দেখানো হবে",
+  "tutorName": "শিক্ষকের নাম",
+  "tutorInstitution": "প্রতিষ্ঠানের নাম",
+  "tutorPhone": "ফোন নম্বর",
+  "chClasses": "ক্লাসের রিমাইন্ডার",
+  "chClassesAbout": "ক্লাস শুরুর আগে মনে করিয়ে দেয়",
+  "chFees": "ফি-র রিমাইন্ডার",
+  "chFeesAbout": "যেদিন ফি আদায়ের দিন",
+  "chSummary": "সাপ্তাহিক সারসংক্ষেপ",
+  "chSummaryAbout": "সপ্তাহের বাকি টাকার হিসাব",
+  "chBackup": "ব্যাকআপ রিমাইন্ডার",
+  "chBackupAbout": "ব্যাকআপ নেওয়ার কথা মনে করায়",
+  "remClassTitle": "ক্লাস: {name}",
+  "@remClassTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "remClassBody": "শুরু {time}",
+  "@remClassBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remFeesTitle": "আজ {count} জনের ফি আদায়ের দিন",
+  "@remFeesTitle": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "remFeesBody": "মোট বাকি {amount}",
+  "@remFeesBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "remWeeklyTitle": "সাপ্তাহিক বাকির হিসাব",
+  "remWeeklyBody": "{count} জনের কাছে মোট {amount} বাকি",
+  "@remWeeklyBody": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "remBackupTitle": "ব্যাকআপ নেওয়ার সময় হয়েছে",
+  "remBackupBody": "তথ্য নিরাপদ রাখতে এখনই ব্যাকআপ নিন",
+  "remKeepOnTitle": "রিমাইন্ডার চালু রাখুন",
+  "remKeepOnBody": "পরবর্তী দুই সপ্তাহের রিমাইন্ডারের জন্য অ্যাপটি একবার খুলুন",
+  "remTestTitle": "পরীক্ষামূলক নোটিফিকেশন",
+  "remTestBody": "রিমাইন্ডার ঠিকমতো কাজ করছে",
+  "remPermTitle": "রিমাইন্ডার চালু করুন",
+  "remPermWhy": "ক্লাস শুরুর আগে এবং ফি আদায়ের দিনে আপনাকে মনে করিয়ে দিতে অ্যাপের নোটিফিকেশন পাঠানোর অনুমতি দরকার। আপনার তথ্য ফোনের বাইরে যায় না।",
+  "remPermAllow": "অনুমতি দিন",
+  "remPermNotNow": "এখন নয়",
+  "remPermDenied": "নোটিফিকেশনের অনুমতি দেওয়া হয়নি, তাই রিমাইন্ডার পাঠানো যাবে না। ফোনের সেটিংস থেকে অনুমতি দিলে রিমাইন্ডার কাজ করবে।",
+  "remPermOpenSettings": "সেটিংস খুলুন",
+  "remPermGranted": "রিমাইন্ডার চালু হয়েছে",
+  "remTestSend": "পরীক্ষামূলক নোটিফিকেশন পাঠান",
+  "oemTitle": "ব্যাটারি সেটিংস",
+  "oemIntro": "কিছু ফোন ব্যাটারি বাঁচাতে অ্যাপ বন্ধ করে দেয়, তাতে রিমাইন্ডার আসে না। নিচের ধাপগুলো একবার করে নিন।",
+  "oemDetected": "আপনার ফোন: {maker}",
+  "@oemDetected": {
+    "placeholders": {
+      "maker": {
+        "type": "String"
+      }
+    }
+  },
+  "oemMakerXiaomi": "Xiaomi / Redmi / POCO",
+  "oemMakerOppo": "Oppo / OnePlus",
+  "oemMakerVivo": "Vivo / iQOO",
+  "oemMakerRealme": "Realme",
+  "oemMakerSamsung": "Samsung",
+  "oemMakerOther": "অন্যান্য ফোন",
+  "oemStepsXiaomi": "সেটিংস › অ্যাপস › অ্যাপ ম্যানেজ › টিউশন খাতা খুলুন\n“অটোস্টার্ট” চালু করুন\n“ব্যাটারি সেভার” থেকে “কোনো সীমাবদ্ধতা নেই” বেছে নিন",
+  "oemStepsOppo": "সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন",
+  "oemStepsVivo": "সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার › টিউশন খাতা খুলুন\n“উচ্চ ব্যাকগ্রাউন্ড পাওয়ার ব্যবহার” অনুমোদন করুন\n“অটোস্টার্ট” চালু করুন",
+  "oemStepsRealme": "সেটিংস › ব্যাটারি › অ্যাপ ব্যাটারি ম্যানেজমেন্ট › টিউশন খাতা খুলুন\n“ব্যাকগ্রাউন্ডে চলার অনুমতি” চালু করুন\n“অটো-লঞ্চ” চালু করুন",
+  "oemStepsSamsung": "সেটিংস › ব্যাটারি › ব্যাকগ্রাউন্ড ব্যবহারের সীমা খুলুন\n“কখনো ঘুমায় না এমন অ্যাপ” তালিকায় টিউশন খাতা যোগ করুন",
+  "oemStepsOther": "সেটিংস › অ্যাপস › টিউশন খাতা › ব্যাটারি খুলুন\n“সীমাবদ্ধতা নেই” বা “অপ্টিমাইজ করবেন না” বেছে নিন",
+  "oemOpenBattery": "ব্যাটারি সেটিংস খুলুন",
+  "oemDone": "বুঝেছি",
+  "remHealth": "রিমাইন্ডারের অবস্থা",
+  "remHealthOff": "বন্ধ আছে",
+  "remHealthBlocked": "নোটিফিকেশন বন্ধ করা আছে",
+  "remHealthOk": "ঠিক আছে — {count}টি রিমাইন্ডার নির্ধারিত",
+  "@remHealthOk": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "remHealthNone": "এখন কোনো রিমাইন্ডার নির্ধারিত নেই",
+  "remHealthGuide": "ব্যাটারি গাইড দেখুন",
+  "remHealthTapEnable": "চালু করতে এখানে চাপুন",
+  "remSettingsTitle": "রিমাইন্ডার",
+  "remMasterTitle": "রিমাইন্ডার",
+  "remMasterHint": "ক্লাস, ফি ও ব্যাকআপের কথা মনে করিয়ে দেবে",
+  "remClassOn": "ক্লাস শুরুর আগে",
+  "remMinutes": "{minutes} মিনিট আগে",
+  "@remMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "remFeeOn": "ফি আদায়ের দিনে",
+  "remAt": "সময়: {time}",
+  "@remAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remWeeklyOn": "সাপ্তাহিক বাকির হিসাব",
+  "remWeeklyWhen": "{day}, {time}",
+  "@remWeeklyWhen": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remBackupOn": "ব্যাকআপের রিমাইন্ডার",
+  "remBackupAfter": "{days} দিনের বেশি পুরনো হলে",
+  "@remBackupAfter": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "remTestSent": "পরীক্ষামূলক নোটিফিকেশন পাঠানো হয়েছে",
+  "tplTitle": "মেসেজ টেমপ্লেট",
+  "tplFeeReminder": "ফি-র রিমাইন্ডার",
+  "tplPreview": "প্রিভিউ",
+  "tplVariables": "ভেরিয়েবল (চাপলে যোগ হবে)",
+  "tplReset": "ডিফল্টে ফিরুন",
+  "tplSaved": "টেমপ্লেট সংরক্ষিত হয়েছে",
+  "tplEmpty": "টেমপ্লেট খালি রাখা যাবে না",
+  "tplBodyLabel": "মেসেজের লেখা",
+  "tplSampleStudent": "রহিম",
+  "tplVarStudent": "শিক্ষার্থীর নাম",
+  "tplVarGuardian": "অভিভাবকের নাম",
+  "tplVarMonth": "মাস",
+  "tplVarAmount": "বাকি টাকা",
+  "tplVarDue": "নির্ধারিত তারিখ",
+  "tplVarMonths": "বাকি মাসের সংখ্যা",
+  "tplVarTutor": "আপনার নাম",
+  "tplVarInstitution": "প্রতিষ্ঠান",
+  "tplVarSignature": "সই (— আপনার নাম)",
+  "remindGuardian": "অভিভাবককে রিমাইন্ডার",
+  "remindSms": "SMS",
+  "remindWhatsApp": "WhatsApp",
+  "remindNoPhone": "এই শিক্ষার্থীর ফোন নম্বর নেই",
+  "remindEditHint": "পাঠানোর আগে লেখা বদলাতে পারেন",
+  "remindEditTemplate": "টেমপ্লেট বদলান",
+  "remindBulkTitle": "সবাইকে রিমাইন্ডার",
+  "remindBulkProgress": "{done}/{total} জন সম্পন্ন",
+  "@remindBulkProgress": {
+    "placeholders": {
+      "done": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "remindMarkDone": "রিমাইন্ড করা হয়েছে",
+  "remindSkip": "বাদ দিন",
+  "remindUndo": "ফিরিয়ে নিন",
+  "remindMarked": "রিমাইন্ড হিসেবে চিহ্নিত করা হয়েছে",
+  "remindDoneAll": "সবাইকে রিমাইন্ড করা হয়েছে",
+  "remindNothing": "কেউ মেয়াদ পেরিয়ে বাকি নেই",
+  "remindLast": "সর্বশেষ রিমাইন্ড: {date}",
+  "@remindLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "remindReminded": "রিমাইন্ড করা হয়েছে",
+  "remindClear": "চিহ্ন মুছে আবার শুরু করুন",
+  "remindNext": "পরের জন",
+  "remindPrevious": "আগের জন",
+  "remindAwaiting": "মেসেজ পাঠানো হলে “রিমাইন্ড করা হয়েছে” চাপুন",
+  "bkTitle": "ব্যাকআপ ও রিস্টোর",
+  "bkLast": "সর্বশেষ ব্যাকআপ: {when}",
+  "@bkLast": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bkNever": "এখনো কোনো ব্যাকআপ নেওয়া হয়নি",
+  "bkPrivacy": "আপনার তথ্য এই ফোনেই থাকে। নিয়মিত ব্যাকআপ নিন।",
+  "bkNow": "ব্যাকআপ নিন",
+  "bkEncrypt": "পাসওয়ার্ড দিয়ে সুরক্ষিত করুন",
+  "bkEncryptHint": "ব্যাকআপে শিক্ষার্থী ও অভিভাবকের তথ্য থাকে। পাসওয়ার্ড ভুলে গেলে ফাইল খোলা যাবে না।",
+  "bkPassword": "পাসওয়ার্ড",
+  "bkPasswordConfirm": "পাসওয়ার্ড আবার লিখুন",
+  "bkPasswordMismatch": "পাসওয়ার্ড দুটি মেলেনি",
+  "bkPasswordShort": "কমপক্ষে ৬টি অক্ষর দিন",
+  "bkWorking": "ব্যাকআপ তৈরি হচ্ছে…",
+  "bkFailed": "ব্যাকআপ তৈরি করা যায়নি",
+  "bkSavedHint": "ফাইলটি নিরাপদ জায়গায় (Google Drive, ইমেইল বা অন্য ফোনে) পাঠিয়ে রাখুন",
+  "bkRestore": "ব্যাকআপ থেকে রিস্টোর",
+  "bkRestoreHint": "বর্তমান সব তথ্য ব্যাকআপের তথ্য দিয়ে বদলে যাবে",
+  "rsEnterPassword": "ব্যাকআপের পাসওয়ার্ড দিন",
+  "rsChecking": "ফাইল যাচাই করা হচ্ছে…",
+  "rsPreviewTitle": "এই ব্যাকআপ রিস্টোর করবেন?",
+  "rsPreviewStudents": "শিক্ষার্থী: {count}",
+  "@rsPreviewStudents": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewPayments": "পেমেন্ট: {count}",
+  "@rsPreviewPayments": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewLatest": "সর্বশেষ পেমেন্ট: {date}",
+  "@rsPreviewLatest": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewDate": "ব্যাকআপের তারিখ: {date}",
+  "@rsPreviewDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "rsPreviewNoPayments": "কোনো পেমেন্ট নেই",
+  "rsWarn": "এই ফোনের বর্তমান সব তথ্য মুছে ব্যাকআপের তথ্য বসবে। তার আগে একটি নিরাপত্তা কপি রাখা হবে।",
+  "rsConfirm": "রিস্টোর করুন",
+  "rsWorking": "রিস্টোর হচ্ছে… অ্যাপ বন্ধ করবেন না",
+  "rsDone": "রিস্টোর সম্পন্ন হয়েছে",
+  "bkErrNotABackup": "এটি টিউশন খাতার ব্যাকআপ ফাইল নয়",
+  "bkErrDamaged": "ব্যাকআপ ফাইলটি নষ্ট বা অসম্পূর্ণ",
+  "bkErrNewer": "এই ব্যাকআপ অ্যাপের নতুন সংস্করণে তৈরি। আগে অ্যাপ আপডেট করুন",
+  "bkErrChecksum": "ব্যাকআপের ভেতরের ফাইল বদলে গেছে বা নষ্ট হয়েছে",
+  "bkErrIntegrity": "ব্যাকআপের ডাটাবেস নষ্ট",
+  "bkErrPasswordRequired": "এই ব্যাকআপ খুলতে পাসওয়ার্ড লাগবে",
+  "bkErrWrongPassword": "পাসওয়ার্ড ভুল, অথবা ফাইলটি নষ্ট",
+  "bkErrRolledBack": "রিস্টোর সফল হয়নি। আপনার আগের তথ্য যেমন ছিল তেমনই ফিরিয়ে দেওয়া হয়েছে",
+  "bkErrNoRollback": "রিস্টোর সফল হয়নি এবং আগের তথ্য নিজে থেকে ফেরানো যায়নি। অ্যাপ বন্ধ করে আবার খুলুন; নিরাপত্তা কপি ফোনে আছে",
+  "bkBannerNever": "এখনো ব্যাকআপ নেওয়া হয়নি",
+  "bkBannerOld": "সর্বশেষ ব্যাকআপ {days} দিন আগে",
+  "@bkBannerOld": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "bkBannerAction": "ব্যাকআপ নিন",
+  "bkReminderEvery": "ব্যাকআপের রিমাইন্ডার",
+  "bkReminderDays": "{days} দিন",
+  "@bkReminderDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "rstTitle": "সব তথ্য মুছে ফেলুন",
+  "rstHint": "শিক্ষার্থী, ব্যাচ, পেমেন্ট, উপস্থিতি ও সেটিংস — সব মুছে যাবে",
+  "rstFirstTitle": "সব তথ্য মুছে ফেলবেন?",
+  "rstFirstBody": "এই ফোনের সব তথ্য মুছে যাবে। ব্যাকআপ না নিয়ে থাকলে আর ফেরত পাওয়া যাবে না। মোছার আগে একটি নিরাপত্তা কপি ফোনে রাখা হবে।",
+  "rstContinue": "চালিয়ে যান",
+  "rstSecondTitle": "শেষবার নিশ্চিত করুন",
+  "rstSecondBody": "নিশ্চিত করতে নিচে “{word}” লিখুন",
+  "@rstSecondBody": {
+    "placeholders": {
+      "word": {
+        "type": "String"
+      }
+    }
+  },
+  "rstWord": "মুছুন",
+  "rstDelete": "সব মুছে ফেলুন",
+  "rstDone": "সব তথ্য মুছে ফেলা হয়েছে",
+  "rstWorking": "মোছা হচ্ছে…",
+  "setAppearance": "চেহারা ও ভাষা",
+  "setNumerals": "সংখ্যার ধরন",
+  "setNumeralsBangla": "বাংলা (১২৩)",
+  "setNumeralsWestern": "ইংরেজি (123)",
+  "setGrouping": "টাকার কমা",
+  "setGroupingLakh": "লাখ (১২,৩৪,৫৬৭)",
+  "setGroupingWestern": "মিলিয়ন (১,২৩৪,৫৬৭)",
+  "setTheme": "থিম",
+  "setThemeSystem": "ফোনের মতো",
+  "setThemeLight": "হালকা",
+  "setThemeDark": "গাঢ়",
+  "setFontSize": "লেখার আকার",
+  "setFontSmall": "ছোট",
+  "setFontNormal": "স্বাভাবিক",
+  "setFontLarge": "বড়",
+  "setFontExtraLarge": "অনেক বড়",
+  "setFontPreview": "অ্যাপে লেখা এই আকারে দেখাবে।",
+  "setCalendar": "ক্যালেন্ডার",
+  "setCalendarGregorian": "শুধু ইংরেজি তারিখ",
+  "setCalendarBangla": "বাংলা তারিখও দেখান",
+  "setFees": "ফি",
+  "setDefaultDueDay": "নতুন শিক্ষার্থীর ফি আদায়ের দিন",
+  "setDueDayValue": "প্রতি মাসের {day} তারিখ",
+  "@setDueDayValue": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "setProration": "যোগদানের মাসের ফি",
+  "setProrationFull": "পুরো মাসের ফি",
+  "setProrationDays": "দিন হিসাবে আনুপাতিক",
+  "setProrationNext": "পরের মাস থেকে",
+  "setProrationHint": "এখন থেকে যোগ হওয়া শিক্ষার্থীদের জন্য প্রযোজ্য। আগের ফি বদলাবে না।",
+  "setData": "তথ্য ও বার্তা",
+  "setAbout": "সংস্করণ {version}",
+  "@setAbout": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "obWelcome": "টিউশন খাতায় স্বাগতম",
+  "obPickLanguage": "আপনার ভাষা বেছে নিন",
+  "obPrivacy": "আপনার তথ্য এই ফোনেই থাকে। কোনো সাইন-আপ লাগে না।",
+  "obIntro1Title": "শিক্ষার্থী",
+  "obIntro1Body": "নাম আর ফি দিয়ে এক মিনিটেই শিক্ষার্থী যোগ করুন",
+  "obIntro2Title": "হাজিরা",
+  "obIntro2Body": "সবাই উপস্থিত ধরা থাকে — শুধু অনুপস্থিতদের ছুঁয়ে দিন",
+  "obIntro3Title": "ফি ও রসিদ",
+  "obIntro3Body": "কার কত বাকি, এক নজরে। পেমেন্ট নিন আর রসিদ পাঠান",
+  "obSkip": "এড়িয়ে যান",
+  "obNext": "পরের ধাপ",
+  "obSampleTitle": "নমুনা তথ্য দিয়ে দেখবেন?",
+  "obSampleBody": "কয়েকজন উদাহরণ শিক্ষার্থী, হাজিরা ও পেমেন্ট যোগ হবে। এক চাপেই মুছে ফেলা যায়।",
+  "obSampleYes": "নমুনা তথ্য যোগ করুন",
+  "obSampleNo": "খালি অ্যাপ দিয়ে শুরু করুন",
+  "obLoading": "তৈরি করা হচ্ছে…",
+  "sampleBanner": "আপনি নমুনা তথ্য দেখছেন",
+  "sampleRemove": "নমুনা মুছুন",
+  "sampleRemoved": "নমুনা তথ্য মুছে ফেলা হয়েছে",
+  "sampleLoad": "নমুনা তথ্য যোগ করুন",
+  "sampleLoaded": "নমুনা তথ্য যোগ হয়েছে",
+  "sampleSettingsHint": "উদাহরণ দিয়ে অ্যাপ ঘুরে দেখুন, এক চাপে মুছে ফেলুন",
+  "lockEnterPin": "পিন দিন",
+  "lockWrong": "ভুল পিন। অপেক্ষার আগে আর {count}টি চেষ্টা বাকি",
+  "@lockWrong": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "lockBlocked": "অনেকবার ভুল হয়েছে। {seconds} সেকেন্ড পরে চেষ্টা করুন",
+  "@lockBlocked": {
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "lockBiometric": "আঙুলের ছাপ বা মুখ দিয়ে খুলুন",
+  "lockBiometricReason": "টিউশন খাতা খুলুন",
+  "lockForgot": "পিন ভুলে গেছেন?",
+  "lockForgotBody": "পিন ছাড়া অ্যাপ খোলার কোনো উপায় নেই। চাইলে অ্যাপের সব তথ্য মুছে নতুন করে শুরু করতে পারেন; তারপর আগের ব্যাকআপ থেকে তথ্য ফিরিয়ে আনা যাবে। ব্যাকআপ না থাকলে তথ্য আর ফেরত পাওয়া যাবে না।",
+  "lockSettingsTitle": "অ্যাপ লক",
+  "lockSettingsHint": "পিন দিয়ে অ্যাপ সুরক্ষিত রাখুন",
+  "lockOn": "পিন দিয়ে লক",
+  "lockSetPin": "পিন ঠিক করুন",
+  "lockPinHint": "৪ থেকে ৮টি সংখ্যা",
+  "lockPinAgain": "পিন আবার দিন",
+  "lockPinMismatch": "পিন দুটি মেলেনি",
+  "lockPinInvalid": "৪ থেকে ৮টি সংখ্যা দিন",
+  "lockChangePin": "পিন বদলান",
+  "lockCurrentPin": "বর্তমান পিন",
+  "lockTurnOff": "লক বন্ধ করুন",
+  "lockTimeout": "কতক্ষণ পরে আবার লক হবে",
+  "lockTimeoutNow": "সাথে সাথে",
+  "lockTimeoutMinutes": "{minutes} মিনিট",
+  "@lockTimeoutMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "lockBiometricOn": "আঙুলের ছাপ বা মুখ দিয়ে খোলা",
+  "lockBiometricNone": "এই ফোনে চালু করা নেই",
+  "lockProtect": "স্ক্রিনশট ও সাম্প্রতিক অ্যাপের প্রিভিউ আটকান",
+  "lockOnDone": "অ্যাপ লক চালু হয়েছে",
+  "lockOffDone": "অ্যাপ লক বন্ধ হয়েছে",
+  "lockRemember": "পিন ভুলে গেলে সব তথ্য মুছে নতুন করে শুরু করতে হবে, তাই নিয়মিত ব্যাকআপ রাখুন।",
+  "lockWrongCurrent": "বর্তমান পিন ভুল",
+  "firstMonthFee": "প্রথম মাসের ফি: {amount}",
+  "@firstMonthFee": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "firstMonthProrated": "যোগদানের মাসের বাকি দিন অনুযায়ী ফি: {amount}",
+  "@firstMonthProrated": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "firstMonthNone": "যোগদানের মাসের জন্য কোনো ফি নেই; বিলিং পরের মাস থেকে শুরু",
+  "dateJumpTitle": "ফোনের তারিখ পিছিয়ে গেছে",
+  "dateJumpBody": "ফোনের তারিখ আগের চেয়ে {days} দিন পিছনে দেখাচ্ছে। তারিখ ভুল থাকলে নতুন ফি ও হাজিরা ভুল দিনে যোগ হতে পারে। আপনার কোনো তথ্য মোছা হয়নি। ফোনের সেটিংসে তারিখ ঠিক করে নিন।",
+  "@dateJumpBody": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "dateJumpOk": "বুঝেছি",
+  "helpTitle": "সহায়তা ও গোপনীয়তা",
+  "helpPrivacyPolicy": "গোপনীয়তা নীতি",
+  "helpSupportWhatsApp": "WhatsApp-এ সহায়তা চান",
+  "helpSupportEmail": "ইমেইলে সহায়তা চান",
+  "helpSupportMessage": "টিউশন খাতা: আমার একটি সমস্যা হয়েছে — "
+}
