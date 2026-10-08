@@ -341,6 +341,7 @@ class _OverviewTab extends ConsumerWidget {
           LocalDate.parse(student.joinedOn),
           language: language,
           numerals: numerals,
+          calendar: watchCalendar(ref),
         ),
       ),
       if (student.guardianName != null)

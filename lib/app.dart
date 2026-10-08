@@ -72,7 +72,17 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: ref.watch(routerProvider),
-      builder: (context, child) => AppGate(child: child ?? const SizedBox()),
+      builder: (context, child) {
+        final size = ref.watchSetting(SettingKeys.fontSize);
+        final media = MediaQuery.of(context);
+        // The app's own step multiplies the phone's setting (spec SE-8).
+        return MediaQuery(
+          data: media.copyWith(
+            textScaler: _MultipliedScaler(media.textScaler, size.factor),
+          ),
+          child: AppGate(child: child ?? const SizedBox()),
+        );
+      },
       onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
       debugShowCheckedModeBanner: widget.flavor == AppFlavor.dev,
       themeMode: switch (ref.watchSetting(SettingKeys.themeMode)) {
@@ -92,4 +102,27 @@ class _TuitionTrackerAppState extends ConsumerState<TuitionTrackerApp>
       ],
     );
   }
+}
+
+/// The phone's text scaler with the app's size step on top.
+class _MultipliedScaler extends TextScaler {
+  const _MultipliedScaler(this.base, this.factor);
+
+  final TextScaler base;
+  final double factor;
+
+  @override
+  double scale(double fontSize) => base.scale(fontSize) * factor;
+
+  @override
+  double get textScaleFactor => scale(1);
+
+  @override
+  bool operator ==(Object other) =>
+      other is _MultipliedScaler &&
+      other.base == base &&
+      other.factor == factor;
+
+  @override
+  int get hashCode => Object.hash(base, factor);
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/app.dart';
 import 'package:tution_tracker/core/app_info.dart';
+import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
@@ -28,6 +29,8 @@ class SettingsScreen extends ConsumerWidget {
     final numerals = ref.watchSetting(SettingKeys.numerals);
     final grouping = ref.watchSetting(SettingKeys.grouping);
     final themeMode = ref.watchSetting(SettingKeys.themeMode);
+    final fontSize = ref.watchSetting(SettingKeys.fontSize);
+    final calendar = ref.watchSetting(SettingKeys.calendar);
     final dueDay = ref.watchSetting(SettingKeys.defaultDueDay);
     final proration = ref.watchSetting(SettingKeys.proration);
 
@@ -111,6 +114,47 @@ class SettingsScreen extends ConsumerWidget {
               selected: {themeMode},
               onSelectionChanged: (s) =>
                   writeSetting(ref, SettingKeys.themeMode, s.first),
+            ),
+            heading(l10n.setFontSize),
+            Wrap(
+              spacing: 8,
+              children: [
+                for (final (size, label) in [
+                  (AppFontSize.small, l10n.setFontSmall),
+                  (AppFontSize.normal, l10n.setFontNormal),
+                  (AppFontSize.large, l10n.setFontLarge),
+                  (AppFontSize.extraLarge, l10n.setFontExtraLarge),
+                ])
+                  ChoiceChip(
+                    label: Text(label),
+                    selected: fontSize == size,
+                    onSelected: (_) =>
+                        writeSetting(ref, SettingKeys.fontSize, size),
+                  ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Text(
+                l10n.setFontPreview,
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+            heading(l10n.setCalendar),
+            SegmentedButton<CalendarStyle>(
+              segments: [
+                ButtonSegment(
+                  value: CalendarStyle.gregorian,
+                  label: Text(l10n.setCalendarGregorian),
+                ),
+                ButtonSegment(
+                  value: CalendarStyle.bangla,
+                  label: Text(l10n.setCalendarBangla),
+                ),
+              ],
+              selected: {calendar},
+              onSelectionChanged: (s) =>
+                  writeSetting(ref, SettingKeys.calendar, s.first),
             ),
             heading(l10n.setFees),
             ListTile(

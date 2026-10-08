@@ -36,16 +36,50 @@ class _Launcher implements UrlLauncherService {
   }
 }
 
-/// A tap that is counted.
+/// A tap that is counted, and a clock for the whole flow: what a practised
+/// tutor takes (aim and tap, a scroll, a look at each new screen) plus what the
+/// app itself takes, measured, to show the result of each action.
 class _Taps {
   _Taps(this.tester);
 
+  static const tapSeconds = 1.0;
+  static const scrollSeconds = 1.5;
+  static const lookSeconds = 1.0;
+
   final WidgetTester tester;
   int count = 0;
+  double humanSeconds = 0;
+  final _app = Stopwatch();
+
+  /// What the app spent responding, in seconds (this machine; a phone is
+  /// several times slower, so the budgets below keep generous room for it).
+  double get appSeconds => _app.elapsedMicroseconds / 1e6;
+
+  /// Modelled seconds for the whole flow, with the app's share multiplied by
+  /// [phoneFactor] for a slow phone.
+  double total({double phoneFactor = 5}) =>
+      humanSeconds + appSeconds * phoneFactor;
 
   Future<void> on(Finder target) async {
     await tester.tap(target);
     count++;
+    humanSeconds += tapSeconds;
+  }
+
+  /// A scroll to bring something into view.
+  void scrolled() {
+    count++;
+    humanSeconds += scrollSeconds;
+  }
+
+  /// Reading a screen that just appeared.
+  void look() => humanSeconds += lookSeconds;
+
+  /// Waits for the app to finish, timing it.
+  Future<void> settle() async {
+    _app.start();
+    await waitFor(tester);
+    _app.stop();
   }
 }
 
@@ -74,7 +108,8 @@ void main() {
 
       final taps = _Taps(tester);
       await taps.on(find.text('Math 9')); // Home -> today's class
-      await waitFor(tester);
+      await taps.settle();
+      taps.look();
       // Everyone starts present; two are away.
       for (final name in ['Student 04', 'Student 11']) {
         if (find.text(name).hitTestable().evaluate().isEmpty) {
@@ -84,19 +119,21 @@ void main() {
             120,
             scrollable: find.byType(Scrollable).first,
           );
-          taps.count++;
+          taps.scrolled();
         }
         await taps.on(find.text(name));
       }
       await tester.pumpAndSettle();
       await taps.on(find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'));
-      await waitFor(tester);
+      await taps.settle();
 
       // Back on Today with the class marked taken: 13 of 15 present.
       expect(find.text('নেওয়া হয়েছে'), findsOneWidget);
       expect(find.textContaining('উপস্থিত ১৩/১৫'), findsOneWidget);
       // One open, two absentees, one save: well inside 20 seconds.
       expect(taps.count, lessThanOrEqualTo(6));
+      // The spec's budget, with the app five times slower than here.
+      expect(taps.total(), lessThan(20), reason: '${taps.total()} s');
 
       final marks = await real(
         tester,
@@ -124,17 +161,20 @@ void main() {
 
       final taps = _Taps(tester);
       await taps.on(find.text(s.name)); // the due list row
-      await waitFor(tester);
+      await taps.settle();
+      taps.look();
       // The amount is already the balance.
       expect(find.text('মোট বাকি: ৳ ৪,৫০০'), findsOneWidget);
       await taps.on(find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'));
-      await waitFor(tester);
+      await taps.settle();
+      taps.look();
       expect(find.text('পেমেন্ট সংরক্ষিত হয়েছে'), findsOneWidget);
       expect(find.text('রসিদ নং ১'), findsOneWidget);
       await taps.on(find.widgetWithText(FilledButton, 'ঠিক আছে'));
       await tester.pumpAndSettle();
 
       expect(taps.count, 3);
+      expect(taps.total(), lessThan(15), reason: '${taps.total()} s');
       expect(await real(tester, () => h.balanceOf(s.id)), 0);
       // The due list no longer shows them.
       await waitFor(tester);

@@ -194,6 +194,7 @@ class _ClassesSection extends ConsumerWidget {
                           date,
                           language: language,
                           numerals: numerals,
+                          calendar: watchCalendar(ref),
                         ),
                         style: theme.textTheme.bodySmall,
                       ),
@@ -412,7 +413,12 @@ class _UpcomingSection extends ConsumerWidget {
             contentPadding: EdgeInsets.zero,
             title: Text(d.studentName),
             subtitle: Text(
-              formatDate(d.dueDate, language: language, numerals: numerals),
+              formatDate(
+                d.dueDate,
+                language: language,
+                numerals: numerals,
+                calendar: watchCalendar(ref),
+              ),
             ),
             trailing: Text(
               formatTaka(

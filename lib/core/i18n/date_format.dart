@@ -1,9 +1,13 @@
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/dates/year_month.dart';
+import 'package:tution_tracker/core/i18n/bangla_calendar.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 
 /// Whether UI text is Bangla or English (the two supported languages).
 enum AppLanguage { bn, en }
+
+/// Whether dates also show their Bangla calendar equivalent (spec SE-7).
+enum CalendarStyle { gregorian, bangla }
 
 // Own tables rather than intl's date data: no async init, and the strings
 // are the ones we verified render correctly with the bundled font.
@@ -124,9 +128,13 @@ String formatDate(
   LocalDate date, {
   required AppLanguage language,
   required NumeralStyle numerals,
+  CalendarStyle calendar = CalendarStyle.gregorian,
 }) {
   final month = language == AppLanguage.bn
       ? _monthsBn[date.month - 1]
       : _monthsEnShort[date.month - 1];
-  return applyNumerals('${date.day} $month ${date.year}', numerals);
+  final text = applyNumerals('${date.day} $month ${date.year}', numerals);
+  if (calendar == CalendarStyle.gregorian) return text;
+  final bangla = formatBanglaDate(date, language: language, numerals: numerals);
+  return '$text ($bangla)';
 }

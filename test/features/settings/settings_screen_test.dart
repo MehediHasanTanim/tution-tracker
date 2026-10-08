@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
+import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/settings/setting_key.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
@@ -182,5 +183,35 @@ void main() {
       await tester.tap(find.byType(BackButton));
       await waitFor(tester);
     }
+  });
+
+  feeUiTest('text size changes at once and is remembered', (tester, h) async {
+    await _open(tester, h);
+    double sizeOf(String text) => tester.getSize(find.text(text)).height;
+
+    final before = sizeOf('লেখার আকার');
+    await tapCentered(tester, find.text('অনেক বড়'));
+    await waitFor(tester);
+
+    expect(
+      await _stored<AppFontSize>(tester, h, SettingKeys.fontSize),
+      AppFontSize.extraLarge,
+    );
+    expect(sizeOf('লেখার আকার'), greaterThan(before * 1.2));
+  });
+
+  feeUiTest('Bangla dates are shown after choosing them', (tester, h) async {
+    await _open(tester, h);
+    await tapCentered(tester, find.text('বাংলা তারিখও দেখান'));
+    await waitFor(tester);
+
+    expect(
+      await _stored<CalendarStyle>(tester, h, SettingKeys.calendar),
+      CalendarStyle.bangla,
+    );
+    // The Today header carries the Bangla date: 15 March 2026 is 1 Choitro.
+    await goTab(tester, 'হোম');
+    await waitFor(tester);
+    expect(find.textContaining('১ চৈত্র ১৪৩২'), findsOneWidget);
   });
 }

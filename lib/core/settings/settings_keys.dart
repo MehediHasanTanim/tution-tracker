@@ -106,6 +106,20 @@ abstract final class SettingKeys {
     AppThemeMode.system,
   );
 
+  /// Text size inside the app, on top of the phone's own setting (SE-8).
+  static final fontSize = enumKey(
+    'font_size',
+    AppFontSize.values,
+    AppFontSize.normal,
+  );
+
+  /// Whether dates also show the Bangla calendar date (SE-7).
+  static final calendar = enumKey(
+    'calendar',
+    CalendarStyle.values,
+    CalendarStyle.gregorian,
+  );
+
   /// The latest moment the app saw the phone's clock, to notice the date
   /// being set backwards (spec section 7, case 7).
   static final lastSeenAt = dateTimeKey('last_seen_at');
@@ -126,3 +140,14 @@ abstract final class SettingKeys {
 }
 
 enum AppThemeMode { system, light, dark }
+
+/// In-app text size steps, multiplied with the phone's font scale.
+enum AppFontSize {
+  small(0.9),
+  normal(1.0),
+  large(1.15),
+  extraLarge(1.3);
+
+  const AppFontSize(this.factor);
+  final double factor;
+}

@@ -4,6 +4,7 @@ import 'package:tution_tracker/core/dates/clock_time.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/platform/secure_store.dart';
+import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
 import 'package:tution_tracker/features/lock/data/app_lock_service.dart';
@@ -119,12 +120,14 @@ void main() {
     }
   }
 
-  testWidgets('every screen at 1.3x font in Bangla', (tester) async {
-    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+  Future<void> everyScreen(WidgetTester tester, {AppFontSize? inApp}) async {
     addTearDown(tester.platformDispatcher.clearAllTestValues);
     final h = FeeHarness();
     try {
       await _seed(tester, h);
+      if (inApp != null) {
+        await real(tester, () => h.settings.set(SettingKeys.fontSize, inApp));
+      }
       await pumpHarnessApp(tester, h);
       final id = await _firstStudentId(tester, h);
       final batch = await real(
@@ -164,6 +167,24 @@ void main() {
       await shutdownApp(tester, h.db);
     }
     expect(problems, isEmpty, reason: problems.join('\n'));
+  }
+
+  testWidgets('every screen at 1.3x font in Bangla', (tester) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    await everyScreen(tester);
+  });
+
+  // The in-app step multiplies the phone's own setting (spec SE-8): the
+  // largest step on a default phone, and on a phone already turned up.
+  testWidgets('every screen at the largest in-app size', (tester) async {
+    await everyScreen(tester, inApp: AppFontSize.extraLarge);
+  });
+
+  testWidgets('every screen at the largest in-app size and a 1.15x phone', (
+    tester,
+  ) async {
+    tester.platformDispatcher.textScaleFactorTestValue = 1.15;
+    await everyScreen(tester, inApp: AppFontSize.extraLarge);
   });
 
   group('small 5-inch screen at 1.3x font', () {

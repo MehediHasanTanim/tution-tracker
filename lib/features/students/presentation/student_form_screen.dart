@@ -531,7 +531,12 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
         contentPadding: EdgeInsets.zero,
         title: Text(l10n.fieldJoinedOn),
         subtitle: Text(
-          formatDate(joined, language: language, numerals: numerals),
+          formatDate(
+            joined,
+            language: language,
+            numerals: numerals,
+            calendar: watchCalendar(ref),
+          ),
         ),
         trailing: const Icon(Icons.calendar_today),
         onTap: () async {

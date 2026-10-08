@@ -1453,6 +1453,33 @@ class AppLocalizationsBn extends AppLocalizations {
   String get setThemeDark => 'গাঢ়';
 
   @override
+  String get setFontSize => 'লেখার আকার';
+
+  @override
+  String get setFontSmall => 'ছোট';
+
+  @override
+  String get setFontNormal => 'স্বাভাবিক';
+
+  @override
+  String get setFontLarge => 'বড়';
+
+  @override
+  String get setFontExtraLarge => 'অনেক বড়';
+
+  @override
+  String get setFontPreview => 'অ্যাপে লেখা এই আকারে দেখাবে।';
+
+  @override
+  String get setCalendar => 'ক্যালেন্ডার';
+
+  @override
+  String get setCalendarGregorian => 'শুধু ইংরেজি তারিখ';
+
+  @override
+  String get setCalendarBangla => 'বাংলা তারিখও দেখান';
+
+  @override
   String get setFees => 'ফি';
 
   @override

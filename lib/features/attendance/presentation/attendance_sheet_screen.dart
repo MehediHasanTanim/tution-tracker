@@ -229,7 +229,7 @@ class _SheetViewState extends ConsumerState<_SheetView> {
         ? ''
         : ' · ${applyNumerals(args.time!.toKey(), numerals)}';
     final subtitle =
-        '${weekdayName(args.date.isoWeekday, language)}, ${formatDate(args.date, language: language, numerals: numerals)}$time';
+        '${weekdayName(args.date.isoWeekday, language)}, ${formatDate(args.date, language: language, numerals: numerals, calendar: watchCalendar(ref))}$time';
 
     return PopScope(
       canPop: !_dirty,

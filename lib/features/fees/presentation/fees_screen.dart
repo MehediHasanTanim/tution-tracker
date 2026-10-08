@@ -258,6 +258,7 @@ class _DueTile extends ConsumerWidget {
                 entry.oldestDueDate,
                 language: language,
                 numerals: numerals,
+                calendar: watchCalendar(ref),
               ),
             ),
     ].join(' · ');

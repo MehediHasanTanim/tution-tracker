@@ -104,23 +104,45 @@ void main() {
     await batches.addMembers(batch.id, ids, today);
     await _settle(tester);
 
-    // Flow A: open today's class, mark one absent, save.
+    // Flow A: open today's class, mark one absent, save. The time the app
+    // itself takes to answer is measured on the device; with the person's
+    // taps (about a second each) the spec's 20 and 15 seconds must hold.
+    final appTime = Stopwatch();
+    Future<void> answered() async {
+      appTime.start();
+      await answered();
+      appTime.stop();
+    }
+
     await tester.tap(find.text('Math 9'));
-    await _settle(tester);
+    await answered();
     await tester.tap(find.text('Bijoy'));
     await tester.pump();
     await tester.tap(find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'));
-    await _settle(tester);
+    await answered();
     expect(find.text('নেওয়া হয়েছে'), findsOneWidget);
+
+    final appA = appTime.elapsed;
+    expect(
+      appA.inMilliseconds,
+      lessThan(5000),
+      reason: 'flow A: the app took $appA to respond',
+    );
+    appTime.reset();
 
     // Flow B: the Fees tab lists them; pay Aman in full.
     await tester.tap(find.text('ফি').last);
-    await _settle(tester);
+    await answered();
     await tester.tap(find.text('Aman'));
-    await _settle(tester);
+    await answered();
     await tester.tap(find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'));
-    await _settle(tester);
+    await answered();
     expect(find.text('পেমেন্ট সংরক্ষিত হয়েছে'), findsOneWidget);
+    expect(
+      appTime.elapsed.inMilliseconds,
+      lessThan(4000),
+      reason: 'flow B: the app took ${appTime.elapsed} to respond',
+    );
   });
 
   testWidgets('flow D: back up from Settings', (tester) async {

@@ -2743,6 +2743,60 @@ abstract class AppLocalizations {
   /// **'গাঢ়'**
   String get setThemeDark;
 
+  /// No description provided for @setFontSize.
+  ///
+  /// In bn, this message translates to:
+  /// **'লেখার আকার'**
+  String get setFontSize;
+
+  /// No description provided for @setFontSmall.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছোট'**
+  String get setFontSmall;
+
+  /// No description provided for @setFontNormal.
+  ///
+  /// In bn, this message translates to:
+  /// **'স্বাভাবিক'**
+  String get setFontNormal;
+
+  /// No description provided for @setFontLarge.
+  ///
+  /// In bn, this message translates to:
+  /// **'বড়'**
+  String get setFontLarge;
+
+  /// No description provided for @setFontExtraLarge.
+  ///
+  /// In bn, this message translates to:
+  /// **'অনেক বড়'**
+  String get setFontExtraLarge;
+
+  /// No description provided for @setFontPreview.
+  ///
+  /// In bn, this message translates to:
+  /// **'অ্যাপে লেখা এই আকারে দেখাবে।'**
+  String get setFontPreview;
+
+  /// No description provided for @setCalendar.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্যালেন্ডার'**
+  String get setCalendar;
+
+  /// No description provided for @setCalendarGregorian.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু ইংরেজি তারিখ'**
+  String get setCalendarGregorian;
+
+  /// No description provided for @setCalendarBangla.
+  ///
+  /// In bn, this message translates to:
+  /// **'বাংলা তারিখও দেখান'**
+  String get setCalendarBangla;
+
   /// No description provided for @setFees.
   ///
   /// In bn, this message translates to:

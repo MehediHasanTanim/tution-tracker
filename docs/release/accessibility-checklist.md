@@ -38,6 +38,8 @@ receipt tests.
 ## Manual, on the low-end phone (device)
 
 - [ ] System font size set to the largest: Home, Attendance sheet, Record payment
+- [ ] In-app text size (Settings → Text size) set to "Extra large", alone and together with a larger system size: same screens, nothing cut off
+- [ ] Settings → Calendar → "Also show Bangla dates": Home header, Fees, Student profile and Record payment show e.g. "15 Mar 2026 (১ চৈত্র ১৪৩২)"
       still usable without horizontal scrolling
 - [ ] TalkBack on: attendance sheet reads each student with the chosen status; the
       calendar days read the date and status ("১৫, উপস্থিত")

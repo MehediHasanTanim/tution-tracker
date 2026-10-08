@@ -1457,6 +1457,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setThemeDark => 'Dark';
 
   @override
+  String get setFontSize => 'Text size';
+
+  @override
+  String get setFontSmall => 'Small';
+
+  @override
+  String get setFontNormal => 'Normal';
+
+  @override
+  String get setFontLarge => 'Large';
+
+  @override
+  String get setFontExtraLarge => 'Extra large';
+
+  @override
+  String get setFontPreview => 'This is how text will look in the app.';
+
+  @override
+  String get setCalendar => 'Calendar';
+
+  @override
+  String get setCalendarGregorian => 'Gregorian only';
+
+  @override
+  String get setCalendarBangla => 'Also show Bangla dates';
+
+  @override
   String get setFees => 'Fees';
 
   @override

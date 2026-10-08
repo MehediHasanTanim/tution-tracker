@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
+import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
@@ -79,7 +80,16 @@ final numeralStyleProvider = StreamProvider<NumeralStyle>((ref) async* {
   yield* store.watch(SettingKeys.numerals);
 });
 
+final calendarStyleProvider = StreamProvider<CalendarStyle>((ref) async* {
+  final store = await ref.watch(settingsStoreProvider.future);
+  yield* store.watch(SettingKeys.calendar);
+});
+
 final groupingStyleProvider = StreamProvider<GroupingStyle>((ref) async* {
   final store = await ref.watch(settingsStoreProvider.future);
   yield* store.watch(SettingKeys.grouping);
 });
+
+/// The calendar preference as a plain value for building text.
+CalendarStyle watchCalendar(WidgetRef ref) =>
+    ref.watch(calendarStyleProvider).value ?? CalendarStyle.gregorian;
