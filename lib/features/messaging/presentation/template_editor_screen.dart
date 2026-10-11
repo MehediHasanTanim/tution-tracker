@@ -166,10 +166,7 @@ class _EditorTabState extends ConsumerState<_EditorTab>
             enabled: _loaded,
             minLines: 4,
             maxLines: 10,
-            decoration: InputDecoration(
-              labelText: l10n.tplBodyLabel,
-              border: const OutlineInputBorder(),
-            ),
+            decoration: InputDecoration(labelText: l10n.tplBodyLabel),
           ),
           const SizedBox(height: 12),
           Text(l10n.tplVariables, style: theme.textTheme.labelLarge),

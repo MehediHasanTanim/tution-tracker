@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/attendance_stats.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
@@ -225,9 +226,10 @@ class _SheetViewState extends ConsumerState<_SheetView> {
     final roster = widget.data.roster;
     final counts = AttendanceCounts.from(_marks.values);
 
-    final time = args.time == null
-        ? ''
-        : ' · ${applyNumerals(args.time!.toKey(), numerals)}';
+    final clock = args.time == null
+        ? null
+        : formatClockParts(args.time!, language: language, numerals: numerals);
+    final time = clock == null ? '' : ' · ${clock.time} ${clock.period}';
     final subtitle =
         '${weekdayName(args.date.isoWeekday, language)}, ${formatDate(args.date, language: language, numerals: numerals, calendar: watchCalendar(ref))}$time';
 
@@ -253,7 +255,7 @@ class _SheetViewState extends ConsumerState<_SheetView> {
             if (!_isOff && roster.isNotEmpty)
               IconButton(
                 tooltip: l10n.attMarkAllPresent,
-                icon: const Icon(Icons.done_all),
+                icon: const Icon(Icons.done_all_rounded),
                 onPressed: _markAllPresent,
               ),
             PopupMenuButton<String>(
@@ -283,27 +285,40 @@ class _SheetViewState extends ConsumerState<_SheetView> {
         body: _isOff ? _offBody(context) : _marksBody(context, counts),
         bottomNavigationBar: _isOff || roster.isEmpty
             ? null
-            : SafeArea(
-                minimum: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '${l10n.attStatusPresent} ${formatCount(counts.present, numerals)} · '
-                      '${l10n.attStatusAbsent} ${formatCount(counts.absent, numerals)} · '
-                      '${l10n.attStatusLate} ${formatCount(counts.late, numerals)} · '
-                      '${l10n.attStatusExcused} ${formatCount(counts.excused, numerals)}',
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: _saving ? null : _saveAndClose,
-                        child: Text(l10n.actionSave),
+            : DecoratedBox(
+                // The handoff's raised footer: summary over a full-width save.
+                decoration: BoxDecoration(
+                  color: Organic.of(context).raised,
+                  border: Border(
+                    top: BorderSide(color: Organic.of(context).divider),
+                  ),
+                ),
+                child: SafeArea(
+                  minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${l10n.attStatusPresent} ${formatCount(counts.present, numerals)} · '
+                        '${l10n.attStatusAbsent} ${formatCount(counts.absent, numerals)} · '
+                        '${l10n.attStatusLate} ${formatCount(counts.late, numerals)} · '
+                        '${l10n.attStatusExcused} ${formatCount(counts.excused, numerals)}',
+                        style: theme.textTheme.labelLarge,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            minimumSize: const Size.fromHeight(56),
+                          ),
+                          onPressed: _saving ? null : _saveAndClose,
+                          child: Text(l10n.actionSave),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),
@@ -320,9 +335,9 @@ class _SheetViewState extends ConsumerState<_SheetView> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              holiday ? Icons.beach_access : Icons.event_busy,
+              holiday ? Icons.beach_access_rounded : Icons.event_busy_rounded,
               size: 64,
-              color: Theme.of(context).colorScheme.outline,
+              color: Organic.of(context).accentDecor,
             ),
             const SizedBox(height: 16),
             Text(
@@ -347,75 +362,99 @@ class _SheetViewState extends ConsumerState<_SheetView> {
 
   Widget _marksBody(BuildContext context, AttendanceCounts counts) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
     final roster = widget.data.roster;
     if (roster.isEmpty) {
       return Center(child: Text(l10n.attNoStudents));
     }
 
-    (String, Color) style(AttendanceStatus s) => switch (s) {
+    // The handoff's attendance colours: present sage, absent deep
+    // terracotta, late neutral; excused is a soft terracotta tint.
+    (String, Color, Color) style(AttendanceStatus s) => switch (s) {
       AttendanceStatus.present => (
         l10n.attStatusPresent,
-        scheme.primaryContainer,
+        o.sageSoft,
+        o.onSageSoft,
       ),
-      AttendanceStatus.absent => (l10n.attStatusAbsent, scheme.errorContainer),
-      AttendanceStatus.late => (l10n.attStatusLate, scheme.tertiaryContainer),
+      AttendanceStatus.absent => (
+        l10n.attStatusAbsent,
+        o.accentStrong,
+        Colors.white,
+      ),
+      AttendanceStatus.late => (
+        l10n.attStatusLate,
+        o.neutralSoft,
+        o.onNeutralSoft,
+      ),
       AttendanceStatus.excused => (
         l10n.attStatusExcused,
-        scheme.secondaryContainer,
+        o.accentSoft,
+        o.onAccentSoft,
       ),
     };
 
     return ListView(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-          child: TextField(
-            controller: _topic,
-            decoration: InputDecoration(
-              labelText: l10n.attTopic,
-              border: const OutlineInputBorder(),
-              isDense: true,
-            ),
-            onChanged: (_) {
-              if (!_dirty) setState(() => _dirty = true);
-            },
-          ),
+        Text(l10n.attMarkHint, style: theme.textTheme.bodySmall),
+        const SizedBox(height: 10),
+        TextField(
+          controller: _topic,
+          decoration: InputDecoration(labelText: l10n.attTopic),
+          onChanged: (_) {
+            if (!_dirty) setState(() => _dirty = true);
+          },
         ),
+        const SizedBox(height: 8),
         for (final entry in roster)
-          ListTile(
-            leading: StudentAvatar(
-              name: entry.student.name,
-              photoPath: entry.student.photoPath,
-            ),
-            // Tapping the name flips present and absent: one tap per absentee.
-            title: Text(
-              entry.student.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () => _mark(
-              entry.student.id,
-              _marks[entry.student.id] == AttendanceStatus.absent
-                  ? AttendanceStatus.present
-                  : AttendanceStatus.absent,
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Wrap(
-                spacing: 6,
-                runSpacing: 0,
-                children: [
-                  for (final s in AttendanceStatus.values)
-                    ChoiceChip(
-                      label: Text(style(s).$1),
-                      selected: _marks[entry.student.id] == s,
-                      selectedColor: style(s).$2,
-                      visualDensity: VisualDensity.compact,
-                      onSelected: (_) => _mark(entry.student.id, s),
-                    ),
-                ],
+          Card(
+            child: ListTile(
+              contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                12,
+                6,
+                12,
+                6,
+              ),
+              leading: StudentAvatar(
+                name: entry.student.name,
+                photoPath: entry.student.photoPath,
+              ),
+              // Tapping the name flips present and absent: one tap per
+              // absentee.
+              title: Text(
+                entry.student.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () => _mark(
+                entry.student.id,
+                _marks[entry.student.id] == AttendanceStatus.absent
+                    ? AttendanceStatus.present
+                    : AttendanceStatus.absent,
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final s in AttendanceStatus.values)
+                      ChoiceChip(
+                        label: Text(style(s).$1),
+                        selected: _marks[entry.student.id] == s,
+                        backgroundColor: o.bg,
+                        selectedColor: style(s).$2,
+                        labelStyle: theme.textTheme.labelMedium?.copyWith(
+                          color: _marks[entry.student.id] == s
+                              ? style(s).$3
+                              : o.text,
+                        ),
+                        visualDensity: VisualDensity.compact,
+                        onSelected: (_) => _mark(entry.student.id, s),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

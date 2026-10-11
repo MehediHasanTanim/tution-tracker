@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/fees/data/fee_repository.dart';
 import 'package:tution_tracker/features/messaging/data/messaging_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -78,29 +79,52 @@ class _ReminderSheetState extends ConsumerState<_ReminderSheet> {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final phone = contactPhone(widget.entry.student);
+    final o = Organic.of(context);
+    // The message as a chat bubble, its tail at the bottom left.
+    const bubble = BorderRadius.only(
+      topLeft: Radius.circular(24),
+      topRight: Radius.circular(24),
+      bottomRight: Radius.circular(24),
+      bottomLeft: Radius.circular(6),
+    );
+    OutlineInputBorder bubbleBorder(Color color) => OutlineInputBorder(
+      borderRadius: bubble,
+      borderSide: BorderSide(color: color, width: 2),
+    );
     return Padding(
       padding: EdgeInsets.fromLTRB(
-        16,
-        16,
-        16,
-        16 + MediaQuery.viewInsetsOf(context).bottom,
+        20,
+        0,
+        20,
+        20 + MediaQuery.viewInsetsOf(context).bottom,
       ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l10n.remindGuardian, style: theme.textTheme.titleLarge),
-            Text(widget.entry.student.name, style: theme.textTheme.bodyMedium),
-            const SizedBox(height: 12),
+            Text(l10n.remindGuardian, style: theme.textTheme.headlineSmall),
+            Text(
+              widget.entry.student.name,
+              style: theme.textTheme.bodyLarge?.copyWith(color: o.subtle),
+            ),
+            const SizedBox(height: 14),
             TextField(
               controller: _text,
               enabled: _ready,
               minLines: 4,
               maxLines: 8,
+              style: theme.textTheme.bodyLarge?.copyWith(height: 1.55),
               decoration: InputDecoration(
                 helperText: l10n.remindEditHint,
-                border: const OutlineInputBorder(),
+                helperMaxLines: 2,
+                filled: true,
+                fillColor: o.sageSoft.withValues(alpha: 0.6),
+                contentPadding: const EdgeInsets.all(16),
+                border: bubbleBorder(o.sageSoft),
+                enabledBorder: bubbleBorder(o.sageSoft),
+                disabledBorder: bubbleBorder(o.sageSoft),
+                focusedBorder: bubbleBorder(o.sage),
               ),
             ),
             if (phone == null)
@@ -111,29 +135,31 @@ class _ReminderSheetState extends ConsumerState<_ReminderSheet> {
                   style: TextStyle(color: theme.colorScheme.error),
                 ),
               ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton.icon(
-                    icon: const Icon(Icons.sms_outlined),
-                    onPressed: _ready && phone != null
-                        ? () => _send(MessageChannel.sms)
-                        : null,
-                    label: Text(l10n.remindSms),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: FilledButton.icon(
-                    icon: const Icon(Icons.chat_outlined),
-                    onPressed: _ready && phone != null
-                        ? () => _send(MessageChannel.whatsapp)
-                        : null,
-                    label: Text(l10n.remindWhatsApp),
-                  ),
-                ),
-              ],
+            const SizedBox(height: 14),
+            FilledButton.icon(
+              style: FilledButton.styleFrom(
+                backgroundColor: o.sage,
+                foregroundColor: Colors.white,
+                minimumSize: const Size.fromHeight(56),
+              ),
+              icon: const Icon(Icons.chat_rounded),
+              onPressed: _ready && phone != null
+                  ? () => _send(MessageChannel.whatsapp)
+                  : null,
+              label: Text(l10n.remindWhatsApp),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              style: OutlinedButton.styleFrom(
+                foregroundColor: o.sageStrong,
+                side: BorderSide(color: o.sage, width: 2),
+                minimumSize: const Size.fromHeight(48),
+              ),
+              icon: const Icon(Icons.sms_rounded),
+              onPressed: _ready && phone != null
+                  ? () => _send(MessageChannel.sms)
+                  : null,
+              label: Text(l10n.remindSms),
             ),
             TextButton(
               onPressed: () {

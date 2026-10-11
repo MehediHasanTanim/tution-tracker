@@ -3222,6 +3222,60 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — '**
   String get helpSupportMessage;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In bn, this message translates to:
+  /// **'আসসালামু আলাইকুম, {name}'**
+  String homeGreeting(String name);
+
+  /// No description provided for @homeGreetingPlain.
+  ///
+  /// In bn, this message translates to:
+  /// **'আসসালামু আলাইকুম'**
+  String get homeGreetingPlain;
+
+  /// No description provided for @homeCollectedMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'আদায় · {month}'**
+  String homeCollectedMonth(String month);
+
+  /// No description provided for @homeOfExpected.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট প্রত্যাশিত {amount}'**
+  String homeOfExpected(String amount);
+
+  /// No description provided for @bkCardTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ'**
+  String get bkCardTitle;
+
+  /// No description provided for @attMarkHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।'**
+  String get attMarkHint;
+
+  /// No description provided for @payFullBalance.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো বাকি'**
+  String get payFullBalance;
+
+  /// No description provided for @payHalf.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ধেক'**
+  String get payHalf;
+
+  /// No description provided for @studentQuickHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু নাম আর মাসিক ফি — বাকিটা পরে।'**
+  String get studentQuickHint;
 }
 
 class _AppLocalizationsDelegate

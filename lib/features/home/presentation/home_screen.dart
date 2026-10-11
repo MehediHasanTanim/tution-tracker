@@ -8,9 +8,14 @@ import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/settings/settings_keys.dart';
+import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
 import 'package:tution_tracker/features/backup/presentation/backup_banner.dart';
+import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
 import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
 import 'package:tution_tracker/features/home/presentation/extra_class_sheet.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
@@ -27,28 +32,97 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.navHome)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => showExtraClassSheet(context, ref),
-        icon: const Icon(Icons.add),
+        icon: const Icon(Icons.add_rounded),
         label: Text(l10n.homeAddExtra),
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
-        children: const [
-          _SampleBanner(),
-          BackupBanner(),
-          _MonthCard(),
-          SizedBox(height: 16),
-          _ClassesSection(),
-          SizedBox(height: 16),
-          _UpcomingSection(),
-        ],
+      body: SafeArea(
+        bottom: false,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 96),
+          children: const [
+            _Greeting(),
+            SizedBox(height: 16),
+            _SampleBanner(),
+            BackupBanner(),
+            _MonthCard(),
+            SizedBox(height: 24),
+            _ClassesSection(),
+            SizedBox(height: 24),
+            _UpcomingSection(),
+          ],
+        ),
       ),
     );
   }
 }
 
+/// Today's date, a greeting with the tutor's name, and their initial.
+class _Greeting extends ConsumerWidget {
+  const _Greeting();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
+    final today = todayFrom(ref.watch(clockProvider));
+    final language = ref.watch(appLanguageProvider);
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
+    final name = ref.watchSetting(SettingKeys.tutorName).trim();
+    final date =
+        '${weekdayName(today.isoWeekday, language)}, '
+        '${formatDate(today, language: language, numerals: numerals)}';
+
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                date,
+                style: theme.textTheme.bodyMedium?.copyWith(color: o.muted),
+              ),
+              // The tab's name stays in the semantics tree for screen readers.
+              Semantics(
+                header: true,
+                label: l10n.navHome,
+                child: ExcludeSemantics(
+                  child: Text(
+                    name.isEmpty
+                        ? l10n.homeGreetingPlain
+                        : l10n.homeGreeting(name),
+                    style: theme.textTheme.headlineSmall,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 12),
+        ExcludeSemantics(
+          child: CircleAvatar(
+            radius: 24,
+            backgroundColor: o.sageSoft,
+            foregroundColor: o.onSageSoft,
+            child: Text(
+              name.isEmpty
+                  ? l10n.appTitle.characters.first
+                  : name.characters.first,
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// The month at a glance: collected out of expected on a terracotta card,
+/// then what is still owed and how many students are overdue.
 class _MonthCard extends ConsumerWidget {
   const _MonthCard();
 
@@ -56,9 +130,12 @@ class _MonthCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final o = Organic.of(context);
     final today = todayFrom(ref.watch(clockProvider));
-    final summary = ref.watch(monthSummaryProvider(YearMonth.from(today)));
+    final month = YearMonth.from(today);
+    final summary = ref.watch(monthSummaryProvider(month));
     final owing = ref.watch(owingProvider(today));
+    final language = ref.watch(appLanguageProvider);
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
     final grouping =
@@ -67,74 +144,183 @@ class _MonthCard extends ConsumerWidget {
         formatTaka(Taka(v), numerals: numerals, grouping: grouping);
 
     final s = summary.value;
-    final o = owing.value;
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: s == null || o == null
-            ? const SizedBox(
-                height: 96,
-                child: Center(child: CircularProgressIndicator()),
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    final o2 = owing.value;
+    if (s == null || o2 == null) {
+      return const SizedBox(
+        height: 160,
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+    final share = s.expected == 0 ? 0.0 : s.collected / s.expected;
+    final heroText = theme.textTheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Semantics(
+          container: true,
+          label: l10n.homeMonthTitle,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(OrganicRadius.panel),
+            child: ColoredBox(
+              color: o.accentSoft,
+              child: Stack(
                 children: [
-                  Text(l10n.homeMonthTitle, style: theme.textTheme.titleMedium),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      _Figure(l10n.homeExpected, money(s.expected)),
-                      _Figure(l10n.homeCollected, money(s.collected)),
-                      _Figure(l10n.homeOutstanding, money(s.outstanding)),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    l10n.homeTotalOwed(money(o.totalOutstanding)),
-                    style: theme.textTheme.bodyMedium,
-                  ),
-                  if (o.overdueStudents > 0)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: ActionChip(
-                        avatar: const Icon(Icons.warning_amber, size: 18),
-                        label: Text(
-                          l10n.homeOverdueStudents(
-                            formatCount(o.overdueStudents, numerals),
-                          ),
-                        ),
-                        onPressed: () => context.go('/fees'),
+                  // The handoff's soft circle, tucked into the top corner.
+                  PositionedDirectional(
+                    end: -30,
+                    top: -30,
+                    child: Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: o.accentDecor,
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.homeCollectedMonth(
+                            formatMonth(
+                              month,
+                              language: language,
+                              numerals: numerals,
+                            ),
+                          ),
+                          style: heroText.labelLarge?.copyWith(
+                            color: o.onAccentSoft,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            money(s.collected),
+                            style: heroText.displayMedium?.copyWith(
+                              color: o.onAccentSoft,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          l10n.homeOfExpected(money(s.expected)),
+                          style: heroText.bodyMedium?.copyWith(
+                            color: o.onAccentSoft,
+                          ),
+                        ),
+                        const SizedBox(height: 14),
+                        PillProgress(
+                          value: share,
+                          height: 12,
+                          color: o.accent,
+                          track: o.track,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-      ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _Tile(
+                  label: l10n.homeOutstanding,
+                  value: money(s.outstanding),
+                  background: o.surface,
+                  foreground: o.text,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _Tile(
+                  label: l10n.filterOverdue,
+                  value: '${formatCount(o2.overdueStudents, numerals)} →',
+                  semanticLabel: l10n.homeOverdueStudents(
+                    formatCount(o2.overdueStudents, numerals),
+                  ),
+                  background: o.accentStrong,
+                  foreground: Colors.white,
+                  onTap: () {
+                    ref
+                        .read(dueFilterProvider.notifier)
+                        .setMode(DueMode.overdue);
+                    context.go('/fees');
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: Text(
+            l10n.homeTotalOwed(money(o2.totalOutstanding)),
+            style: theme.textTheme.bodySmall,
+          ),
+        ),
+      ],
     );
   }
 }
 
-class _Figure extends StatelessWidget {
-  const _Figure(this.label, this.value);
+class _Tile extends StatelessWidget {
+  const _Tile({
+    required this.label,
+    required this.value,
+    required this.background,
+    required this.foreground,
+    this.semanticLabel,
+    this.onTap,
+  });
 
   final String label;
   final String value;
+  final String? semanticLabel;
+  final Color background;
+  final Color foreground;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label, style: theme.textTheme.bodySmall),
-          const SizedBox(height: 2),
-          Text(
-            value,
-            style: theme.textTheme.titleMedium,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
+    return Semantics(
+      button: onTap != null,
+      label: semanticLabel,
+      child: OrganicPanel(
+        color: background,
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: theme.textTheme.bodySmall?.copyWith(color: foreground),
+            ),
+            const SizedBox(height: 2),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                value,
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  color: foreground,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -165,13 +351,9 @@ class _ClassesSection extends ConsumerWidget {
       children: [
         Row(
           children: [
-            IconButton(
-              tooltip: l10n.homePrevDay,
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () => notifier.shift(-1),
-            ),
             Expanded(
               child: InkWell(
+                borderRadius: BorderRadius.circular(OrganicRadius.card),
                 onTap: () async {
                   final picked = await showDatePicker(
                     context: context,
@@ -185,10 +367,11 @@ class _ClassesSection extends ConsumerWidget {
                   }
                 },
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: theme.textTheme.titleMedium),
+                      Text(title, style: theme.textTheme.titleLarge),
                       Text(
                         formatDate(
                           date,
@@ -209,12 +392,18 @@ class _ClassesSection extends ConsumerWidget {
                 child: Text(l10n.homeToday),
               ),
             IconButton(
+              tooltip: l10n.homePrevDay,
+              icon: const Icon(Icons.chevron_left_rounded),
+              onPressed: () => notifier.shift(-1),
+            ),
+            IconButton(
               tooltip: l10n.homeNextDay,
-              icon: const Icon(Icons.chevron_right),
+              icon: const Icon(Icons.chevron_right_rounded),
               onPressed: () => notifier.shift(1),
             ),
           ],
         ),
+        const SizedBox(height: 8),
         classes.when(
           loading: () => const Padding(
             padding: EdgeInsets.all(24),
@@ -228,7 +417,11 @@ class _ClassesSection extends ConsumerWidget {
                 )
               : Column(
                   children: [
-                    for (final c in list) _ClassCard(session: c, date: date),
+                    for (final c in list)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: _ClassCard(session: c, date: date),
+                      ),
                   ],
                 ),
         ),
@@ -293,37 +486,25 @@ class _ClassCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
+    final language = ref.watch(appLanguageProvider);
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
 
-    final (label, color, icon) = switch (session.state) {
-      ClassState.notTaken => (
-        l10n.classNotTaken,
-        scheme.surfaceContainerHighest,
-        Icons.radio_button_unchecked,
-      ),
-      ClassState.taken => (
-        l10n.classTaken,
-        scheme.primaryContainer,
-        Icons.check_circle,
-      ),
+    final (label, background, foreground) = switch (session.state) {
+      ClassState.notTaken => (l10n.classNotTaken, o.accent, o.onAccent),
+      ClassState.taken => (l10n.classTaken, o.sageSoft, o.onSageSoft),
       ClassState.cancelled => (
         l10n.classCancelled,
-        scheme.errorContainer,
-        Icons.event_busy,
+        o.neutralSoft,
+        o.onNeutralSoft,
       ),
-      ClassState.holiday => (
-        l10n.classHoliday,
-        scheme.tertiaryContainer,
-        Icons.beach_access,
-      ),
+      ClassState.holiday => (l10n.classHoliday, o.accentSoft, o.onAccentSoft),
     };
 
     final record = session.record;
     final detail = [
-      if (session.startTime != null)
-        applyNumerals(session.startTime!.toKey(), numerals),
       if (session.state == ClassState.taken && record != null)
         l10n.classAttended(
           formatCount(record.attendedCount, numerals),
@@ -331,23 +512,61 @@ class _ClassCard extends ConsumerWidget {
         ),
       if (session.isExtra) l10n.classExtra,
     ].join(' · ');
+    final clock = session.startTime == null
+        ? null
+        : formatClockParts(
+            session.startTime!,
+            language: language,
+            numerals: numerals,
+          );
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        title: Text(session.owner.name),
-        subtitle: detail.isEmpty ? null : Text(detail),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
+    return OrganicPanel(
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 4, 12),
+      onTap: () => context.push(
+        attendanceLocation(session.owner, date, session.startTime),
+      ),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 48),
+        child: Row(
           children: [
-            Chip(
-              avatar: Icon(icon, size: 18),
-              label: Text(label),
-              backgroundColor: color,
-              visualDensity: VisualDensity.compact,
+            if (clock != null) ...[
+              SizedBox(
+                width: 56,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      clock.time,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(clock.period, style: theme.textTheme.bodySmall),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+            ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(session.owner.name, style: theme.textTheme.titleMedium),
+                  if (detail.isNotEmpty)
+                    Text(detail, style: theme.textTheme.bodySmall),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            StatusPill(
+              label: label,
+              background: background,
+              foreground: foreground,
+              height: 36,
             ),
             PopupMenuButton<String>(
               tooltip: l10n.homeClassMenu,
+              icon: const Icon(Icons.more_vert),
               onSelected: (v) => _onMenu(context, ref, v),
               itemBuilder: (context) => [
                 if (!_isOff) ...[
@@ -361,9 +580,6 @@ class _ClassCard extends ConsumerWidget {
               ],
             ),
           ],
-        ),
-        onTap: () => context.push(
-          attendanceLocation(session.owner, date, session.startTime),
         ),
       ),
     );
@@ -386,48 +602,54 @@ class _UpcomingSection extends ConsumerWidget {
         ref.watch(groupingStyleProvider).value ?? GroupingStyle.lakh;
     if (dues == null) return const SizedBox.shrink();
 
+    final o = Organic.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                l10n.homeUpcoming,
-                style: theme.textTheme.titleMedium,
-              ),
-            ),
-            TextButton(
-              onPressed: () => context.go('/fees'),
-              child: Text(l10n.homeSeeAll),
-            ),
-          ],
+        SectionTitle(
+          l10n.homeUpcoming,
+          trailing: TextButton(
+            onPressed: () => context.go('/fees'),
+            child: Text(l10n.homeSeeAll),
+          ),
         ),
         if (dues.isEmpty)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(l10n.homeUpcomingNone),
+            child: Text(
+              l10n.homeUpcomingNone,
+              style: theme.textTheme.bodyMedium?.copyWith(color: o.muted),
+            ),
           ),
         for (final d in dues)
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(d.studentName),
-            subtitle: Text(
-              formatDate(
-                d.dueDate,
-                language: language,
-                numerals: numerals,
-                calendar: watchCalendar(ref),
-              ),
-            ),
-            trailing: Text(
-              formatTaka(
-                Taka(d.balance),
-                numerals: numerals,
-                grouping: grouping,
-              ),
-            ),
+          InkWell(
+            borderRadius: BorderRadius.circular(OrganicRadius.card),
             onTap: () => context.push('/fees/pay/${d.studentId}'),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 48),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        d.studentName,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      '${formatDate(d.dueDate, language: language, numerals: numerals, calendar: watchCalendar(ref))}'
+                      ' · '
+                      '${formatTaka(Taka(d.balance), numerals: numerals, grouping: grouping)}',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: o.muted,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
       ],
     );
@@ -447,9 +669,10 @@ class _SampleBanner extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Card(
-        color: Theme.of(context).colorScheme.secondaryContainer,
+        margin: EdgeInsets.zero,
+        color: Organic.of(context).sageSoft,
         child: ListTile(
-          leading: const Icon(Icons.auto_awesome_outlined),
+          leading: const Icon(Icons.auto_awesome_rounded),
           title: Text(l10n.sampleBanner),
           trailing: TextButton(
             onPressed: () async {

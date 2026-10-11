@@ -34,7 +34,7 @@ void main() {
 
   appTest('all five tabs navigate', (tester) async {
     await pumpApp(tester, db);
-    for (final label in ['শিক্ষার্থী', 'ফি', 'রিপোর্ট', 'সেটিংস', 'হোম']) {
+    for (final label in ['শিক্ষার্থী', 'ফি', 'রিপোর্ট', 'সেটিংস']) {
       await tester.tap(_navLabel(label));
       await settle(tester);
       expect(
@@ -42,6 +42,10 @@ void main() {
         findsOneWidget,
       );
     }
+    // Home has no title bar: it opens on the greeting header.
+    await tester.tap(_navLabel('হোম'));
+    await settle(tester);
+    expect(find.text('আসসালামু আলাইকুম'), findsOneWidget);
   });
 
   appTest('tab state survives switching', (tester) async {

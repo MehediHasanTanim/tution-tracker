@@ -944,5 +944,35 @@
   "helpPrivacyPolicy": "গোপনীয়তা নীতি",
   "helpSupportWhatsApp": "WhatsApp-এ সহায়তা চান",
   "helpSupportEmail": "ইমেইলে সহায়তা চান",
-  "helpSupportMessage": "টিউশন খাতা: আমার একটি সমস্যা হয়েছে — "
+  "helpSupportMessage": "টিউশন খাতা: আমার একটি সমস্যা হয়েছে — ",
+  "homeGreeting": "আসসালামু আলাইকুম, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGreetingPlain": "আসসালামু আলাইকুম",
+  "homeCollectedMonth": "আদায় · {month}",
+  "@homeCollectedMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "homeOfExpected": "মোট প্রত্যাশিত {amount}",
+  "@homeOfExpected": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "bkCardTitle": "ব্যাকআপ",
+  "attMarkHint": "সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।",
+  "payFullBalance": "পুরো বাকি",
+  "payHalf": "অর্ধেক",
+  "studentQuickHint": "শুধু নাম আর মাসিক ফি — বাকিটা পরে।"
 }

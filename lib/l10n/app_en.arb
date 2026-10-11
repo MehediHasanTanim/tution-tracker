@@ -519,5 +519,14 @@
   "helpPrivacyPolicy": "Privacy policy",
   "helpSupportWhatsApp": "Get help on WhatsApp",
   "helpSupportEmail": "Get help by email",
-  "helpSupportMessage": "Tuition Khata: I have a problem — "
+  "helpSupportMessage": "Tuition Khata: I have a problem — ",
+  "homeGreeting": "Hello, {name}",
+  "homeGreetingPlain": "Hello",
+  "homeCollectedMonth": "Collected · {month}",
+  "homeOfExpected": "of {amount}",
+  "bkCardTitle": "Backup",
+  "attMarkHint": "Everyone starts Present. Tap a student to flip.",
+  "payFullBalance": "Full balance",
+  "payHalf": "Half",
+  "studentQuickHint": "Just name and monthly fee — fill the rest later."
 }

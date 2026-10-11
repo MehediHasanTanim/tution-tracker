@@ -31,7 +31,7 @@ Future<String> _seedBatch(
 });
 
 Future<void> _openClass(WidgetTester tester) async {
-  await tester.tap(find.text('Math 9'));
+  await tapCentered(tester, find.text('Math 9'));
   await waitFor(tester);
 }
 

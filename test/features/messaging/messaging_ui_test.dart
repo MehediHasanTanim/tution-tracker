@@ -206,8 +206,8 @@ void main() {
       expect(find.text('এই শিক্ষার্থীর ফোন নম্বর নেই'), findsOneWidget);
       expect(
         tester
-            .widget<FilledButton>(
-              find.widgetWithText(FilledButton, 'SMS').first,
+            .widget<OutlinedButton>(
+              find.widgetWithText(OutlinedButton, 'SMS').first,
             )
             .onPressed,
         isNull,

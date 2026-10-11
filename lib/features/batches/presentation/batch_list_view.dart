@@ -6,6 +6,7 @@ import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/batches/data/batch_providers.dart';
 import 'package:tution_tracker/features/batches/data/batch_repository.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
@@ -57,7 +58,7 @@ class BatchListView extends ConsumerWidget {
           height: 52,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
             children: [
               FilterChip(
                 label: Text(l10n.batchShowArchived),
@@ -81,9 +82,9 @@ class BatchListView extends ConsumerWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.groups_outlined,
+                          Icons.groups_rounded,
                           size: 64,
-                          color: Theme.of(context).colorScheme.outline,
+                          color: Organic.of(context).accentDecor,
                         ),
                         const SizedBox(height: 16),
                         Text(
@@ -98,7 +99,7 @@ class BatchListView extends ConsumerWidget {
                 );
               }
               return ListView.builder(
-                padding: const EdgeInsets.only(bottom: 88),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 96),
                 itemCount: list.length,
                 itemBuilder: (context, i) {
                   final s = list[i];
@@ -109,32 +110,46 @@ class BatchListView extends ConsumerWidget {
                     numerals: numerals,
                     grouping: grouping,
                   );
-                  return ListTile(
-                    leading: const CircleAvatar(child: Icon(Icons.groups)),
-                    title: Text(
-                      b.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+                  final o = Organic.of(context);
+                  return Card(
+                    child: ListTile(
+                      contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                        14,
+                        8,
+                        14,
+                        8,
+                      ),
+                      leading: CircleAvatar(
+                        radius: 22,
+                        backgroundColor: o.sageSoft,
+                        foregroundColor: o.onSageSoft,
+                        child: const Icon(Icons.groups_rounded),
+                      ),
+                      title: Text(
+                        b.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(
+                        [
+                          if (detail.isNotEmpty) detail,
+                          batchScheduleText(
+                            b,
+                            language: language,
+                            numerals: numerals,
+                          ),
+                          '${l10n.batchMemberCount(formatCount(s.memberCount, numerals))} · $fee',
+                        ].join('\n'),
+                      ),
+                      isThreeLine: true,
+                      trailing: b.isArchived
+                          ? Chip(
+                              label: Text(l10n.statusArchived),
+                              visualDensity: VisualDensity.compact,
+                            )
+                          : null,
+                      onTap: () => context.push('/batches/${b.id}'),
                     ),
-                    subtitle: Text(
-                      [
-                        if (detail.isNotEmpty) detail,
-                        batchScheduleText(
-                          b,
-                          language: language,
-                          numerals: numerals,
-                        ),
-                        '${l10n.batchMemberCount(formatCount(s.memberCount, numerals))} · $fee',
-                      ].join('\n'),
-                    ),
-                    isThreeLine: true,
-                    trailing: b.isArchived
-                        ? Chip(
-                            label: Text(l10n.statusArchived),
-                            visualDensity: VisualDensity.compact,
-                          )
-                        : null,
-                    onTap: () => context.push('/batches/${b.id}'),
                   );
                 },
               );

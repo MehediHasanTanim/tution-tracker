@@ -83,12 +83,32 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/brand/app_icon.png
+  # The Organic design system: Caprasimo headings over Figtree body text, with
+  # Hind Siliguri for Bangla (neither Latin face has Bangla glyphs). Bundled so
+  # conjuncts render correctly offline and on low-end devices.
   fonts:
-    - family: NotoSansBengali
+    - family: Caprasimo
       fonts:
-        - asset: assets/fonts/NotoSansBengali-400.ttf
+        - asset: assets/fonts/Caprasimo-400.ttf
+    - family: Figtree
+      fonts:
+        - asset: assets/fonts/Figtree-400.ttf
           weight: 400
-        - asset: assets/fonts/NotoSansBengali-500.ttf
+        - asset: assets/fonts/Figtree-500.ttf
           weight: 500
-        - asset: assets/fonts/NotoSansBengali-700.ttf
+        - asset: assets/fonts/Figtree-600.ttf
+          weight: 600
+        - asset: assets/fonts/Figtree-700.ttf
+          weight: 700
+    - family: HindSiliguri
+      fonts:
+        - asset: assets/fonts/HindSiliguri-400.ttf
+          weight: 400
+        - asset: assets/fonts/HindSiliguri-500.ttf
+          weight: 500
+        - asset: assets/fonts/HindSiliguri-600.ttf
+          weight: 600
+        - asset: assets/fonts/HindSiliguri-700.ttf
           weight: 700

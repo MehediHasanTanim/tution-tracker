@@ -1714,4 +1714,38 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get helpSupportMessage => 'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — ';
+
+  @override
+  String homeGreeting(String name) {
+    return 'আসসালামু আলাইকুম, $name';
+  }
+
+  @override
+  String get homeGreetingPlain => 'আসসালামু আলাইকুম';
+
+  @override
+  String homeCollectedMonth(String month) {
+    return 'আদায় · $month';
+  }
+
+  @override
+  String homeOfExpected(String amount) {
+    return 'মোট প্রত্যাশিত $amount';
+  }
+
+  @override
+  String get bkCardTitle => 'ব্যাকআপ';
+
+  @override
+  String get attMarkHint =>
+      'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।';
+
+  @override
+  String get payFullBalance => 'পুরো বাকি';
+
+  @override
+  String get payHalf => 'অর্ধেক';
+
+  @override
+  String get studentQuickHint => 'শুধু নাম আর মাসিক ফি — বাকিটা পরে।';
 }
