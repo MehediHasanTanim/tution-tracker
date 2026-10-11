@@ -3342,6 +3342,48 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'অন্য সময়…'**
   String get timeOther;
+
+  /// No description provided for @dueDayEarlier.
+  ///
+  /// In bn, this message translates to:
+  /// **'এক দিন আগে'**
+  String get dueDayEarlier;
+
+  /// No description provided for @dueDayLater.
+  ///
+  /// In bn, this message translates to:
+  /// **'এক দিন পরে'**
+  String get dueDayLater;
+
+  /// No description provided for @noteNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন নোট'**
+  String get noteNew;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'যেমন: বীজগণিতে দুর্বল'**
+  String get noteHint;
+
+  /// No description provided for @noteAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোট যোগ করুন'**
+  String get noteAdd;
+
+  /// No description provided for @noteNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনও কোনো নোট নেই।'**
+  String get noteNone;
+
+  /// No description provided for @noteEarlier.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের নোট'**
+  String get noteEarlier;
 }
 
 class _AppLocalizationsDelegate

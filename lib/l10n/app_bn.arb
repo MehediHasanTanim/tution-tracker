@@ -999,5 +999,12 @@
   "batchDeleteYes": "হ্যাঁ, মুছুন",
   "batchDeleteNo": "না",
   "batchDeleted": "ব্যাচ মুছে ফেলা হয়েছে",
-  "timeOther": "অন্য সময়…"
+  "timeOther": "অন্য সময়…",
+  "dueDayEarlier": "এক দিন আগে",
+  "dueDayLater": "এক দিন পরে",
+  "noteNew": "নতুন নোট",
+  "noteHint": "যেমন: বীজগণিতে দুর্বল",
+  "noteAdd": "নোট যোগ করুন",
+  "noteNone": "এখনও কোনো নোট নেই।",
+  "noteEarlier": "আগের নোট"
 }

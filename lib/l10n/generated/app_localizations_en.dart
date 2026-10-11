@@ -1792,4 +1792,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timeOther => 'Other time…';
+
+  @override
+  String get dueDayEarlier => 'One day earlier';
+
+  @override
+  String get dueDayLater => 'One day later';
+
+  @override
+  String get noteNew => 'New note';
+
+  @override
+  String get noteHint => 'e.g. Needs help with algebra';
+
+  @override
+  String get noteAdd => 'Add note';
+
+  @override
+  String get noteNone => 'No notes yet.';
+
+  @override
+  String get noteEarlier => 'Earlier note';
 }

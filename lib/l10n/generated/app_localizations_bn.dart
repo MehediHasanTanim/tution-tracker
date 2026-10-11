@@ -1786,4 +1786,25 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get timeOther => 'অন্য সময়…';
+
+  @override
+  String get dueDayEarlier => 'এক দিন আগে';
+
+  @override
+  String get dueDayLater => 'এক দিন পরে';
+
+  @override
+  String get noteNew => 'নতুন নোট';
+
+  @override
+  String get noteHint => 'যেমন: বীজগণিতে দুর্বল';
+
+  @override
+  String get noteAdd => 'নোট যোগ করুন';
+
+  @override
+  String get noteNone => 'এখনও কোনো নোট নেই।';
+
+  @override
+  String get noteEarlier => 'আগের নোট';
 }

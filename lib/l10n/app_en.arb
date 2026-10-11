@@ -539,5 +539,12 @@
   "batchDeleteYes": "Yes, delete",
   "batchDeleteNo": "Keep it",
   "batchDeleted": "Batch deleted",
-  "timeOther": "Other time…"
+  "timeOther": "Other time…",
+  "dueDayEarlier": "One day earlier",
+  "dueDayLater": "One day later",
+  "noteNew": "New note",
+  "noteHint": "e.g. Needs help with algebra",
+  "noteAdd": "Add note",
+  "noteNone": "No notes yet.",
+  "noteEarlier": "Earlier note"
 }
