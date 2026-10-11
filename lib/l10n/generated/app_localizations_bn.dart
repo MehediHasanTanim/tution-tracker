@@ -1735,4 +1735,8 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get bkCardTitle => 'ব্যাকআপ';
+
+  @override
+  String get attMarkHint =>
+      'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।';
 }

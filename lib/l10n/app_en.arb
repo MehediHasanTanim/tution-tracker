@@ -524,5 +524,6 @@
   "homeGreetingPlain": "Hello",
   "homeCollectedMonth": "Collected · {month}",
   "homeOfExpected": "of {amount}",
-  "bkCardTitle": "Backup"
+  "bkCardTitle": "Backup",
+  "attMarkHint": "Everyone starts Present. Tap a student to flip."
 }

@@ -8,6 +8,8 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
 import 'package:tution_tracker/features/attendance/presentation/student_attendance_tab.dart';
@@ -71,8 +73,9 @@ class _ProfileView extends ConsumerWidget {
         appBar: AppBar(
           title: Text(
             student.name,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           actions: [
             IconButton(
@@ -96,20 +99,34 @@ class _ProfileView extends ConsumerWidget {
               ],
             ),
           ],
-          bottom: TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            tabs: [
-              Tab(text: l10n.tabOverview),
-              Tab(text: l10n.tabAttendance),
-              Tab(text: l10n.tabFees),
-              Tab(text: l10n.tabNotes),
-            ],
-          ),
         ),
         body: Column(
           children: [
             _Header(student: student),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+              // The handoff's segmented pill.
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: Organic.of(context).surface,
+                  shape: const StadiumBorder(),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: TabBar(
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 16),
+                    tabs: [
+                      Tab(height: 44, text: l10n.tabOverview),
+                      Tab(height: 44, text: l10n.tabAttendance),
+                      Tab(height: 44, text: l10n.tabFees),
+                      Tab(height: 44, text: l10n.tabNotes),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               child: TabBarView(
                 children: [
@@ -196,7 +213,7 @@ class _Header extends ConsumerWidget {
         parseBdPhone(student.studentPhone ?? '');
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -205,16 +222,21 @@ class _Header extends ConsumerWidget {
               StudentAvatar(
                 name: student.name,
                 photoPath: student.photoPath,
-                radius: 32,
+                radius: 36,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(student.name, style: theme.textTheme.titleLarge),
+                    Text(student.name, style: theme.textTheme.headlineSmall),
                     if (subtitle.isNotEmpty)
-                      Text(subtitle, style: theme.textTheme.bodyMedium),
+                      Text(
+                        subtitle,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: Organic.of(context).subtle,
+                        ),
+                      ),
                     if (status != StudentStatus.active)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
@@ -262,38 +284,53 @@ class _ContactButtons extends ConsumerWidget {
       }
     }
 
+    final o = Organic.of(context);
+    final tonal = FilledButton.styleFrom(
+      backgroundColor: o.sageSoft,
+      foregroundColor: o.onSageSoft,
+      minimumSize: const Size.fromHeight(52),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           p == null ? l10n.noPhoneNumber : applyNumerals(p.local, numerals),
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: o.muted),
         ),
         const SizedBox(height: 8),
         Row(
           children: [
             Expanded(
               child: FilledButton.tonalIcon(
+                style: tonal,
                 onPressed: p == null ? null : () => open(ContactLinks.call(p)),
-                icon: const Icon(Icons.call),
+                icon: const Icon(Icons.call_rounded, size: 20),
                 label: Text(l10n.actionCall),
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
               child: FilledButton.tonalIcon(
+                style: tonal,
                 onPressed: p == null ? null : () => open(ContactLinks.sms(p)),
-                icon: const Icon(Icons.sms),
+                icon: const Icon(Icons.sms_rounded, size: 20),
                 label: Text(l10n.actionSms),
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
               child: FilledButton.tonalIcon(
+                style: tonal.copyWith(
+                  backgroundColor: WidgetStatePropertyAll(o.sage),
+                  foregroundColor: const WidgetStatePropertyAll(Colors.white),
+                ),
                 onPressed: p == null
                     ? null
                     : () => open(ContactLinks.whatsapp(p)),
-                icon: const Icon(Icons.chat),
+                icon: const Icon(Icons.chat_rounded, size: 20),
                 label: Text(l10n.actionWhatsapp),
               ),
             ),
@@ -366,23 +403,43 @@ class _OverviewTab extends ConsumerWidget {
         (l10n.fieldClassTime, applyNumerals(time.toKey(), numerals)),
     ];
 
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
     // A short fixed list, so a plain scroll view rather than a lazy one.
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          for (final (label, value) in rows)
-            ListTile(
-              dense: true,
-              title: Text(
-                label,
-                style: Theme.of(context).textTheme.labelMedium,
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+      child: OrganicPanel(
+        radius: OrganicRadius.panel,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+        child: Column(
+          children: [
+            for (final (label, value) in rows)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        label,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: o.muted,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Text(
+                        value,
+                        textAlign: TextAlign.end,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              subtitle: Text(
-                value,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -398,8 +455,12 @@ class _NotesTab extends StatelessWidget {
     final notes = student.notes;
     if (notes == null) return _Soon(label: AppLocalizations.of(context).none);
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Text(notes),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+      child: OrganicPanel(
+        radius: OrganicRadius.panel,
+        padding: const EdgeInsets.all(18),
+        child: Text(notes, style: Theme.of(context).textTheme.bodyLarge),
+      ),
     );
   }
 }

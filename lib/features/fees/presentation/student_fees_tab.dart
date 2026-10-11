@@ -9,8 +9,10 @@ import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/domain/fee_status.dart';
+import 'package:tution_tracker/features/fees/presentation/fee_status_style.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
 import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
@@ -58,79 +60,94 @@ class StudentFeesTab extends ConsumerWidget {
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.only(bottom: 32),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 32),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Card(
-              margin: EdgeInsets.zero,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.feesOutstanding,
-                      style: theme.textTheme.labelMedium,
+          Card(
+            margin: EdgeInsets.zero,
+            color: Organic.of(context).accentSoft,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(OrganicRadius.panel),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(18),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.feesOutstanding,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: Organic.of(context).onAccentSoft,
                     ),
+                  ),
+                  Text(
+                    money(outstanding),
+                    style: theme.textTheme.displaySmall?.copyWith(
+                      color: Organic.of(context).onAccentSoft,
+                    ),
+                  ),
+                  if (credit > 0)
                     Text(
-                      money(outstanding),
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
+                      '${l10n.tabFeesCredit}: ${money(credit)}',
+                      style: TextStyle(color: Organic.of(context).onAccentSoft),
+                    ),
+                  const SizedBox(height: 14),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton.icon(
+                          onPressed: () =>
+                              context.push('/fees/pay/${student.id}'),
+                          icon: const Icon(Icons.payments_rounded),
+                          label: Text(l10n.actionRecordPayment),
+                        ),
                       ),
-                    ),
-                    if (credit > 0)
-                      Text('${l10n.tabFeesCredit}: ${money(credit)}'),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: FilledButton.icon(
-                            onPressed: () =>
-                                context.push('/fees/pay/${student.id}'),
-                            icon: const Icon(Icons.payments),
-                            label: Text(l10n.actionRecordPayment),
+                      const SizedBox(width: 8),
+                      PopupMenuButton<String>(
+                        tooltip: l10n.actionAdjust,
+                        onSelected: (v) => _adjust(context, ref, v, paused),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'fee',
+                            child: Text(l10n.adjChangeFee),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        PopupMenuButton<String>(
-                          tooltip: l10n.actionAdjust,
-                          onSelected: (v) => _adjust(context, ref, v, paused),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 'fee',
-                              child: Text(l10n.adjChangeFee),
+                          PopupMenuItem(
+                            value: 'pause',
+                            child: Text(
+                              paused ? l10n.adjResume : l10n.adjPause,
                             ),
-                            PopupMenuItem(
-                              value: 'pause',
-                              child: Text(
-                                paused ? l10n.adjResume : l10n.adjPause,
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'onetime',
-                              child: Text(l10n.adjOneTime),
-                            ),
-                          ],
-                          child: OutlinedButton.icon(
-                            onPressed: null,
-                            icon: const Icon(Icons.tune),
-                            label: Text(l10n.actionAdjust),
                           ),
+                          PopupMenuItem(
+                            value: 'onetime',
+                            child: Text(l10n.adjOneTime),
+                          ),
+                        ],
+                        child: OutlinedButton.icon(
+                          onPressed: null,
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(64, 52),
+                            disabledForegroundColor: Organic.of(context)
+                                .accentStrong,
+                            side: BorderSide(
+                              color: Organic.of(context).accent,
+                              width: 2,
+                            ),
+                          ),
+                          icon: const Icon(Icons.tune_rounded),
+                          label: Text(l10n.actionAdjust),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
           _SectionTitle(l10n.ledgerTitle),
           if (ledger.isEmpty)
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(l10n.noDues),
             ),
           for (final b in ledger)
@@ -151,22 +168,24 @@ class StudentFeesTab extends ConsumerWidget {
           _SectionTitle(l10n.paymentsTitle),
           if (payments.isEmpty)
             Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Text(l10n.noPayments),
             ),
           for (final p in payments)
-            ListTile(
-              title: Text(
-                '${l10n.payReceiptNo(formatCount(p.receiptNo, numerals))} · ${formatDate(LocalDate.parse(p.receivedOn), language: language, numerals: numerals)}',
-              ),
-              subtitle: Text(_methodText(l10n, p.method)),
-              trailing: Text(
-                money(p.amount),
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+            Card(
+              child: ListTile(
+                title: Text(
+                  '${l10n.payReceiptNo(formatCount(p.receiptNo, numerals))} · ${formatDate(LocalDate.parse(p.receivedOn), language: language, numerals: numerals)}',
                 ),
+                subtitle: Text(_methodText(l10n, p.method)),
+                trailing: Text(
+                  money(p.amount),
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                onTap: () => _paymentActions(context, ref, p),
               ),
-              onTap: () => _paymentActions(context, ref, p),
             ),
         ],
       ),
@@ -292,18 +311,18 @@ class StudentFeesTab extends ConsumerWidget {
           children: [
             if (due.waived == 1)
               ListTile(
-                leading: const Icon(Icons.undo),
+                leading: const Icon(Icons.undo_rounded),
                 title: Text(l10n.adjUnwaive),
                 onTap: () => Navigator.pop(context, 'unwaive'),
               )
             else ...[
               ListTile(
-                leading: const Icon(Icons.money_off),
+                leading: const Icon(Icons.money_off_rounded),
                 title: Text(l10n.adjWaive),
                 onTap: () => Navigator.pop(context, 'waive'),
               ),
               ListTile(
-                leading: const Icon(Icons.percent),
+                leading: const Icon(Icons.percent_rounded),
                 title: Text(l10n.adjDiscount),
                 onTap: () => Navigator.pop(context, 'discount'),
               ),
@@ -388,7 +407,7 @@ class StudentFeesTab extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              leading: const Icon(Icons.receipt_long),
+              leading: const Icon(Icons.receipt_long_rounded),
               title: Text(l10n.receiptAction),
               onTap: () => Navigator.pop(context, 'receipt'),
             ),
@@ -398,7 +417,7 @@ class StudentFeesTab extends ConsumerWidget {
               onTap: () => Navigator.pop(context, 'edit'),
             ),
             ListTile(
-              leading: const Icon(Icons.delete_outline),
+              leading: const Icon(Icons.delete_outline_rounded),
               title: Text(l10n.payDelete),
               onTap: () => Navigator.pop(context, 'delete'),
             ),
@@ -475,8 +494,8 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(16, 16, 16, 4),
-    child: Text(text, style: Theme.of(context).textTheme.titleSmall),
+    padding: const EdgeInsets.fromLTRB(4, 22, 4, 8),
+    child: Text(text, style: Theme.of(context).textTheme.titleLarge),
   );
 }
 
@@ -500,7 +519,6 @@ class _LedgerRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
     final status = statusOf(
       waived: due.waived == 1,
       balance: due.balance,
@@ -508,23 +526,23 @@ class _LedgerRow extends StatelessWidget {
       dueDate: LocalDate.parse(due.dueDate),
       today: today,
     );
-    final (label, color) = switch (status) {
-      FeeStatus.paid => (l10n.statusPaid, scheme.primaryContainer),
-      FeeStatus.partial => (l10n.statusPartial, scheme.tertiaryContainer),
-      FeeStatus.due => (l10n.statusDue, scheme.surfaceContainerHighest),
-      FeeStatus.overdue => (l10n.statusOverdue, scheme.errorContainer),
-      FeeStatus.waived => (l10n.statusWaived, scheme.secondaryContainer),
-    };
-    return ListTile(
-      title: Text(title),
-      subtitle: Text('$amounts\n$running'),
-      isThreeLine: true,
-      trailing: Chip(
-        label: Text(label),
-        backgroundColor: color,
-        visualDensity: VisualDensity.compact,
+    final (label, background, foreground) = feeStatusStyle(
+      status,
+      l10n,
+      Organic.of(context),
+    );
+    return Card(
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text('$amounts\n$running'),
+        isThreeLine: true,
+        trailing: Chip(
+          label: Text(label, style: TextStyle(color: foreground)),
+          backgroundColor: background,
+          visualDensity: VisualDensity.compact,
+        ),
+        onTap: onTap,
       ),
-      onTap: onTap,
     );
   }
 }

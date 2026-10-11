@@ -1741,4 +1741,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bkCardTitle => 'Backup';
+
+  @override
+  String get attMarkHint => 'Everyone starts Present. Tap a student to flip.';
 }

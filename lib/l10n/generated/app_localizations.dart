@@ -3252,6 +3252,12 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'ব্যাকআপ'**
   String get bkCardTitle;
+
+  /// No description provided for @attMarkHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।'**
+  String get attMarkHint;
 }
 
 class _AppLocalizationsDelegate
