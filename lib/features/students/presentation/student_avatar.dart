@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/students/data/photo_store.dart';
 
 /// The student's photo, or their first letter when there is none.
@@ -39,14 +40,21 @@ class StudentAvatar extends ConsumerWidget {
         );
       }
     }
+    final o = Organic.of(context);
     return CircleAvatar(
       radius: radius,
+      backgroundColor: o.avatarFor(name),
+      foregroundColor: o.text,
       // foregroundImage keeps the letter visible if the file is missing.
       foregroundImage: image,
       onForegroundImageError: image == null ? null : (_, _) {},
       child: Text(
         name.characters.first,
-        style: radius >= 32 ? Theme.of(context).textTheme.headlineSmall : null,
+        style: TextStyle(
+          fontSize: radius * 0.8,
+          fontWeight: FontWeight.w700,
+          color: o.text,
+        ),
       ),
     );
   }

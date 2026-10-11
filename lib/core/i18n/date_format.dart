@@ -1,3 +1,4 @@
+import 'package:tution_tracker/core/dates/clock_time.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/dates/year_month.dart';
 import 'package:tution_tracker/core/i18n/bangla_calendar.dart';
@@ -137,4 +138,30 @@ String formatDate(
   if (calendar == CalendarStyle.gregorian) return text;
   final bangla = formatBanglaDate(date, language: language, numerals: numerals);
   return '$text ($bangla)';
+}
+
+/// A class time the way tutors say it: `৩:৩০` with `বিকাল`, or `3:30` with
+/// `PM`. Bangla names the part of the day rather than AM/PM.
+({String time, String period}) formatClockParts(
+  ClockTime time, {
+  required AppLanguage language,
+  required NumeralStyle numerals,
+}) {
+  final h12 = time.hour % 12 == 0 ? 12 : time.hour % 12;
+  final clock = applyNumerals(
+    '$h12:${time.minute.toString().padLeft(2, '0')}',
+    numerals,
+  );
+  final period = language == AppLanguage.en
+      ? (time.hour < 12 ? 'AM' : 'PM')
+      : switch (time.hour) {
+          < 4 => 'রাত',
+          < 6 => 'ভোর',
+          < 12 => 'সকাল',
+          < 15 => 'দুপুর',
+          < 18 => 'বিকাল',
+          < 20 => 'সন্ধ্যা',
+          _ => 'রাত',
+        };
+  return (time: clock, period: period);
 }

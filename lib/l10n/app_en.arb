@@ -519,5 +519,9 @@
   "helpPrivacyPolicy": "Privacy policy",
   "helpSupportWhatsApp": "Get help on WhatsApp",
   "helpSupportEmail": "Get help by email",
-  "helpSupportMessage": "Tuition Khata: I have a problem — "
+  "helpSupportMessage": "Tuition Khata: I have a problem — ",
+  "homeGreeting": "Hello, {name}",
+  "homeGreetingPlain": "Hello",
+  "homeCollectedMonth": "Collected · {month}",
+  "homeOfExpected": "of {amount}"
 }

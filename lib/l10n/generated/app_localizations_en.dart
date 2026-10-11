@@ -1720,4 +1720,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpSupportMessage => 'Tuition Khata: I have a problem — ';
+
+  @override
+  String homeGreeting(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get homeGreetingPlain => 'Hello';
+
+  @override
+  String homeCollectedMonth(String month) {
+    return 'Collected · $month';
+  }
+
+  @override
+  String homeOfExpected(String amount) {
+    return 'of $amount';
+  }
 }

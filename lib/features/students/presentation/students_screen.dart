@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tution_tracker/core/clock.dart';
+import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_list_view.dart';
+import 'package:tution_tracker/features/fees/data/fee_repository.dart';
+import 'package:tution_tracker/features/fees/domain/fee_status.dart';
+import 'package:tution_tracker/features/fees/presentation/fee_status_style.dart';
+import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
@@ -26,11 +34,27 @@ class StudentsScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(l10n.navStudents),
-              bottom: TabBar(
-                tabs: [
-                  Tab(text: l10n.tabAllStudents),
-                  Tab(text: l10n.tabBatches),
-                ],
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(64),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+                  // The handoff's segmented pill.
+                  child: DecoratedBox(
+                    decoration: ShapeDecoration(
+                      color: Organic.of(context).surface,
+                      shape: const StadiumBorder(),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: TabBar(
+                        tabs: [
+                          Tab(height: 44, text: l10n.tabAllStudents),
+                          Tab(height: 44, text: l10n.tabBatches),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
             // The button follows the visible tab.
@@ -39,12 +63,12 @@ class StudentsScreen extends StatelessWidget {
               builder: (context, _) => tabs.index == 0
                   ? FloatingActionButton.extended(
                       onPressed: () => context.push('/students/new'),
-                      icon: const Icon(Icons.person_add),
+                      icon: const Icon(Icons.add_rounded),
                       label: Text(l10n.studentsAdd),
                     )
                   : FloatingActionButton.extended(
                       onPressed: () => context.push('/batches/new'),
-                      icon: const Icon(Icons.group_add),
+                      icon: const Icon(Icons.add_rounded),
                       label: Text(l10n.batchesAdd),
                     ),
             ),
@@ -92,20 +116,51 @@ class _StudentListBodyState extends ConsumerState<StudentListBody>
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
     final grouping =
         ref.watch(groupingStyleProvider).value ?? GroupingStyle.lakh;
+    final today = todayFrom(ref.watch(clockProvider));
+    // What each student owes, for the fee pill on their row.
+    final owing = {
+      for (final e
+          in ref.watch(dueListProvider).value ?? const <DueListEntry>[])
+        e.student.id: e,
+    };
 
     super.build(context);
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
           child: TextField(
             controller: _search,
             textInputAction: TextInputAction.search,
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon: const Padding(
+                padding: EdgeInsetsDirectional.only(start: 8),
+                child: Icon(Icons.search_rounded),
+              ),
               hintText: l10n.studentsSearchHint,
-              border: const OutlineInputBorder(),
-              isDense: true,
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(OrganicRadius.pill),
+                ),
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(OrganicRadius.pill),
+                ),
+                borderSide: BorderSide(
+                  color: OrganicPalette.neutral300,
+                  width: 2,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(OrganicRadius.pill),
+                ),
+                borderSide: BorderSide(
+                  color: Organic.of(context).accent,
+                  width: 2,
+                ),
+              ),
               suffixIcon: ValueListenableBuilder<TextEditingValue>(
                 valueListenable: _search,
                 builder: (context, value, _) => value.text.isEmpty
@@ -137,7 +192,7 @@ class _StudentListBodyState extends ConsumerState<StudentListBody>
                   Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                      padding: const EdgeInsets.fromLTRB(24, 4, 24, 4),
                       child: Text(
                         l10n.studentsCount(formatCount(list.length, numerals)),
                         style: Theme.of(context).textTheme.labelLarge,
@@ -146,12 +201,14 @@ class _StudentListBodyState extends ConsumerState<StudentListBody>
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.only(bottom: 88),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 96),
                       itemCount: list.length,
                       itemBuilder: (context, i) => _StudentTile(
                         student: list[i],
                         numerals: numerals,
                         grouping: grouping,
+                        owing: owing[list[i].id],
+                        today: today,
                       ),
                     ),
                   ),
@@ -194,7 +251,7 @@ class _FilterBar extends ConsumerWidget {
       height: 52,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         children: [
           for (final status in StudentStatus.values)
             Padding(
@@ -219,11 +276,11 @@ class _FilterBar extends ConsumerWidget {
                   PopupMenuItem(value: level, child: Text(level)),
               ],
               child: Chip(
-                avatar: const Icon(Icons.school_outlined, size: 18),
+                avatar: const Icon(Icons.school_rounded, size: 18),
                 label: Text(filter.classLevel ?? l10n.studentsFilterClass),
                 backgroundColor: filter.classLevel == null
                     ? null
-                    : Theme.of(context).colorScheme.secondaryContainer,
+                    : Organic.of(context).accentSoft,
               ),
             ),
           ),
@@ -241,11 +298,11 @@ class _FilterBar extends ConsumerWidget {
                   PopupMenuItem(value: b.id, child: Text(b.name)),
               ],
               child: Chip(
-                avatar: const Icon(Icons.groups_outlined, size: 18),
+                avatar: const Icon(Icons.groups_rounded, size: 18),
                 label: Text(batchName ?? l10n.studentsFilterBatch),
                 backgroundColor: filter.batchId == null
                     ? null
-                    : Theme.of(context).colorScheme.secondaryContainer,
+                    : Organic.of(context).accentSoft,
               ),
             ),
           ),
@@ -260,15 +317,22 @@ class _StudentTile extends StatelessWidget {
     required this.student,
     required this.numerals,
     required this.grouping,
+    required this.owing,
+    required this.today,
   });
 
   final Student student;
   final NumeralStyle numerals;
   final GroupingStyle grouping;
 
+  /// Their open dues, or null when they owe nothing.
+  final DueListEntry? owing;
+  final LocalDate today;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final o = Organic.of(context);
     final status = student.statusValue;
     final fee = l10n.studentFeePerMonth(
       formatTaka(
@@ -278,22 +342,42 @@ class _StudentTile extends StatelessWidget {
       ),
     );
     final classLevel = student.classLevel;
-    return ListTile(
-      leading: StudentAvatar(name: student.name, photoPath: student.photoPath),
-      // Long Bangla names wrap rather than truncate (spec section 7).
-      title: Text(student.name, maxLines: 2, overflow: TextOverflow.ellipsis),
-      subtitle: Text(classLevel == null ? fee : '$classLevel · $fee'),
-      trailing: status == StudentStatus.active
-          ? null
-          : Chip(
-              label: Text(
-                status == StudentStatus.paused
-                    ? l10n.statusPaused
-                    : l10n.statusArchived,
-              ),
-              visualDensity: VisualDensity.compact,
-            ),
-      onTap: () => context.push('/students/${student.id}'),
+    final Widget pill;
+    if (status != StudentStatus.active) {
+      pill = StatusPill(
+        label: status == StudentStatus.paused
+            ? l10n.statusPaused
+            : l10n.statusArchived,
+        background: o.raised,
+        foreground: o.muted,
+      );
+    } else {
+      final e = owing;
+      pill = FeeStatusPill(
+        e == null
+            ? FeeStatus.paid
+            : today > e.oldestDueDate
+            ? FeeStatus.overdue
+            : e.dues.any((d) => d.paid > 0)
+            ? FeeStatus.partial
+            : FeeStatus.due,
+      );
+    }
+    return Card(
+      child: ListTile(
+        minTileHeight: 68,
+        contentPadding: const EdgeInsetsDirectional.fromSTEB(14, 6, 14, 6),
+        leading: StudentAvatar(
+          name: student.name,
+          photoPath: student.photoPath,
+          radius: 22,
+        ),
+        // Long Bangla names wrap rather than truncate (spec section 7).
+        title: Text(student.name, maxLines: 2, overflow: TextOverflow.ellipsis),
+        subtitle: Text(classLevel == null ? fee : '$classLevel · $fee'),
+        trailing: pill,
+        onTap: () => context.push('/students/${student.id}'),
+      ),
     );
   }
 }
@@ -315,9 +399,9 @@ class _EmptyState extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              filtered ? Icons.search_off : Icons.school_outlined,
+              filtered ? Icons.search_off_rounded : Icons.school_rounded,
               size: 64,
-              color: theme.colorScheme.outline,
+              color: Organic.of(context).accentDecor,
             ),
             const SizedBox(height: 16),
             Text(

@@ -1714,4 +1714,22 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get helpSupportMessage => 'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — ';
+
+  @override
+  String homeGreeting(String name) {
+    return 'আসসালামু আলাইকুম, $name';
+  }
+
+  @override
+  String get homeGreetingPlain => 'আসসালামু আলাইকুম';
+
+  @override
+  String homeCollectedMonth(String month) {
+    return 'আদায় · $month';
+  }
+
+  @override
+  String homeOfExpected(String amount) {
+    return 'মোট প্রত্যাশিত $amount';
+  }
 }

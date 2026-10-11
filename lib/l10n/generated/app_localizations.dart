@@ -3222,6 +3222,30 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — '**
   String get helpSupportMessage;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In bn, this message translates to:
+  /// **'আসসালামু আলাইকুম, {name}'**
+  String homeGreeting(String name);
+
+  /// No description provided for @homeGreetingPlain.
+  ///
+  /// In bn, this message translates to:
+  /// **'আসসালামু আলাইকুম'**
+  String get homeGreetingPlain;
+
+  /// No description provided for @homeCollectedMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'আদায় · {month}'**
+  String homeCollectedMonth(String month);
+
+  /// No description provided for @homeOfExpected.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট প্রত্যাশিত {amount}'**
+  String homeOfExpected(String amount);
 }
 
 class _AppLocalizationsDelegate
