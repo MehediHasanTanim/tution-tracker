@@ -4,6 +4,7 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/theme/app_theme.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/fees/presentation/payment_labels.dart';
 import 'package:tution_tracker/features/receipts/domain/receipt_data.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -37,9 +38,10 @@ class ReceiptCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final base = AppTheme.light();
     final text = base.textTheme.apply(
-      bodyColor: Colors.black87,
-      displayColor: Colors.black87,
+      bodyColor: OrganicPalette.text,
+      displayColor: OrganicPalette.text,
     );
+    const rule = Divider(height: 24, color: OrganicPalette.neutral300);
 
     String money(int a) =>
         formatTaka(Taka(a), numerals: numerals, grouping: grouping);
@@ -62,15 +64,18 @@ class ReceiptCard extends StatelessWidget {
         style: text.bodyMedium!,
         child: Container(
           width: receiptWidth,
-          color: Colors.white,
-          padding: const EdgeInsets.all(20),
+          // Always the light paper, whatever the app theme: it is shared.
+          color: OrganicPalette.neutral100,
+          padding: const EdgeInsets.all(22),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: text.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+                style: text.headlineSmall!.copyWith(
+                  color: OrganicPalette.accent700,
+                ),
               ),
               if (tutor.name.isNotEmpty && tutor.name != title)
                 Text(tutor.name, textAlign: TextAlign.center),
@@ -79,7 +84,7 @@ class ReceiptCard extends StatelessWidget {
                   applyNumerals(tutor.phone, numerals),
                   textAlign: TextAlign.center,
                 ),
-              const Divider(height: 24, color: Colors.black26),
+              rule,
               Text(
                 l10n.receiptTitle,
                 textAlign: TextAlign.center,
@@ -105,10 +110,12 @@ class ReceiptCard extends StatelessWidget {
               _Pair(l10n.receiptStudent, data.studentName),
               if (data.guardianName != null)
                 _Pair(l10n.receiptGuardian, data.guardianName!),
-              const Divider(height: 24, color: Colors.black26),
+              rule,
               Text(
                 l10n.receiptFor,
-                style: text.labelMedium!.copyWith(color: Colors.black54),
+                style: text.labelMedium!.copyWith(
+                  color: OrganicPalette.neutral700,
+                ),
               ),
               const SizedBox(height: 4),
               for (final line in data.lines)
@@ -123,7 +130,7 @@ class ReceiptCard extends StatelessWidget {
                     ],
                   ),
                 ),
-              const Divider(height: 24, color: Colors.black26),
+              rule,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -137,8 +144,8 @@ class ReceiptCard extends StatelessWidget {
                   ),
                   Text(
                     money(data.amount),
-                    style: text.titleLarge!.copyWith(
-                      fontWeight: FontWeight.bold,
+                    style: text.headlineSmall!.copyWith(
+                      color: OrganicPalette.accent700,
                     ),
                   ),
                 ],
@@ -151,7 +158,7 @@ class ReceiptCard extends StatelessWidget {
               Text(
                 l10n.receiptThanks,
                 textAlign: TextAlign.center,
-                style: text.bodyMedium!.copyWith(color: Colors.black54),
+                style: text.bodyMedium!.copyWith(color: OrganicPalette.sage700),
               ),
             ],
           ),
@@ -176,7 +183,10 @@ class _Pair extends StatelessWidget {
       children: [
         SizedBox(
           width: 96,
-          child: Text(label, style: const TextStyle(color: Colors.black54)),
+          child: Text(
+            label,
+            style: const TextStyle(color: OrganicPalette.neutral700),
+          ),
         ),
         Expanded(child: Text(value)),
       ],

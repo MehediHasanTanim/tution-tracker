@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -41,12 +42,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final locale = ref.watch(localeProvider);
 
     final (icon, title, body) = switch (_step) {
-      1 => (Icons.groups_outlined, l10n.obIntro1Title, l10n.obIntro1Body),
-      2 => (Icons.fact_check_outlined, l10n.obIntro2Title, l10n.obIntro2Body),
-      3 => (Icons.payments_outlined, l10n.obIntro3Title, l10n.obIntro3Body),
-      4 => (Icons.auto_awesome_outlined, l10n.obSampleTitle, l10n.obSampleBody),
-      _ => (Icons.school_outlined, l10n.obWelcome, l10n.obPrivacy),
+      1 => (Icons.groups_rounded, l10n.obIntro1Title, l10n.obIntro1Body),
+      2 => (Icons.fact_check_rounded, l10n.obIntro2Title, l10n.obIntro2Body),
+      3 => (
+        Icons.account_balance_wallet_rounded,
+        l10n.obIntro3Title,
+        l10n.obIntro3Body,
+      ),
+      4 => (Icons.auto_awesome_rounded, l10n.obSampleTitle, l10n.obSampleBody),
+      _ => (Icons.school_rounded, l10n.obWelcome, l10n.obPrivacy),
     };
+    final o = Organic.of(context);
 
     return Scaffold(
       body: SafeArea(
@@ -73,25 +79,51 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           : const SizedBox(height: 48),
                     ),
                     const Spacer(),
-                    Icon(icon, size: 88, color: theme.colorScheme.primary),
-                    const SizedBox(height: 24),
-                    Text(
-                      title,
-                      style: theme.textTheme.headlineSmall,
-                      textAlign: TextAlign.center,
+                    // Flush left, as the design system asks: the brand on the
+                    // welcome step, a soft circle behind each intro icon.
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: _step == 0
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(28),
+                              child: Image.asset(
+                                'assets/brand/app_icon.png',
+                                width: 112,
+                                height: 112,
+                                excludeFromSemantics: true,
+                              ),
+                            )
+                          : Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: o.accentSoft,
+                              ),
+                              child: Icon(icon, size: 56, color: o.accent),
+                            ),
                     ),
+                    const SizedBox(height: 24),
+                    if (_step == 0)
+                      Text(
+                        l10n.appTitle,
+                        style: theme.textTheme.displayMedium?.copyWith(
+                          color: o.accentStrong,
+                        ),
+                      ),
+                    Text(title, style: theme.textTheme.headlineSmall),
                     const SizedBox(height: 12),
                     Text(
                       body,
-                      style: theme.textTheme.bodyLarge,
-                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: o.subtle,
+                      ),
                     ),
                     if (_step == 0) ...[
                       const SizedBox(height: 32),
                       Text(
                         l10n.obPickLanguage,
                         style: theme.textTheme.titleMedium,
-                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 12),
                       SegmentedButton<Locale>(
@@ -116,6 +148,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       _Dots(current: _step, count: 5),
                       const SizedBox(height: 16),
                       FilledButton(
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size.fromHeight(56),
+                        ),
                         onPressed: () => setState(() => _step++),
                         child: Text(l10n.obNext),
                       ),
@@ -129,6 +164,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       )
                     else ...[
                       FilledButton(
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size.fromHeight(56),
+                        ),
                         onPressed: () => _finish(withSample: true),
                         child: Text(l10n.obSampleYes),
                       ),
@@ -157,18 +195,18 @@ class _Dots extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final o = Organic.of(context);
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (var i = 0; i < count; i++)
-          Container(
-            width: 8,
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: i == current ? 24 : 8,
             height: 8,
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: i == current ? scheme.primary : scheme.outlineVariant,
+            margin: const EdgeInsetsDirectional.only(end: 6),
+            decoration: ShapeDecoration(
+              shape: const StadiumBorder(),
+              color: i == current ? o.accent : o.neutralSoft,
             ),
           ),
       ],
