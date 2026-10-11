@@ -1847,4 +1847,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get receiptExactly => 'This is exactly what the guardian receives.';
+
+  @override
+  String homeExtraWhen(String date) {
+    return '$date — outside the regular routine.';
+  }
+
+  @override
+  String get homeExtraAdd => 'Add to the day';
+
+  @override
+  String get offAction => 'Cancel class / holiday';
+
+  @override
+  String get offTitle => 'Mark class off';
+
+  @override
+  String get offBody =>
+      'No one is marked absent and the class won’t count towards attendance %. You can restore it any time.';
+
+  @override
+  String get offPublicHoliday => 'Public holiday';
+
+  @override
+  String get offTutorUnwell => 'Tutor unwell';
+
+  @override
+  String get offExams => 'Students’ exams';
+
+  @override
+  String get offOther => 'Other reason';
+
+  @override
+  String get offConfirm => 'Mark class off';
+
+  @override
+  String get offNever => 'Never mind';
+
+  @override
+  String get offNoAttendance => 'No attendance is taken';
 }

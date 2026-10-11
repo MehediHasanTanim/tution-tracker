@@ -5,10 +5,11 @@ import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/attendance_stats.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
-import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
+import 'package:tution_tracker/features/attendance/presentation/mark_off_sheet.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -172,34 +173,24 @@ class _SheetViewState extends ConsumerState<_SheetView> {
     }
   }
 
-  Future<void> _markOff(SessionStatus status) async {
+  Future<void> _markOff() async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final router = GoRouter.of(context);
-    final result = await showDialog<FieldsResult>(
-      context: context,
-      builder: (_) => FieldsDialog(
-        title: status == SessionStatus.cancelled
-            ? l10n.attCancelClass
-            : l10n.attHoliday,
-        fields: [
-          DialogField(key: 'reason', label: l10n.attReason, required: false),
-        ],
-      ),
-    );
+    final result = await showMarkOffSheet(context);
     if (result == null) return;
     final repo = await ref.read(attendanceRepositoryProvider.future);
     await repo.markOff(
       owner: widget.args.owner,
       date: widget.args.date,
       startTime: widget.args.time,
-      status: status,
-      reason: result.values['reason'],
+      status: result.status,
+      reason: result.note,
     );
     messenger.showSnackBar(
       SnackBar(
         content: Text(
-          status == SessionStatus.cancelled
+          result.status == SessionStatus.cancelled
               ? l10n.classCancelled
               : l10n.classHoliday,
         ),
@@ -261,29 +252,36 @@ class _SheetViewState extends ConsumerState<_SheetView> {
             PopupMenuButton<String>(
               onSelected: (v) {
                 switch (v) {
-                  case 'cancel':
-                    _markOff(SessionStatus.cancelled);
-                  case 'holiday':
-                    _markOff(SessionStatus.holiday);
+                  case 'off':
+                    _markOff();
                   case 'restore':
                     _restore();
                 }
               },
               itemBuilder: (context) => [
-                if (!_isOff) ...[
-                  PopupMenuItem(
-                    value: 'cancel',
-                    child: Text(l10n.attCancelClass),
-                  ),
-                  PopupMenuItem(value: 'holiday', child: Text(l10n.attHoliday)),
-                ] else
+                if (!_isOff)
+                  PopupMenuItem(value: 'off', child: Text(l10n.offAction))
+                else
                   PopupMenuItem(value: 'restore', child: Text(l10n.attRestore)),
               ],
             ),
           ],
         ),
         body: _isOff ? _offBody(context) : _marksBody(context, counts),
-        bottomNavigationBar: _isOff || roster.isEmpty
+        bottomNavigationBar: _isOff
+            ? DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Organic.of(context).raised,
+                  border: Border(
+                    top: BorderSide(color: Organic.of(context).divider),
+                  ),
+                ),
+                child: SafeArea(
+                  minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                  child: BlockButton(l10n.attRestore, onPressed: _restore),
+                ),
+              )
+            : roster.isEmpty
             ? null
             : DecoratedBox(
                 // The handoff's raised footer: summary over a full-width save.
@@ -325,38 +323,37 @@ class _SheetViewState extends ConsumerState<_SheetView> {
     );
   }
 
+  /// The design's off-day view: a neutral banner with the reason, the
+  /// students marked off, and the restore button in the footer.
   Widget _offBody(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final o = Organic.of(context);
     final holiday = _session!.status == SessionStatus.holiday;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    final note = _session!.note;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
+      children: [
+        BlockStack(
           children: [
-            Icon(
-              holiday ? Icons.beach_access_rounded : Icons.event_busy_rounded,
-              size: 64,
-              color: Organic.of(context).accentDecor,
+            BlockBanner(
+              title: holiday ? l10n.attHolidayBanner : l10n.attCancelledBanner,
+              text: [?note, l10n.offNoAttendance].join(' · '),
+              background: o.neutralSoft,
+              foreground: o.onNeutralSoft,
             ),
-            const SizedBox(height: 16),
-            Text(
-              holiday ? l10n.attHolidayBanner : l10n.attCancelledBanner,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-            if (_session!.note != null) ...[
-              const SizedBox(height: 8),
-              Text(_session!.note!, textAlign: TextAlign.center),
-            ],
-            const SizedBox(height: 24),
-            FilledButton.tonal(
-              onPressed: _restore,
-              child: Text(l10n.attRestore),
-            ),
+            for (final entry in widget.data.roster)
+              BlockItem(
+                leading: StudentAvatar(
+                  name: entry.student.name,
+                  photoPath: entry.student.photoPath,
+                  radius: 22,
+                ),
+                title: entry.student.name,
+                subtitle: holiday ? l10n.classHoliday : l10n.classCancelled,
+              ),
           ],
         ),
-      ),
+      ],
     );
   }
 
@@ -399,6 +396,12 @@ class _SheetViewState extends ConsumerState<_SheetView> {
       children: [
         Text(l10n.attMarkHint, style: theme.textTheme.bodySmall),
         const SizedBox(height: 10),
+        BlockButton(
+          l10n.offAction,
+          kind: BlockButtonKind.outlined,
+          onPressed: _markOff,
+        ),
+        const SizedBox(height: 12),
         TextField(
           controller: _topic,
           decoration: InputDecoration(labelText: l10n.attTopic),

@@ -556,5 +556,17 @@
   "fadjWaiveSub": "The whole month or part of it",
   "fadjPaymentsHint": "Tap a payment to correct or delete it.",
   "receiptFormatImage": "Image (PNG)",
-  "receiptExactly": "This is exactly what the guardian receives."
+  "receiptExactly": "This is exactly what the guardian receives.",
+  "homeExtraWhen": "{date} — outside the regular routine.",
+  "homeExtraAdd": "Add to the day",
+  "offAction": "Cancel class / holiday",
+  "offTitle": "Mark class off",
+  "offBody": "No one is marked absent and the class won’t count towards attendance %. You can restore it any time.",
+  "offPublicHoliday": "Public holiday",
+  "offTutorUnwell": "Tutor unwell",
+  "offExams": "Students’ exams",
+  "offOther": "Other reason",
+  "offConfirm": "Mark class off",
+  "offNever": "Never mind",
+  "offNoAttendance": "No attendance is taken"
 }

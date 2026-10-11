@@ -3444,6 +3444,78 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'অভিভাবক ঠিক এটাই পাবেন।'**
   String get receiptExactly;
+
+  /// No description provided for @homeExtraWhen.
+  ///
+  /// In bn, this message translates to:
+  /// **'{date} — নির্ধারিত রুটিনের বাইরে।'**
+  String homeExtraWhen(String date);
+
+  /// No description provided for @homeExtraAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকায় যোগ করুন'**
+  String get homeExtraAdd;
+
+  /// No description provided for @offAction.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বাতিল / ছুটি'**
+  String get offAction;
+
+  /// No description provided for @offTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বন্ধ?'**
+  String get offTitle;
+
+  /// No description provided for @offBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাউকে অনুপস্থিত ধরা হবে না, আর এই ক্লাস হাজিরার হারে গোনা হবে না। পরে ফিরিয়ে আনা যাবে।'**
+  String get offBody;
+
+  /// No description provided for @offPublicHoliday.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরকারি ছুটি'**
+  String get offPublicHoliday;
+
+  /// No description provided for @offTutorUnwell.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষক অসুস্থ'**
+  String get offTutorUnwell;
+
+  /// No description provided for @offExams.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীদের পরীক্ষা'**
+  String get offExams;
+
+  /// No description provided for @offOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য কারণ'**
+  String get offOther;
+
+  /// No description provided for @offConfirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বন্ধ করুন'**
+  String get offConfirm;
+
+  /// No description provided for @offNever.
+  ///
+  /// In bn, this message translates to:
+  /// **'থাক'**
+  String get offNever;
+
+  /// No description provided for @offNoAttendance.
+  ///
+  /// In bn, this message translates to:
+  /// **'হাজিরা নেওয়া হবে না'**
+  String get offNoAttendance;
 }
 
 class _AppLocalizationsDelegate

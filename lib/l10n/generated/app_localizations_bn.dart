@@ -1841,4 +1841,43 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get receiptExactly => 'অভিভাবক ঠিক এটাই পাবেন।';
+
+  @override
+  String homeExtraWhen(String date) {
+    return '$date — নির্ধারিত রুটিনের বাইরে।';
+  }
+
+  @override
+  String get homeExtraAdd => 'তালিকায় যোগ করুন';
+
+  @override
+  String get offAction => 'ক্লাস বাতিল / ছুটি';
+
+  @override
+  String get offTitle => 'ক্লাস বন্ধ?';
+
+  @override
+  String get offBody =>
+      'কাউকে অনুপস্থিত ধরা হবে না, আর এই ক্লাস হাজিরার হারে গোনা হবে না। পরে ফিরিয়ে আনা যাবে।';
+
+  @override
+  String get offPublicHoliday => 'সরকারি ছুটি';
+
+  @override
+  String get offTutorUnwell => 'শিক্ষক অসুস্থ';
+
+  @override
+  String get offExams => 'শিক্ষার্থীদের পরীক্ষা';
+
+  @override
+  String get offOther => 'অন্য কারণ';
+
+  @override
+  String get offConfirm => 'ক্লাস বন্ধ করুন';
+
+  @override
+  String get offNever => 'থাক';
+
+  @override
+  String get offNoAttendance => 'হাজিরা নেওয়া হবে না';
 }

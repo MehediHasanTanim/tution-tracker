@@ -1030,5 +1030,24 @@
   "fadjWaiveSub": "পুরো মাস বা কিছু টাকা",
   "fadjPaymentsHint": "ভুল হলে ট্যাপ করে সংশোধন বা মুছুন।",
   "receiptFormatImage": "ছবি (PNG)",
-  "receiptExactly": "অভিভাবক ঠিক এটাই পাবেন।"
+  "receiptExactly": "অভিভাবক ঠিক এটাই পাবেন।",
+  "homeExtraWhen": "{date} — নির্ধারিত রুটিনের বাইরে।",
+  "@homeExtraWhen": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeExtraAdd": "তালিকায় যোগ করুন",
+  "offAction": "ক্লাস বাতিল / ছুটি",
+  "offTitle": "ক্লাস বন্ধ?",
+  "offBody": "কাউকে অনুপস্থিত ধরা হবে না, আর এই ক্লাস হাজিরার হারে গোনা হবে না। পরে ফিরিয়ে আনা যাবে।",
+  "offPublicHoliday": "সরকারি ছুটি",
+  "offTutorUnwell": "শিক্ষক অসুস্থ",
+  "offExams": "শিক্ষার্থীদের পরীক্ষা",
+  "offOther": "অন্য কারণ",
+  "offConfirm": "ক্লাস বন্ধ করুন",
+  "offNever": "থাক",
+  "offNoAttendance": "হাজিরা নেওয়া হবে না"
 }

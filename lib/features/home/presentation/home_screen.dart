@@ -14,9 +14,9 @@ import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
+import 'package:tution_tracker/features/attendance/presentation/mark_off_sheet.dart';
 import 'package:tution_tracker/features/backup/presentation/backup_banner.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
-import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
 import 'package:tution_tracker/features/home/presentation/extra_class_sheet.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/features/reports/data/report_providers.dart';
@@ -32,15 +32,10 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => showExtraClassSheet(context, ref),
-        icon: const Icon(Icons.add_rounded),
-        label: Text(l10n.homeAddExtra),
-      ),
       body: SafeArea(
         bottom: false,
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 96),
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
           children: const [
             _Greeting(),
             SizedBox(height: 16),
@@ -425,6 +420,21 @@ class _ClassesSection extends ConsumerWidget {
                   ],
                 ),
         ),
+        // The design's dashed "Extra class" pill, under the day's classes.
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: OutlinedButton.icon(
+            onPressed: () => showExtraClassSheet(context, ref),
+            icon: const Icon(Icons.add_rounded),
+            label: Text(l10n.homeAddExtra),
+            style: OutlinedButton.styleFrom(
+              side: BorderSide(
+                color: Organic.of(context).accent.withValues(alpha: 0.6),
+                width: 2,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -449,33 +459,20 @@ class _ClassCard extends ConsumerWidget {
       await repo.reopen(session.record!.id);
       return;
     }
-    final status = v == 'cancel'
-        ? SessionStatus.cancelled
-        : SessionStatus.holiday;
     if (!context.mounted) return;
-    final result = await showDialog<FieldsResult>(
-      context: context,
-      builder: (_) => FieldsDialog(
-        title: status == SessionStatus.cancelled
-            ? l10n.attCancelClass
-            : l10n.attHoliday,
-        fields: [
-          DialogField(key: 'reason', label: l10n.attReason, required: false),
-        ],
-      ),
-    );
+    final result = await showMarkOffSheet(context);
     if (result == null) return;
     await repo.markOff(
       owner: session.owner,
       date: date,
       startTime: session.startTime,
-      status: status,
-      reason: result.values['reason'],
+      status: result.status,
+      reason: result.note,
     );
     messenger.showSnackBar(
       SnackBar(
         content: Text(
-          status == SessionStatus.cancelled
+          result.status == SessionStatus.cancelled
               ? l10n.classCancelled
               : l10n.classHoliday,
         ),
@@ -569,13 +566,9 @@ class _ClassCard extends ConsumerWidget {
               icon: const Icon(Icons.more_vert),
               onSelected: (v) => _onMenu(context, ref, v),
               itemBuilder: (context) => [
-                if (!_isOff) ...[
-                  PopupMenuItem(
-                    value: 'cancel',
-                    child: Text(l10n.attCancelClass),
-                  ),
-                  PopupMenuItem(value: 'holiday', child: Text(l10n.attHoliday)),
-                ] else if (session.record != null)
+                if (!_isOff)
+                  PopupMenuItem(value: 'off', child: Text(l10n.offAction))
+                else if (session.record != null)
                   PopupMenuItem(value: 'restore', child: Text(l10n.attRestore)),
               ],
             ),
