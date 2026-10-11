@@ -3258,6 +3258,18 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।'**
   String get attMarkHint;
+
+  /// No description provided for @payFullBalance.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো বাকি'**
+  String get payFullBalance;
+
+  /// No description provided for @payHalf.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ধেক'**
+  String get payHalf;
 }
 
 class _AppLocalizationsDelegate

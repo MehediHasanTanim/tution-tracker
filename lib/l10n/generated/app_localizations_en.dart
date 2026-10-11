@@ -1744,4 +1744,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get attMarkHint => 'Everyone starts Present. Tap a student to flip.';
+
+  @override
+  String get payFullBalance => 'Full balance';
+
+  @override
+  String get payHalf => 'Half';
 }

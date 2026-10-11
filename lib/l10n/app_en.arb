@@ -525,5 +525,7 @@
   "homeCollectedMonth": "Collected · {month}",
   "homeOfExpected": "of {amount}",
   "bkCardTitle": "Backup",
-  "attMarkHint": "Everyone starts Present. Tap a student to flip."
+  "attMarkHint": "Everyone starts Present. Tap a student to flip.",
+  "payFullBalance": "Full balance",
+  "payHalf": "Half"
 }

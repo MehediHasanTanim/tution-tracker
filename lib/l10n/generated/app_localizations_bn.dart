@@ -1739,4 +1739,10 @@ class AppLocalizationsBn extends AppLocalizations {
   @override
   String get attMarkHint =>
       'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।';
+
+  @override
+  String get payFullBalance => 'পুরো বাকি';
+
+  @override
+  String get payHalf => 'অর্ধেক';
 }
