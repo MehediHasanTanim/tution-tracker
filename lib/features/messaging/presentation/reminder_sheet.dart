@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/fees/data/fee_repository.dart';
 import 'package:tution_tracker/features/messaging/data/messaging_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -80,17 +81,6 @@ class _ReminderSheetState extends ConsumerState<_ReminderSheet> {
     final theme = Theme.of(context);
     final phone = contactPhone(widget.entry.student);
     final o = Organic.of(context);
-    // The message as a chat bubble, its tail at the bottom left.
-    const bubble = BorderRadius.only(
-      topLeft: Radius.circular(24),
-      topRight: Radius.circular(24),
-      bottomRight: Radius.circular(24),
-      bottomLeft: Radius.circular(6),
-    );
-    OutlineInputBorder bubbleBorder(Color color) => OutlineInputBorder(
-      borderRadius: bubble,
-      borderSide: BorderSide(color: color, width: 2),
-    );
     return Padding(
       padding: EdgeInsets.fromLTRB(
         20,
@@ -109,23 +99,10 @@ class _ReminderSheetState extends ConsumerState<_ReminderSheet> {
               style: theme.textTheme.bodyLarge?.copyWith(color: o.subtle),
             ),
             const SizedBox(height: 14),
-            TextField(
+            BlockMessageField(
               controller: _text,
               enabled: _ready,
-              minLines: 4,
-              maxLines: 8,
-              style: theme.textTheme.bodyLarge?.copyWith(height: 1.55),
-              decoration: InputDecoration(
-                helperText: l10n.remindEditHint,
-                helperMaxLines: 2,
-                filled: true,
-                fillColor: o.sageSoft.withValues(alpha: 0.6),
-                contentPadding: const EdgeInsets.all(16),
-                border: bubbleBorder(o.sageSoft),
-                enabledBorder: bubbleBorder(o.sageSoft),
-                disabledBorder: bubbleBorder(o.sageSoft),
-                focusedBorder: bubbleBorder(o.sage),
-              ),
+              helperText: l10n.remindEditHint,
             ),
             if (phone == null)
               Padding(

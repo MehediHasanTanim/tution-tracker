@@ -8,7 +8,6 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/organic_widgets.dart';
-import 'package:tution_tracker/features/batches/presentation/batch_list_view.dart';
 import 'package:tution_tracker/features/fees/data/fee_repository.dart';
 import 'package:tution_tracker/features/fees/domain/fee_status.dart';
 import 'package:tution_tracker/features/fees/presentation/fee_status_style.dart';
@@ -19,65 +18,21 @@ import 'package:tution_tracker/features/students/presentation/student_avatar.dar
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
-/// The Students tab: the student list and the batch list side by side.
+/// The Students tab. Batches have their own tab.
 class StudentsScreen extends StatelessWidget {
   const StudentsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    return DefaultTabController(
-      length: 2,
-      child: Builder(
-        builder: (context) {
-          final tabs = DefaultTabController.of(context);
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(l10n.navStudents),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(64),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
-                  // The handoff's segmented pill.
-                  child: DecoratedBox(
-                    decoration: ShapeDecoration(
-                      color: Organic.of(context).surface,
-                      shape: const StadiumBorder(),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(4),
-                      child: TabBar(
-                        tabs: [
-                          Tab(height: 44, text: l10n.tabAllStudents),
-                          Tab(height: 44, text: l10n.tabBatches),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // The button follows the visible tab.
-            floatingActionButton: ListenableBuilder(
-              listenable: tabs,
-              builder: (context, _) => tabs.index == 0
-                  ? FloatingActionButton.extended(
-                      onPressed: () => context.push('/students/new'),
-                      icon: const Icon(Icons.add_rounded),
-                      label: Text(l10n.studentsAdd),
-                    )
-                  : FloatingActionButton.extended(
-                      onPressed: () => context.push('/batches/new'),
-                      icon: const Icon(Icons.add_rounded),
-                      label: Text(l10n.batchesAdd),
-                    ),
-            ),
-            body: const TabBarView(
-              children: [StudentListBody(), BatchListView()],
-            ),
-          );
-        },
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.navStudents)),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push('/students/new'),
+        icon: const Icon(Icons.add_rounded),
+        label: Text(l10n.studentsAdd),
       ),
+      body: const StudentListBody(),
     );
   }
 }

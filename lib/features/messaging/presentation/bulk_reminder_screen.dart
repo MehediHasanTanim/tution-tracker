@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
@@ -7,11 +8,15 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/fees/data/fee_repository.dart';
 import 'package:tution_tracker/features/fees/domain/fee_status.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
 import 'package:tution_tracker/features/messaging/data/messaging_providers.dart';
 import 'package:tution_tracker/features/messaging/data/reminder_log.dart';
+import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -103,19 +108,22 @@ class _BulkReminderScreenState extends ConsumerState<BulkReminderScreen>
               if (!isRecentlyReminded(log[e.student.id], today)) e,
           ];
           final done = overdue.length - pending.length;
+          final o = Organic.of(context);
           final header = Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
+            child: BlockStack(
               children: [
-                Text(
+                BlockText(
                   l10n.remindBulkProgress(
                     formatCount(done, numerals),
                     formatCount(overdue.length, numerals),
                   ),
                 ),
-                const SizedBox(height: 8),
-                LinearProgressIndicator(value: done / overdue.length),
+                PillProgress(
+                  value: done / overdue.length,
+                  color: o.sage,
+                  track: o.neutralSoft,
+                ),
               ],
             ),
           );
@@ -124,26 +132,38 @@ class _BulkReminderScreenState extends ConsumerState<BulkReminderScreen>
               children: [
                 header,
                 Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.check_circle_outline, size: 64),
-                        const SizedBox(height: 12),
-                        Text(l10n.remindDoneAll),
-                        const SizedBox(height: 12),
-                        OutlinedButton(
-                          onPressed: () async {
-                            final l = await ref.read(
-                              reminderLogProvider.future,
-                            );
-                            await l.clear();
-                            setState(_skipped.clear);
-                          },
-                          child: Text(l10n.remindClear),
-                        ),
-                      ],
-                    ),
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+                    children: [
+                      BlockStack(
+                        children: [
+                          BlockBanner(
+                            title: l10n.remindDoneAll,
+                            text: l10n.remindBulkProgress(
+                              formatCount(done, numerals),
+                              formatCount(overdue.length, numerals),
+                            ),
+                            background: o.sageSoft,
+                            foreground: o.onSageSoft,
+                          ),
+                          BlockButton(
+                            l10n.payDone,
+                            onPressed: () => Navigator.maybePop(context),
+                          ),
+                          BlockButton(
+                            l10n.remindClear,
+                            kind: BlockButtonKind.outlined,
+                            onPressed: () async {
+                              final l = await ref.read(
+                                reminderLogProvider.future,
+                              );
+                              await l.clear();
+                              setState(_skipped.clear);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -259,79 +279,84 @@ class _StudentStepState extends ConsumerState<_StudentStep> {
     final phone = contactPhone(student);
     final late = overdueDays(widget.entry.oldestDueDate, widget.today);
 
+    final o = Organic.of(context);
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
       children: [
-        Text(student.name, style: theme.textTheme.headlineSmall),
-        const SizedBox(height: 4),
-        Text(
-          [
-            formatTaka(
-              Taka(widget.entry.totalBalance),
-              numerals: numerals,
-              grouping: grouping,
-            ),
-            l10n.feesOverdueDays(formatCount(late, numerals)),
-            if (widget.lastReminded != null)
-              l10n.remindLast(
-                formatDate(
-                  widget.lastReminded!,
-                  language: language,
-                  numerals: numerals,
-                ),
-              ),
-          ].join(' · '),
-          style: theme.textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 16),
-        TextField(
-          controller: _text,
-          enabled: _ready,
-          minLines: 5,
-          maxLines: 10,
-          decoration: InputDecoration(helperText: l10n.remindEditHint),
-        ),
-        if (phone == null)
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              l10n.remindNoPhone,
-              style: TextStyle(color: theme.colorScheme.error),
-            ),
-          ),
-        const SizedBox(height: 16),
-        Row(
+        BlockStack(
           children: [
-            Expanded(
-              child: FilledButton.icon(
-                icon: const Icon(Icons.sms_outlined),
-                onPressed: _ready && phone != null
-                    ? () => _open(MessageChannel.sms)
-                    : null,
-                label: Text(l10n.remindSms),
+            BlockItem(
+              leading: StudentAvatar(
+                name: student.name,
+                photoPath: student.photoPath,
+                radius: 22,
               ),
+              title: student.name,
+              subtitle: [
+                l10n.feesOverdueDays(formatCount(late, numerals)),
+                if (widget.lastReminded != null)
+                  l10n.remindLast(
+                    formatDate(
+                      widget.lastReminded!,
+                      language: language,
+                      numerals: numerals,
+                    ),
+                  ),
+              ].join(' · '),
+              tag: formatTaka(
+                Taka(widget.entry.totalBalance),
+                numerals: numerals,
+                grouping: grouping,
+              ),
+              tagBackground: o.accentStrong,
+              tagForeground: Colors.white,
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: FilledButton.icon(
-                icon: const Icon(Icons.chat_outlined),
-                onPressed: _ready && phone != null
-                    ? () => _open(MessageChannel.whatsapp)
-                    : null,
-                label: Text(l10n.remindWhatsApp),
+            BlockMessageField(
+              controller: _text,
+              enabled: _ready,
+              minLines: 5,
+              helperText: l10n.remindEditHint,
+            ),
+            if (phone == null)
+              Text(
+                l10n.remindNoPhone,
+                style: TextStyle(color: theme.colorScheme.error),
               ),
+            BlockButton(
+              l10n.remindWhatsApp,
+              kind: BlockButtonKind.sage,
+              icon: Icons.chat_rounded,
+              onPressed: _ready && phone != null
+                  ? () => _open(MessageChannel.whatsapp)
+                  : null,
+            ),
+            BlockButton(
+              l10n.remindSms,
+              kind: BlockButtonKind.outlined,
+              icon: Icons.sms_rounded,
+              onPressed: _ready && phone != null
+                  ? () => _open(MessageChannel.sms)
+                  : null,
+            ),
+            BlockText(l10n.remindAwaiting),
+            BlockButton(
+              l10n.remindMarkDone,
+              kind: BlockButtonKind.outlined,
+              icon: Icons.check_rounded,
+              onPressed: widget.onMarkDone,
+            ),
+            BlockButton(
+              l10n.remindSkip,
+              kind: BlockButtonKind.ghost,
+              onPressed: widget.onSkip,
+            ),
+            BlockButton(
+              l10n.remindEditTemplate,
+              kind: BlockButtonKind.ghost,
+              onPressed: () => context.push('/settings/templates'),
             ),
           ],
         ),
-        const SizedBox(height: 8),
-        Text(l10n.remindAwaiting, style: theme.textTheme.bodySmall),
-        const SizedBox(height: 8),
-        OutlinedButton.icon(
-          icon: const Icon(Icons.check),
-          onPressed: widget.onMarkDone,
-          label: Text(l10n.remindMarkDone),
-        ),
-        TextButton(onPressed: widget.onSkip, child: Text(l10n.remindSkip)),
       ],
     );
   }

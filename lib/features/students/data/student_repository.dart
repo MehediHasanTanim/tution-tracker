@@ -152,6 +152,17 @@ class StudentRepository {
     );
   }
 
+  /// Replaces the notes field (the Notes tab adds dated entries to it).
+  Future<void> setNotes(String id, String? notes) async {
+    final text = notes?.trim();
+    await (_db.update(_db.students)..where((t) => t.id.equals(id))).write(
+      StudentsCompanion(
+        notes: Value(text == null || text.isEmpty ? null : text),
+        updatedAt: Value(_timestamp),
+      ),
+    );
+  }
+
   /// Hides the student from the default list; all history is kept. The date
   /// is logged so a later [restore] knows which months were skipped.
   Future<void> archive(String id) {

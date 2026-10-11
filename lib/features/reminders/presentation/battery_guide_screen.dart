@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/platform/battery_guide_service.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
 /// Steps for letting the app run in the background on phones whose battery
@@ -40,7 +44,8 @@ class _BatteryGuideScreenState extends ConsumerState<BatteryGuideScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
     final maker = _chosen ?? _detected;
     String name(PhoneMaker m) => switch (m) {
       PhoneMaker.xiaomi => l10n.oemMakerXiaomi,
@@ -64,44 +69,56 @@ class _BatteryGuideScreenState extends ConsumerState<BatteryGuideScreen> {
       body: maker == null
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
               children: [
-                Text(l10n.oemIntro, style: theme.textTheme.bodyLarge),
-                const SizedBox(height: 16),
-                Wrap(
-                  spacing: 8,
+                BlockStack(
                   children: [
-                    for (final m in PhoneMaker.values)
-                      ChoiceChip(
-                        label: Text(name(m)),
-                        selected: m == maker,
-                        onSelected: (_) => setState(() => _chosen = m),
+                    BlockText(l10n.oemIntro),
+                    BlockChips<PhoneMaker>(
+                      options: [
+                        for (final m in PhoneMaker.values) (m, name(m)),
+                      ],
+                      isSelected: (m) => m == maker,
+                      onTap: (m) => setState(() => _chosen = m),
+                    ),
+                    BlockSubheading(l10n.oemDetected(name(maker))),
+                    for (final (i, step) in steps(maker).split('\n').indexed)
+                      BlockStep(
+                        number: applyNumerals('${i + 1}', numerals),
+                        text: step,
                       ),
                   ],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  l10n.oemDetected(name(maker)),
-                  style: theme.textTheme.titleMedium,
-                ),
-                const SizedBox(height: 8),
-                for (final (i, step) in steps(maker).split('\n').indexed)
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: CircleAvatar(radius: 14, child: Text('${i + 1}')),
-                    title: Text(step),
-                  ),
-                const SizedBox(height: 16),
-                OutlinedButton.icon(
-                  icon: const Icon(Icons.battery_saver),
-                  onPressed: () => ref
-                      .read(batteryGuideServiceProvider)
-                      .openBatterySettings(maker),
-                  label: Text(l10n.oemOpenBattery),
-                ),
-                const SizedBox(height: 8),
-                FilledButton(onPressed: _done, child: Text(l10n.oemDone)),
               ],
+            ),
+      bottomNavigationBar: maker == null
+          ? null
+          : DecoratedBox(
+              decoration: BoxDecoration(
+                color: Organic.of(context).raised,
+                border: Border(
+                  top: BorderSide(color: Organic.of(context).divider),
+                ),
+              ),
+              child: SafeArea(
+                minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                child: BlockStack(
+                  children: [
+                    BlockButton(
+                      l10n.oemOpenBattery,
+                      icon: Icons.battery_saver_rounded,
+                      onPressed: () => ref
+                          .read(batteryGuideServiceProvider)
+                          .openBatterySettings(maker),
+                    ),
+                    BlockButton(
+                      l10n.oemDone,
+                      kind: BlockButtonKind.outlined,
+                      onPressed: _done,
+                    ),
+                  ],
+                ),
+              ),
             ),
     );
   }

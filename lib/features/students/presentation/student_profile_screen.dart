@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
@@ -9,6 +10,7 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
@@ -19,6 +21,7 @@ import 'package:tution_tracker/features/students/data/photo_store.dart';
 import 'package:tution_tracker/features/students/data/student_form_providers.dart';
 import 'package:tution_tracker/features/students/data/student_providers.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
+import 'package:tution_tracker/features/students/domain/student_notes.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
@@ -445,32 +448,83 @@ class _OverviewTab extends ConsumerWidget {
   }
 }
 
-class _NotesTab extends StatelessWidget {
+/// Dated notes about the student, newest first, with a box to add one
+/// (design: the profile's Notes tab).
+class _NotesTab extends ConsumerStatefulWidget {
   const _NotesTab({required this.student});
 
   final Student student;
 
   @override
-  Widget build(BuildContext context) {
-    final notes = student.notes;
-    if (notes == null) return _Soon(label: AppLocalizations.of(context).none);
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
-      child: OrganicPanel(
-        radius: OrganicRadius.panel,
-        padding: const EdgeInsets.all(18),
-        child: Text(notes, style: Theme.of(context).textTheme.bodyLarge),
-      ),
-    );
-  }
+  ConsumerState<_NotesTab> createState() => _NotesTabState();
 }
 
-class _Soon extends StatelessWidget {
-  const _Soon({required this.label});
-
-  final String label;
+class _NotesTabState extends ConsumerState<_NotesTab> {
+  final _text = TextEditingController();
 
   @override
-  Widget build(BuildContext context) =>
-      Center(child: Text(label, style: Theme.of(context).textTheme.bodyLarge));
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  Future<void> _add() async {
+    final text = _text.text.trim();
+    if (text.isEmpty) return;
+    final today = todayFrom(ref.read(clockProvider));
+    final repo = await ref.read(studentRepositoryProvider.future);
+    await repo.setNotes(
+      widget.student.id,
+      addStudentNote(widget.student.notes, today, text),
+    );
+    _text.clear();
+    if (mounted) FocusScope.of(context).unfocus();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final language = ref.watch(appLanguageProvider);
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
+    final notes = parseStudentNotes(widget.student.notes);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+      children: [
+        BlockStack(
+          children: [
+            TextField(
+              controller: _text,
+              minLines: 3,
+              maxLines: 6,
+              decoration: InputDecoration(
+                labelText: l10n.noteNew,
+                hintText: l10n.noteHint,
+                alignLabelWithHint: true,
+              ),
+            ),
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _text,
+              builder: (context, value, _) => BlockButton(
+                l10n.noteAdd,
+                onPressed: value.text.trim().isEmpty ? null : _add,
+              ),
+            ),
+            if (notes.isEmpty) BlockText(l10n.noteNone),
+            for (final n in notes)
+              BlockItem(
+                title: n.date == null
+                    ? l10n.noteEarlier
+                    : formatDate(
+                        n.date!,
+                        language: language,
+                        numerals: numerals,
+                      ),
+                subtitle: n.text,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
 }

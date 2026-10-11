@@ -4,6 +4,7 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -50,9 +51,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         l10n.obIntro3Body,
       ),
       4 => (Icons.auto_awesome_rounded, l10n.obSampleTitle, l10n.obSampleBody),
-      _ => (Icons.school_rounded, l10n.obWelcome, l10n.obPrivacy),
+      _ => (Icons.language_rounded, l10n.obWelcome, l10n.obPrivacy),
     };
-    final o = Organic.of(context);
+    final bn = locale.languageCode == 'bn';
 
     return Scaffold(
       body: SafeArea(
@@ -60,122 +61,55 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         // ever cut off; otherwise it fills the screen.
         child: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: constraints.maxHeight - 48,
+                minHeight: constraints.maxHeight - 40,
               ),
               child: IntrinsicHeight(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Align(
-                      alignment: AlignmentDirectional.centerEnd,
-                      child: _step >= 1 && _step <= 3
-                          ? TextButton(
-                              onPressed: () => setState(() => _step = 4),
-                              child: Text(l10n.obSkip),
-                            )
-                          : const SizedBox(height: 48),
-                    ),
                     const Spacer(),
-                    // Flush left, as the design system asks: the brand on the
-                    // welcome step, a soft circle behind each intro icon.
-                    Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: _step == 0
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(28),
-                              child: Image.asset(
-                                'assets/brand/app_icon.png',
-                                width: 112,
-                                height: 112,
-                                excludeFromSemantics: true,
-                              ),
-                            )
-                          : Container(
-                              width: 120,
-                              height: 120,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: o.accentSoft,
-                              ),
-                              child: Icon(icon, size: 56, color: o.accent),
-                            ),
-                    ),
-                    const SizedBox(height: 24),
+                    // The design's soft circles, alternating sage and
+                    // terracotta from step to step.
+                    BlockIllustration(icon: icon, sage: _step.isEven),
+                    const SizedBox(height: 12),
                     if (_step == 0)
                       Text(
                         l10n.appTitle,
-                        style: theme.textTheme.displayMedium?.copyWith(
-                          color: o.accentStrong,
+                        style: theme.textTheme.displaySmall?.copyWith(
+                          color: Organic.of(context).accentStrong,
                         ),
                       ),
-                    Text(title, style: theme.textTheme.headlineSmall),
-                    const SizedBox(height: 12),
-                    Text(
-                      body,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: o.subtle,
-                      ),
-                    ),
+                    BlockHeading(title),
+                    const SizedBox(height: 8),
+                    BlockText(body),
                     if (_step == 0) ...[
-                      const SizedBox(height: 32),
-                      Text(
-                        l10n.obPickLanguage,
-                        style: theme.textTheme.titleMedium,
-                      ),
-                      const SizedBox(height: 12),
-                      SegmentedButton<Locale>(
-                        segments: const [
-                          ButtonSegment(
-                            value: Locale('bn'),
-                            label: Text('বাংলা'),
-                          ),
-                          ButtonSegment(
-                            value: Locale('en'),
-                            label: Text('English'),
-                          ),
-                        ],
-                        selected: {locale},
-                        onSelectionChanged: (s) => ref
+                      const SizedBox(height: 20),
+                      BlockSubheading(l10n.obPickLanguage),
+                      const SizedBox(height: 10),
+                      BlockButton(
+                        'বাংলা',
+                        kind: bn
+                            ? BlockButtonKind.primary
+                            : BlockButtonKind.outlined,
+                        onPressed: () => ref
                             .read(localeProvider.notifier)
-                            .setLocale(s.first),
+                            .setLocale(const Locale('bn')),
+                      ),
+                      const SizedBox(height: 10),
+                      BlockButton(
+                        'English',
+                        kind: bn
+                            ? BlockButtonKind.outlined
+                            : BlockButtonKind.primary,
+                        onPressed: () => ref
+                            .read(localeProvider.notifier)
+                            .setLocale(const Locale('en')),
                       ),
                     ],
                     const Spacer(),
-                    if (_step < 4) ...[
-                      _Dots(current: _step, count: 5),
-                      const SizedBox(height: 16),
-                      FilledButton(
-                        style: FilledButton.styleFrom(
-                          minimumSize: const Size.fromHeight(56),
-                        ),
-                        onPressed: () => setState(() => _step++),
-                        child: Text(l10n.obNext),
-                      ),
-                    ] else if (_busy)
-                      Column(
-                        children: [
-                          const CircularProgressIndicator(),
-                          const SizedBox(height: 8),
-                          Text(l10n.obLoading),
-                        ],
-                      )
-                    else ...[
-                      FilledButton(
-                        style: FilledButton.styleFrom(
-                          minimumSize: const Size.fromHeight(56),
-                        ),
-                        onPressed: () => _finish(withSample: true),
-                        child: Text(l10n.obSampleYes),
-                      ),
-                      const SizedBox(height: 8),
-                      OutlinedButton(
-                        onPressed: () => _finish(withSample: false),
-                        child: Text(l10n.obSampleNo),
-                      ),
-                    ],
                   ],
                 ),
               ),
@@ -183,33 +117,49 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _Dots extends StatelessWidget {
-  const _Dots({required this.current, required this.count});
-
-  final int current;
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    final o = Organic.of(context);
-    return Row(
-      children: [
-        for (var i = 0; i < count; i++)
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            width: i == current ? 24 : 8,
-            height: 8,
-            margin: const EdgeInsetsDirectional.only(end: 6),
-            decoration: ShapeDecoration(
-              shape: const StadiumBorder(),
-              color: i == current ? o.accent : o.neutralSoft,
-            ),
-          ),
-      ],
+      // Progress and actions stay in reach on small phones.
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            BlockDots(count: 5, current: _step),
+            const SizedBox(height: 12),
+            if (_step < 4) ...[
+              BlockButton(
+                l10n.obNext,
+                onPressed: () => setState(() => _step++),
+              ),
+              if (_step >= 1)
+                BlockButton(
+                  l10n.obSkip,
+                  kind: BlockButtonKind.ghost,
+                  onPressed: () => setState(() => _step = 4),
+                ),
+            ] else if (_busy)
+              Column(
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 8),
+                  Text(l10n.obLoading),
+                ],
+              )
+            else ...[
+              BlockButton(
+                l10n.obSampleYes,
+                onPressed: () => _finish(withSample: true),
+              ),
+              const SizedBox(height: 10),
+              BlockButton(
+                l10n.obSampleNo,
+                kind: BlockButtonKind.outlined,
+                onPressed: () => _finish(withSample: false),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

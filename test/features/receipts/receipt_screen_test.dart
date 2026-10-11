@@ -87,7 +87,7 @@ void main() {
       expect(find.text('মোট জমা'), findsOneWidget);
       expect(find.text('৳ ৩,০০০'), findsOneWidget);
       expect(find.text('ক্যাশ'), findsOneWidget);
-      expect(find.text('ধন্যবাদ'), findsOneWidget);
+      expect(find.text('ধন্যবাদ · টিউশন খাতা'), findsOneWidget);
     });
 
     feeUiTest('uses the tutor and institution names when they are set', (
@@ -217,6 +217,9 @@ void main() {
       await _open(tester, h, '/fees/receipt/$id', share);
       await tester.pumpAndSettle();
 
+      // Pick PDF with the format chips, then share.
+      await tester.tap(find.widgetWithText(ChoiceChip, 'PDF'));
+      await tester.pump();
       await tester.tap(find.text('PDF হিসেবে শেয়ার করুন'));
       await waitFor(tester, 8);
 

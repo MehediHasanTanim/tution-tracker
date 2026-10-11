@@ -9,13 +9,17 @@ import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/i18n/text_normalizer.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/core/ui/time_chips.dart';
 import 'package:tution_tracker/features/batches/data/batch_providers.dart';
 import 'package:tution_tracker/features/batches/data/batch_repository.dart';
 import 'package:tution_tracker/features/batches/domain/batch_draft.dart';
 import 'package:tution_tracker/features/students/domain/student_options.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
+import 'package:tution_tracker/router.dart';
 
 /// Create a batch or, with [batchId], edit one.
 class BatchFormScreen extends ConsumerStatefulWidget {
@@ -98,13 +102,46 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
       if (router.canPop()) {
         router.pop();
       } else {
-        router.go('/students');
+        router.go(AppRoutes.batches);
       }
     } on BatchValidationException {
       if (mounted) _formKey.currentState!.validate();
     } finally {
       if (mounted) setState(() => _saving = false);
     }
+  }
+
+  /// The design's "delete batch": students stay, the batch and its schedule
+  /// go. Stored as an archive (spec 5.2: soft delete), so the archived
+  /// filter can still bring it back.
+  Future<void> _confirmDelete() async {
+    final l10n = AppLocalizations.of(context);
+    final messenger = ScaffoldMessenger.of(context);
+    final router = GoRouter.of(context);
+    final yes = await showBlockSheet<bool>(
+      context,
+      builder: (context) => BlockStack(
+        children: [
+          BlockSubheading(l10n.batchDeleteTitle),
+          BlockText(l10n.batchDeleteBody),
+          BlockButton(
+            l10n.batchDeleteYes,
+            kind: BlockButtonKind.danger,
+            onPressed: () => Navigator.pop(context, true),
+          ),
+          BlockButton(
+            l10n.batchDeleteNo,
+            kind: BlockButtonKind.ghost,
+            onPressed: () => Navigator.pop(context, false),
+          ),
+        ],
+      ),
+    );
+    if (yes != true) return;
+    final repo = await ref.read(batchRepositoryProvider.future);
+    await repo.archive(widget.batchId!);
+    messenger.showSnackBar(SnackBar(content: Text(l10n.batchDeleted)));
+    router.go(AppRoutes.batches);
   }
 
   @override
@@ -138,17 +175,23 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
       appBar: AppBar(
         title: Text(_editing ? l10n.batchEditTitle : l10n.batchesAdd),
       ),
-      bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.all(16),
-        child: FilledButton(
-          onPressed: _saving ? null : _save,
-          child: Text(l10n.actionSave),
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+          color: Organic.of(context).raised,
+          border: Border(top: BorderSide(color: Organic.of(context).divider)),
+        ),
+        child: SafeArea(
+          minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+          child: BlockButton(
+            l10n.actionSave,
+            onPressed: _saving ? null : _save,
+          ),
         ),
       ),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -181,10 +224,7 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
                 onChanged: (v) => setState(() => _classLevel = v),
               ),
               gap,
-              Text(
-                '${l10n.fieldClassDays} *',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
+              BlockSubheading('${l10n.fieldClassDays} *'),
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
@@ -211,36 +251,14 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
                     ),
                   ),
                 ),
+              const SizedBox(height: 4),
+              BlockSubheading(l10n.fieldClassTime),
               const SizedBox(height: 8),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(l10n.fieldClassTime),
-                subtitle: Text(
-                  _startTime == null
-                      ? l10n.none
-                      : applyNumerals(_startTime!.toKey(), numerals),
-                ),
-                trailing: _startTime == null
-                    ? const Icon(Icons.access_time)
-                    : IconButton(
-                        tooltip: l10n.actionClear,
-                        icon: const Icon(Icons.close),
-                        onPressed: () => setState(() => _startTime = null),
-                      ),
-                onTap: () async {
-                  final picked = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay(
-                      hour: _startTime?.hour ?? 17,
-                      minute: _startTime?.minute ?? 0,
-                    ),
-                  );
-                  if (picked != null) {
-                    setState(
-                      () => _startTime = ClockTime(picked.hour, picked.minute),
-                    );
-                  }
-                },
+              ClassTimeChips(
+                value: _startTime,
+                language: language,
+                numerals: numerals,
+                onChanged: (t) => setState(() => _startTime = t),
               ),
               gap,
               TextFormField(
@@ -271,6 +289,14 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
                   labelText: l10n.batchFieldDefaultFee,
                 ),
               ),
+              if (_editing) ...[
+                const SizedBox(height: 20),
+                BlockButton(
+                  l10n.batchDelete,
+                  kind: BlockButtonKind.outlined,
+                  onPressed: _confirmDelete,
+                ),
+              ],
               const SizedBox(height: 16),
             ],
           ),

@@ -168,19 +168,13 @@ void main() {
         await _tapCentered(tester, find.widgetWithText(FilterChip, subject));
       }
 
-      // Class level dropdown.
-      await tester.ensureVisible(find.byType(DropdownButtonFormField<String>));
-      await tester.tap(find.byType(DropdownButtonFormField<String>));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('Class 2').last);
-      await tester.pumpAndSettle();
+      // Class level chips.
+      await _tapCentered(tester, find.widgetWithText(ChoiceChip, 'Class 2'));
 
-      // Due day dropdown.
-      await tester.ensureVisible(find.byType(DropdownButtonFormField<int>));
-      await tester.tap(find.byType(DropdownButtonFormField<int>));
-      await tester.pumpAndSettle();
-      await tester.tap(find.text('১৫').last);
-      await tester.pumpAndSettle();
+      // Due day stepper: from the default 10th up to the 15th.
+      for (var i = 0; i < 5; i++) {
+        await _tapCentered(tester, find.byTooltip('এক দিন পরে'));
+      }
 
       // Class days: Saturday and Monday.
       await _tapCentered(tester, find.widgetWithText(FilterChip, 'শনিবার'));

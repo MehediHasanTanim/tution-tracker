@@ -20,10 +20,11 @@ Future<String> _openFeesTab(
   return s.id;
 }
 
+/// Opens the Fee adjustments page from the Fees tab, then one of its items.
 Future<void> _openAdjust(WidgetTester tester, String item) async {
-  await tester.tap(find.byTooltip('ফি সমন্বয়'));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text(item));
+  await tapCentered(tester, find.text('ফি সমন্বয়'));
+  await waitFor(tester);
+  await tapCentered(tester, find.text(item));
   await tester.pumpAndSettle();
 }
 
@@ -366,8 +367,8 @@ void main() {
         '2026-03',
       ]); // March's was already made
 
-      await tester.tap(find.byTooltip('ফি সমন্বয়'));
-      await tester.pumpAndSettle();
+      // Still on the adjustments page, which now offers resume.
+      await waitFor(tester);
       expect(find.text('ফি আবার চালু করুন'), findsOneWidget);
       expect(find.text('ফি বন্ধ রাখুন'), findsNothing);
     });
@@ -412,6 +413,9 @@ void main() {
       await _confirmDialog(tester);
 
       expect(find.text('এককালীন ফি যোগ করা হয়েছে'), findsOneWidget);
+      // Back from the adjustments page, the ledger shows it.
+      await tester.tap(find.byType(BackButton));
+      await waitFor(tester);
       expect(find.text('Admission · মার্চ ২০২৬'), findsOneWidget);
       final list = await real(tester, () => h.fees.watchDueList().first);
       expect(list.single.totalBalance, 4500 + 800);
