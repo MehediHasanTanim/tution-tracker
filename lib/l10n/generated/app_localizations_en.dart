@@ -1750,4 +1750,8 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payHalf => 'Half';
+
+  @override
+  String get studentQuickHint =>
+      'Just name and monthly fee — fill the rest later.';
 }

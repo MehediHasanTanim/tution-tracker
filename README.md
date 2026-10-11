@@ -7,6 +7,8 @@ network permission, all data on the phone.
 
 See `docs/` for the spec (`docs/feature`), technical design (`docs/design`) and
 implementation plan (`docs/plan`). Release material is in `docs/release/`.
+The visual design (the Organic design system, fonts and app icons) is described
+in `docs/design/organic-design-system.md`.
 
 Application ID: `com.nextgenai.tution_tracker` (dev flavor: `.dev` suffix).
 
@@ -50,10 +52,11 @@ what is and is not yet verified is `docs/release/release-checklist.md`.
 ## Layout
 
 ```
-lib/core        shared: database, settings, i18n, platform wrappers, security
+lib/core        shared: database, settings, i18n, theme, platform wrappers, security
 lib/features    students, batches, attendance, fees, receipts, reports, reminders,
                 messaging, backup, lock, onboarding, settings
 test, integration_test, tool, docs
+branding       store icons: iOS AppIcon.appiconset, Play Store 512 px
 ```
 
 Platform plugins sit behind small interfaces (`lib/core/platform/`), so everything

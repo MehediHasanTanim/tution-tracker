@@ -1745,4 +1745,7 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get payHalf => 'অর্ধেক';
+
+  @override
+  String get studentQuickHint => 'শুধু নাম আর মাসিক ফি — বাকিটা পরে।';
 }

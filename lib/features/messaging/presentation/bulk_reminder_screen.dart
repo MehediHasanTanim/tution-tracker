@@ -289,10 +289,7 @@ class _StudentStepState extends ConsumerState<_StudentStep> {
           enabled: _ready,
           minLines: 5,
           maxLines: 10,
-          decoration: InputDecoration(
-            helperText: l10n.remindEditHint,
-            border: const OutlineInputBorder(),
-          ),
+          decoration: InputDecoration(helperText: l10n.remindEditHint),
         ),
         if (phone == null)
           Padding(

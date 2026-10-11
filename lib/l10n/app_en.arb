@@ -527,5 +527,6 @@
   "bkCardTitle": "Backup",
   "attMarkHint": "Everyone starts Present. Tap a student to flip.",
   "payFullBalance": "Full balance",
-  "payHalf": "Half"
+  "payHalf": "Half",
+  "studentQuickHint": "Just name and monthly fee — fill the rest later."
 }

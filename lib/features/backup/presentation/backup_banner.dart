@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/backup/data/backup_status_provider.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -22,9 +23,12 @@ class BackupBanner extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Card(
-        color: Theme.of(context).colorScheme.tertiaryContainer,
+        margin: EdgeInsets.zero,
+        color: Organic.of(context).accentSoft,
         child: ListTile(
-          leading: const Icon(Icons.backup_outlined),
+          iconColor: Organic.of(context).onAccentSoft,
+          textColor: Organic.of(context).onAccentSoft,
+          leading: const Icon(Icons.backup_rounded),
           title: Text(
             days == null
                 ? l10n.bkBannerNever

@@ -3270,6 +3270,12 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'অর্ধেক'**
   String get payHalf;
+
+  /// No description provided for @studentQuickHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু নাম আর মাসিক ফি — বাকিটা পরে।'**
+  String get studentQuickHint;
 }
 
 class _AppLocalizationsDelegate

@@ -116,7 +116,7 @@ lib/
 │   └── app_en.arb
 └── router.dart
 assets/
-├── fonts/                       # Noto Sans Bengali / Hind Siliguri (regular, medium, bold)
+├── fonts/                       # Caprasimo, Figtree, Hind Siliguri (see organic-design-system.md)
 └── sample_data/
 test/
 ├── fee_engine/
@@ -646,7 +646,7 @@ backup_2026-10-06_1630.tkbackup
 ## 11. Localization and Bangla Support
 
 - ARB files: `app_bn.arb` (primary) and `app_en.arb`. Use `flutter gen-l10n`.
-- Bundle **Noto Sans Bengali** (or Hind Siliguri) in 400/500/700 weights; subset if APK size matters. Do not rely on system fonts, because many low-end devices render conjuncts poorly.
+- Bundle **Hind Siliguri** in 400/500/600/700 weights as the Bangla face behind the design system's Latin faces (Caprasimo headings, Figtree body); see `docs/design/organic-design-system.md`. Do not rely on system fonts, because many low-end devices render conjuncts poorly.
 - A `NumberFormatter` layer converts digits to Bangla (০১২৩৪৫৬৭৮৯) based on a user setting. Use it for money, dates, counts and phone display.
 - Taka formatting: `৳ ১২,৫০০` or `৳ 12,500`. Bangladesh commonly groups digits in lakh/crore style (`১,২৫,০০০`); make the grouping style a formatter option.
 - Search must handle both scripts: normalize input (NFC) and match case-insensitively; consider a simple transliteration index (optional, v1.1) so English-typed names find Bangla entries.

@@ -8,7 +8,9 @@ import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/batches/data/batch_providers.dart';
 import 'package:tution_tracker/features/batches/data/batch_repository.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_list_view.dart';
@@ -109,14 +111,16 @@ class _BatchView extends ConsumerWidget {
           ? null
           : FloatingActionButton.extended(
               onPressed: () => _showAddMembers(context, batch.id),
-              icon: const Icon(Icons.person_add),
+              icon: const Icon(Icons.add_rounded),
               label: Text(l10n.batchAddMembers),
             ),
       body: ListView(
-        padding: const EdgeInsets.only(bottom: 88),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 96),
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
+          OrganicPanel(
+            color: Organic.of(context).sageSoft,
+            radius: OrganicRadius.panel,
+            padding: const EdgeInsets.all(18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -141,7 +145,7 @@ class _BatchView extends ConsumerWidget {
               ],
             ),
           ),
-          const Divider(height: 1),
+          const SizedBox(height: 8),
           members.when(
             loading: () => const Padding(
               padding: EdgeInsets.all(32),
@@ -152,51 +156,53 @@ class _BatchView extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+                  padding: const EdgeInsets.fromLTRB(4, 16, 4, 8),
                   child: Text(
                     '${l10n.batchMembersTitle} · ${formatCount(list.length, numerals)}',
-                    style: theme.textTheme.titleSmall,
+                    style: theme.textTheme.titleLarge,
                   ),
                 ),
                 if (list.isEmpty)
                   Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(8),
                     child: Text(l10n.batchNoMembers),
                   ),
                 for (final m in list)
-                  ListTile(
-                    leading: StudentAvatar(
-                      name: m.student.name,
-                      photoPath: m.student.photoPath,
+                  Card(
+                    child: ListTile(
+                      leading: StudentAvatar(
+                        name: m.student.name,
+                        photoPath: m.student.photoPath,
+                      ),
+                      title: Text(
+                        m.student.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: Text(
+                        [
+                          l10n.batchMemberFee(money(m.effectiveFee(batch))),
+                          if (m.member.feeOverride != null)
+                            l10n.batchMemberCustomFee,
+                        ].join(' · '),
+                      ),
+                      trailing: PopupMenuButton<String>(
+                        onSelected: (v) => v == 'fee'
+                            ? _editFee(context, ref, batch, m)
+                            : _remove(context, ref, m),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: 'fee',
+                            child: Text(l10n.batchSetCustomFee),
+                          ),
+                          PopupMenuItem(
+                            value: 'remove',
+                            child: Text(l10n.batchRemoveMember),
+                          ),
+                        ],
+                      ),
+                      onTap: () => context.push('/students/${m.student.id}'),
                     ),
-                    title: Text(
-                      m.student.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: Text(
-                      [
-                        l10n.batchMemberFee(money(m.effectiveFee(batch))),
-                        if (m.member.feeOverride != null)
-                          l10n.batchMemberCustomFee,
-                      ].join(' · '),
-                    ),
-                    trailing: PopupMenuButton<String>(
-                      onSelected: (v) => v == 'fee'
-                          ? _editFee(context, ref, batch, m)
-                          : _remove(context, ref, m),
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                          value: 'fee',
-                          child: Text(l10n.batchSetCustomFee),
-                        ),
-                        PopupMenuItem(
-                          value: 'remove',
-                          child: Text(l10n.batchRemoveMember),
-                        ),
-                      ],
-                    ),
-                    onTap: () => context.push('/students/${m.student.id}'),
                   ),
               ],
             ),
@@ -296,9 +302,8 @@ class _AddMembersSheetState extends ConsumerState<_AddMembersSheet> {
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: TextField(
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon: const Icon(Icons.search_rounded),
               hintText: l10n.studentsSearchHint,
-              border: const OutlineInputBorder(),
               isDense: true,
             ),
             onChanged: (v) => setState(() => _query = v),
@@ -388,7 +393,6 @@ class _CustomFeeDialogState extends State<_CustomFeeDialog> {
         decoration: InputDecoration(
           labelText: l10n.batchCustomFeeLabel,
           helperText: l10n.batchCustomFeeHint,
-          border: const OutlineInputBorder(),
         ),
       ),
       actions: [

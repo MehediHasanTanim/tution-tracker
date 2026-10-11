@@ -159,7 +159,6 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
                 textCapitalization: TextCapitalization.words,
                 decoration: InputDecoration(
                   labelText: '${l10n.batchFieldName} *',
-                  border: const OutlineInputBorder(),
                 ),
                 validator: (v) => normalizeText(v ?? '').isEmpty
                     ? l10n.errorNameRequired
@@ -169,18 +168,12 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
               TextFormField(
                 controller: _subject,
                 textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  labelText: l10n.batchFieldSubject,
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: l10n.batchFieldSubject),
               ),
               gap,
               DropdownButtonFormField<String>(
                 initialValue: _classLevel,
-                decoration: InputDecoration(
-                  labelText: l10n.fieldClassLevel,
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: l10n.fieldClassLevel),
                 items: [
                   for (final level in studentClassLevels)
                     DropdownMenuItem(value: level, child: Text(level)),
@@ -258,10 +251,7 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
                   const DigitsOnlyFormatter(),
                   LengthLimitingTextInputFormatter(3),
                 ],
-                decoration: InputDecoration(
-                  labelText: l10n.batchFieldDuration,
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: l10n.batchFieldDuration),
                 validator: (v) {
                   final t = (v ?? '').trim();
                   if (t.isEmpty) return null;
@@ -279,7 +269,6 @@ class _BatchFormScreenState extends ConsumerState<BatchFormScreen> {
                 ],
                 decoration: InputDecoration(
                   labelText: l10n.batchFieldDefaultFee,
-                  border: const OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 16),
