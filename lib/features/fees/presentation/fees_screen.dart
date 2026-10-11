@@ -8,6 +8,7 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
@@ -57,6 +58,26 @@ class FeesScreen extends ConsumerWidget {
             orElse: () => const SizedBox(height: 8),
           ),
           const _FilterBar(),
+          // The design's "remind all overdue" button.
+          all.maybeWhen(
+            data: (list) {
+              final today = todayFrom(ref.read(clockProvider));
+              final overdue = list
+                  .where((e) => overdueDays(e.oldestDueDate, today) > 0)
+                  .length;
+              if (overdue == 0) return const SizedBox.shrink();
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 6),
+                child: BlockButton(
+                  l10n.remindAllOverdue(formatCount(overdue, numerals)),
+                  kind: BlockButtonKind.sage,
+                  icon: Icons.campaign_rounded,
+                  onPressed: () => context.push('/fees/remind'),
+                ),
+              );
+            },
+            orElse: () => const SizedBox.shrink(),
+          ),
           Expanded(
             child: visible.when(
               loading: () => const Center(child: CircularProgressIndicator()),

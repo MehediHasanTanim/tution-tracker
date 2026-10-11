@@ -1886,4 +1886,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get offNoAttendance => 'No attendance is taken';
+
+  @override
+  String get tplIntro =>
+      'This text goes into every fee reminder. Tap a chip below to insert the name, amount and so on.';
+
+  @override
+  String remindAllOverdue(String count) {
+    return 'Remind all overdue ($count)';
+  }
 }

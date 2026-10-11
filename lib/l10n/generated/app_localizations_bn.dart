@@ -1880,4 +1880,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get offNoAttendance => 'হাজিরা নেওয়া হবে না';
+
+  @override
+  String get tplIntro =>
+      'প্রতিটি ফি রিমাইন্ডারে এই লেখা যাবে। নিচের চিপে ট্যাপ করলে নাম, টাকা ইত্যাদি নিজে থেকে বসবে।';
+
+  @override
+  String remindAllOverdue(String count) {
+    return 'সবাইকে রিমাইন্ডার ($count)';
+  }
 }

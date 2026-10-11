@@ -388,9 +388,20 @@ class BlockBanner extends StatelessWidget {
 
 /// `msg`: a message as the guardian will see it, as a chat bubble.
 class BlockMessage extends StatelessWidget {
-  const BlockMessage(this.text, {super.key});
+  const BlockMessage(
+    this.text, {
+    this.selectable = false,
+    this.textKey,
+    super.key,
+  });
 
   final String text;
+
+  /// Lets the tutor copy the text.
+  final bool selectable;
+
+  /// A key for the text itself, for finding it in tests.
+  final Key? textKey;
 
   @override
   Widget build(BuildContext context) {
@@ -408,7 +419,17 @@ class BlockMessage extends StatelessWidget {
           bottomLeft: Radius.circular(6),
         ),
       ),
-      child: Text(text, style: const TextStyle(fontSize: 16, height: 1.55)),
+      child: selectable
+          ? SelectableText(
+              text,
+              key: textKey,
+              style: const TextStyle(fontSize: 16, height: 1.55),
+            )
+          : Text(
+              text,
+              key: textKey,
+              style: const TextStyle(fontSize: 16, height: 1.55),
+            ),
     );
   }
 }
@@ -729,4 +750,54 @@ class BlockStack extends StatelessWidget {
       ],
     ],
   );
+}
+
+/// An editable [BlockMessage]: the message as a chat bubble the tutor can
+/// change before sending.
+class BlockMessageField extends StatelessWidget {
+  const BlockMessageField({
+    required this.controller,
+    this.enabled = true,
+    this.helperText,
+    this.minLines = 4,
+    super.key,
+  });
+
+  final TextEditingController controller;
+  final bool enabled;
+  final String? helperText;
+  final int minLines;
+
+  @override
+  Widget build(BuildContext context) {
+    final o = Organic.of(context);
+    const bubble = BorderRadius.only(
+      topLeft: Radius.circular(24),
+      topRight: Radius.circular(24),
+      bottomRight: Radius.circular(24),
+      bottomLeft: Radius.circular(6),
+    );
+    OutlineInputBorder border(Color color) => OutlineInputBorder(
+      borderRadius: bubble,
+      borderSide: BorderSide(color: color, width: 2),
+    );
+    return TextField(
+      controller: controller,
+      enabled: enabled,
+      minLines: minLines,
+      maxLines: 10,
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.55),
+      decoration: InputDecoration(
+        helperText: helperText,
+        helperMaxLines: 2,
+        filled: true,
+        fillColor: o.sageSoft.withValues(alpha: 0.6),
+        contentPadding: const EdgeInsets.all(16),
+        border: border(o.sageSoft),
+        enabledBorder: border(o.sageSoft),
+        disabledBorder: border(o.sageSoft),
+        focusedBorder: border(o.sage),
+      ),
+    );
+  }
 }

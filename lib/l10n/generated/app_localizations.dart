@@ -3516,6 +3516,18 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'হাজিরা নেওয়া হবে না'**
   String get offNoAttendance;
+
+  /// No description provided for @tplIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিটি ফি রিমাইন্ডারে এই লেখা যাবে। নিচের চিপে ট্যাপ করলে নাম, টাকা ইত্যাদি নিজে থেকে বসবে।'**
+  String get tplIntro;
+
+  /// No description provided for @remindAllOverdue.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাইকে রিমাইন্ডার ({count})'**
+  String remindAllOverdue(String count);
 }
 
 class _AppLocalizationsDelegate

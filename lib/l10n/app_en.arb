@@ -568,5 +568,7 @@
   "offOther": "Other reason",
   "offConfirm": "Mark class off",
   "offNever": "Never mind",
-  "offNoAttendance": "No attendance is taken"
+  "offNoAttendance": "No attendance is taken",
+  "tplIntro": "This text goes into every fee reminder. Tap a chip below to insert the name, amount and so on.",
+  "remindAllOverdue": "Remind all overdue ({count})"
 }

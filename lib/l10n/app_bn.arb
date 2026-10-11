@@ -1049,5 +1049,14 @@
   "offOther": "অন্য কারণ",
   "offConfirm": "ক্লাস বন্ধ করুন",
   "offNever": "থাক",
-  "offNoAttendance": "হাজিরা নেওয়া হবে না"
+  "offNoAttendance": "হাজিরা নেওয়া হবে না",
+  "tplIntro": "প্রতিটি ফি রিমাইন্ডারে এই লেখা যাবে। নিচের চিপে ট্যাপ করলে নাম, টাকা ইত্যাদি নিজে থেকে বসবে।",
+  "remindAllOverdue": "সবাইকে রিমাইন্ডার ({count})",
+  "@remindAllOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  }
 }
