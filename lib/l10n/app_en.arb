@@ -528,5 +528,16 @@
   "attMarkHint": "Everyone starts Present. Tap a student to flip.",
   "payFullBalance": "Full balance",
   "payHalf": "Half",
-  "studentQuickHint": "Just name and monthly fee — fill the rest later."
+  "studentQuickHint": "Just name and monthly fee — fill the rest later.",
+  "navBatches": "Batches",
+  "batchesIntro": "{count} batches · class days and times in one place",
+  "batchStudentsTag": "{count} students",
+  "batchTakeAttendance": "Take today’s attendance",
+  "batchDelete": "Delete batch",
+  "batchDeleteTitle": "Delete this batch?",
+  "batchDeleteBody": "Students stay; only the batch and its schedule are removed.",
+  "batchDeleteYes": "Yes, delete",
+  "batchDeleteNo": "Keep it",
+  "batchDeleted": "Batch deleted",
+  "timeOther": "Other time…"
 }

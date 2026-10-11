@@ -974,5 +974,30 @@
   "attMarkHint": "সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।",
   "payFullBalance": "পুরো বাকি",
   "payHalf": "অর্ধেক",
-  "studentQuickHint": "শুধু নাম আর মাসিক ফি — বাকিটা পরে।"
+  "studentQuickHint": "শুধু নাম আর মাসিক ফি — বাকিটা পরে।",
+  "navBatches": "ব্যাচ",
+  "batchesIntro": "{count}টি ব্যাচ · ক্লাসের দিন ও সময় এক জায়গায়",
+  "@batchesIntro": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "batchStudentsTag": "{count} জন",
+  "@batchStudentsTag": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "batchTakeAttendance": "আজকের হাজিরা নিন",
+  "batchDelete": "ব্যাচ মুছুন",
+  "batchDeleteTitle": "এই ব্যাচ মুছবেন?",
+  "batchDeleteBody": "শিক্ষার্থীরা থাকবে; শুধু ব্যাচ আর তার রুটিন মুছবে।",
+  "batchDeleteYes": "হ্যাঁ, মুছুন",
+  "batchDeleteNo": "না",
+  "batchDeleted": "ব্যাচ মুছে ফেলা হয়েছে",
+  "timeOther": "অন্য সময়…"
 }

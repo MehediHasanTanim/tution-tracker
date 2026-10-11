@@ -1748,4 +1748,42 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get studentQuickHint => 'শুধু নাম আর মাসিক ফি — বাকিটা পরে।';
+
+  @override
+  String get navBatches => 'ব্যাচ';
+
+  @override
+  String batchesIntro(String count) {
+    return '$countটি ব্যাচ · ক্লাসের দিন ও সময় এক জায়গায়';
+  }
+
+  @override
+  String batchStudentsTag(String count) {
+    return '$count জন';
+  }
+
+  @override
+  String get batchTakeAttendance => 'আজকের হাজিরা নিন';
+
+  @override
+  String get batchDelete => 'ব্যাচ মুছুন';
+
+  @override
+  String get batchDeleteTitle => 'এই ব্যাচ মুছবেন?';
+
+  @override
+  String get batchDeleteBody =>
+      'শিক্ষার্থীরা থাকবে; শুধু ব্যাচ আর তার রুটিন মুছবে।';
+
+  @override
+  String get batchDeleteYes => 'হ্যাঁ, মুছুন';
+
+  @override
+  String get batchDeleteNo => 'না';
+
+  @override
+  String get batchDeleted => 'ব্যাচ মুছে ফেলা হয়েছে';
+
+  @override
+  String get timeOther => 'অন্য সময়…';
 }

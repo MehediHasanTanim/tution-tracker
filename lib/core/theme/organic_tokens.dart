@@ -38,13 +38,6 @@ abstract final class OrganicPalette {
   static const sage700 = Color(0xFF56633F);
   static const sage800 = Color(0xFF3D472B);
   static const sage900 = Color(0xFF272E1B);
-
-  /// The dark ground. The handoff ships light only, so dark mode (spec SE-4)
-  /// reuses the same ramps from the other end: deep neutrals for the ground,
-  /// the 400 steps for accents and the 800–900 steps for tinted fills.
-  static const darkBg = Color(0xFF1E1C19);
-  static const darkSurface = Color(0xFF2E2B25);
-  static const darkText = Color(0xFFF5EAD8);
 }
 
 /// Semantic roles over the palette, one set per brightness. Screens use these
@@ -155,32 +148,35 @@ class Organic extends ThemeExtension<Organic> {
     ],
   );
 
+  /// The handoff's dark palette (`[data-theme="dark"]`): a deep warm ground,
+  /// the 200–300 tints darkened and the 800–900 text steps lightened, with
+  /// the 600 accents unchanged.
   static const dark = Organic(
-    bg: OrganicPalette.darkBg,
-    surface: OrganicPalette.darkSurface,
-    raised: Color(0xFF26231F),
-    text: OrganicPalette.darkText,
-    muted: OrganicPalette.neutral400,
-    subtle: OrganicPalette.neutral300,
-    divider: Color(0x29F5EAD8),
-    accent: OrganicPalette.accent400,
-    onAccent: OrganicPalette.accent900,
-    accentStrong: OrganicPalette.accent400,
-    accentSoft: OrganicPalette.accent900,
-    onAccentSoft: OrganicPalette.accent200,
-    accentDecor: OrganicPalette.accent800,
-    track: OrganicPalette.accent800,
-    sage: OrganicPalette.sage400,
-    sageSoft: OrganicPalette.sage900,
-    onSageSoft: OrganicPalette.sage200,
-    sageStrong: OrganicPalette.sage400,
-    neutralSoft: OrganicPalette.neutral800,
-    onNeutralSoft: OrganicPalette.neutral200,
+    bg: Color(0xFF1B1917),
+    surface: Color(0xFF26231F),
+    raised: Color(0xFF2A2623),
+    text: Color(0xFFF3EADB),
+    muted: Color(0xFFB5ADA3),
+    subtle: Color(0xFFCDC6BC),
+    divider: Color(0xFF3A3530),
+    accent: OrganicPalette.accent600,
+    onAccent: Colors.white,
+    accentStrong: Color(0xFFB25A28),
+    accentSoft: Color(0xFF4D2F1C),
+    onAccentSoft: Color(0xFFF3CFB4),
+    accentDecor: Color(0xFF6B3D22),
+    track: Color(0xFF33201A),
+    sage: OrganicPalette.sage600,
+    sageSoft: Color(0xFF333B27),
+    onSageSoft: Color(0xFFDFE7CC),
+    sageStrong: Color(0xFFC3CFA9),
+    neutralSoft: Color(0xFF443E39),
+    onNeutralSoft: Color(0xFFE6DFD3),
     avatars: [
-      OrganicPalette.accent800,
-      OrganicPalette.sage800,
-      OrganicPalette.accent900,
-      OrganicPalette.sage900,
+      Color(0xFF6B3D22),
+      Color(0xFF4A5638),
+      Color(0xFF4D2F1C),
+      Color(0xFF333B27),
     ],
   );
 

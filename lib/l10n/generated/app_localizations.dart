@@ -3276,6 +3276,72 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'শুধু নাম আর মাসিক ফি — বাকিটা পরে।'**
   String get studentQuickHint;
+
+  /// No description provided for @navBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ'**
+  String get navBatches;
+
+  /// No description provided for @batchesIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count}টি ব্যাচ · ক্লাসের দিন ও সময় এক জায়গায়'**
+  String batchesIntro(String count);
+
+  /// No description provided for @batchStudentsTag.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} জন'**
+  String batchStudentsTag(String count);
+
+  /// No description provided for @batchTakeAttendance.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের হাজিরা নিন'**
+  String get batchTakeAttendance;
+
+  /// No description provided for @batchDelete.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ মুছুন'**
+  String get batchDelete;
+
+  /// No description provided for @batchDeleteTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ব্যাচ মুছবেন?'**
+  String get batchDeleteTitle;
+
+  /// No description provided for @batchDeleteBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীরা থাকবে; শুধু ব্যাচ আর তার রুটিন মুছবে।'**
+  String get batchDeleteBody;
+
+  /// No description provided for @batchDeleteYes.
+  ///
+  /// In bn, this message translates to:
+  /// **'হ্যাঁ, মুছুন'**
+  String get batchDeleteYes;
+
+  /// No description provided for @batchDeleteNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'না'**
+  String get batchDeleteNo;
+
+  /// No description provided for @batchDeleted.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ মুছে ফেলা হয়েছে'**
+  String get batchDeleted;
+
+  /// No description provided for @timeOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য সময়…'**
+  String get timeOther;
 }
 
 class _AppLocalizationsDelegate

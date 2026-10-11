@@ -7,6 +7,7 @@ import 'package:tution_tracker/features/attendance/presentation/attendance_sheet
 import 'package:tution_tracker/features/backup/presentation/backup_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_detail_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_form_screen.dart';
+import 'package:tution_tracker/features/batches/presentation/batches_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
@@ -26,6 +27,7 @@ import 'package:tution_tracker/features/students/presentation/students_screen.da
 abstract final class AppRoutes {
   static const home = '/home';
   static const students = '/students';
+  static const batches = '/batches';
   static const fees = '/fees';
   static const reports = '/reports';
   static const settings = '/settings';
@@ -88,20 +90,32 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                   ),
                 ],
               ),
-              // Batches live under the Students tab (spec section 4.1).
+            ],
+          ),
+          // Batches have their own tab (design handoff 2).
+          StatefulShellBranch(
+            routes: [
               GoRoute(
-                path: '/batches/new',
-                builder: (context, state) => const BatchFormScreen(),
-              ),
-              GoRoute(
-                path: '/batches/:id',
-                builder: (context, state) =>
-                    BatchDetailScreen(batchId: state.pathParameters['id']!),
+                path: AppRoutes.batches,
+                builder: (context, state) => const BatchesScreen(),
                 routes: [
+                  // `new` must come before `:id` so it is not read as an id.
                   GoRoute(
-                    path: 'edit',
+                    path: 'new',
+                    builder: (context, state) => const BatchFormScreen(),
+                  ),
+                  GoRoute(
+                    path: ':id',
                     builder: (context, state) =>
-                        BatchFormScreen(batchId: state.pathParameters['id']),
+                        BatchDetailScreen(batchId: state.pathParameters['id']!),
+                    routes: [
+                      GoRoute(
+                        path: 'edit',
+                        builder: (context, state) => BatchFormScreen(
+                          batchId: state.pathParameters['id'],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

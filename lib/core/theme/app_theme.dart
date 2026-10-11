@@ -18,11 +18,11 @@ abstract final class AppTheme {
       primaryContainer: o.accentSoft,
       onPrimaryContainer: o.onAccentSoft,
       secondary: o.sage,
-      onSecondary: light ? Colors.white : OrganicPalette.sage900,
+      onSecondary: Colors.white,
       secondaryContainer: o.sageSoft,
       onSecondaryContainer: o.onSageSoft,
       tertiary: o.accentStrong,
-      onTertiary: light ? Colors.white : OrganicPalette.accent900,
+      onTertiary: Colors.white,
       tertiaryContainer: o.accentDecor,
       onTertiaryContainer: o.onAccentSoft,
       // A warm brick red: distinct from the terracotta accent for errors and
@@ -248,9 +248,7 @@ abstract final class AppTheme {
         enabledBorder: _inputBorder(
           light ? OrganicPalette.neutral300 : OrganicPalette.neutral700,
         ),
-        focusedBorder: _inputBorder(
-          light ? OrganicPalette.accent500 : OrganicPalette.accent400,
-        ),
+        focusedBorder: _inputBorder(OrganicPalette.accent500),
         errorBorder: _inputBorder(scheme.error),
         focusedErrorBorder: _inputBorder(scheme.error),
         disabledBorder: _inputBorder(o.divider),
@@ -314,21 +312,19 @@ abstract final class AppTheme {
         textStyle: text.bodyLarge,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
-      snackBarTheme: SnackBarThemeData(
+      snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: light ? OrganicPalette.neutral900 : OrganicPalette.bg,
+        backgroundColor: OrganicPalette.neutral900,
         contentTextStyle: TextStyle(
           fontFamily: OrganicFonts.body,
           fontFamilyFallback: OrganicFonts.fallback,
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: light ? Colors.white : OrganicPalette.text,
+          color: Colors.white,
         ),
-        actionTextColor: light
-            ? OrganicPalette.accent300
-            : OrganicPalette.accent700,
+        actionTextColor: OrganicPalette.accent300,
         shape: stadium,
-        insetPadding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+        insetPadding: EdgeInsets.fromLTRB(20, 0, 20, 16),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith(

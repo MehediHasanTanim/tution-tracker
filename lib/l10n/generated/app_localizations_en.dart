@@ -1754,4 +1754,42 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get studentQuickHint =>
       'Just name and monthly fee — fill the rest later.';
+
+  @override
+  String get navBatches => 'Batches';
+
+  @override
+  String batchesIntro(String count) {
+    return '$count batches · class days and times in one place';
+  }
+
+  @override
+  String batchStudentsTag(String count) {
+    return '$count students';
+  }
+
+  @override
+  String get batchTakeAttendance => 'Take today’s attendance';
+
+  @override
+  String get batchDelete => 'Delete batch';
+
+  @override
+  String get batchDeleteTitle => 'Delete this batch?';
+
+  @override
+  String get batchDeleteBody =>
+      'Students stay; only the batch and its schedule are removed.';
+
+  @override
+  String get batchDeleteYes => 'Yes, delete';
+
+  @override
+  String get batchDeleteNo => 'Keep it';
+
+  @override
+  String get batchDeleted => 'Batch deleted';
+
+  @override
+  String get timeOther => 'Other time…';
 }
