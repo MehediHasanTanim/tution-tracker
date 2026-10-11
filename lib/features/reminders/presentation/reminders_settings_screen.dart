@@ -8,6 +8,8 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/settings/setting_key.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/reminders/data/reminder_providers.dart';
 import 'package:tution_tracker/features/reminders/data/reminder_scheduler.dart';
 import 'package:tution_tracker/features/reminders/presentation/reminder_actions.dart';
@@ -45,128 +47,120 @@ class RemindersSettingsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.remSettingsTitle)),
       body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
         children: [
-          SwitchListTile(
-            title: Text(l10n.remMasterTitle),
-            subtitle: Text(l10n.remMasterHint),
-            value: enabled,
-            onChanged: (on) =>
-                on ? startEnableReminders(context, ref) : disableReminders(ref),
-          ),
-          const _HealthTile(),
-          const Divider(),
-          SwitchListTile(
-            title: Text(l10n.remClassOn),
-            value: ref.watchSetting(SettingKeys.classReminders),
-            onChanged: enabled
-                ? (v) => writeSetting(ref, SettingKeys.classReminders, v)
-                : null,
-          ),
-          ListTile(
-            enabled: enabled && ref.watchSetting(SettingKeys.classReminders),
-            title: Text(
-              l10n.remMinutes(
-                formatCount(
-                  ref.watchSetting(SettingKeys.classReminderMinutes),
-                  numerals,
+          BlockStack(
+            children: [
+              const _HealthTile(),
+              BlockToggle(
+                label: l10n.remMasterTitle,
+                subtitle: l10n.remMasterHint,
+                value: enabled,
+                onChanged: (on) => on
+                    ? startEnableReminders(context, ref)
+                    : disableReminders(ref),
+              ),
+              BlockToggle(
+                label: l10n.remClassOn,
+                value: ref.watchSetting(SettingKeys.classReminders),
+                onChanged: enabled
+                    ? (v) => writeSetting(ref, SettingKeys.classReminders, v)
+                    : null,
+              ),
+              if (enabled && ref.watchSetting(SettingKeys.classReminders))
+                BlockChips<int>(
+                  options: [
+                    for (final m in const [5, 10, 15, 30, 45, 60])
+                      (m, l10n.remMinutes(formatCount(m, numerals))),
+                  ],
+                  isSelected: (m) =>
+                      m == ref.watchSetting(SettingKeys.classReminderMinutes),
+                  onTap: (m) =>
+                      writeSetting(ref, SettingKeys.classReminderMinutes, m),
                 ),
+              BlockToggle(
+                label: l10n.remFeeOn,
+                value: ref.watchSetting(SettingKeys.feeReminders),
+                onChanged: enabled
+                    ? (v) => writeSetting(ref, SettingKeys.feeReminders, v)
+                    : null,
               ),
-            ),
-            trailing: const Icon(Icons.expand_more),
-            onTap: () => _pickMinutes(context, ref, numerals),
-          ),
-          SwitchListTile(
-            title: Text(l10n.remFeeOn),
-            value: ref.watchSetting(SettingKeys.feeReminders),
-            onChanged: enabled
-                ? (v) => writeSetting(ref, SettingKeys.feeReminders, v)
-                : null,
-          ),
-          ListTile(
-            enabled: enabled && ref.watchSetting(SettingKeys.feeReminders),
-            title: Text(l10n.remAt(time(feeTime))),
-            trailing: const Icon(Icons.schedule),
-            onTap: () => pickTime(SettingKeys.feeReminderTime, feeTime),
-          ),
-          SwitchListTile(
-            title: Text(l10n.remWeeklyOn),
-            value: ref.watchSetting(SettingKeys.weeklySummary),
-            onChanged: enabled
-                ? (v) => writeSetting(ref, SettingKeys.weeklySummary, v)
-                : null,
-          ),
-          ListTile(
-            enabled: enabled && ref.watchSetting(SettingKeys.weeklySummary),
-            title: Text(
-              l10n.remWeeklyWhen(
-                weekdayName(weeklyDay, language),
-                time(weeklyTime),
-              ),
-            ),
-            trailing: const Icon(Icons.expand_more),
-            onTap: () => _pickWeekly(context, ref, weeklyTime, language),
-          ),
-          SwitchListTile(
-            title: Text(l10n.remBackupOn),
-            subtitle: Text(
-              l10n.remBackupAfter(
-                formatCount(
-                  ref.watchSetting(SettingKeys.backupReminderDays),
-                  numerals,
+              if (enabled && ref.watchSetting(SettingKeys.feeReminders))
+                BlockItem(
+                  leading: const BlockIcon(Icons.schedule_rounded),
+                  title: l10n.remAt(time(feeTime)),
+                  chevron: true,
+                  onTap: () => pickTime(SettingKeys.feeReminderTime, feeTime),
                 ),
+              BlockToggle(
+                label: l10n.remWeeklyOn,
+                value: ref.watchSetting(SettingKeys.weeklySummary),
+                onChanged: enabled
+                    ? (v) => writeSetting(ref, SettingKeys.weeklySummary, v)
+                    : null,
               ),
-            ),
-            value: ref.watchSetting(SettingKeys.backupReminders),
-            onChanged: enabled
-                ? (v) => writeSetting(ref, SettingKeys.backupReminders, v)
-                : null,
-          ),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.notification_add_outlined),
-            title: Text(l10n.remTestSend),
-            enabled: enabled,
-            onTap: () async {
-              final messenger = ScaffoldMessenger.of(context);
-              final scheduler = await ref.read(
-                reminderSchedulerProvider.future,
-              );
-              await scheduler.sendTest();
-              messenger.showSnackBar(SnackBar(content: Text(l10n.remTestSent)));
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.battery_saver),
-            title: Text(l10n.oemTitle),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.push(ReminderRoutes.battery),
+              if (enabled && ref.watchSetting(SettingKeys.weeklySummary))
+                BlockItem(
+                  leading: const BlockIcon(Icons.event_repeat_rounded),
+                  title: l10n.remWeeklyWhen(
+                    weekdayName(weeklyDay, language),
+                    time(weeklyTime),
+                  ),
+                  chevron: true,
+                  onTap: () => _pickWeekly(context, ref, weeklyTime, language),
+                ),
+              BlockToggle(
+                label: l10n.remBackupOn,
+                subtitle: l10n.remBackupAfter(
+                  formatCount(
+                    ref.watchSetting(SettingKeys.backupReminderDays),
+                    numerals,
+                  ),
+                ),
+                value: ref.watchSetting(SettingKeys.backupReminders),
+                onChanged: enabled
+                    ? (v) => writeSetting(ref, SettingKeys.backupReminders, v)
+                    : null,
+              ),
+              const SizedBox(height: 4),
+              BlockItem(
+                leading: const BlockIcon(Icons.battery_saver_rounded),
+                title: l10n.oemTitle,
+                subtitle: l10n.remBatterySub,
+                chevron: true,
+                onTap: () => context.push(ReminderRoutes.battery),
+              ),
+              BlockItem(
+                leading: const BlockIcon(Icons.chat_bubble_outline_rounded),
+                title: l10n.tplTitle,
+                subtitle: l10n.remTemplateSub,
+                chevron: true,
+                onTap: () => context.push('/settings/templates'),
+              ),
+              BlockItem(
+                leading: const BlockIcon(
+                  Icons.notification_add_rounded,
+                  sage: true,
+                ),
+                title: l10n.remTestSend,
+                onTap: enabled
+                    ? () async {
+                        final messenger = ScaffoldMessenger.of(context);
+                        final scheduler = await ref.read(
+                          reminderSchedulerProvider.future,
+                        );
+                        await scheduler.sendTest();
+                        messenger.showSnackBar(
+                          SnackBar(content: Text(l10n.remTestSent)),
+                        );
+                      }
+                    : null,
+              ),
+            ],
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _pickMinutes(
-    BuildContext context,
-    WidgetRef ref,
-    NumeralStyle numerals,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final picked = await showDialog<int>(
-      context: context,
-      builder: (context) => SimpleDialog(
-        children: [
-          for (final m in const [5, 10, 15, 30, 45, 60])
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, m),
-              child: Text(l10n.remMinutes(formatCount(m, numerals))),
-            ),
-        ],
-      ),
-    );
-    if (picked != null) {
-      await writeSetting(ref, SettingKeys.classReminderMinutes, picked);
-    }
   }
 
   Future<void> _pickWeekly(
@@ -215,48 +209,49 @@ class _HealthTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
     final status = ref.watch(reminderStatusProvider).value;
 
+    final o = Organic.of(context);
     final (
-      IconData icon,
-      Color color,
       String text,
+      bool warn,
       VoidCallback? onTap,
+      String? action,
     ) = switch (status) {
-      null => (Icons.hourglass_empty, scheme.outline, '…', null),
+      null => ('…', false, null, null),
       ReminderStatus(enabled: false) => (
-        Icons.notifications_off_outlined,
-        scheme.outline,
         l10n.remHealthOff,
+        true,
         () => startEnableReminders(context, ref),
+        l10n.remMasterTitle,
       ),
       ReminderStatus(permitted: false) => (
-        Icons.error_outline,
-        scheme.error,
         l10n.remHealthBlocked,
+        true,
         () => context.push(ReminderRoutes.permission),
+        l10n.remPermAllow,
       ),
-      ReminderStatus(scheduled: 0) => (
-        Icons.info_outline,
-        scheme.tertiary,
-        l10n.remHealthNone,
-        null,
-      ),
+      ReminderStatus(scheduled: 0) => (l10n.remHealthNone, false, null, null),
       final s => (
-        Icons.check_circle_outline,
-        scheme.primary,
         l10n.remHealthOk(formatCount(s.scheduled, numerals)),
+        false,
+        null,
         null,
       ),
     };
-    return ListTile(
-      leading: Icon(icon, color: color),
-      title: Text(l10n.remHealth),
-      subtitle: Text(text),
-      onTap: onTap,
+    return BlockStack(
+      children: [
+        BlockBanner(
+          title: l10n.remHealth,
+          text: text,
+          background: warn ? o.accentSoft : o.sageSoft,
+          foreground: warn ? o.onAccentSoft : o.onSageSoft,
+        ),
+        if (onTap != null && action != null)
+          BlockButton(action, onPressed: onTap),
+      ],
     );
   }
 }

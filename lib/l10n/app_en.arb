@@ -570,5 +570,11 @@
   "offNever": "Never mind",
   "offNoAttendance": "No attendance is taken",
   "tplIntro": "This text goes into every fee reminder. Tap a chip below to insert the name, amount and so on.",
-  "remindAllOverdue": "Remind all overdue ({count})"
+  "remindAllOverdue": "Remind all overdue ({count})",
+  "remBatterySub": "Battery settings for Xiaomi, Oppo and others",
+  "remTemplateSub": "What guardians receive",
+  "remPermAsk": "Allow notifications?",
+  "remPermStep1": "A reminder before each class",
+  "remPermStep2": "A nudge on fee due dates",
+  "remPermStep3": "Everything stays on this phone — no server, no ads"
 }

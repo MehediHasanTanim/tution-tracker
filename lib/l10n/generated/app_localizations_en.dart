@@ -1895,4 +1895,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String remindAllOverdue(String count) {
     return 'Remind all overdue ($count)';
   }
+
+  @override
+  String get remBatterySub => 'Battery settings for Xiaomi, Oppo and others';
+
+  @override
+  String get remTemplateSub => 'What guardians receive';
+
+  @override
+  String get remPermAsk => 'Allow notifications?';
+
+  @override
+  String get remPermStep1 => 'A reminder before each class';
+
+  @override
+  String get remPermStep2 => 'A nudge on fee due dates';
+
+  @override
+  String get remPermStep3 =>
+      'Everything stays on this phone — no server, no ads';
 }

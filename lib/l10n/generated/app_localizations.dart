@@ -3528,6 +3528,42 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'সবাইকে রিমাইন্ডার ({count})'**
   String remindAllOverdue(String count);
+
+  /// No description provided for @remBatterySub.
+  ///
+  /// In bn, this message translates to:
+  /// **'শাওমি, অপো ইত্যাদি ফোনের ব্যাটারি সেটিং'**
+  String get remBatterySub;
+
+  /// No description provided for @remTemplateSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবক যা পাবেন'**
+  String get remTemplateSub;
+
+  /// No description provided for @remPermAsk.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোটিফিকেশন চালু করবেন?'**
+  String get remPermAsk;
+
+  /// No description provided for @remPermStep1.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিটি ক্লাসের আগে রিমাইন্ডার'**
+  String get remPermStep1;
+
+  /// No description provided for @remPermStep2.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি-র তারিখে বাকির কথা মনে করানো'**
+  String get remPermStep2;
+
+  /// No description provided for @remPermStep3.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই'**
+  String get remPermStep3;
 }
 
 class _AppLocalizationsDelegate

@@ -1889,4 +1889,22 @@ class AppLocalizationsBn extends AppLocalizations {
   String remindAllOverdue(String count) {
     return 'সবাইকে রিমাইন্ডার ($count)';
   }
+
+  @override
+  String get remBatterySub => 'শাওমি, অপো ইত্যাদি ফোনের ব্যাটারি সেটিং';
+
+  @override
+  String get remTemplateSub => 'অভিভাবক যা পাবেন';
+
+  @override
+  String get remPermAsk => 'নোটিফিকেশন চালু করবেন?';
+
+  @override
+  String get remPermStep1 => 'প্রতিটি ক্লাসের আগে রিমাইন্ডার';
+
+  @override
+  String get remPermStep2 => 'ফি-র তারিখে বাকির কথা মনে করানো';
+
+  @override
+  String get remPermStep3 => 'সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই';
 }

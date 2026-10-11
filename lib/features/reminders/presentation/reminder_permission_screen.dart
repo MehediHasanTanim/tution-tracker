@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/platform/notification_service.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/reminders/presentation/reminder_actions.dart';
+import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
 /// Explains why the app wants to send notifications before the system asks,
@@ -80,49 +83,50 @@ class _ReminderPermissionScreenState
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
+    String numeral(int n) => applyNumerals('$n', numerals);
     return Scaffold(
       appBar: AppBar(title: Text(l10n.remPermTitle)),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+        children: [
+          BlockStack(
             children: [
-              Icon(
-                _denied
-                    ? Icons.notifications_off_outlined
-                    : Icons.notifications_active_outlined,
-                size: 72,
-                color: theme.colorScheme.primary,
+              BlockIllustration(
+                icon: _denied
+                    ? Icons.notifications_off_rounded
+                    : Icons.notifications_active_rounded,
+                sage: false,
               ),
-              const SizedBox(height: 24),
-              Text(
-                _denied ? l10n.remPermDenied : l10n.remPermWhy,
-                style: theme.textTheme.bodyLarge,
-                textAlign: TextAlign.center,
-              ),
-              const Spacer(),
+              BlockSubheading(_denied ? l10n.remPermTitle : l10n.remPermAsk),
               if (_denied)
-                FilledButton(
+                BlockText(l10n.remPermDenied)
+              else ...[
+                BlockStep(number: numeral(1), text: l10n.remPermStep1),
+                BlockStep(number: numeral(2), text: l10n.remPermStep2),
+                BlockStep(number: numeral(3), text: l10n.remPermStep3),
+              ],
+              if (_denied)
+                BlockButton(
+                  l10n.remPermOpenSettings,
                   onPressed: () => ref
                       .read(notificationServiceProvider)
                       .openSystemSettings(),
-                  child: Text(l10n.remPermOpenSettings),
                 )
               else
-                FilledButton(
+                BlockButton(
+                  l10n.remPermAllow,
                   onPressed: _busy ? null : _allow,
-                  child: Text(l10n.remPermAllow),
                 ),
-              const SizedBox(height: 8),
-              TextButton(
+              BlockButton(
+                l10n.remPermNotNow,
+                kind: BlockButtonKind.ghost,
                 onPressed: () => context.pop(),
-                child: Text(l10n.remPermNotNow),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
