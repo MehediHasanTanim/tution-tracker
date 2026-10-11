@@ -576,5 +576,8 @@
   "remPermAsk": "Allow notifications?",
   "remPermStep1": "A reminder before each class",
   "remPermStep2": "A nudge on fee due dates",
-  "remPermStep3": "Everything stays on this phone — no server, no ads"
+  "remPermStep3": "Everything stays on this phone — no server, no ads",
+  "rsReplaceTitle": "This replaces everything on this phone",
+  "bkRestoreSection": "Restore",
+  "bkDangerZone": "Danger zone"
 }

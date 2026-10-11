@@ -8,7 +8,11 @@ import 'package:tution_tracker/core/platform/file_picker_service.dart';
 import 'package:tution_tracker/core/platform/share_service.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/backup/data/backup_providers.dart';
+import 'package:tution_tracker/features/backup/data/backup_status_provider.dart';
 import 'package:tution_tracker/features/backup/data/restore_service.dart';
 import 'package:tution_tracker/features/backup/domain/backup_exception.dart';
 import 'package:tution_tracker/features/backup/presentation/backup_dialogs.dart';
@@ -140,46 +144,59 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
       numerals: numerals,
     );
     final m = preview.manifest;
-    return showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.rsPreviewTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return showBlockSheet<bool>(
+      context,
+      builder: (context) {
+        final o = Organic.of(context);
+        return BlockStack(
           children: [
-            Text(l10n.rsPreviewDate(date(m.createdAt))),
-            Text(l10n.rsPreviewStudents(formatCount(m.students, numerals))),
-            Text(l10n.rsPreviewPayments(formatCount(m.payments, numerals))),
-            Text(
-              preview.latestPaymentOn == null
-                  ? l10n.rsPreviewNoPayments
-                  : l10n.rsPreviewLatest(
-                      formatDate(
-                        LocalDate.parse(preview.latestPaymentOn!),
-                        language: language,
-                        numerals: numerals,
-                      ),
-                    ),
+            BlockSubheading(l10n.rsPreviewTitle),
+            BlockBanner(
+              title: l10n.rsReplaceTitle,
+              text: l10n.rsWarn,
+              background: o.accentStrong,
+              foreground: Colors.white,
             ),
-            const SizedBox(height: 12),
-            Text(
-              l10n.rsWarn,
-              style: TextStyle(color: Theme.of(context).colorScheme.error),
+            OrganicPanel(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final line in [
+                    l10n.rsPreviewDate(date(m.createdAt)),
+                    l10n.rsPreviewStudents(formatCount(m.students, numerals)),
+                    l10n.rsPreviewPayments(formatCount(m.payments, numerals)),
+                    if (preview.latestPaymentOn == null)
+                      l10n.rsPreviewNoPayments
+                    else
+                      l10n.rsPreviewLatest(
+                        formatDate(
+                          LocalDate.parse(preview.latestPaymentOn!),
+                          language: language,
+                          numerals: numerals,
+                        ),
+                      ),
+                  ])
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: Text(line, style: const TextStyle(fontSize: 15)),
+                    ),
+                ],
+              ),
+            ),
+            BlockButton(
+              l10n.rsConfirm,
+              kind: BlockButtonKind.danger,
+              onPressed: () => Navigator.pop(context, true),
+            ),
+            BlockButton(
+              l10n.actionCancel,
+              kind: BlockButtonKind.ghost,
+              onPressed: () => Navigator.pop(context, false),
             ),
           ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.actionCancel),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.rsConfirm),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -228,7 +245,6 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final language = ref.watch(appLanguageProvider);
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
@@ -242,76 +258,60 @@ class _BackupScreenState extends ConsumerState<BackupScreen> {
       return '${formatDate(LocalDate.fromDateTime(local), language: language, numerals: numerals)}, ${applyNumerals(time, numerals)}';
     }
 
+    final o = Organic.of(context);
+    final status = ref.watch(backupStatusProvider);
+    final warn = last == null || status.show;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.bkTitle)),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
         children: [
-          Text(l10n.bkPrivacy, style: theme.textTheme.bodyLarge),
-          const SizedBox(height: 12),
-          Text(
-            last == null ? l10n.bkNever : l10n.bkLast(when(last)),
-            style: theme.textTheme.titleMedium,
-          ),
-          const SizedBox(height: 12),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(l10n.bkEncrypt),
-            subtitle: Text(l10n.bkEncryptHint),
-            value: _protect,
-            onChanged: (v) => setState(() => _protect = v),
-          ),
-          FilledButton.icon(
-            icon: const Icon(Icons.backup_outlined),
-            onPressed: _backup,
-            label: Text(l10n.bkNow),
-          ),
-          const Divider(height: 32),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.restore),
-            title: Text(l10n.bkRestore),
-            subtitle: Text(l10n.bkRestoreHint),
-            onTap: _restore,
-          ),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: const Icon(Icons.schedule),
-            title: Text(l10n.bkReminderEvery),
-            trailing: Text(
-              l10n.bkReminderDays(formatCount(days, numerals)),
-              style: theme.textTheme.titleSmall,
-            ),
-            onTap: () async {
-              final picked = await showDialog<int>(
-                context: context,
-                builder: (context) => SimpleDialog(
-                  children: [
-                    for (final d in const [7, 14, 30, 60])
-                      SimpleDialogOption(
-                        onPressed: () => Navigator.pop(context, d),
-                        child: Text(
-                          l10n.bkReminderDays(formatCount(d, numerals)),
-                        ),
-                      ),
-                  ],
-                ),
-              );
-              if (picked != null) {
-                await writeSetting(ref, SettingKeys.backupReminderDays, picked);
-              }
-            },
-          ),
-          const Divider(height: 32),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            leading: Icon(Icons.delete_forever, color: theme.colorScheme.error),
-            title: Text(
-              l10n.rstTitle,
-              style: TextStyle(color: theme.colorScheme.error),
-            ),
-            subtitle: Text(l10n.rstHint),
-            onTap: _deleteAll,
+          BlockStack(
+            children: [
+              BlockBanner(
+                title: last == null ? l10n.bkNever : l10n.bkLast(when(last)),
+                text: l10n.bkPrivacy,
+                background: warn ? o.accentSoft : o.sageSoft,
+                foreground: warn ? o.onAccentSoft : o.onSageSoft,
+              ),
+              BlockToggle(
+                label: l10n.bkEncrypt,
+                subtitle: l10n.bkEncryptHint,
+                value: _protect,
+                onChanged: (v) => setState(() => _protect = v),
+              ),
+              BlockButton(
+                l10n.bkNow,
+                icon: Icons.backup_rounded,
+                onPressed: _backup,
+              ),
+              BlockText(l10n.bkSavedHint),
+              BlockSubheading(l10n.bkRestoreSection),
+              BlockItem(
+                leading: const BlockIcon(Icons.description_rounded),
+                title: l10n.bkRestore,
+                subtitle: l10n.bkRestoreHint,
+                chevron: true,
+                onTap: _restore,
+              ),
+              BlockSubheading(l10n.bkReminderEvery),
+              BlockChips<int>(
+                options: [
+                  for (final d in const [7, 14, 30, 60])
+                    (d, l10n.bkReminderDays(formatCount(d, numerals))),
+                ],
+                isSelected: (d) => d == days,
+                onTap: (d) =>
+                    writeSetting(ref, SettingKeys.backupReminderDays, d),
+              ),
+              BlockSubheading(l10n.bkDangerZone),
+              BlockText(l10n.rstHint),
+              BlockButton(
+                l10n.rstTitle,
+                kind: BlockButtonKind.danger,
+                onPressed: _deleteAll,
+              ),
+            ],
           ),
         ],
       ),

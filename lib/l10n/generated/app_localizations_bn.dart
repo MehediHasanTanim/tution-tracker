@@ -1907,4 +1907,13 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get remPermStep3 => 'সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই';
+
+  @override
+  String get rsReplaceTitle => 'বর্তমান সব তথ্য বদলে যাবে';
+
+  @override
+  String get bkRestoreSection => 'রিস্টোর';
+
+  @override
+  String get bkDangerZone => 'বিপজ্জনক';
 }

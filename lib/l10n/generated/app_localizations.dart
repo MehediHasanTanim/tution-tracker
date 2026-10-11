@@ -3564,6 +3564,24 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই'**
   String get remPermStep3;
+
+  /// No description provided for @rsReplaceTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বর্তমান সব তথ্য বদলে যাবে'**
+  String get rsReplaceTitle;
+
+  /// No description provided for @bkRestoreSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর'**
+  String get bkRestoreSection;
+
+  /// No description provided for @bkDangerZone.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিপজ্জনক'**
+  String get bkDangerZone;
 }
 
 class _AppLocalizationsDelegate

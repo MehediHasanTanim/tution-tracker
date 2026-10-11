@@ -1914,4 +1914,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get remPermStep3 =>
       'Everything stays on this phone — no server, no ads';
+
+  @override
+  String get rsReplaceTitle => 'This replaces everything on this phone';
+
+  @override
+  String get bkRestoreSection => 'Restore';
+
+  @override
+  String get bkDangerZone => 'Danger zone';
 }
