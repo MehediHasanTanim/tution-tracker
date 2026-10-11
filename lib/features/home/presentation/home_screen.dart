@@ -30,7 +30,6 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: SafeArea(
         bottom: false,
