@@ -94,7 +94,6 @@ abstract final class AppTheme {
         foregroundColor: o.text,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
-        scrolledUnderElevation: 0,
         centerTitle: false,
         toolbarHeight: 64,
         titleSpacing: 20,

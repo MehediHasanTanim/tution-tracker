@@ -217,16 +217,17 @@ class _LockScreenState extends ConsumerState<LockScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // Kept small so the keypad and "forgot" fit a 5-inch screen.
                   Container(
-                    width: 96,
-                    height: 96,
+                    width: 64,
+                    height: 64,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Organic.of(context).accentSoft,
                     ),
                     child: Icon(
                       Icons.lock_rounded,
-                      size: 44,
+                      size: 32,
                       color: Organic.of(context).accent,
                     ),
                   ),
