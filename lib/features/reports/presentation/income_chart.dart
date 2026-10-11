@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/features/reports/data/report_repository.dart';
 
-/// Cash received per month. One series, so one colour and no legend; the
-/// section title names it. Bars are thin with a rounded top, the grid is
-/// faint, and touching a bar shows its exact amount.
+/// Cash received per month. One series, so no legend; the section title
+/// names it. Bars are pill-topped, past months in a soft tint and this month
+/// in the full accent, with no grid; touching a bar shows its exact amount.
 class IncomeChart extends StatelessWidget {
   const IncomeChart({
     required this.income,
@@ -25,6 +26,7 @@ class IncomeChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final o = Organic.of(context);
     final style = Theme.of(context).textTheme.labelSmall;
     final peak = income.fold<int>(0, (m, e) => e.amount > m ? e.amount : m);
     final top = peak == 0 ? 1.0 : peak * 1.15;
@@ -46,14 +48,7 @@ class IncomeChart extends StatelessWidget {
               maxY: top,
               alignment: BarChartAlignment.spaceAround,
               borderData: FlBorderData(show: false),
-              gridData: FlGridData(
-                drawVerticalLine: false,
-                horizontalInterval: top / 4,
-                getDrawingHorizontalLine: (_) => FlLine(
-                  color: scheme.outlineVariant.withValues(alpha: 0.5),
-                  strokeWidth: 1,
-                ),
-              ),
+              gridData: const FlGridData(show: false),
               titlesData: FlTitlesData(
                 topTitles: const AxisTitles(),
                 rightTitles: const AxisTitles(),
@@ -83,6 +78,8 @@ class IncomeChart extends StatelessWidget {
               ),
               barTouchData: BarTouchData(
                 touchTooltipData: BarTouchTooltipData(
+                  getTooltipColor: (_) => scheme.inverseSurface,
+                  tooltipBorderRadius: BorderRadius.circular(16),
                   getTooltipItem: (group, _, rod, _) {
                     final e = income[group.x];
                     return BarTooltipItem(
@@ -99,10 +96,14 @@ class IncomeChart extends StatelessWidget {
                     barRods: [
                       BarChartRodData(
                         toY: income[i].amount.toDouble(),
-                        width: 12,
-                        color: scheme.primary,
+                        width: 16,
+                        // This month stands out; past months sit back.
+                        color: i == income.length - 1
+                            ? o.accent
+                            : o.accentDecor,
                         borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(4),
+                          top: Radius.circular(OrganicRadius.pill),
+                          bottom: Radius.circular(6),
                         ),
                       ),
                     ],

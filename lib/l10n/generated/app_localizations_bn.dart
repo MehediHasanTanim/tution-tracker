@@ -1732,4 +1732,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String homeOfExpected(String amount) {
     return 'মোট প্রত্যাশিত $amount';
   }
+
+  @override
+  String get bkCardTitle => 'ব্যাকআপ';
 }

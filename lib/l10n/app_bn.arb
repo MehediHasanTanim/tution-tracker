@@ -969,5 +969,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "bkCardTitle": "ব্যাকআপ"
 }

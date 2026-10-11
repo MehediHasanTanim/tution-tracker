@@ -7,6 +7,8 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
 import 'package:tution_tracker/features/fees/data/fee_repository.dart';
@@ -40,7 +42,7 @@ class FeesScreen extends ConsumerWidget {
         actions: [
           IconButton(
             tooltip: l10n.remindBulkTitle,
-            icon: const Icon(Icons.campaign_outlined),
+            icon: const Icon(Icons.campaign_rounded),
             onPressed: () => context.push('/fees/remind'),
           ),
         ],
@@ -68,11 +70,12 @@ class FeesScreen extends ConsumerWidget {
                         : l10n.studentsNoMatch,
                     body: nothingOwed ? l10n.feesEmptyBody : null,
                     icon: nothingOwed
-                        ? Icons.check_circle_outline
-                        : Icons.search_off,
+                        ? Icons.check_circle_rounded
+                        : Icons.search_off_rounded,
                   );
                 }
                 return ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
                   itemCount: list.length,
                   itemBuilder: (context, i) => _DueTile(
                     entry: list[i],
@@ -99,37 +102,47 @@ class _TotalsHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final o = Organic.of(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-      child: Card(
-        margin: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      l10n.feesOutstanding,
-                      style: theme.textTheme.labelMedium,
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 4),
+      child: OrganicPanel(
+        color: o.accentSoft,
+        radius: OrganicRadius.panel,
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    l10n.feesOutstanding,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: o.onAccentSoft,
                     ),
-                    Text(
+                  ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
                       total,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        color: o.onAccentSoft,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Text(
-                l10n.feesStudentsOwing(count),
-                style: theme.textTheme.titleMedium,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              l10n.feesStudentsOwing(count),
+              style: theme.textTheme.titleSmall?.copyWith(
+                color: o.onAccentSoft,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -162,7 +175,7 @@ class _FilterBar extends ConsumerWidget {
       height: 52,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
         children: [
           for (final mode in DueMode.values)
             Padding(
@@ -189,7 +202,7 @@ class _FilterBar extends ConsumerWidget {
                 ),
               ],
               child: Chip(
-                avatar: const Icon(Icons.sort, size: 18),
+                avatar: const Icon(Icons.sort_rounded, size: 18),
                 label: Text(
                   filter.sort == DueSort.amount
                       ? l10n.sortByAmount
@@ -212,11 +225,11 @@ class _FilterBar extends ConsumerWidget {
                   PopupMenuItem(value: b.id, child: Text(b.name)),
               ],
               child: Chip(
-                avatar: const Icon(Icons.groups_outlined, size: 18),
+                avatar: const Icon(Icons.groups_rounded, size: 18),
                 label: Text(batchName ?? l10n.studentsFilterBatch),
                 backgroundColor: filter.batchId == null
                     ? null
-                    : Theme.of(context).colorScheme.secondaryContainer,
+                    : Organic.of(context).accentSoft,
               ),
             ),
           ),
@@ -263,49 +276,66 @@ class _DueTile extends ConsumerWidget {
             ),
     ].join(' · ');
 
-    return ListTile(
-      leading: StudentAvatar(name: student.name, photoPath: student.photoPath),
-      title: Text(student.name, maxLines: 2, overflow: TextOverflow.ellipsis),
-      subtitle: Text(
-        detail,
-        style: late > 0 ? TextStyle(color: theme.colorScheme.error) : null,
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            money(entry.totalBalance),
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: late > 0 ? theme.colorScheme.error : null,
+    final o = Organic.of(context);
+    final balanceColor = late > 0 ? o.accentStrong : o.text;
+    return Card(
+      child: ListTile(
+        minTileHeight: 72,
+        contentPadding: const EdgeInsetsDirectional.fromSTEB(14, 6, 8, 6),
+        leading: StudentAvatar(
+          name: student.name,
+          photoPath: student.photoPath,
+          radius: 22,
+        ),
+        title: Text(student.name, maxLines: 2, overflow: TextOverflow.ellipsis),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              detail,
+              style: late > 0 ? TextStyle(color: o.accentStrong) : null,
             ),
-          ),
-          IconButton(
-            tooltip: l10n.remindGuardian,
-            icon: const Icon(Icons.message_outlined),
-            onPressed: () => showReminderSheet(context, entry),
-          ),
-          IconButton(
-            tooltip: l10n.actionCall,
-            icon: const Icon(Icons.call),
-            onPressed: phone == null
-                ? null
-                : () async {
-                    final messenger = ScaffoldMessenger.of(context);
-                    final ok = await ref
-                        .read(urlLauncherProvider)
-                        .open(ContactLinks.call(phone));
-                    if (!ok) {
-                      messenger.showSnackBar(
-                        SnackBar(content: Text(l10n.contactLaunchFailed)),
-                      );
-                    }
-                  },
-          ),
-        ],
+            const SizedBox(height: 2),
+            Text(
+              money(entry.totalBalance),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: balanceColor,
+              ),
+            ),
+          ],
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            RoundIconButton(
+              tooltip: l10n.remindGuardian,
+              icon: Icons.chat_bubble_outline_rounded,
+              onPressed: () => showReminderSheet(context, entry),
+            ),
+            IconButton(
+              tooltip: l10n.actionCall,
+              icon: const Icon(Icons.call_rounded),
+              color: o.sageStrong,
+              onPressed: phone == null
+                  ? null
+                  : () async {
+                      final messenger = ScaffoldMessenger.of(context);
+                      final ok = await ref
+                          .read(urlLauncherProvider)
+                          .open(ContactLinks.call(phone));
+                      if (!ok) {
+                        messenger.showSnackBar(
+                          SnackBar(content: Text(l10n.contactLaunchFailed)),
+                        );
+                      }
+                    },
+            ),
+          ],
+        ),
+        // One tap from the row to the payment screen (spec FE-1).
+        onTap: () => context.push('/fees/pay/${student.id}'),
       ),
-      // One tap from the row to the payment screen (spec FE-1).
-      onTap: () => context.push('/fees/pay/${student.id}'),
     );
   }
 }
@@ -326,7 +356,7 @@ class _Empty extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 64, color: theme.colorScheme.outline),
+            Icon(icon, size: 64, color: Organic.of(context).accentDecor),
             const SizedBox(height: 16),
             Text(
               title,

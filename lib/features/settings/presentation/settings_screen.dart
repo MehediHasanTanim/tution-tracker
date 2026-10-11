@@ -10,7 +10,10 @@ import 'package:tution_tracker/core/platform/url_launcher_service.dart';
 import 'package:tution_tracker/core/settings/setting_key.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
+import 'package:tution_tracker/features/backup/data/backup_status_provider.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/domain/proration_rule.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
@@ -34,189 +37,240 @@ class SettingsScreen extends ConsumerWidget {
     final dueDay = ref.watchSetting(SettingKeys.defaultDueDay);
     final proration = ref.watchSetting(SettingKeys.proration);
 
-    Widget heading(String text) => Padding(
-      padding: const EdgeInsets.only(top: 24, bottom: 8),
+    Widget heading(String text, {bool first = false}) => Padding(
+      padding: EdgeInsets.only(top: first ? 4 : 18, bottom: 8),
       child: Text(text, style: theme.textTheme.titleMedium),
     );
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.navSettings)),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(l10n.language, style: theme.textTheme.titleMedium),
-            const SizedBox(height: 8),
-            SegmentedButton<Locale>(
-              segments: [
-                ButtonSegment(
-                  value: const Locale('bn'),
-                  label: Text(l10n.languageBangla),
-                ),
-                ButtonSegment(
-                  value: const Locale('en'),
-                  label: Text(l10n.languageEnglish),
-                ),
-              ],
-              selected: {locale},
-              onSelectionChanged: (s) =>
-                  ref.read(localeProvider.notifier).setLocale(s.first),
-            ),
-            heading(l10n.setNumerals),
-            SegmentedButton<NumeralStyle>(
-              segments: [
-                ButtonSegment(
-                  value: NumeralStyle.bangla,
-                  label: Text(l10n.setNumeralsBangla),
-                ),
-                ButtonSegment(
-                  value: NumeralStyle.western,
-                  label: Text(l10n.setNumeralsWestern),
-                ),
-              ],
-              selected: {numerals},
-              onSelectionChanged: (s) =>
-                  writeSetting(ref, SettingKeys.numerals, s.first),
-            ),
-            heading(l10n.setGrouping),
-            SegmentedButton<GroupingStyle>(
-              segments: [
-                ButtonSegment(
-                  value: GroupingStyle.lakh,
-                  label: Text(l10n.setGroupingLakh),
-                ),
-                ButtonSegment(
-                  value: GroupingStyle.western,
-                  label: Text(l10n.setGroupingWestern),
-                ),
-              ],
-              selected: {grouping},
-              onSelectionChanged: (s) =>
-                  writeSetting(ref, SettingKeys.grouping, s.first),
-            ),
-            heading(l10n.setTheme),
-            SegmentedButton<AppThemeMode>(
-              segments: [
-                ButtonSegment(
-                  value: AppThemeMode.system,
-                  label: Text(l10n.setThemeSystem),
-                ),
-                ButtonSegment(
-                  value: AppThemeMode.light,
-                  label: Text(l10n.setThemeLight),
-                ),
-                ButtonSegment(
-                  value: AppThemeMode.dark,
-                  label: Text(l10n.setThemeDark),
-                ),
-              ],
-              selected: {themeMode},
-              onSelectionChanged: (s) =>
-                  writeSetting(ref, SettingKeys.themeMode, s.first),
-            ),
-            heading(l10n.setFontSize),
-            Wrap(
-              spacing: 8,
+            const _BackupCard(),
+            const SizedBox(height: 16),
+            _Group(
               children: [
-                for (final (size, label) in [
-                  (AppFontSize.small, l10n.setFontSmall),
-                  (AppFontSize.normal, l10n.setFontNormal),
-                  (AppFontSize.large, l10n.setFontLarge),
-                  (AppFontSize.extraLarge, l10n.setFontExtraLarge),
-                ])
-                  ChoiceChip(
-                    label: Text(label),
-                    selected: fontSize == size,
-                    onSelected: (_) =>
-                        writeSetting(ref, SettingKeys.fontSize, size),
+                heading(l10n.language, first: true),
+                SegmentedButton<Locale>(
+                  segments: [
+                    ButtonSegment(
+                      value: const Locale('bn'),
+                      label: Text(l10n.languageBangla),
+                    ),
+                    ButtonSegment(
+                      value: const Locale('en'),
+                      label: Text(l10n.languageEnglish),
+                    ),
+                  ],
+                  selected: {locale},
+                  onSelectionChanged: (s) =>
+                      ref.read(localeProvider.notifier).setLocale(s.first),
+                ),
+                heading(l10n.setNumerals),
+                SegmentedButton<NumeralStyle>(
+                  segments: [
+                    ButtonSegment(
+                      value: NumeralStyle.bangla,
+                      label: Text(l10n.setNumeralsBangla),
+                    ),
+                    ButtonSegment(
+                      value: NumeralStyle.western,
+                      label: Text(l10n.setNumeralsWestern),
+                    ),
+                  ],
+                  selected: {numerals},
+                  onSelectionChanged: (s) =>
+                      writeSetting(ref, SettingKeys.numerals, s.first),
+                ),
+                heading(l10n.setGrouping),
+                SegmentedButton<GroupingStyle>(
+                  segments: [
+                    ButtonSegment(
+                      value: GroupingStyle.lakh,
+                      label: Text(l10n.setGroupingLakh),
+                    ),
+                    ButtonSegment(
+                      value: GroupingStyle.western,
+                      label: Text(l10n.setGroupingWestern),
+                    ),
+                  ],
+                  selected: {grouping},
+                  onSelectionChanged: (s) =>
+                      writeSetting(ref, SettingKeys.grouping, s.first),
+                ),
+                heading(l10n.setCalendar),
+                SegmentedButton<CalendarStyle>(
+                  segments: [
+                    ButtonSegment(
+                      value: CalendarStyle.gregorian,
+                      label: Text(l10n.setCalendarGregorian),
+                    ),
+                    ButtonSegment(
+                      value: CalendarStyle.bangla,
+                      label: Text(l10n.setCalendarBangla),
+                    ),
+                  ],
+                  selected: {calendar},
+                  onSelectionChanged: (s) =>
+                      writeSetting(ref, SettingKeys.calendar, s.first),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            _Group(
+              children: [
+                heading(l10n.setTheme, first: true),
+                SegmentedButton<AppThemeMode>(
+                  segments: [
+                    ButtonSegment(
+                      value: AppThemeMode.system,
+                      label: Text(l10n.setThemeSystem),
+                    ),
+                    ButtonSegment(
+                      value: AppThemeMode.light,
+                      label: Text(l10n.setThemeLight),
+                    ),
+                    ButtonSegment(
+                      value: AppThemeMode.dark,
+                      label: Text(l10n.setThemeDark),
+                    ),
+                  ],
+                  selected: {themeMode},
+                  onSelectionChanged: (s) =>
+                      writeSetting(ref, SettingKeys.themeMode, s.first),
+                ),
+                heading(l10n.setFontSize),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final (size, label) in [
+                      (AppFontSize.small, l10n.setFontSmall),
+                      (AppFontSize.normal, l10n.setFontNormal),
+                      (AppFontSize.large, l10n.setFontLarge),
+                      (AppFontSize.extraLarge, l10n.setFontExtraLarge),
+                    ])
+                      ChoiceChip(
+                        label: Text(label),
+                        selected: fontSize == size,
+                        onSelected: (_) =>
+                            writeSetting(ref, SettingKeys.fontSize, size),
+                      ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 4),
+                  child: Text(
+                    l10n.setFontPreview,
+                    style: theme.textTheme.bodyMedium,
                   ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                l10n.setFontPreview,
-                style: theme.textTheme.bodyMedium,
-              ),
-            ),
-            heading(l10n.setCalendar),
-            SegmentedButton<CalendarStyle>(
-              segments: [
-                ButtonSegment(
-                  value: CalendarStyle.gregorian,
-                  label: Text(l10n.setCalendarGregorian),
-                ),
-                ButtonSegment(
-                  value: CalendarStyle.bangla,
-                  label: Text(l10n.setCalendarBangla),
                 ),
               ],
-              selected: {calendar},
-              onSelectionChanged: (s) =>
-                  writeSetting(ref, SettingKeys.calendar, s.first),
             ),
-            heading(l10n.setFees),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.setDefaultDueDay),
-              subtitle: Text(
-                l10n.setDueDayValue(formatCount(dueDay, numerals)),
-              ),
-              trailing: const Icon(Icons.expand_more),
-              onTap: () => _pickDueDay(context, ref, dueDay, numerals),
+            const SizedBox(height: 12),
+            _Group(
+              children: [
+                heading(l10n.setFees, first: true),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(l10n.setDefaultDueDay),
+                  subtitle: Text(
+                    l10n.setDueDayValue(formatCount(dueDay, numerals)),
+                  ),
+                  trailing: const Icon(Icons.expand_more_rounded),
+                  onTap: () => _pickDueDay(context, ref, dueDay, numerals),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(l10n.setProration),
+                  subtitle: Text(_prorationLabel(l10n, proration)),
+                  trailing: const Icon(Icons.expand_more_rounded),
+                  onTap: () => _pickProration(context, ref, proration),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Text(
+                    l10n.setProrationHint,
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ),
+              ],
             ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.setProration),
-              subtitle: Text(_prorationLabel(l10n, proration)),
-              trailing: const Icon(Icons.expand_more),
-              onTap: () => _pickProration(context, ref, proration),
-            ),
-            Text(l10n.setProrationHint, style: theme.textTheme.bodySmall),
-            const SizedBox(height: 8),
-            const _TutorProfileSection(),
-            heading(l10n.setData),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.notifications_outlined),
-              title: Text(l10n.remSettingsTitle),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push(ReminderRoutes.settings),
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.message_outlined),
-              title: Text(l10n.tplTitle),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/settings/templates'),
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.lock_outline),
-              title: Text(l10n.lockSettingsTitle),
-              subtitle: Text(l10n.lockSettingsHint),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/settings/lock'),
-            ),
-            const _SampleDataTile(),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              leading: const Icon(Icons.backup_outlined),
-              title: Text(l10n.bkTitle),
-              subtitle: Text(l10n.bkPrivacy),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => context.push('/settings/backup'),
+            const SizedBox(height: 12),
+            const _Group(children: [_TutorProfileSection()]),
+            const SizedBox(height: 12),
+            _Group(
+              children: [
+                heading(l10n.setData, first: true),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.notifications_rounded),
+                  title: Text(l10n.remSettingsTitle),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => context.push(ReminderRoutes.settings),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.chat_bubble_outline_rounded),
+                  title: Text(l10n.tplTitle),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => context.push('/settings/templates'),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.lock_rounded),
+                  title: Text(l10n.lockSettingsTitle),
+                  subtitle: Text(l10n.lockSettingsHint),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => context.push('/settings/lock'),
+                ),
+                const _SampleDataTile(),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.backup_rounded),
+                  title: Text(l10n.bkTitle),
+                  subtitle: Text(l10n.bkPrivacy),
+                  trailing: const Icon(Icons.chevron_right_rounded),
+                  onTap: () => context.push('/settings/backup'),
+                ),
+              ],
             ),
             // The privacy note is always here; the links appear when the build
             // was given them (tool/release.sh).
             heading(l10n.helpTitle),
-            Text(l10n.bkPrivacy, style: theme.textTheme.bodyMedium),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Icon(
+                      Icons.lock_rounded,
+                      size: 16,
+                      color: Organic.of(context).muted,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      l10n.bkPrivacy,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Organic.of(context).subtle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             ...[
               if (supportWhatsApp.isNotEmpty)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.chat_outlined),
+                  leading: const Icon(Icons.chat_rounded),
                   title: Text(l10n.helpSupportWhatsApp),
                   onTap: () => ref
                       .read(urlLauncherProvider)
@@ -230,7 +284,7 @@ class SettingsScreen extends ConsumerWidget {
               if (supportEmail.isNotEmpty)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.mail_outline),
+                  leading: const Icon(Icons.mail_rounded),
                   title: Text(l10n.helpSupportEmail),
                   onTap: () => ref
                       .read(urlLauncherProvider)
@@ -239,7 +293,7 @@ class SettingsScreen extends ConsumerWidget {
               if (privacyPolicyUrl.isNotEmpty)
                 ListTile(
                   contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.privacy_tip_outlined),
+                  leading: const Icon(Icons.privacy_tip_rounded),
                   title: Text(l10n.helpPrivacyPolicy),
                   onTap: () => ref
                       .read(urlLauncherProvider)
@@ -258,13 +312,101 @@ class SettingsScreen extends ConsumerWidget {
               Text(l10n.devSection, style: theme.textTheme.titleMedium),
               ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: const Icon(Icons.fact_check_outlined),
+                leading: const Icon(Icons.fact_check_rounded),
                 title: Text(l10n.devConsistency),
                 onTap: () => _runConsistencyCheck(context, ref),
               ),
             ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// A rounded group of settings on the surface colour. Controls inside take
+/// the page ground as their fill, as in the handoff's settings card.
+class _Group extends StatelessWidget {
+  const _Group({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
+    final seg = theme.segmentedButtonTheme.style!;
+    return OrganicPanel(
+      radius: OrganicRadius.panel,
+      padding: const EdgeInsets.fromLTRB(18, 12, 18, 14),
+      child: Theme(
+        data: theme.copyWith(
+          segmentedButtonTheme: SegmentedButtonThemeData(
+            style: seg.copyWith(
+              backgroundColor: WidgetStateProperty.resolveWith(
+                (s) => s.contains(WidgetState.selected) ? o.accent : o.bg,
+              ),
+              side: WidgetStatePropertyAll(BorderSide(color: o.bg, width: 4)),
+            ),
+          ),
+          chipTheme: theme.chipTheme.copyWith(backgroundColor: o.bg),
+          inputDecorationTheme: theme.inputDecorationTheme.copyWith(
+            fillColor: o.bg,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: children,
+        ),
+      ),
+    );
+  }
+}
+
+/// The handoff's backup card: terracotta when a backup is overdue, sage when
+/// the data is safe, with the export button right there (spec BK-5).
+class _BackupCard extends ConsumerWidget {
+  const _BackupCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
+    final status = ref.watch(backupStatusProvider);
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
+    final warn = status.show;
+    final fg = warn ? o.onAccentSoft : o.onSageSoft;
+    final days = status.daysAgo;
+    final message = warn
+        ? (days == null
+              ? l10n.bkBannerNever
+              : l10n.bkBannerOld(formatCount(days, numerals)))
+        : l10n.bkPrivacy;
+    return OrganicPanel(
+      color: warn ? o.accentSoft : o.sageSoft,
+      radius: OrganicRadius.panel,
+      padding: const EdgeInsets.all(18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.bkCardTitle,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: fg,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(message, style: theme.textTheme.bodyMedium?.copyWith(color: fg)),
+          const SizedBox(height: 12),
+          FilledButton(
+            onPressed: () => context.push('/settings/backup'),
+            style: FilledButton.styleFrom(minimumSize: const Size(64, 48)),
+            child: Text(l10n.bkNow),
+          ),
+        ],
       ),
     );
   }
@@ -431,17 +573,15 @@ class _TutorProfileSectionState extends ConsumerState<_TutorProfileSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const SizedBox(height: 4),
         Text(l10n.tutorSection, style: theme.textTheme.titleMedium),
         Text(l10n.tutorSectionHint, style: theme.textTheme.bodySmall),
-        const SizedBox(height: 12),
+        const SizedBox(height: 14),
         TextField(
           controller: _name,
           enabled: _loaded,
           textCapitalization: TextCapitalization.words,
-          decoration: InputDecoration(
-            labelText: l10n.tutorName,
-            border: const OutlineInputBorder(),
-          ),
+          decoration: InputDecoration(labelText: l10n.tutorName),
           onChanged: (v) => _save(SettingKeys.tutorName, v),
         ),
         const SizedBox(height: 12),
@@ -449,10 +589,7 @@ class _TutorProfileSectionState extends ConsumerState<_TutorProfileSection> {
           controller: _institution,
           enabled: _loaded,
           textCapitalization: TextCapitalization.words,
-          decoration: InputDecoration(
-            labelText: l10n.tutorInstitution,
-            border: const OutlineInputBorder(),
-          ),
+          decoration: InputDecoration(labelText: l10n.tutorInstitution),
           onChanged: (v) => _save(SettingKeys.institutionName, v),
         ),
         const SizedBox(height: 12),
@@ -461,10 +598,7 @@ class _TutorProfileSectionState extends ConsumerState<_TutorProfileSection> {
           enabled: _loaded,
           keyboardType: TextInputType.phone,
           inputFormatters: const [PhoneInputFormatter()],
-          decoration: InputDecoration(
-            labelText: l10n.tutorPhone,
-            border: const OutlineInputBorder(),
-          ),
+          decoration: InputDecoration(labelText: l10n.tutorPhone),
           onChanged: (v) => _save(SettingKeys.tutorPhone, v),
         ),
       ],
@@ -482,7 +616,7 @@ class _SampleDataTile extends ConsumerWidget {
     final loaded = ref.watch(sampleLoadedProvider).value ?? false;
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.auto_awesome_outlined),
+      leading: const Icon(Icons.auto_awesome_rounded),
       title: Text(loaded ? l10n.sampleRemove : l10n.sampleLoad),
       subtitle: Text(l10n.sampleSettingsHint),
       onTap: () async {

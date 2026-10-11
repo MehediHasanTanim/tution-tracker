@@ -3246,6 +3246,12 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'মোট প্রত্যাশিত {amount}'**
   String homeOfExpected(String amount);
+
+  /// No description provided for @bkCardTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ'**
+  String get bkCardTitle;
 }
 
 class _AppLocalizationsDelegate

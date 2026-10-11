@@ -1738,4 +1738,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String homeOfExpected(String amount) {
     return 'of $amount';
   }
+
+  @override
+  String get bkCardTitle => 'Backup';
 }

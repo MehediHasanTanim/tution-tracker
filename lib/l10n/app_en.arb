@@ -523,5 +523,6 @@
   "homeGreeting": "Hello, {name}",
   "homeGreetingPlain": "Hello",
   "homeCollectedMonth": "Collected · {month}",
-  "homeOfExpected": "of {amount}"
+  "homeOfExpected": "of {amount}",
+  "bkCardTitle": "Backup"
 }

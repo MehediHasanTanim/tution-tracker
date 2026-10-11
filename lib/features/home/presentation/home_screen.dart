@@ -74,7 +74,7 @@ class _Greeting extends ConsumerWidget {
     final name = ref.watchSetting(SettingKeys.tutorName).trim();
     final date =
         '${weekdayName(today.isoWeekday, language)}, '
-        '${formatDate(today, language: language, numerals: numerals, calendar: watchCalendar(ref))}';
+        '${formatDate(today, language: language, numerals: numerals)}';
 
     return Row(
       children: [
