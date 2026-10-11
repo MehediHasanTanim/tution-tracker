@@ -110,45 +110,54 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       ),
                     ],
                     const Spacer(),
-                    const SizedBox(height: 16),
-                    BlockDots(count: 5, current: _step),
-                    const SizedBox(height: 12),
-                    if (_step < 4) ...[
-                      BlockButton(
-                        l10n.obNext,
-                        onPressed: () => setState(() => _step++),
-                      ),
-                      if (_step >= 1)
-                        BlockButton(
-                          l10n.obSkip,
-                          kind: BlockButtonKind.ghost,
-                          onPressed: () => setState(() => _step = 4),
-                        ),
-                    ] else if (_busy)
-                      Column(
-                        children: [
-                          const CircularProgressIndicator(),
-                          const SizedBox(height: 8),
-                          Text(l10n.obLoading),
-                        ],
-                      )
-                    else ...[
-                      BlockButton(
-                        l10n.obSampleYes,
-                        onPressed: () => _finish(withSample: true),
-                      ),
-                      const SizedBox(height: 10),
-                      BlockButton(
-                        l10n.obSampleNo,
-                        kind: BlockButtonKind.outlined,
-                        onPressed: () => _finish(withSample: false),
-                      ),
-                    ],
                   ],
                 ),
               ),
             ),
           ),
+        ),
+      ),
+      // Progress and actions stay in reach on small phones.
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(24, 8, 24, 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            BlockDots(count: 5, current: _step),
+            const SizedBox(height: 12),
+            if (_step < 4) ...[
+              BlockButton(
+                l10n.obNext,
+                onPressed: () => setState(() => _step++),
+              ),
+              if (_step >= 1)
+                BlockButton(
+                  l10n.obSkip,
+                  kind: BlockButtonKind.ghost,
+                  onPressed: () => setState(() => _step = 4),
+                ),
+            ] else if (_busy)
+              Column(
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 8),
+                  Text(l10n.obLoading),
+                ],
+              )
+            else ...[
+              BlockButton(
+                l10n.obSampleYes,
+                onPressed: () => _finish(withSample: true),
+              ),
+              const SizedBox(height: 10),
+              BlockButton(
+                l10n.obSampleNo,
+                kind: BlockButtonKind.outlined,
+                onPressed: () => _finish(withSample: false),
+              ),
+            ],
+          ],
         ),
       ),
     );

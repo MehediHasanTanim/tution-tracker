@@ -116,7 +116,9 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
   }
 
   Future<void> _loadBatches(String studentId) async {
-    final batches = await ref.read(batchesOfStudentProvider(studentId).future);
+    // Straight from the repository: a one-off read, not a watched provider.
+    final repo = await ref.read(batchRepositoryProvider.future);
+    final batches = await repo.watchBatchesOfStudent(studentId).first;
     if (!mounted) return;
     setState(() {
       _initialBatchIds = {for (final b in batches) b.id};

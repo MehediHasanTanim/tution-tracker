@@ -107,26 +107,30 @@ class _ReminderPermissionScreenState
                 BlockStep(number: numeral(2), text: l10n.remPermStep2),
                 BlockStep(number: numeral(3), text: l10n.remPermStep3),
               ],
-              if (_denied)
-                BlockButton(
-                  l10n.remPermOpenSettings,
-                  onPressed: () => ref
-                      .read(notificationServiceProvider)
-                      .openSystemSettings(),
-                )
-              else
-                BlockButton(
-                  l10n.remPermAllow,
-                  onPressed: _busy ? null : _allow,
-                ),
-              BlockButton(
-                l10n.remPermNotNow,
-                kind: BlockButtonKind.ghost,
-                onPressed: () => context.pop(),
-              ),
             ],
           ),
         ],
+      ),
+      // The actions stay in reach on small phones, under the explanation.
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+        child: BlockStack(
+          children: [
+            if (_denied)
+              BlockButton(
+                l10n.remPermOpenSettings,
+                onPressed: () =>
+                    ref.read(notificationServiceProvider).openSystemSettings(),
+              )
+            else
+              BlockButton(l10n.remPermAllow, onPressed: _busy ? null : _allow),
+            BlockButton(
+              l10n.remPermNotNow,
+              kind: BlockButtonKind.ghost,
+              onPressed: () => context.pop(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -96,22 +96,21 @@ void main() {
     await waitFor(tester);
     await _openClass(tester);
 
-    await tester.tap(find.byType(PopupMenuButton<String>));
+    // The sheet's button opens the reasons; anything but a public holiday
+    // cancels the class.
+    await tapCentered(tester, find.text('ক্লাস বাতিল / ছুটি'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('ক্লাস বাতিল করুন').last);
-    await tester.pumpAndSettle();
-    await tester.tap(
-      find.descendant(
-        of: find.byType(AlertDialog),
-        matching: find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'),
-      ),
-    );
+    await tapCentered(tester, find.text('শিক্ষক অসুস্থ'));
+    await tapCentered(tester, find.text('ক্লাস বন্ধ করুন'));
     await waitFor(tester);
 
     expect(find.text('বাতিল'), findsWidgets);
 
     await _openClass(tester);
     expect(find.text('এই ক্লাস বাতিল করা হয়েছে'), findsOneWidget);
+    // Let the "cancelled" snackbar go; it sits over the footer button.
+    await tester.pump(const Duration(seconds: 6));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('ক্লাস আবার চালু করুন'));
     await waitFor(tester);
     expect(find.text('এই ক্লাস বাতিল করা হয়েছে'), findsNothing);
@@ -135,18 +134,14 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    Future<void> confirm() async {
-      await tester.tap(
-        find.descendant(
-          of: find.byType(AlertDialog),
-          matching: find.widgetWithText(FilledButton, 'সংরক্ষণ করুন'),
-        ),
-      );
+    Future<void> markOff(String reason) async {
+      await tapCentered(tester, find.text(reason));
+      await tapCentered(tester, find.text('ক্লাস বন্ধ করুন'));
       await waitFor(tester);
     }
 
-    await choose('ক্লাস বাতিল করুন');
-    await confirm();
+    await choose('ক্লাস বাতিল / ছুটি');
+    await markOff('শিক্ষক অসুস্থ');
     expect(find.text('বাতিল'), findsWidgets);
     expect(find.text('নেওয়া হয়নি'), findsNothing);
 
@@ -155,8 +150,8 @@ void main() {
     await waitFor(tester);
     expect(find.text('নেওয়া হয়নি'), findsOneWidget);
 
-    await choose('ছুটির দিন হিসেবে চিহ্নিত করুন');
-    await confirm();
+    await choose('ক্লাস বাতিল / ছুটি');
+    await markOff('সরকারি ছুটি');
     expect(find.text('নেওয়া হয়নি'), findsNothing);
     expect(find.text('ছুটি'), findsWidgets);
   });
@@ -170,9 +165,10 @@ void main() {
     await pumpHarnessApp(tester, h);
     await waitFor(tester);
 
-    await tester.tap(find.text('অতিরিক্ত ক্লাস'));
+    await tapCentered(tester, find.text('অতিরিক্ত ক্লাস'));
     await waitFor(tester);
-    await tester.tap(find.text('Physics'));
+    await tapCentered(tester, find.text('Physics'));
+    await tapCentered(tester, find.text('তালিকায় যোগ করুন'));
     await waitFor(tester);
     // The sheet opens for the new class; going back shows it on Today.
     await tester.tap(find.byType(BackButton));

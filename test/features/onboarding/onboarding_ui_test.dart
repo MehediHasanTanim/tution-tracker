@@ -37,7 +37,7 @@ void main() {
     h,
   ) async {
     await _launch(tester, h);
-    await tester.tap(find.text('English'));
+    await tapCentered(tester, find.text('English'));
     await waitFor(tester);
     expect(find.text('Welcome to Tuition Khata'), findsOneWidget);
     await tester.tap(find.text('Next'));

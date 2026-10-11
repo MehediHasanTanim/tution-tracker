@@ -413,6 +413,9 @@ void main() {
       await _confirmDialog(tester);
 
       expect(find.text('এককালীন ফি যোগ করা হয়েছে'), findsOneWidget);
+      // Back from the adjustments page, the ledger shows it.
+      await tester.tap(find.byType(BackButton));
+      await waitFor(tester);
       expect(find.text('Admission · মার্চ ২০২৬'), findsOneWidget);
       final list = await real(tester, () => h.fees.watchDueList().first);
       expect(list.single.totalBalance, 4500 + 800);

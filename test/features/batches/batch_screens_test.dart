@@ -28,7 +28,10 @@ Future<void> _openBatchesTab(WidgetTester tester, AppDatabase db) async {
   await pumpApp(tester, db, clock: _clock);
   // Batches have their own tab.
   await tester.tap(
-    find.descendant(of: find.byType(NavigationBar), matching: find.text('ব্যাচ')),
+    find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text('ব্যাচ'),
+    ),
   );
   await settle(tester);
   await tester.pumpAndSettle();
@@ -403,7 +406,7 @@ void main() {
       await tester.pumpAndSettle();
       await _tapAndLoad(tester, find.text('আর্কাইভ করুন'));
       expect(find.text('শিক্ষার্থী যোগ করুন'), findsNothing);
-      expect(find.text('আর্কাইভ'), findsOneWidget);
+      expect(find.textContaining('· আর্কাইভ'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.more_vert));
       await tester.pumpAndSettle();
