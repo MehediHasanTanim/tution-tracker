@@ -26,14 +26,11 @@ Future<void> _push(WidgetTester tester, String route) async {
 
 Future<void> _openBatchesTab(WidgetTester tester, AppDatabase db) async {
   await pumpApp(tester, db, clock: _clock);
+  // Batches have their own tab.
   await tester.tap(
-    find.descendant(
-      of: find.byType(NavigationBar),
-      matching: find.text('শিক্ষার্থী'),
-    ),
+    find.descendant(of: find.byType(NavigationBar), matching: find.text('ব্যাচ')),
   );
   await settle(tester);
-  await tester.tap(find.widgetWithText(Tab, 'ব্যাচসমূহ'));
   await tester.pumpAndSettle();
 }
 
@@ -106,11 +103,6 @@ void main() {
       expect(find.text('এখনও কোনো ব্যাচ নেই'), findsOneWidget);
       expect(find.text('ব্যাচ যোগ করুন'), findsOneWidget);
       expect(find.text('শিক্ষার্থী যোগ করুন'), findsNothing);
-
-      // Back on the first tab the other button returns.
-      await tester.tap(find.widgetWithText(Tab, 'সব শিক্ষার্থী'));
-      await tester.pumpAndSettle();
-      expect(find.text('শিক্ষার্থী যোগ করুন'), findsOneWidget);
     });
 
     appTestWidgets('lists batches with schedule, members and fee', (
@@ -131,8 +123,10 @@ void main() {
       await _openBatchesTab(tester, db);
 
       expect(find.text('Math 9'), findsOneWidget);
+      // Subject, schedule and fee on the row; the member count on its tag.
       expect(find.textContaining('সোমবার, বুধবার'), findsOneWidget);
-      expect(find.textContaining('সদস্য: ২ · ৳ ১,২৫,০০০'), findsOneWidget);
+      expect(find.textContaining('৳ ১,২৫,০০০'), findsOneWidget);
+      expect(find.text('২ জন'), findsOneWidget);
     });
 
     appTestWidgets('archived batches show only with the archived chip', (
@@ -152,7 +146,7 @@ void main() {
         find.widgetWithText(FilterChip, 'আর্কাইভ দেখান'),
       );
       expect(find.text('Old Batch'), findsOneWidget);
-      expect(find.widgetWithText(Chip, 'আর্কাইভ'), findsOneWidget);
+      expect(find.text('আর্কাইভ'), findsOneWidget);
     });
   });
 
@@ -237,7 +231,8 @@ void main() {
       await _push(tester, '/batches/${b.id}');
 
       expect(find.text('Math 9'), findsWidgets);
-      expect(find.text('ডিফল্ট ফি: ৳ ১,৫০০'), findsOneWidget);
+      expect(find.text('ডিফল্ট ফি'), findsOneWidget);
+      expect(find.text('৳ ১,৫০০'), findsWidgets);
       expect(find.text('এই ব্যাচে এখনও কেউ নেই'), findsOneWidget);
     });
 
@@ -408,7 +403,7 @@ void main() {
       await tester.pumpAndSettle();
       await _tapAndLoad(tester, find.text('আর্কাইভ করুন'));
       expect(find.text('শিক্ষার্থী যোগ করুন'), findsNothing);
-      expect(find.widgetWithText(Chip, 'আর্কাইভ'), findsOneWidget);
+      expect(find.text('আর্কাইভ'), findsOneWidget);
 
       await tester.tap(find.byIcon(Icons.more_vert));
       await tester.pumpAndSettle();

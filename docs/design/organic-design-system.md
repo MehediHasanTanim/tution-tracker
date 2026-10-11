@@ -12,6 +12,8 @@ and pill-shaped controls.
 | `lib/core/theme/organic_tokens.dart` | The palette (`OrganicPalette`: ground, surface, text and the 100–900 neutral, terracotta and sage ramps), the semantic roles screens use (`Organic`, a `ThemeExtension`, one set for light and one for dark), font family names and radii |
 | `lib/core/theme/app_theme.dart` | The Material theme built from the tokens: colour scheme, type scale, and component themes (buttons, chips, segmented buttons, tabs, fields, nav bar, sheets, dialogs, snack bars, switches) |
 | `lib/core/ui/organic_widgets.dart` | Small shared pieces: `StatusPill`, `SectionTitle`, `OrganicPanel`, `PillProgress`, `RoundIconButton` |
+| `lib/core/ui/organic_blocks.dart` | The second handoff's blocks (`Blocks.dc.html`): heading, text, rows card, item row, toggle, buttons (primary, sage, outlined, danger, ghost), banner, message bubble, numbered step, stepper, photo, onboarding dots and illustration, chips, and `showBlockSheet` |
+| `lib/core/ui/time_chips.dart` | Class time chips: common times, any other time, or none |
 | `lib/features/fees/presentation/fee_status_style.dart` | Paid / Partial / Due / Overdue / Waived colours, used by the student list and ledger |
 
 Screens read colours through `Organic.of(context)` (for example `o.accentSoft`
@@ -39,9 +41,34 @@ The tokens are the only place colours are defined.
 
 ## Dark theme
 
-The handoff ships light only. Dark mode (spec SE-4) reuses the same ramps from
-the other end: a deep warm ground, the 400 steps for accents and the 800–900
-steps for tinted fills (`Organic.dark`).
+`Organic.dark` is the second handoff's dark palette (`[data-theme="dark"]`): a
+deep warm ground, darkened 200–300 tints and lightened 800–900 text steps, with
+the 600 accents unchanged.
+
+## Second handoff: the remaining screens
+
+The second handoff designed what the first left out. Where the app already did
+more than the prototype (effective months on fee changes, waiving any month,
+optional backup passwords, weekly summaries, custom member fees), the screens
+take the design's layout and keep the app's features and wording.
+
+- **Batches** have their own tab (six tabs in all): list, detail with this
+  month's figures and members, and a form with day and time chips. "Delete
+  batch" archives it (spec 5.2: soft delete).
+- **Student form:** photo block, class chips, a due-day stepper, subject, day,
+  time and batch chips. Batch chips join and leave batches on save.
+- **Notes tab:** dated notes, newest first, stored in the existing notes field
+  as `[YYYY-MM-DD] text` entries; older free text shows as an undated note.
+- **Fee adjustments** page (`/students/:id/adjust`): change fee, pause or
+  resume, one-time fee, waive or discount this month, and payments.
+- **Receipt:** cream paper, brand badge, dashed rules and a "paid" stamp; PNG or
+  PDF chosen with chips.
+- **Home:** a dashed "Extra class" button under the day's classes opens a sheet
+  with owner and time chips.
+- **Mark class off:** one sheet with reasons; a public holiday is stored as a
+  holiday, other reasons as a cancelled class with the reason as its note.
+- **Messaging, reminders, backup, lock, onboarding, settings and reports**
+  follow the handoff's blocks.
 
 ## Fonts
 
