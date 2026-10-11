@@ -3384,6 +3384,66 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'আগের নোট'**
   String get noteEarlier;
+
+  /// No description provided for @fadjThisMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে প্রাপ্য {amount}'**
+  String fadjThisMonth(String amount);
+
+  /// No description provided for @fadjPaused.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি বন্ধ আছে'**
+  String get fadjPaused;
+
+  /// No description provided for @fadjPauseSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছুটি বা বিরতির সময়'**
+  String get fadjPauseSub;
+
+  /// No description provided for @fadjResumeSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'আবার মাসিক ফি ধরা হবে'**
+  String get fadjResumeSub;
+
+  /// No description provided for @fadjOneTimeSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভর্তি, বই বা পরীক্ষার ফি'**
+  String get fadjOneTimeSub;
+
+  /// No description provided for @fadjWaiveMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'{month} মওকুফ বা ছাড়'**
+  String fadjWaiveMonth(String month);
+
+  /// No description provided for @fadjWaiveSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো মাস বা কিছু টাকা'**
+  String get fadjWaiveSub;
+
+  /// No description provided for @fadjPaymentsHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভুল হলে ট্যাপ করে সংশোধন বা মুছুন।'**
+  String get fadjPaymentsHint;
+
+  /// No description provided for @receiptFormatImage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি (PNG)'**
+  String get receiptFormatImage;
+
+  /// No description provided for @receiptExactly.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবক ঠিক এটাই পাবেন।'**
+  String get receiptExactly;
 }
 
 class _AppLocalizationsDelegate

@@ -1807,4 +1807,38 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get noteEarlier => 'আগের নোট';
+
+  @override
+  String fadjThisMonth(String amount) {
+    return 'এ মাসে প্রাপ্য $amount';
+  }
+
+  @override
+  String get fadjPaused => 'ফি বন্ধ আছে';
+
+  @override
+  String get fadjPauseSub => 'ছুটি বা বিরতির সময়';
+
+  @override
+  String get fadjResumeSub => 'আবার মাসিক ফি ধরা হবে';
+
+  @override
+  String get fadjOneTimeSub => 'ভর্তি, বই বা পরীক্ষার ফি';
+
+  @override
+  String fadjWaiveMonth(String month) {
+    return '$month মওকুফ বা ছাড়';
+  }
+
+  @override
+  String get fadjWaiveSub => 'পুরো মাস বা কিছু টাকা';
+
+  @override
+  String get fadjPaymentsHint => 'ভুল হলে ট্যাপ করে সংশোধন বা মুছুন।';
+
+  @override
+  String get receiptFormatImage => 'ছবি (PNG)';
+
+  @override
+  String get receiptExactly => 'অভিভাবক ঠিক এটাই পাবেন।';
 }

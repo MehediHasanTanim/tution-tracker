@@ -8,6 +8,7 @@ import 'package:tution_tracker/features/backup/presentation/backup_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_detail_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batch_form_screen.dart';
 import 'package:tution_tracker/features/batches/presentation/batches_screen.dart';
+import 'package:tution_tracker/features/fees/presentation/fee_adjustments_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_screen.dart';
 import 'package:tution_tracker/features/fees/presentation/record_payment_screen.dart';
 import 'package:tution_tracker/features/home/presentation/home_screen.dart';
@@ -84,6 +85,12 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
                         path: 'edit',
                         builder: (context, state) => StudentFormScreen(
                           studentId: state.pathParameters['id'],
+                        ),
+                      ),
+                      GoRoute(
+                        path: 'adjust',
+                        builder: (context, state) => FeeAdjustmentsScreen(
+                          studentId: state.pathParameters['id']!,
                         ),
                       ),
                     ],

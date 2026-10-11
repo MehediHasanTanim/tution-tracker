@@ -9,6 +9,8 @@ import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/platform/share_service.dart';
 import 'package:tution_tracker/core/platform/temp_directory.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/receipts/data/receipt_export.dart';
 import 'package:tution_tracker/features/receipts/data/receipt_providers.dart';
@@ -31,6 +33,9 @@ class ReceiptScreen extends ConsumerStatefulWidget {
 class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
   final _boundaryKey = GlobalKey();
   bool _busy = false;
+
+  /// Share as PDF rather than an image (the design's format chips).
+  bool _pdf = false;
 
   Future<void> _share(ReceiptData data, {required bool pdf}) async {
     final l10n = AppLocalizations.of(context);
@@ -98,53 +103,74 @@ class _ReceiptScreenState extends ConsumerState<ReceiptScreen> {
           return Column(
             children: [
               Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
-                  child: Center(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+                  children: [
+                    BlockChips<bool>(
+                      options: [
+                        (false, l10n.receiptFormatImage),
+                        (true, 'PDF'),
+                      ],
+                      isSelected: (v) => v == _pdf,
+                      onTap: (v) => setState(() => _pdf = v),
+                    ),
+                    const SizedBox(height: 12),
+                    BlockText(l10n.receiptExactly),
+                    const SizedBox(height: 12),
                     // Scales down on narrow screens; the captured image is
                     // always the card's own size.
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Card(
-                        margin: EdgeInsets.zero,
-                        clipBehavior: Clip.antiAlias,
-                        child: RepaintBoundary(
-                          key: _boundaryKey,
-                          child: ReceiptCard(
-                            data: data,
-                            tutor: tutor,
-                            language: language,
-                            numerals: numerals,
-                            grouping: grouping,
+                    Center(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              OrganicRadius.panel,
+                            ),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x292E2B25),
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              OrganicRadius.panel,
+                            ),
+                            child: RepaintBoundary(
+                              key: _boundaryKey,
+                              child: ReceiptCard(
+                                data: data,
+                                tutor: tutor,
+                                language: language,
+                                numerals: numerals,
+                                grouping: grouping,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-              SafeArea(
-                minimum: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: FilledButton.icon(
-                        onPressed: _busy
-                            ? null
-                            : () => _share(data, pdf: false),
-                        icon: const Icon(Icons.image),
-                        label: Text(l10n.receiptShareImage),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: FilledButton.tonalIcon(
-                        onPressed: _busy ? null : () => _share(data, pdf: true),
-                        icon: const Icon(Icons.picture_as_pdf),
-                        label: Text(l10n.receiptSharePdf),
-                      ),
-                    ),
-                  ],
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Organic.of(context).raised,
+                  border: Border(
+                    top: BorderSide(color: Organic.of(context).divider),
+                  ),
+                ),
+                child: SafeArea(
+                  minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                  child: BlockButton(
+                    _pdf ? l10n.receiptSharePdf : l10n.receiptShareImage,
+                    kind: BlockButtonKind.sage,
+                    icon: Icons.share_rounded,
+                    onPressed: _busy ? null : () => _share(data, pdf: _pdf),
+                  ),
                 ),
               ),
             ],

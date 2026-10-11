@@ -546,5 +546,15 @@
   "noteHint": "e.g. Needs help with algebra",
   "noteAdd": "Add note",
   "noteNone": "No notes yet.",
-  "noteEarlier": "Earlier note"
+  "noteEarlier": "Earlier note",
+  "fadjThisMonth": "This month: {amount}",
+  "fadjPaused": "billing paused",
+  "fadjPauseSub": "For breaks or leave",
+  "fadjResumeSub": "Fees count again from the month you choose",
+  "fadjOneTimeSub": "Admission, books or exam fee",
+  "fadjWaiveMonth": "Waive or discount {month}",
+  "fadjWaiveSub": "The whole month or part of it",
+  "fadjPaymentsHint": "Tap a payment to correct or delete it.",
+  "receiptFormatImage": "Image (PNG)",
+  "receiptExactly": "This is exactly what the guardian receives."
 }

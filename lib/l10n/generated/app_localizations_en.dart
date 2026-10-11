@@ -1813,4 +1813,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noteEarlier => 'Earlier note';
+
+  @override
+  String fadjThisMonth(String amount) {
+    return 'This month: $amount';
+  }
+
+  @override
+  String get fadjPaused => 'billing paused';
+
+  @override
+  String get fadjPauseSub => 'For breaks or leave';
+
+  @override
+  String get fadjResumeSub => 'Fees count again from the month you choose';
+
+  @override
+  String get fadjOneTimeSub => 'Admission, books or exam fee';
+
+  @override
+  String fadjWaiveMonth(String month) {
+    return 'Waive or discount $month';
+  }
+
+  @override
+  String get fadjWaiveSub => 'The whole month or part of it';
+
+  @override
+  String get fadjPaymentsHint => 'Tap a payment to correct or delete it.';
+
+  @override
+  String get receiptFormatImage => 'Image (PNG)';
+
+  @override
+  String get receiptExactly => 'This is exactly what the guardian receives.';
 }

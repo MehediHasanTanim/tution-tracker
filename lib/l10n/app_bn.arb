@@ -1006,5 +1006,29 @@
   "noteHint": "যেমন: বীজগণিতে দুর্বল",
   "noteAdd": "নোট যোগ করুন",
   "noteNone": "এখনও কোনো নোট নেই।",
-  "noteEarlier": "আগের নোট"
+  "noteEarlier": "আগের নোট",
+  "fadjThisMonth": "এ মাসে প্রাপ্য {amount}",
+  "@fadjThisMonth": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "fadjPaused": "ফি বন্ধ আছে",
+  "fadjPauseSub": "ছুটি বা বিরতির সময়",
+  "fadjResumeSub": "আবার মাসিক ফি ধরা হবে",
+  "fadjOneTimeSub": "ভর্তি, বই বা পরীক্ষার ফি",
+  "fadjWaiveMonth": "{month} মওকুফ বা ছাড়",
+  "@fadjWaiveMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "fadjWaiveSub": "পুরো মাস বা কিছু টাকা",
+  "fadjPaymentsHint": "ভুল হলে ট্যাপ করে সংশোধন বা মুছুন।",
+  "receiptFormatImage": "ছবি (PNG)",
+  "receiptExactly": "অভিভাবক ঠিক এটাই পাবেন।"
 }

@@ -10,11 +10,10 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
-import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/domain/fee_status.dart';
+import 'package:tution_tracker/features/fees/presentation/fee_actions.dart';
 import 'package:tution_tracker/features/fees/presentation/fee_status_style.dart';
 import 'package:tution_tracker/features/fees/presentation/fees_providers.dart';
-import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
 
@@ -40,7 +39,6 @@ class StudentFeesTab extends ConsumerWidget {
     final payments =
         ref.watch(studentPaymentsProvider(student.id)).value ?? const [];
     final credit = ref.watch(studentCreditProvider(student.id)).value ?? 0;
-    final paused = ref.watch(feesPausedProvider(student.id)).value ?? false;
 
     String money(int a) =>
         formatTaka(Taka(a), numerals: numerals, grouping: grouping);
@@ -104,39 +102,14 @@ class StudentFeesTab extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      PopupMenuButton<String>(
-                        tooltip: l10n.actionAdjust,
-                        onSelected: (v) => _adjust(context, ref, v, paused),
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 'fee',
-                            child: Text(l10n.adjChangeFee),
-                          ),
-                          PopupMenuItem(
-                            value: 'pause',
-                            child: Text(
-                              paused ? l10n.adjResume : l10n.adjPause,
-                            ),
-                          ),
-                          PopupMenuItem(
-                            value: 'onetime',
-                            child: Text(l10n.adjOneTime),
-                          ),
-                        ],
-                        child: OutlinedButton.icon(
-                          onPressed: null,
-                          style: OutlinedButton.styleFrom(
-                            minimumSize: const Size(64, 52),
-                            disabledForegroundColor: Organic.of(context)
-                                .accentStrong,
-                            side: BorderSide(
-                              color: Organic.of(context).accent,
-                              width: 2,
-                            ),
-                          ),
-                          icon: const Icon(Icons.tune_rounded),
-                          label: Text(l10n.actionAdjust),
+                      OutlinedButton.icon(
+                        onPressed: () =>
+                            context.push('/students/${student.id}/adjust'),
+                        style: OutlinedButton.styleFrom(
+                          minimumSize: const Size(64, 52),
                         ),
+                        icon: const Icon(Icons.tune_rounded),
+                        label: Text(l10n.actionAdjust),
                       ),
                     ],
                   ),
@@ -163,7 +136,7 @@ class StudentFeesTab extends ConsumerWidget {
                 money(b.waived == 1 ? 0 : b.balance),
               ),
               running: l10n.ledgerRunning(money(runningAfter[b.feeRecordId]!)),
-              onTap: () => _dueActions(context, ref, b, money),
+              onTap: () => dueActions(context, ref, b, money),
             ),
           _SectionTitle(l10n.paymentsTitle),
           if (payments.isEmpty)
@@ -184,297 +157,12 @@ class StudentFeesTab extends ConsumerWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onTap: () => _paymentActions(context, ref, p),
+                onTap: () => paymentActions(context, ref, p),
               ),
             ),
         ],
       ),
     );
-  }
-
-  // ---- adjustments ------------------------------------------------------
-
-  Future<void> _adjust(
-    BuildContext context,
-    WidgetRef ref,
-    String action,
-    bool paused,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    final language = ref.read(appLanguageProvider);
-    final numerals =
-        ref.read(numeralStyleProvider).value ?? NumeralStyle.bangla;
-    final now = YearMonth.from(todayFrom(ref.read(clockProvider)));
-    String monthText(YearMonth m) =>
-        formatMonth(m, language: language, numerals: numerals);
-
-    // A year back to a year ahead, never before the joining month.
-    final joined = YearMonth.from(LocalDate.parse(student.joinedOn));
-    final months = [
-      for (var m = now.addMonths(-12); m <= now.addMonths(12); m = m.next())
-        if (m >= joined) m,
-    ];
-
-    try {
-      switch (action) {
-        case 'fee':
-          final r = await showDialog<FieldsResult>(
-            context: context,
-            builder: (_) => FieldsDialog(
-              title: l10n.adjChangeFee,
-              months: months,
-              monthLabel: l10n.adjEffectiveMonth,
-              initialMonth: months.contains(now) ? now : months.last,
-              monthText: monthText,
-              fields: [
-                DialogField(
-                  key: 'amount',
-                  label: l10n.adjNewFee,
-                  numeric: true,
-                  initial: student.monthlyFee.toString(),
-                ),
-              ],
-            ),
-          );
-          if (r == null) return;
-          final repo = await ref.read(feeRepositoryProvider.future);
-          await repo.changeFee(student.id, r.month!, r.intValue('amount'));
-          messenger.showSnackBar(SnackBar(content: Text(l10n.adjFeeChanged)));
-        case 'pause':
-          final r = await showDialog<FieldsResult>(
-            context: context,
-            builder: (_) => FieldsDialog(
-              title: paused ? l10n.adjResume : l10n.adjPause,
-              months: months,
-              monthLabel: paused ? l10n.adjResumeFrom : l10n.adjPauseFrom,
-              initialMonth: months.contains(now) ? now : months.last,
-              monthText: monthText,
-              fields: const [],
-            ),
-          );
-          if (r == null) return;
-          final repo = await ref.read(feeRepositoryProvider.future);
-          if (paused) {
-            await repo.resumeFees(student.id, r.month!);
-            messenger.showSnackBar(SnackBar(content: Text(l10n.adjResumed)));
-          } else {
-            await repo.pauseFees(student.id, r.month!);
-            messenger.showSnackBar(SnackBar(content: Text(l10n.adjPaused)));
-          }
-        case 'onetime':
-          final r = await showDialog<FieldsResult>(
-            context: context,
-            builder: (_) => FieldsDialog(
-              title: l10n.adjOneTime,
-              fields: [
-                DialogField(
-                  key: 'label',
-                  label: l10n.adjOneTimeLabel,
-                  requiredMessage: l10n.adjReasonRequired,
-                ),
-                DialogField(
-                  key: 'amount',
-                  label: l10n.adjOneTimeAmount,
-                  numeric: true,
-                ),
-              ],
-            ),
-          );
-          if (r == null) return;
-          final repo = await ref.read(feeRepositoryProvider.future);
-          await repo.addOneTimeFee(
-            student.id,
-            label: r.values['label']!,
-            amount: r.intValue('amount'),
-          );
-          messenger.showSnackBar(SnackBar(content: Text(l10n.adjOneTimeAdded)));
-      }
-    } on Object {
-      messenger.showSnackBar(SnackBar(content: Text(l10n.genericError)));
-    }
-  }
-
-  Future<void> _dueActions(
-    BuildContext context,
-    WidgetRef ref,
-    FeeBalance due,
-    String Function(int) money,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final messenger = ScaffoldMessenger.of(context);
-    final choice = await showModalBottomSheet<String>(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (due.waived == 1)
-              ListTile(
-                leading: const Icon(Icons.undo_rounded),
-                title: Text(l10n.adjUnwaive),
-                onTap: () => Navigator.pop(context, 'unwaive'),
-              )
-            else ...[
-              ListTile(
-                leading: const Icon(Icons.money_off_rounded),
-                title: Text(l10n.adjWaive),
-                onTap: () => Navigator.pop(context, 'waive'),
-              ),
-              ListTile(
-                leading: const Icon(Icons.percent_rounded),
-                title: Text(l10n.adjDiscount),
-                onTap: () => Navigator.pop(context, 'discount'),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-    if (choice == null || !context.mounted) return;
-
-    try {
-      switch (choice) {
-        case 'unwaive':
-          final repo = await ref.read(feeRepositoryProvider.future);
-          await repo.unwaive(due.feeRecordId);
-        case 'waive':
-          final r = await showDialog<FieldsResult>(
-            context: context,
-            builder: (_) => FieldsDialog(
-              title: l10n.adjWaive,
-              fields: [
-                DialogField(
-                  key: 'reason',
-                  label: l10n.adjReason,
-                  requiredMessage: l10n.adjReasonRequired,
-                ),
-              ],
-            ),
-          );
-          if (r == null) return;
-          final repo = await ref.read(feeRepositoryProvider.future);
-          await repo.waive(due.feeRecordId, reason: r.values['reason']!);
-        case 'discount':
-          final r = await showDialog<FieldsResult>(
-            context: context,
-            builder: (_) => FieldsDialog(
-              title: l10n.adjDiscount,
-              fields: [
-                DialogField(
-                  key: 'amount',
-                  label: l10n.adjDiscountAmount,
-                  numeric: true,
-                  initial: due.discount > 0 ? due.discount.toString() : '',
-                  max: due.amountDue,
-                  helper: money(due.amountDue),
-                ),
-                DialogField(
-                  key: 'reason',
-                  label: l10n.adjReason,
-                  required: false,
-                ),
-              ],
-            ),
-          );
-          if (r == null) return;
-          final repo = await ref.read(feeRepositoryProvider.future);
-          await repo.setDiscount(
-            due.feeRecordId,
-            r.intValue('amount'),
-            reason: r.values['reason'],
-          );
-      }
-      messenger.showSnackBar(SnackBar(content: Text(l10n.adjDone)));
-    } on Object {
-      messenger.showSnackBar(SnackBar(content: Text(l10n.genericError)));
-    }
-  }
-
-  Future<void> _paymentActions(
-    BuildContext context,
-    WidgetRef ref,
-    Payment payment,
-  ) async {
-    final l10n = AppLocalizations.of(context);
-    final numerals =
-        ref.read(numeralStyleProvider).value ?? NumeralStyle.bangla;
-    final messenger = ScaffoldMessenger.of(context);
-    final choice = await showModalBottomSheet<String>(
-      context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.receipt_long_rounded),
-              title: Text(l10n.receiptAction),
-              onTap: () => Navigator.pop(context, 'receipt'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit_outlined),
-              title: Text(l10n.actionEdit),
-              onTap: () => Navigator.pop(context, 'edit'),
-            ),
-            ListTile(
-              leading: const Icon(Icons.delete_outline_rounded),
-              title: Text(l10n.payDelete),
-              onTap: () => Navigator.pop(context, 'delete'),
-            ),
-          ],
-        ),
-      ),
-    );
-    if (choice == null || !context.mounted) return;
-
-    if (choice == 'receipt') {
-      await context.push('/fees/receipt/${payment.id}');
-      return;
-    }
-
-    if (choice == 'edit') {
-      await context.push('/fees/payments/${payment.id}/edit');
-      return;
-    }
-
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.payDeleteTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.payDeleteBody(formatCount(payment.receiptNo, numerals))),
-            if (payment.receiptSharedAt != null) ...[
-              const SizedBox(height: 12),
-              Text(
-                l10n.payReceiptSharedWarning,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            ],
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(l10n.actionCancel),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
-              foregroundColor: Theme.of(context).colorScheme.onError,
-            ),
-            onPressed: () => Navigator.pop(context, true),
-            child: Text(l10n.payDelete),
-          ),
-        ],
-      ),
-    );
-    if (confirmed != true) return;
-    final repo = await ref.read(paymentRepositoryProvider.future);
-    await repo.delete(payment.id);
-    messenger.showSnackBar(SnackBar(content: Text(l10n.payDeleted)));
   }
 }
 
