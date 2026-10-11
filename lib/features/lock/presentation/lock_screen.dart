@@ -192,16 +192,25 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                 onPressed: onTap,
                 // Soft filled circles rather than outlines, as the design
                 // system rounds and fills its controls.
+                // Digits on surface circles; the fingerprint and delete keys
+                // sit on the ground, as in the design's PIN pad.
                 style: OutlinedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: EdgeInsets.zero,
                   side: BorderSide.none,
-                  backgroundColor: Organic.of(context).surface,
+                  backgroundColor: icon != null
+                      ? Colors.transparent
+                      : Organic.of(context).surface,
                   foregroundColor: Organic.of(context).text,
                 ),
                 child: icon != null
-                    ? Icon(icon)
-                    : Text(label, style: theme.textTheme.headlineSmall),
+                    ? Icon(icon, size: 26)
+                    : Text(
+                        label,
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          fontSize: 28,
+                        ),
+                      ),
               ),
       ),
     );
@@ -219,8 +228,8 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                 children: [
                   // Kept small so the keypad and "forgot" fit a 5-inch screen.
                   Container(
-                    width: 64,
-                    height: 64,
+                    width: 72,
+                    height: 72,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Organic.of(context).accentSoft,
@@ -228,25 +237,34 @@ class _LockScreenState extends ConsumerState<LockScreen> {
                     child: Icon(
                       Icons.lock_rounded,
                       size: 32,
-                      color: Organic.of(context).accent,
+                      color: Organic.of(context).onAccentSoft,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(l10n.lockEnterPin, style: theme.textTheme.headlineSmall),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
+                  Text(
+                    l10n.lockEnterPin,
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      fontSize: 26,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       for (var i = 0; i < _length; i++)
                         Container(
-                          width: 14,
-                          height: 14,
-                          margin: const EdgeInsets.symmetric(horizontal: 6),
+                          width: 18,
+                          height: 18,
+                          margin: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Organic.of(context).accent,
+                              width: 2,
+                            ),
                             color: i < _entered.length
-                                ? theme.colorScheme.primary
-                                : theme.colorScheme.outlineVariant,
+                                ? Organic.of(context).accent
+                                : Colors.transparent,
                           ),
                         ),
                     ],

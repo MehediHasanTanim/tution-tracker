@@ -1923,4 +1923,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bkDangerZone => 'Danger zone';
+
+  @override
+  String get setOn => 'On';
+
+  @override
+  String get setOff => 'Off';
+
+  @override
+  String get setReplayIntro => 'Replay intro';
+
+  @override
+  String get setReplayIntroSub => 'Language and welcome screens';
+
+  @override
+  String reportMonths(String count) {
+    return '$count mo';
+  }
 }

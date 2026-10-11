@@ -12,6 +12,7 @@ import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/backup/data/backup_status_provider.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
@@ -202,39 +203,48 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: 12),
             const _Group(children: [_TutorProfileSection()]),
             const SizedBox(height: 12),
-            _Group(
+            BlockSubheading(l10n.setData),
+            const SizedBox(height: 10),
+            BlockStack(
               children: [
-                heading(l10n.setData, first: true),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.notifications_rounded),
-                  title: Text(l10n.remSettingsTitle),
-                  trailing: const Icon(Icons.chevron_right_rounded),
+                BlockItem(
+                  leading: const BlockIcon(Icons.notifications_rounded),
+                  title: l10n.remSettingsTitle,
+                  subtitle: ref.watchSetting(SettingKeys.remindersEnabled)
+                      ? l10n.setOn
+                      : l10n.setOff,
+                  chevron: true,
                   onTap: () => context.push(ReminderRoutes.settings),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.chat_bubble_outline_rounded),
-                  title: Text(l10n.tplTitle),
-                  trailing: const Icon(Icons.chevron_right_rounded),
+                BlockItem(
+                  leading: const BlockIcon(Icons.chat_bubble_outline_rounded),
+                  title: l10n.tplTitle,
+                  subtitle: l10n.remTemplateSub,
+                  chevron: true,
                   onTap: () => context.push('/settings/templates'),
                 ),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.lock_rounded),
-                  title: Text(l10n.lockSettingsTitle),
-                  subtitle: Text(l10n.lockSettingsHint),
-                  trailing: const Icon(Icons.chevron_right_rounded),
+                BlockItem(
+                  leading: const BlockIcon(Icons.lock_rounded),
+                  title: l10n.lockSettingsTitle,
+                  subtitle: l10n.lockSettingsHint,
+                  chevron: true,
                   onTap: () => context.push('/settings/lock'),
                 ),
-                const _SampleDataTile(),
-                ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  leading: const Icon(Icons.backup_rounded),
-                  title: Text(l10n.bkTitle),
-                  subtitle: Text(l10n.bkPrivacy),
-                  trailing: const Icon(Icons.chevron_right_rounded),
+                BlockItem(
+                  leading: const BlockIcon(Icons.backup_rounded, sage: true),
+                  title: l10n.bkTitle,
+                  subtitle: l10n.bkPrivacy,
+                  chevron: true,
                   onTap: () => context.push('/settings/backup'),
+                ),
+                const _SampleDataTile(),
+                BlockItem(
+                  leading: const BlockIcon(Icons.replay_rounded, sage: true),
+                  title: l10n.setReplayIntro,
+                  subtitle: l10n.setReplayIntroSub,
+                  chevron: true,
+                  onTap: () =>
+                      writeSetting(ref, SettingKeys.onboardingDone, false),
                 ),
               ],
             ),
@@ -614,11 +624,10 @@ class _SampleDataTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final loaded = ref.watch(sampleLoadedProvider).value ?? false;
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.auto_awesome_rounded),
-      title: Text(loaded ? l10n.sampleRemove : l10n.sampleLoad),
-      subtitle: Text(l10n.sampleSettingsHint),
+    return BlockItem(
+      leading: const BlockIcon(Icons.auto_awesome_rounded, sage: true),
+      title: loaded ? l10n.sampleRemove : l10n.sampleLoad,
+      subtitle: l10n.sampleSettingsHint,
       onTap: () async {
         final messenger = ScaffoldMessenger.of(context);
         final service = await ref.read(sampleDataServiceProvider.future);

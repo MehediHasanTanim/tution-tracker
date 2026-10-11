@@ -1916,4 +1916,21 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get bkDangerZone => 'বিপজ্জনক';
+
+  @override
+  String get setOn => 'চালু';
+
+  @override
+  String get setOff => 'বন্ধ';
+
+  @override
+  String get setReplayIntro => 'ইন্ট্রো আবার দেখুন';
+
+  @override
+  String get setReplayIntroSub => 'ভাষা ও পরিচিতি';
+
+  @override
+  String reportMonths(String count) {
+    return '$count মাস';
+  }
 }

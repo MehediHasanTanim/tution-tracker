@@ -3582,6 +3582,36 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'বিপজ্জনক'**
   String get bkDangerZone;
+
+  /// No description provided for @setOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালু'**
+  String get setOn;
+
+  /// No description provided for @setOff.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ'**
+  String get setOff;
+
+  /// No description provided for @setReplayIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'ইন্ট্রো আবার দেখুন'**
+  String get setReplayIntro;
+
+  /// No description provided for @setReplayIntroSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাষা ও পরিচিতি'**
+  String get setReplayIntroSub;
+
+  /// No description provided for @reportMonths.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} মাস'**
+  String reportMonths(String count);
 }
 
 class _AppLocalizationsDelegate

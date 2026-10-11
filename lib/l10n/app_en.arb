@@ -579,5 +579,10 @@
   "remPermStep3": "Everything stays on this phone — no server, no ads",
   "rsReplaceTitle": "This replaces everything on this phone",
   "bkRestoreSection": "Restore",
-  "bkDangerZone": "Danger zone"
+  "bkDangerZone": "Danger zone",
+  "setOn": "On",
+  "setOff": "Off",
+  "setReplayIntro": "Replay intro",
+  "setReplayIntroSub": "Language and welcome screens",
+  "reportMonths": "{count} mo"
 }

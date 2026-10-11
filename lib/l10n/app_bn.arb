@@ -1067,5 +1067,17 @@
   "remPermStep3": "সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই",
   "rsReplaceTitle": "বর্তমান সব তথ্য বদলে যাবে",
   "bkRestoreSection": "রিস্টোর",
-  "bkDangerZone": "বিপজ্জনক"
+  "bkDangerZone": "বিপজ্জনক",
+  "setOn": "চালু",
+  "setOff": "বন্ধ",
+  "setReplayIntro": "ইন্ট্রো আবার দেখুন",
+  "setReplayIntroSub": "ভাষা ও পরিচিতি",
+  "reportMonths": "{count} মাস",
+  "@reportMonths": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  }
 }

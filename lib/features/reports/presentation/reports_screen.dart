@@ -26,6 +26,9 @@ class ReportsScreen extends ConsumerStatefulWidget {
 class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   YearMonth? _month;
 
+  /// How many months the income chart shows: the design's 6 / 12 switch.
+  int _span = 6;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -154,11 +157,34 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(l10n.reportIncomeTitle, style: theme.textTheme.titleSmall),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        l10n.reportIncomeTitle,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                    for (final n in const [6, 12])
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 4),
+                        child: ChoiceChip(
+                          label: Text(
+                            l10n.reportMonths(formatCount(n, numerals)),
+                          ),
+                          selected: _span == n,
+                          visualDensity: VisualDensity.compact,
+                          onSelected: (_) => setState(() => _span = n),
+                        ),
+                      ),
+                  ],
+                ),
                 const SizedBox(height: 14),
                 if (income != null)
                   IncomeChart(
-                    income: income,
+                    income: income.length > _span
+                        ? income.sublist(income.length - _span)
+                        : income,
                     language: language,
                     numerals: numerals,
                     grouping: grouping,
