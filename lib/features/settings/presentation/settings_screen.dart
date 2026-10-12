@@ -14,6 +14,7 @@ import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/core/ui/organic_widgets.dart';
+import 'package:tution_tracker/features/ads/data/ad_providers.dart';
 import 'package:tution_tracker/features/backup/data/backup_status_provider.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/domain/proration_rule.dart';
@@ -237,6 +238,14 @@ class SettingsScreen extends ConsumerWidget {
                   chevron: true,
                   onTap: () => context.push('/settings/backup'),
                 ),
+                if (ref.watch(privacyOptionsRequiredProvider).value ?? false)
+                  BlockItem(
+                    leading: const BlockIcon(Icons.ads_click_rounded),
+                    title: l10n.adsPrivacyOptions,
+                    subtitle: l10n.adsNote,
+                    onTap: () =>
+                        ref.read(adServiceProvider).showPrivacyOptions(),
+                  ),
                 const _SampleDataTile(),
                 BlockItem(
                   leading: const BlockIcon(Icons.replay_rounded, sage: true),

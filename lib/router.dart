@@ -43,7 +43,8 @@ GoRouter buildRouter({String initialLocation = AppRoutes.home}) {
     routes: [
       // Each branch keeps its own navigation stack and widget state alive.
       StatefulShellRoute.indexedStack(
-        builder: (context, state, shell) => AppShell(shell: shell),
+        builder: (context, state, shell) =>
+            AppShell(shell: shell, location: state.uri.toString()),
         branches: [
           StatefulShellBranch(
             routes: [

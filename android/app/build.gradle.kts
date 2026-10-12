@@ -38,6 +38,16 @@ android {
         // flag during build.
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // AdMob app id for the manifest: -PADMOB_APP_ID=ca-app-pub-...~... for a
+        // real build; otherwise Google's sample id (test ads only).
+        manifestPlaceholders["admobAppId"] =
+            (project.findProperty("ADMOB_APP_ID") as String?)
+                ?: "ca-app-pub-3940256099942544~3347511713"
+    }
+
+    buildFeatures {
+        // AGP 9 turns this off by default; the flavors set app_name with resValue.
+        resValues = true
     }
 
     flavorDimensions += "env"

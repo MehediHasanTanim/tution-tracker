@@ -663,19 +663,38 @@ class _SampleBanner extends ConsumerWidget {
       child: Card(
         margin: EdgeInsets.zero,
         color: Organic.of(context).sageSoft,
-        child: ListTile(
-          leading: const Icon(Icons.auto_awesome_rounded),
-          title: Text(l10n.sampleBanner),
-          trailing: TextButton(
-            onPressed: () async {
-              final messenger = ScaffoldMessenger.of(context);
-              final service = await ref.read(sampleDataServiceProvider.future);
-              await service.remove();
-              messenger.showSnackBar(
-                SnackBar(content: Text(l10n.sampleRemoved)),
-              );
-            },
-            child: Text(l10n.sampleRemove),
+        // A column, not a ListTile: with big text the button would take the
+        // whole width of a tile's trailing slot.
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.auto_awesome_rounded),
+                  const SizedBox(width: 16),
+                  Expanded(child: Text(l10n.sampleBanner)),
+                ],
+              ),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: TextButton(
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final service = await ref.read(
+                      sampleDataServiceProvider.future,
+                    );
+                    await service.remove();
+                    messenger.showSnackBar(
+                      SnackBar(content: Text(l10n.sampleRemoved)),
+                    );
+                  },
+                  child: Text(l10n.sampleRemove),
+                ),
+              ),
+            ],
           ),
         ),
       ),

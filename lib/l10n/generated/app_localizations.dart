@@ -3205,6 +3205,18 @@ abstract class AppLocalizations {
   /// **'গোপনীয়তা নীতি'**
   String get helpPrivacyPolicy;
 
+  /// No description provided for @adsPrivacyOptions.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিজ্ঞাপনের গোপনীয়তা অপশন'**
+  String get adsPrivacyOptions;
+
+  /// No description provided for @adsNote.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিজ্ঞাপনে আপনার শিক্ষার্থী বা পেমেন্টের তথ্য কখনো ব্যবহার হয় না।'**
+  String get adsNote;
+
   /// No description provided for @helpSupportWhatsApp.
   ///
   /// In bn, this message translates to:

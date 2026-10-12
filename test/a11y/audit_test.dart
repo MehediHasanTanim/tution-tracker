@@ -11,6 +11,7 @@ import 'package:tution_tracker/features/lock/data/app_lock_service.dart';
 import 'package:tution_tracker/features/onboarding/data/sample_data_service.dart';
 import 'package:tution_tracker/features/students/domain/student_draft.dart';
 
+import '../support/fake_ads.dart';
 import '../support/fee_harness.dart';
 import '../support/fee_ui.dart';
 import '../support/test_app.dart';
@@ -218,6 +219,49 @@ void main() {
           labeledTapTargetGuideline,
         ]) {
           expect((await g.evaluate(tester)).passed, isTrue);
+        }
+      } finally {
+        await shutdownApp(tester, h.db);
+      }
+    });
+
+    testWidgets('tabs with a banner and the largest text do not overflow', (
+      tester,
+    ) async {
+      smallScreen(tester);
+      final h = FeeHarness();
+      try {
+        await _seed(tester, h);
+        await real(
+          tester,
+          () => h.settings.set(SettingKeys.fontSize, AppFontSize.extraLarge),
+        );
+        await pumpApp(
+          tester,
+          h.db,
+          clock: () => h.now,
+          overrides: adsOn(FakeAdService()),
+        );
+        await waitFor(tester);
+        await tester.pump(const Duration(milliseconds: 300));
+        for (final tab in [
+          'হোম',
+          'শিক্ষার্থী',
+          'ব্যাচ',
+          'ফি',
+          'রিপোর্ট',
+          'সেটিংস',
+        ]) {
+          await goTab(tester, tab);
+          await tester.pump(const Duration(milliseconds: 300));
+          expect(tester.takeException(), isNull, reason: tab);
+          expect(find.byKey(const Key('fake-banner')), findsOneWidget);
+          for (final g in [
+            androidTapTargetGuideline,
+            labeledTapTargetGuideline,
+          ]) {
+            expect((await g.evaluate(tester)).passed, isTrue, reason: tab);
+          }
         }
       } finally {
         await shutdownApp(tester, h.db);

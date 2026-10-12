@@ -48,44 +48,57 @@ class FeesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          all.maybeWhen(
-            data: (list) => _TotalsHeader(
-              total: money(list.fold(0, (s, e) => s + e.totalBalance)),
-              count: formatCount(list.length, numerals),
+      // One scroll view, so with big text or a banner the totals and filters
+      // scroll away instead of squeezing the list (or overflowing).
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: all.maybeWhen(
+              data: (list) => _TotalsHeader(
+                total: money(list.fold(0, (s, e) => s + e.totalBalance)),
+                count: formatCount(list.length, numerals),
+              ),
+              orElse: () => const SizedBox(height: 8),
             ),
-            orElse: () => const SizedBox(height: 8),
           ),
-          const _FilterBar(),
+          const SliverToBoxAdapter(child: _FilterBar()),
           // The design's "remind all overdue" button.
-          all.maybeWhen(
-            data: (list) {
-              final today = todayFrom(ref.read(clockProvider));
-              final overdue = list
-                  .where((e) => overdueDays(e.oldestDueDate, today) > 0)
-                  .length;
-              if (overdue == 0) return const SizedBox.shrink();
-              return Padding(
-                padding: const EdgeInsets.fromLTRB(20, 4, 20, 6),
-                child: BlockButton(
-                  l10n.remindAllOverdue(formatCount(overdue, numerals)),
-                  kind: BlockButtonKind.sage,
-                  icon: Icons.campaign_rounded,
-                  onPressed: () => context.push('/fees/remind'),
-                ),
-              );
-            },
-            orElse: () => const SizedBox.shrink(),
-          ),
-          Expanded(
-            child: visible.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('$e')),
+          SliverToBoxAdapter(
+            child: all.maybeWhen(
               data: (list) {
-                if (list.isEmpty) {
-                  final nothingOwed = all.value?.isEmpty ?? true;
-                  return _Empty(
+                final today = todayFrom(ref.read(clockProvider));
+                final overdue = list
+                    .where((e) => overdueDays(e.oldestDueDate, today) > 0)
+                    .length;
+                if (overdue == 0) return const SizedBox.shrink();
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 6),
+                  child: BlockButton(
+                    l10n.remindAllOverdue(formatCount(overdue, numerals)),
+                    kind: BlockButtonKind.sage,
+                    icon: Icons.campaign_rounded,
+                    onPressed: () => context.push('/fees/remind'),
+                  ),
+                );
+              },
+              orElse: () => const SizedBox.shrink(),
+            ),
+          ),
+          visible.when(
+            loading: () => const SliverFillRemaining(
+              hasScrollBody: false,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (e, _) => SliverFillRemaining(
+              hasScrollBody: false,
+              child: Center(child: Text('$e')),
+            ),
+            data: (list) {
+              if (list.isEmpty) {
+                final nothingOwed = all.value?.isEmpty ?? true;
+                return SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _Empty(
                     title: nothingOwed
                         ? l10n.feesEmptyTitle
                         : l10n.studentsNoMatch,
@@ -93,19 +106,21 @@ class FeesScreen extends ConsumerWidget {
                     icon: nothingOwed
                         ? Icons.check_circle_rounded
                         : Icons.search_off_rounded,
-                  );
-                }
-                return ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+                  ),
+                );
+              }
+              return SliverPadding(
+                padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+                sliver: SliverList.builder(
                   itemCount: list.length,
                   itemBuilder: (context, i) => _DueTile(
                     entry: list[i],
                     money: money,
                     numerals: numerals,
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ],
       ),

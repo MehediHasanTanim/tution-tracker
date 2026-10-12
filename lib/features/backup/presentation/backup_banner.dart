@@ -25,18 +25,41 @@ class BackupBanner extends ConsumerWidget {
       child: Card(
         margin: EdgeInsets.zero,
         color: Organic.of(context).accentSoft,
-        child: ListTile(
-          iconColor: Organic.of(context).onAccentSoft,
-          textColor: Organic.of(context).onAccentSoft,
-          leading: const Icon(Icons.backup_rounded),
-          title: Text(
-            days == null
-                ? l10n.bkBannerNever
-                : l10n.bkBannerOld(formatCount(days, numerals)),
-          ),
-          trailing: TextButton(
-            onPressed: () => context.push('/settings/backup'),
-            child: Text(l10n.bkBannerAction),
+        // A column, not a ListTile: with big text the button would take the
+        // whole width of a tile's trailing slot.
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
+          child: DefaultTextStyle.merge(
+            style: TextStyle(color: Organic.of(context).onAccentSoft),
+            child: IconTheme(
+              data: IconThemeData(color: Organic.of(context).onAccentSoft),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.backup_rounded),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          days == null
+                              ? l10n.bkBannerNever
+                              : l10n.bkBannerOld(formatCount(days, numerals)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.centerEnd,
+                    child: TextButton(
+                      onPressed: () => context.push('/settings/backup'),
+                      child: Text(l10n.bkBannerAction),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

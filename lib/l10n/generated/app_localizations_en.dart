@@ -1713,6 +1713,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get helpPrivacyPolicy => 'Privacy policy';
 
   @override
+  String get adsPrivacyOptions => 'Ad privacy options';
+
+  @override
+  String get adsNote => 'Ads never use your students\' or payment records.';
+
+  @override
   String get helpSupportWhatsApp => 'Get help on WhatsApp';
 
   @override
