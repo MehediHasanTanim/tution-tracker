@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Tuition Khata (dev, test ads)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "toolArgs": ["--flavor", "dev", "--dart-define=ADS_MODE=test"]
+    },
+    {
+      "name": "Tuition Khata (dev, no ads)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "toolArgs": ["--flavor", "dev"]
+    },
+    {
+      "name": "Tuition Khata (prod, profile, no ads)",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "program": "lib/main_prod.dart",
+      "toolArgs": ["--flavor", "prod"]
+    }
+  ]
+}

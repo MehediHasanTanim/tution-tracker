@@ -1,0 +1,9 @@
+{
+  // Applied to every `flutter run` VS Code starts, including the editor play
+  // button and the "Run | Debug" link above main(), which ignore launch.json.
+  // Debug runs show Google's sample ads. Release builds go through
+  // tool/release.sh and are not affected.
+  "dart.flutterRunAdditionalArgs": [
+    "--dart-define=ADS_MODE=test"
+  ]
+}

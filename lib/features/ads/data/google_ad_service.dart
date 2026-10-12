@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:tution_tracker/features/ads/data/ad_service.dart';
@@ -12,6 +13,11 @@ import 'package:tution_tracker/features/ads/domain/ad_config.dart';
 class GoogleAdService implements AdService {
   GoogleAdService(this._config);
 
+  /// Why an ad did not show, for `flutter run` only. Never in a release.
+  static void _log(String message) {
+    if (kDebugMode) debugPrint('[ads] $message');
+  }
+
   final AdConfig _config;
   Future<bool>? _started;
 
@@ -21,7 +27,9 @@ class GoogleAdService implements AdService {
   Future<bool> _start() async {
     try {
       await _requestConsent();
-      if (!await ConsentInformation.instance.canRequestAds()) return false;
+      final canRequest = await ConsentInformation.instance.canRequestAds();
+      _log('consent settled, canRequestAds=$canRequest');
+      if (!canRequest) return false;
       await MobileAds.instance.updateRequestConfiguration(
         RequestConfiguration(
           // Family-friendly content only: the app's data is about children.
@@ -30,9 +38,11 @@ class GoogleAdService implements AdService {
           ageRestrictedTreatment: AgeRestrictedTreatment.unspecified,
         ),
       );
-      await MobileAds.instance.initialize();
+      final status = await MobileAds.instance.initialize();
+      _log('SDK started: ${status.adapterStatuses.keys.join(', ')}');
       return true;
-    } on Object {
+    } on Object catch (e) {
+      _log('start failed: $e');
       return false;
     }
   }
@@ -47,7 +57,8 @@ class GoogleAdService implements AdService {
         });
       },
       // No answer (offline): the last stored consent still applies.
-      (_) {
+      (error) {
+        _log('consent info update failed: ${error.message}');
         if (!done.isCompleted) done.complete();
       },
     );
@@ -96,8 +107,12 @@ class GoogleAdService implements AdService {
         size: size,
         request: const AdRequest(),
         listener: BannerAdListener(
-          onAdLoaded: (ad) => loaded.complete(ad as BannerAd),
-          onAdFailedToLoad: (ad, _) {
+          onAdLoaded: (ad) {
+            _log('banner loaded');
+            loaded.complete(ad as BannerAd);
+          },
+          onAdFailedToLoad: (ad, error) {
+            _log('banner failed: ${error.code} ${error.message}');
             ad.dispose();
             loaded.complete(null);
           },
@@ -111,7 +126,10 @@ class GoogleAdService implements AdService {
           return null;
         },
       );
-      if (result == null) return null;
+      if (result == null) {
+        _log('banner: no ad');
+        return null;
+      }
       return AdBannerHandle(
         widget: SizedBox(
           width: size.width.toDouble(),
@@ -121,7 +139,8 @@ class GoogleAdService implements AdService {
         height: size.height.toDouble(),
         dispose: result.dispose,
       );
-    } on Object {
+    } on Object catch (e) {
+      _log('banner error: $e');
       return null;
     }
   }
@@ -148,7 +167,8 @@ class GoogleAdService implements AdService {
             );
             ad.show();
           },
-          onAdFailedToLoad: (_) {
+          onAdFailedToLoad: (error) {
+            _log('interstitial failed: ${error.code} ${error.message}');
             if (!closed.isCompleted) closed.complete();
           },
         ),

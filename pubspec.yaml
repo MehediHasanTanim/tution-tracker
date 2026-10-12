@@ -84,6 +84,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  # Plain `flutter run` / F5 picks the dev flavor; release builds pass --flavor prod.
+  default-flavor: dev
   assets:
     - assets/brand/app_icon.png
   # The Organic design system: Caprasimo headings over Figtree body text, with
