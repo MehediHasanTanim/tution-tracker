@@ -130,10 +130,7 @@ class _FieldsDialogState extends State<FieldsDialog> {
             if (widget.months != null) ...[
               DropdownButtonFormField<YearMonth>(
                 initialValue: _month,
-                decoration: InputDecoration(
-                  labelText: widget.monthLabel,
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: widget.monthLabel),
                 items: [
                   for (final m in widget.months!)
                     DropdownMenuItem(
@@ -162,7 +159,6 @@ class _FieldsDialogState extends State<FieldsDialog> {
                   labelText: f.label,
                   helperText: f.helper,
                   errorText: _errors[f.key],
-                  border: const OutlineInputBorder(),
                 ),
               ),
               const SizedBox(height: 12),

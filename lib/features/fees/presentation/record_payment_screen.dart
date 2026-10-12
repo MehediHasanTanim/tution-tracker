@@ -13,6 +13,7 @@ import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
 import 'package:tution_tracker/features/ads/data/ad_providers.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
@@ -236,7 +237,19 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        icon: const Icon(Icons.check_circle, size: 40),
+        icon: Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Organic.of(context).sageSoft,
+          ),
+          child: Icon(
+            Icons.check_rounded,
+            size: 32,
+            color: Organic.of(context).onSageSoft,
+          ),
+        ),
         title: Text(l10n.paySaved),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -264,6 +277,18 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
     );
   }
 
+  /// Puts [amount] in the field, written the way the field starts out.
+  void _fillAmount(int amount) {
+    final text = '$amount';
+    setState(() {
+      _amount.value = TextEditingValue(
+        text: text,
+        selection: TextSelection.collapsed(offset: text.length),
+      );
+      _amountError = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -276,6 +301,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
     final today = todayFrom(ref.watch(clockProvider));
     final date = _date ?? today;
 
+    final o = Organic.of(context);
     String money(int a) =>
         formatTaka(Taka(a), numerals: numerals, grouping: grouping);
 
@@ -292,27 +318,35 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
         title: Text(_editing ? l10n.payEditTitle : l10n.actionRecordPayment),
       ),
       bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.all(16),
+        minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
         child: FilledButton(
+          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(56)),
           onPressed: _saving ? null : _save,
           child: Text(l10n.actionSave),
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(widget.student.name, style: theme.textTheme.titleLarge),
-            Text(l10n.payOutstanding(money(_outstanding))),
-            if (widget.credit > 0) Text(l10n.payCredit(money(widget.credit))),
+            Text(widget.student.name, style: theme.textTheme.headlineSmall),
+            Text(
+              l10n.payOutstanding(money(_outstanding)),
+              style: theme.textTheme.bodyLarge?.copyWith(color: o.subtle),
+            ),
+            if (widget.credit > 0)
+              Text(
+                l10n.payCredit(money(widget.credit)),
+                style: theme.textTheme.bodyLarge?.copyWith(color: o.subtle),
+              ),
             if (_editing && widget.existing!.receiptSharedAt != null)
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: Card(
                   color: theme.colorScheme.errorContainer,
                   child: Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(16),
                     child: Text(
                       l10n.payReceiptSharedWarning,
                       style: TextStyle(
@@ -331,14 +365,56 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
                 const DigitsOnlyFormatter(),
                 LengthLimitingTextInputFormatter(8),
               ],
-              style: theme.textTheme.headlineSmall,
+              style: theme.textTheme.headlineMedium,
               decoration: InputDecoration(
                 labelText: '${l10n.payAmount} *',
                 errorText: _amountError,
-                border: const OutlineInputBorder(),
+                prefixText: '৳ ',
+                prefixStyle: theme.textTheme.headlineMedium?.copyWith(
+                  color: o.muted,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 18,
+                ),
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(OrganicRadius.pill),
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(OrganicRadius.pill),
+                  ),
+                  borderSide: BorderSide(color: o.accent, width: 2),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(OrganicRadius.pill),
+                  ),
+                  borderSide: BorderSide(color: o.accentStrong, width: 2),
+                ),
               ),
               onChanged: (_) => setState(() => _amountError = null),
             ),
+            if (_outstanding > 0) ...[
+              const SizedBox(height: 10),
+              // Quick fills from the handoff: the whole balance or half.
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: [
+                  OutlinedButton(
+                    onPressed: () => _fillAmount(_outstanding),
+                    child: Text(l10n.payFullBalance),
+                  ),
+                  OutlinedButton(
+                    onPressed: () => _fillAmount((_outstanding / 2).round()),
+                    child: Text(l10n.payHalf),
+                  ),
+                ],
+              ),
+            ],
             if (monthBalances.isNotEmpty) ...[
               const SizedBox(height: 16),
               Text(l10n.payMonths, style: theme.textTheme.titleSmall),
@@ -368,7 +444,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
               Card(
                 margin: EdgeInsets.zero,
                 child: Padding(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -401,10 +477,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
             const SizedBox(height: 16),
             TextField(
               controller: _reference,
-              decoration: InputDecoration(
-                labelText: l10n.payReference,
-                border: const OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(labelText: l10n.payReference),
             ),
             const SizedBox(height: 8),
             ListTile(
@@ -418,7 +491,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
                   calendar: watchCalendar(ref),
                 ),
               ),
-              trailing: const Icon(Icons.calendar_today),
+              trailing: const Icon(Icons.calendar_today_rounded),
               onTap: () async {
                 final picked = await showDatePicker(
                   context: context,
@@ -439,10 +512,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
             TextField(
               controller: _note,
               maxLines: 2,
-              decoration: InputDecoration(
-                labelText: l10n.fieldNotes,
-                border: const OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(labelText: l10n.fieldNotes),
             ),
             const SizedBox(height: 16),
           ],

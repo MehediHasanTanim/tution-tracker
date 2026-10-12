@@ -18,6 +18,7 @@ abstract final class AdPolicy {
     '/home',
     '/students',
     '/students/:id',
+    '/batches',
     '/batches/:id',
     '/fees',
     '/fees/remind',
@@ -35,6 +36,7 @@ abstract final class AdPolicy {
     '/fees/payments/:id/edit', // editing a payment
     '/students/new', // entry forms
     '/students/:id/edit',
+    '/students/:id/adjust', // changing a student's fee
     '/batches/new',
     '/batches/:id/edit',
     '/settings/lock', // PIN setup

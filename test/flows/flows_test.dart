@@ -11,6 +11,7 @@ import 'package:tution_tracker/core/db/database_provider.dart';
 import 'package:tution_tracker/core/platform/file_picker_service.dart';
 import 'package:tution_tracker/core/platform/share_service.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
+import 'package:tution_tracker/features/attendance/presentation/attendance_sheet_screen.dart';
 import 'package:tution_tracker/features/backup/data/backup_providers.dart';
 import 'package:tution_tracker/features/backup/data/database_swapper.dart';
 import 'package:tution_tracker/features/backup/data/restore_service.dart';
@@ -107,20 +108,43 @@ void main() {
       await waitFor(tester);
 
       final taps = _Taps(tester);
+      if (find.text('Math 9').hitTestable().evaluate().isEmpty) {
+        // Today's classes sit below the month card on a short screen.
+        await Scrollable.ensureVisible(
+          tester.element(find.text('Math 9')),
+          alignment: 0.5,
+        );
+        await tester.pump();
+        taps.scrolled();
+      }
       await taps.on(find.text('Math 9')); // Home -> today's class
       await taps.settle();
       taps.look();
       // Everyone starts present; two are away.
+      final sheetList = find
+          .descendant(
+            of: find.byType(AttendanceSheetScreen),
+            matching: find.byType(Scrollable),
+          )
+          .first;
+      final list = tester.state<ScrollableState>(sheetList);
       for (final name in ['Student 04', 'Student 11']) {
-        if (find.text(name).hitTestable().evaluate().isEmpty) {
-          // Fifteen names do not fit one screen: a scroll is a gesture too.
+        // Fifteen names do not fit one screen: a scroll is a gesture too.
+        final before = list.position.pixels;
+        if (find.text(name).evaluate().isEmpty) {
+          // Not built yet: the list is lazy.
           await tester.scrollUntilVisible(
             find.text(name),
             120,
-            scrollable: find.byType(Scrollable).first,
+            scrollable: sheetList,
           );
-          taps.scrolled();
         }
+        await Scrollable.ensureVisible(
+          tester.element(find.text(name)),
+          alignment: 0.5,
+        );
+        await tester.pump();
+        if (list.position.pixels != before) taps.scrolled();
         await taps.on(find.text(name));
       }
       await tester.pumpAndSettle();
@@ -130,8 +154,10 @@ void main() {
       // Back on Today with the class marked taken: 13 of 15 present.
       expect(find.text('নেওয়া হয়েছে'), findsOneWidget);
       expect(find.textContaining('উপস্থিত ১৩/১৫'), findsOneWidget);
-      // One open, two absentees, one save: well inside 20 seconds.
-      expect(taps.count, lessThanOrEqualTo(6));
+      // One open, two absentees, one save, plus scrolls: on this short test
+      // surface Today's classes sit below the month card (one scroll) and
+      // the fifteen names need up to two. Still well inside 20 seconds.
+      expect(taps.count, lessThanOrEqualTo(7));
       // The spec's budget, with the app five times slower than here.
       expect(taps.total(), lessThan(20), reason: '${taps.total()} s');
 

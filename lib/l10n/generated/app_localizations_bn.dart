@@ -1721,4 +1721,223 @@ class AppLocalizationsBn extends AppLocalizations {
 
   @override
   String get helpSupportMessage => 'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — ';
+
+  @override
+  String homeGreeting(String name) {
+    return 'আসসালামু আলাইকুম, $name';
+  }
+
+  @override
+  String get homeGreetingPlain => 'আসসালামু আলাইকুম';
+
+  @override
+  String homeCollectedMonth(String month) {
+    return 'আদায় · $month';
+  }
+
+  @override
+  String homeOfExpected(String amount) {
+    return 'মোট প্রত্যাশিত $amount';
+  }
+
+  @override
+  String get bkCardTitle => 'ব্যাকআপ';
+
+  @override
+  String get attMarkHint =>
+      'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।';
+
+  @override
+  String get payFullBalance => 'পুরো বাকি';
+
+  @override
+  String get payHalf => 'অর্ধেক';
+
+  @override
+  String get studentQuickHint => 'শুধু নাম আর মাসিক ফি — বাকিটা পরে।';
+
+  @override
+  String get navBatches => 'ব্যাচ';
+
+  @override
+  String batchesIntro(String count) {
+    return '$countটি ব্যাচ · ক্লাসের দিন ও সময় এক জায়গায়';
+  }
+
+  @override
+  String batchStudentsTag(String count) {
+    return '$count জন';
+  }
+
+  @override
+  String get batchTakeAttendance => 'আজকের হাজিরা নিন';
+
+  @override
+  String get batchDelete => 'ব্যাচ মুছুন';
+
+  @override
+  String get batchDeleteTitle => 'এই ব্যাচ মুছবেন?';
+
+  @override
+  String get batchDeleteBody =>
+      'শিক্ষার্থীরা থাকবে; শুধু ব্যাচ আর তার রুটিন মুছবে।';
+
+  @override
+  String get batchDeleteYes => 'হ্যাঁ, মুছুন';
+
+  @override
+  String get batchDeleteNo => 'না';
+
+  @override
+  String get batchDeleted => 'ব্যাচ মুছে ফেলা হয়েছে';
+
+  @override
+  String get timeOther => 'অন্য সময়…';
+
+  @override
+  String get dueDayEarlier => 'এক দিন আগে';
+
+  @override
+  String get dueDayLater => 'এক দিন পরে';
+
+  @override
+  String get noteNew => 'নতুন নোট';
+
+  @override
+  String get noteHint => 'যেমন: বীজগণিতে দুর্বল';
+
+  @override
+  String get noteAdd => 'নোট যোগ করুন';
+
+  @override
+  String get noteNone => 'এখনও কোনো নোট নেই।';
+
+  @override
+  String get noteEarlier => 'আগের নোট';
+
+  @override
+  String fadjThisMonth(String amount) {
+    return 'এ মাসে প্রাপ্য $amount';
+  }
+
+  @override
+  String get fadjPaused => 'ফি বন্ধ আছে';
+
+  @override
+  String get fadjPauseSub => 'ছুটি বা বিরতির সময়';
+
+  @override
+  String get fadjResumeSub => 'আবার মাসিক ফি ধরা হবে';
+
+  @override
+  String get fadjOneTimeSub => 'ভর্তি, বই বা পরীক্ষার ফি';
+
+  @override
+  String fadjWaiveMonth(String month) {
+    return '$month মওকুফ বা ছাড়';
+  }
+
+  @override
+  String get fadjWaiveSub => 'পুরো মাস বা কিছু টাকা';
+
+  @override
+  String get fadjPaymentsHint => 'ভুল হলে ট্যাপ করে সংশোধন বা মুছুন।';
+
+  @override
+  String get receiptFormatImage => 'ছবি (PNG)';
+
+  @override
+  String get receiptExactly => 'অভিভাবক ঠিক এটাই পাবেন।';
+
+  @override
+  String homeExtraWhen(String date) {
+    return '$date — নির্ধারিত রুটিনের বাইরে।';
+  }
+
+  @override
+  String get homeExtraAdd => 'তালিকায় যোগ করুন';
+
+  @override
+  String get offAction => 'ক্লাস বাতিল / ছুটি';
+
+  @override
+  String get offTitle => 'ক্লাস বন্ধ?';
+
+  @override
+  String get offBody =>
+      'কাউকে অনুপস্থিত ধরা হবে না, আর এই ক্লাস হাজিরার হারে গোনা হবে না। পরে ফিরিয়ে আনা যাবে।';
+
+  @override
+  String get offPublicHoliday => 'সরকারি ছুটি';
+
+  @override
+  String get offTutorUnwell => 'শিক্ষক অসুস্থ';
+
+  @override
+  String get offExams => 'শিক্ষার্থীদের পরীক্ষা';
+
+  @override
+  String get offOther => 'অন্য কারণ';
+
+  @override
+  String get offConfirm => 'ক্লাস বন্ধ করুন';
+
+  @override
+  String get offNever => 'থাক';
+
+  @override
+  String get offNoAttendance => 'হাজিরা নেওয়া হবে না';
+
+  @override
+  String get tplIntro =>
+      'প্রতিটি ফি রিমাইন্ডারে এই লেখা যাবে। নিচের চিপে ট্যাপ করলে নাম, টাকা ইত্যাদি নিজে থেকে বসবে।';
+
+  @override
+  String remindAllOverdue(String count) {
+    return 'সবাইকে রিমাইন্ডার ($count)';
+  }
+
+  @override
+  String get remBatterySub => 'শাওমি, অপো ইত্যাদি ফোনের ব্যাটারি সেটিং';
+
+  @override
+  String get remTemplateSub => 'অভিভাবক যা পাবেন';
+
+  @override
+  String get remPermAsk => 'নোটিফিকেশন চালু করবেন?';
+
+  @override
+  String get remPermStep1 => 'প্রতিটি ক্লাসের আগে রিমাইন্ডার';
+
+  @override
+  String get remPermStep2 => 'ফি-র তারিখে বাকির কথা মনে করানো';
+
+  @override
+  String get remPermStep3 => 'সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই';
+
+  @override
+  String get rsReplaceTitle => 'বর্তমান সব তথ্য বদলে যাবে';
+
+  @override
+  String get bkRestoreSection => 'রিস্টোর';
+
+  @override
+  String get bkDangerZone => 'বিপজ্জনক';
+
+  @override
+  String get setOn => 'চালু';
+
+  @override
+  String get setOff => 'বন্ধ';
+
+  @override
+  String get setReplayIntro => 'ইন্ট্রো আবার দেখুন';
+
+  @override
+  String get setReplayIntroSub => 'ভাষা ও পরিচিতি';
+
+  @override
+  String reportMonths(String count) {
+    return '$count মাস';
+  }
 }

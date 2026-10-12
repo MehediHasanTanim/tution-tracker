@@ -5,6 +5,8 @@ import 'package:tution_tracker/core/dates/year_month.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/messaging/data/messaging_providers.dart';
 import 'package:tution_tracker/features/messaging/domain/message_template.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -22,11 +24,26 @@ class TemplateEditorScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('${l10n.tplTitle} · ${l10n.tplFeeReminder}'),
-          bottom: TabBar(
-            tabs: [
-              Tab(text: l10n.languageBangla),
-              Tab(text: l10n.languageEnglish),
-            ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(64),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: Organic.of(context).surface,
+                  shape: const StadiumBorder(),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: TabBar(
+                    tabs: [
+                      Tab(height: 44, text: l10n.languageBangla),
+                      Tab(height: 44, text: l10n.languageEnglish),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
         ),
         body: const TabBarView(
@@ -156,67 +173,66 @@ class _EditorTabState extends ConsumerState<_EditorTab>
             grouping: settings.grouping,
           );
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextField(
-            controller: _controller,
-            enabled: _loaded,
-            minLines: 4,
-            maxLines: 10,
-            decoration: InputDecoration(
-              labelText: l10n.tplBodyLabel,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(l10n.tplVariables, style: theme.textTheme.labelLarge),
-          const SizedBox(height: 4),
-          Wrap(
-            spacing: 8,
-            children: [
-              for (final v in MessageVariable.values)
-                ActionChip(
-                  label: Text(_label(l10n, v)),
-                  onPressed: _loaded ? () => _insert(v) : null,
-                ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Text(l10n.tplPreview, style: theme.textTheme.titleSmall),
-          const SizedBox(height: 4),
-          Card(
-            color: theme.colorScheme.surfaceContainerHighest,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: SelectableText(
-                preview,
-                key: const Key('template-preview'),
+    final o = Organic.of(context);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+      children: [
+        BlockStack(
+          children: [
+            BlockText(l10n.tplIntro),
+            TextField(
+              controller: _controller,
+              enabled: _loaded,
+              minLines: 4,
+              maxLines: 10,
+              decoration: InputDecoration(
+                labelText: l10n.tplBodyLabel,
+                alignLabelWithHint: true,
               ),
             ),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: _loaded ? _reset : null,
-                  child: Text(l10n.tplReset),
+            BlockSubheading(l10n.tplVariables),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                for (final v in MessageVariable.values)
+                  ActionChip(
+                    label: Text(_label(l10n, v)),
+                    backgroundColor: o.sageSoft,
+                    labelStyle: theme.textTheme.labelLarge?.copyWith(
+                      color: o.onSageSoft,
+                    ),
+                    onPressed: _loaded ? () => _insert(v) : null,
+                  ),
+              ],
+            ),
+            BlockSubheading(l10n.tplPreview),
+            BlockMessage(
+              preview,
+              selectable: true,
+              textKey: const Key('template-preview'),
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: BlockButton(
+                    l10n.tplReset,
+                    kind: BlockButtonKind.outlined,
+                    onPressed: _loaded ? _reset : null,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: FilledButton(
-                  onPressed: _loaded ? _save : null,
-                  child: Text(l10n.actionSave),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: BlockButton(
+                    l10n.actionSave,
+                    onPressed: _loaded ? _save : null,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

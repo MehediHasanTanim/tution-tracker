@@ -3234,6 +3234,396 @@ abstract class AppLocalizations {
   /// In bn, this message translates to:
   /// **'টিউশন খাতা: আমার একটি সমস্যা হয়েছে — '**
   String get helpSupportMessage;
+
+  /// No description provided for @homeGreeting.
+  ///
+  /// In bn, this message translates to:
+  /// **'আসসালামু আলাইকুম, {name}'**
+  String homeGreeting(String name);
+
+  /// No description provided for @homeGreetingPlain.
+  ///
+  /// In bn, this message translates to:
+  /// **'আসসালামু আলাইকুম'**
+  String get homeGreetingPlain;
+
+  /// No description provided for @homeCollectedMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'আদায় · {month}'**
+  String homeCollectedMonth(String month);
+
+  /// No description provided for @homeOfExpected.
+  ///
+  /// In bn, this message translates to:
+  /// **'মোট প্রত্যাশিত {amount}'**
+  String homeOfExpected(String amount);
+
+  /// No description provided for @bkCardTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাকআপ'**
+  String get bkCardTitle;
+
+  /// No description provided for @attMarkHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাই উপস্থিত ধরা আছে। অনুপস্থিত হলে ছাত্রের নামে ট্যাপ করুন।'**
+  String get attMarkHint;
+
+  /// No description provided for @payFullBalance.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো বাকি'**
+  String get payFullBalance;
+
+  /// No description provided for @payHalf.
+  ///
+  /// In bn, this message translates to:
+  /// **'অর্ধেক'**
+  String get payHalf;
+
+  /// No description provided for @studentQuickHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'শুধু নাম আর মাসিক ফি — বাকিটা পরে।'**
+  String get studentQuickHint;
+
+  /// No description provided for @navBatches.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ'**
+  String get navBatches;
+
+  /// No description provided for @batchesIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count}টি ব্যাচ · ক্লাসের দিন ও সময় এক জায়গায়'**
+  String batchesIntro(String count);
+
+  /// No description provided for @batchStudentsTag.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} জন'**
+  String batchStudentsTag(String count);
+
+  /// No description provided for @batchTakeAttendance.
+  ///
+  /// In bn, this message translates to:
+  /// **'আজকের হাজিরা নিন'**
+  String get batchTakeAttendance;
+
+  /// No description provided for @batchDelete.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ মুছুন'**
+  String get batchDelete;
+
+  /// No description provided for @batchDeleteTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'এই ব্যাচ মুছবেন?'**
+  String get batchDeleteTitle;
+
+  /// No description provided for @batchDeleteBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীরা থাকবে; শুধু ব্যাচ আর তার রুটিন মুছবে।'**
+  String get batchDeleteBody;
+
+  /// No description provided for @batchDeleteYes.
+  ///
+  /// In bn, this message translates to:
+  /// **'হ্যাঁ, মুছুন'**
+  String get batchDeleteYes;
+
+  /// No description provided for @batchDeleteNo.
+  ///
+  /// In bn, this message translates to:
+  /// **'না'**
+  String get batchDeleteNo;
+
+  /// No description provided for @batchDeleted.
+  ///
+  /// In bn, this message translates to:
+  /// **'ব্যাচ মুছে ফেলা হয়েছে'**
+  String get batchDeleted;
+
+  /// No description provided for @timeOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য সময়…'**
+  String get timeOther;
+
+  /// No description provided for @dueDayEarlier.
+  ///
+  /// In bn, this message translates to:
+  /// **'এক দিন আগে'**
+  String get dueDayEarlier;
+
+  /// No description provided for @dueDayLater.
+  ///
+  /// In bn, this message translates to:
+  /// **'এক দিন পরে'**
+  String get dueDayLater;
+
+  /// No description provided for @noteNew.
+  ///
+  /// In bn, this message translates to:
+  /// **'নতুন নোট'**
+  String get noteNew;
+
+  /// No description provided for @noteHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'যেমন: বীজগণিতে দুর্বল'**
+  String get noteHint;
+
+  /// No description provided for @noteAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোট যোগ করুন'**
+  String get noteAdd;
+
+  /// No description provided for @noteNone.
+  ///
+  /// In bn, this message translates to:
+  /// **'এখনও কোনো নোট নেই।'**
+  String get noteNone;
+
+  /// No description provided for @noteEarlier.
+  ///
+  /// In bn, this message translates to:
+  /// **'আগের নোট'**
+  String get noteEarlier;
+
+  /// No description provided for @fadjThisMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'এ মাসে প্রাপ্য {amount}'**
+  String fadjThisMonth(String amount);
+
+  /// No description provided for @fadjPaused.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি বন্ধ আছে'**
+  String get fadjPaused;
+
+  /// No description provided for @fadjPauseSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছুটি বা বিরতির সময়'**
+  String get fadjPauseSub;
+
+  /// No description provided for @fadjResumeSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'আবার মাসিক ফি ধরা হবে'**
+  String get fadjResumeSub;
+
+  /// No description provided for @fadjOneTimeSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভর্তি, বই বা পরীক্ষার ফি'**
+  String get fadjOneTimeSub;
+
+  /// No description provided for @fadjWaiveMonth.
+  ///
+  /// In bn, this message translates to:
+  /// **'{month} মওকুফ বা ছাড়'**
+  String fadjWaiveMonth(String month);
+
+  /// No description provided for @fadjWaiveSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'পুরো মাস বা কিছু টাকা'**
+  String get fadjWaiveSub;
+
+  /// No description provided for @fadjPaymentsHint.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভুল হলে ট্যাপ করে সংশোধন বা মুছুন।'**
+  String get fadjPaymentsHint;
+
+  /// No description provided for @receiptFormatImage.
+  ///
+  /// In bn, this message translates to:
+  /// **'ছবি (PNG)'**
+  String get receiptFormatImage;
+
+  /// No description provided for @receiptExactly.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবক ঠিক এটাই পাবেন।'**
+  String get receiptExactly;
+
+  /// No description provided for @homeExtraWhen.
+  ///
+  /// In bn, this message translates to:
+  /// **'{date} — নির্ধারিত রুটিনের বাইরে।'**
+  String homeExtraWhen(String date);
+
+  /// No description provided for @homeExtraAdd.
+  ///
+  /// In bn, this message translates to:
+  /// **'তালিকায় যোগ করুন'**
+  String get homeExtraAdd;
+
+  /// No description provided for @offAction.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বাতিল / ছুটি'**
+  String get offAction;
+
+  /// No description provided for @offTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বন্ধ?'**
+  String get offTitle;
+
+  /// No description provided for @offBody.
+  ///
+  /// In bn, this message translates to:
+  /// **'কাউকে অনুপস্থিত ধরা হবে না, আর এই ক্লাস হাজিরার হারে গোনা হবে না। পরে ফিরিয়ে আনা যাবে।'**
+  String get offBody;
+
+  /// No description provided for @offPublicHoliday.
+  ///
+  /// In bn, this message translates to:
+  /// **'সরকারি ছুটি'**
+  String get offPublicHoliday;
+
+  /// No description provided for @offTutorUnwell.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষক অসুস্থ'**
+  String get offTutorUnwell;
+
+  /// No description provided for @offExams.
+  ///
+  /// In bn, this message translates to:
+  /// **'শিক্ষার্থীদের পরীক্ষা'**
+  String get offExams;
+
+  /// No description provided for @offOther.
+  ///
+  /// In bn, this message translates to:
+  /// **'অন্য কারণ'**
+  String get offOther;
+
+  /// No description provided for @offConfirm.
+  ///
+  /// In bn, this message translates to:
+  /// **'ক্লাস বন্ধ করুন'**
+  String get offConfirm;
+
+  /// No description provided for @offNever.
+  ///
+  /// In bn, this message translates to:
+  /// **'থাক'**
+  String get offNever;
+
+  /// No description provided for @offNoAttendance.
+  ///
+  /// In bn, this message translates to:
+  /// **'হাজিরা নেওয়া হবে না'**
+  String get offNoAttendance;
+
+  /// No description provided for @tplIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিটি ফি রিমাইন্ডারে এই লেখা যাবে। নিচের চিপে ট্যাপ করলে নাম, টাকা ইত্যাদি নিজে থেকে বসবে।'**
+  String get tplIntro;
+
+  /// No description provided for @remindAllOverdue.
+  ///
+  /// In bn, this message translates to:
+  /// **'সবাইকে রিমাইন্ডার ({count})'**
+  String remindAllOverdue(String count);
+
+  /// No description provided for @remBatterySub.
+  ///
+  /// In bn, this message translates to:
+  /// **'শাওমি, অপো ইত্যাদি ফোনের ব্যাটারি সেটিং'**
+  String get remBatterySub;
+
+  /// No description provided for @remTemplateSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'অভিভাবক যা পাবেন'**
+  String get remTemplateSub;
+
+  /// No description provided for @remPermAsk.
+  ///
+  /// In bn, this message translates to:
+  /// **'নোটিফিকেশন চালু করবেন?'**
+  String get remPermAsk;
+
+  /// No description provided for @remPermStep1.
+  ///
+  /// In bn, this message translates to:
+  /// **'প্রতিটি ক্লাসের আগে রিমাইন্ডার'**
+  String get remPermStep1;
+
+  /// No description provided for @remPermStep2.
+  ///
+  /// In bn, this message translates to:
+  /// **'ফি-র তারিখে বাকির কথা মনে করানো'**
+  String get remPermStep2;
+
+  /// No description provided for @remPermStep3.
+  ///
+  /// In bn, this message translates to:
+  /// **'সব কিছু এই ফোনেই — কোনো সার্ভার বা বিজ্ঞাপন নেই'**
+  String get remPermStep3;
+
+  /// No description provided for @rsReplaceTitle.
+  ///
+  /// In bn, this message translates to:
+  /// **'বর্তমান সব তথ্য বদলে যাবে'**
+  String get rsReplaceTitle;
+
+  /// No description provided for @bkRestoreSection.
+  ///
+  /// In bn, this message translates to:
+  /// **'রিস্টোর'**
+  String get bkRestoreSection;
+
+  /// No description provided for @bkDangerZone.
+  ///
+  /// In bn, this message translates to:
+  /// **'বিপজ্জনক'**
+  String get bkDangerZone;
+
+  /// No description provided for @setOn.
+  ///
+  /// In bn, this message translates to:
+  /// **'চালু'**
+  String get setOn;
+
+  /// No description provided for @setOff.
+  ///
+  /// In bn, this message translates to:
+  /// **'বন্ধ'**
+  String get setOff;
+
+  /// No description provided for @setReplayIntro.
+  ///
+  /// In bn, this message translates to:
+  /// **'ইন্ট্রো আবার দেখুন'**
+  String get setReplayIntro;
+
+  /// No description provided for @setReplayIntroSub.
+  ///
+  /// In bn, this message translates to:
+  /// **'ভাষা ও পরিচিতি'**
+  String get setReplayIntroSub;
+
+  /// No description provided for @reportMonths.
+  ///
+  /// In bn, this message translates to:
+  /// **'{count} মাস'**
+  String reportMonths(String count);
 }
 
 class _AppLocalizationsDelegate

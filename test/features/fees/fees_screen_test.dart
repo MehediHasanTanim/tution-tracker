@@ -199,7 +199,9 @@ void main() {
       await _open(tester, h);
       expect(
         tester
-            .widget<IconButton>(find.widgetWithIcon(IconButton, Icons.call))
+            .widget<IconButton>(
+              find.widgetWithIcon(IconButton, Icons.call_rounded),
+            )
             .onPressed,
         isNull,
       );

@@ -299,7 +299,7 @@ void main() {
       await _push(tester, '/students/${student.id}');
       final big = tester
           .widgetList<CircleAvatar>(find.byType(CircleAvatar))
-          .where((a) => a.radius == 32)
+          .where((a) => a.radius == 36)
           .single;
       expect(big.foregroundImage, isA<ResizeImage>());
     });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tution_tracker/core/clock.dart';
 import 'package:tution_tracker/core/dates/local_date.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
@@ -8,6 +9,9 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/url_launcher_service.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/core/utils/contact_links.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
 import 'package:tution_tracker/features/attendance/presentation/student_attendance_tab.dart';
@@ -17,6 +21,7 @@ import 'package:tution_tracker/features/students/data/photo_store.dart';
 import 'package:tution_tracker/features/students/data/student_form_providers.dart';
 import 'package:tution_tracker/features/students/data/student_providers.dart';
 import 'package:tution_tracker/features/students/data/student_repository.dart';
+import 'package:tution_tracker/features/students/domain/student_notes.dart';
 import 'package:tution_tracker/features/students/domain/student_status.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
@@ -71,8 +76,9 @@ class _ProfileView extends ConsumerWidget {
         appBar: AppBar(
           title: Text(
             student.name,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           actions: [
             IconButton(
@@ -96,20 +102,34 @@ class _ProfileView extends ConsumerWidget {
               ],
             ),
           ],
-          bottom: TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            tabs: [
-              Tab(text: l10n.tabOverview),
-              Tab(text: l10n.tabAttendance),
-              Tab(text: l10n.tabFees),
-              Tab(text: l10n.tabNotes),
-            ],
-          ),
         ),
         body: Column(
           children: [
             _Header(student: student),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
+              // The handoff's segmented pill.
+              child: DecoratedBox(
+                decoration: ShapeDecoration(
+                  color: Organic.of(context).surface,
+                  shape: const StadiumBorder(),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: TabBar(
+                    isScrollable: true,
+                    tabAlignment: TabAlignment.start,
+                    labelPadding: const EdgeInsets.symmetric(horizontal: 16),
+                    tabs: [
+                      Tab(height: 44, text: l10n.tabOverview),
+                      Tab(height: 44, text: l10n.tabAttendance),
+                      Tab(height: 44, text: l10n.tabFees),
+                      Tab(height: 44, text: l10n.tabNotes),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Expanded(
               child: TabBarView(
                 children: [
@@ -196,7 +216,7 @@ class _Header extends ConsumerWidget {
         parseBdPhone(student.studentPhone ?? '');
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -205,16 +225,21 @@ class _Header extends ConsumerWidget {
               StudentAvatar(
                 name: student.name,
                 photoPath: student.photoPath,
-                radius: 32,
+                radius: 36,
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(student.name, style: theme.textTheme.titleLarge),
+                    Text(student.name, style: theme.textTheme.headlineSmall),
                     if (subtitle.isNotEmpty)
-                      Text(subtitle, style: theme.textTheme.bodyMedium),
+                      Text(
+                        subtitle,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: Organic.of(context).subtle,
+                        ),
+                      ),
                     if (status != StudentStatus.active)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
@@ -262,38 +287,53 @@ class _ContactButtons extends ConsumerWidget {
       }
     }
 
+    final o = Organic.of(context);
+    final tonal = FilledButton.styleFrom(
+      backgroundColor: o.sageSoft,
+      foregroundColor: o.onSageSoft,
+      minimumSize: const Size.fromHeight(52),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           p == null ? l10n.noPhoneNumber : applyNumerals(p.local, numerals),
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium
+              ?.copyWith(color: o.muted),
         ),
         const SizedBox(height: 8),
         Row(
           children: [
             Expanded(
               child: FilledButton.tonalIcon(
+                style: tonal,
                 onPressed: p == null ? null : () => open(ContactLinks.call(p)),
-                icon: const Icon(Icons.call),
+                icon: const Icon(Icons.call_rounded, size: 20),
                 label: Text(l10n.actionCall),
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
               child: FilledButton.tonalIcon(
+                style: tonal,
                 onPressed: p == null ? null : () => open(ContactLinks.sms(p)),
-                icon: const Icon(Icons.sms),
+                icon: const Icon(Icons.sms_rounded, size: 20),
                 label: Text(l10n.actionSms),
               ),
             ),
             const SizedBox(width: 8),
             Expanded(
               child: FilledButton.tonalIcon(
+                style: tonal.copyWith(
+                  backgroundColor: WidgetStatePropertyAll(o.sage),
+                  foregroundColor: const WidgetStatePropertyAll(Colors.white),
+                ),
                 onPressed: p == null
                     ? null
                     : () => open(ContactLinks.whatsapp(p)),
-                icon: const Icon(Icons.chat),
+                icon: const Icon(Icons.chat_rounded, size: 20),
                 label: Text(l10n.actionWhatsapp),
               ),
             ),
@@ -366,50 +406,125 @@ class _OverviewTab extends ConsumerWidget {
         (l10n.fieldClassTime, applyNumerals(time.toKey(), numerals)),
     ];
 
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
     // A short fixed list, so a plain scroll view rather than a lazy one.
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          for (final (label, value) in rows)
-            ListTile(
-              dense: true,
-              title: Text(
-                label,
-                style: Theme.of(context).textTheme.labelMedium,
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+      child: OrganicPanel(
+        radius: OrganicRadius.panel,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 6),
+        child: Column(
+          children: [
+            for (final (label, value) in rows)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        label,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: o.muted,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Flexible(
+                      child: Text(
+                        value,
+                        textAlign: TextAlign.end,
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              subtitle: Text(
-                value,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-class _NotesTab extends StatelessWidget {
+/// Dated notes about the student, newest first, with a box to add one
+/// (design: the profile's Notes tab).
+class _NotesTab extends ConsumerStatefulWidget {
   const _NotesTab({required this.student});
 
   final Student student;
 
   @override
-  Widget build(BuildContext context) {
-    final notes = student.notes;
-    if (notes == null) return _Soon(label: AppLocalizations.of(context).none);
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Text(notes),
-    );
-  }
+  ConsumerState<_NotesTab> createState() => _NotesTabState();
 }
 
-class _Soon extends StatelessWidget {
-  const _Soon({required this.label});
-
-  final String label;
+class _NotesTabState extends ConsumerState<_NotesTab> {
+  final _text = TextEditingController();
 
   @override
-  Widget build(BuildContext context) =>
-      Center(child: Text(label, style: Theme.of(context).textTheme.bodyLarge));
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  Future<void> _add() async {
+    final text = _text.text.trim();
+    if (text.isEmpty) return;
+    final today = todayFrom(ref.read(clockProvider));
+    final repo = await ref.read(studentRepositoryProvider.future);
+    await repo.setNotes(
+      widget.student.id,
+      addStudentNote(widget.student.notes, today, text),
+    );
+    _text.clear();
+    if (mounted) FocusScope.of(context).unfocus();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final language = ref.watch(appLanguageProvider);
+    final numerals =
+        ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
+    final notes = parseStudentNotes(widget.student.notes);
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
+      children: [
+        BlockStack(
+          children: [
+            TextField(
+              controller: _text,
+              minLines: 3,
+              maxLines: 6,
+              decoration: InputDecoration(
+                labelText: l10n.noteNew,
+                hintText: l10n.noteHint,
+                alignLabelWithHint: true,
+              ),
+            ),
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: _text,
+              builder: (context, value, _) => BlockButton(
+                l10n.noteAdd,
+                onPressed: value.text.trim().isEmpty ? null : _add,
+              ),
+            ),
+            if (notes.isEmpty) BlockText(l10n.noteNone),
+            for (final n in notes)
+              BlockItem(
+                title: n.date == null
+                    ? l10n.noteEarlier
+                    : formatDate(
+                        n.date!,
+                        language: language,
+                        numerals: numerals,
+                      ),
+                subtitle: n.text,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
 }

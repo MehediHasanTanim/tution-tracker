@@ -3,15 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/clock.dart';
+import 'package:tution_tracker/core/dates/year_month.dart';
 import 'package:tution_tracker/core/db/app_database.dart';
 import 'package:tution_tracker/core/i18n/digits.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
+import 'package:tution_tracker/features/attendance/domain/session_models.dart';
 import 'package:tution_tracker/features/batches/data/batch_providers.dart';
 import 'package:tution_tracker/features/batches/data/batch_repository.dart';
-import 'package:tution_tracker/features/batches/presentation/batch_list_view.dart';
+import 'package:tution_tracker/features/batches/presentation/batches_screen.dart';
+import 'package:tution_tracker/features/reports/data/report_providers.dart';
+import 'package:tution_tracker/features/reports/data/report_repository.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -54,7 +61,6 @@ class _BatchView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final language = ref.watch(appLanguageProvider);
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
@@ -66,16 +72,21 @@ class _BatchView extends ConsumerWidget {
         formatTaka(Taka(amount), numerals: numerals, grouping: grouping);
 
     final subtitle = [?batch.subject, ?batch.classLevel].join(' · ');
+    final o = Organic.of(context);
+    final today = todayFrom(ref.watch(clockProvider));
+    final classToday = batch.scheduleDayList.contains(today.isoWeekday);
+    // This month's money for the batch, from the same figures as Reports.
+    BatchBreakdown? figures;
+    for (final r
+        in ref.watch(batchBreakdownProvider(YearMonth.from(today))).value ??
+            const <BatchBreakdown>[]) {
+      if (r.batch?.id == batch.id) figures = r;
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(batch.name, maxLines: 2, overflow: TextOverflow.ellipsis),
         actions: [
-          IconButton(
-            tooltip: l10n.actionEdit,
-            icon: const Icon(Icons.edit_outlined),
-            onPressed: () => context.push('/batches/${batch.id}/edit'),
-          ),
           PopupMenuButton<_BatchMenu>(
             onSelected: (a) async {
               final messenger = ScaffoldMessenger.of(context);
@@ -105,82 +116,60 @@ class _BatchView extends ConsumerWidget {
           ),
         ],
       ),
-      floatingActionButton: batch.isArchived
-          ? null
-          : FloatingActionButton.extended(
-              onPressed: () => _showAddMembers(context, batch.id),
-              icon: const Icon(Icons.person_add),
-              label: Text(l10n.batchAddMembers),
-            ),
       body: ListView(
-        padding: const EdgeInsets.only(bottom: 88),
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 32),
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (subtitle.isNotEmpty)
-                  Text(subtitle, style: theme.textTheme.titleMedium),
-                Text(
-                  batchScheduleText(
-                    batch,
-                    language: language,
-                    numerals: numerals,
-                  ),
-                ),
-                Text('${l10n.batchDefaultFee}: ${money(batch.defaultFee)}'),
-                if (batch.isArchived)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Chip(
-                      label: Text(l10n.statusArchived),
-                      visualDensity: VisualDensity.compact,
-                    ),
-                  ),
-              ],
-            ),
+          BlockBanner(
+            title: batch.name,
+            text: [
+              ?(subtitle.isEmpty ? null : subtitle),
+              batchScheduleText(batch, language: language, numerals: numerals),
+              if (batch.isArchived) l10n.statusArchived,
+            ].join(' · '),
+            background: o.sageSoft,
+            foreground: o.onSageSoft,
           ),
-          const Divider(height: 1),
+          const SizedBox(height: 12),
           members.when(
             loading: () => const Padding(
               padding: EdgeInsets.all(32),
               child: Center(child: CircularProgressIndicator()),
             ),
             error: (e, _) => Center(child: Text('$e')),
-            data: (list) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            data: (list) => BlockStack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-                  child: Text(
-                    '${l10n.batchMembersTitle} · ${formatCount(list.length, numerals)}',
-                    style: theme.textTheme.titleSmall,
-                  ),
+                BlockRows([
+                  (l10n.navStudents, formatCount(list.length, numerals)),
+                  if (figures != null) ...[
+                    (l10n.homeExpected, money(figures.expected)),
+                    (
+                      l10n.homeCollected,
+                      figures.expected == 0
+                          ? money(figures.collected)
+                          : '${money(figures.collected)} '
+                                '(${applyNumerals('${(figures.collected * 100 / figures.expected).round()}%', numerals)})',
+                    ),
+                  ],
+                  (l10n.batchDefaultFee, money(batch.defaultFee)),
+                ]),
+                BlockSubheading(
+                  '${l10n.batchMembersTitle} · ${formatCount(list.length, numerals)}',
                 ),
-                if (list.isEmpty)
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(l10n.batchNoMembers),
-                  ),
+                if (list.isEmpty) BlockText(l10n.batchNoMembers),
                 for (final m in list)
-                  ListTile(
+                  BlockItem(
                     leading: StudentAvatar(
                       name: m.student.name,
                       photoPath: m.student.photoPath,
+                      radius: 22,
                     ),
-                    title: Text(
-                      m.student.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle: Text(
-                      [
-                        l10n.batchMemberFee(money(m.effectiveFee(batch))),
-                        if (m.member.feeOverride != null)
-                          l10n.batchMemberCustomFee,
-                      ].join(' · '),
-                    ),
+                    title: m.student.name,
+                    subtitle: [
+                      ?m.student.classLevel,
+                      l10n.batchMemberFee(money(m.effectiveFee(batch))),
+                      if (m.member.feeOverride != null)
+                        l10n.batchMemberCustomFee,
+                    ].join(' · '),
                     trailing: PopupMenuButton<String>(
                       onSelected: (v) => v == 'fee'
                           ? _editFee(context, ref, batch, m)
@@ -198,6 +187,30 @@ class _BatchView extends ConsumerWidget {
                     ),
                     onTap: () => context.push('/students/${m.student.id}'),
                   ),
+                if (!batch.isArchived) ...[
+                  BlockButton(
+                    l10n.batchAddMembers,
+                    kind: BlockButtonKind.outlined,
+                    onPressed: () => _showAddMembers(context, batch.id),
+                  ),
+                  if (classToday)
+                    BlockButton(
+                      l10n.batchTakeAttendance,
+                      kind: BlockButtonKind.sage,
+                      onPressed: () => context.push(
+                        attendanceLocation(
+                          ClassOwner.batch(batch.id, batch.name),
+                          today,
+                          batch.startTimeValue,
+                        ),
+                      ),
+                    ),
+                ],
+                BlockButton(
+                  l10n.batchEditTitle,
+                  kind: BlockButtonKind.ghost,
+                  onPressed: () => context.push('/batches/${batch.id}/edit'),
+                ),
               ],
             ),
           ),
@@ -296,9 +309,8 @@ class _AddMembersSheetState extends ConsumerState<_AddMembersSheet> {
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
           child: TextField(
             decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
+              prefixIcon: const Icon(Icons.search_rounded),
               hintText: l10n.studentsSearchHint,
-              border: const OutlineInputBorder(),
               isDense: true,
             ),
             onChanged: (v) => setState(() => _query = v),
@@ -388,7 +400,6 @@ class _CustomFeeDialogState extends State<_CustomFeeDialog> {
         decoration: InputDecoration(
           labelText: l10n.batchCustomFeeLabel,
           helperText: l10n.batchCustomFeeHint,
-          border: const OutlineInputBorder(),
         ),
       ),
       actions: [

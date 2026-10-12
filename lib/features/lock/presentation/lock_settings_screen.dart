@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/platform/biometric_auth.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/lock/data/app_lock_service.dart';
 import 'package:tution_tracker/features/lock/data/lock_controller.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
@@ -103,7 +104,6 @@ class _LockSettingsScreenState extends ConsumerState<LockSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
     final s = _settings;
@@ -117,85 +117,64 @@ class _LockSettingsScreenState extends ConsumerState<LockSettingsScreen> {
       body: s == null
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
               children: [
-                SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(l10n.lockOn),
-                  subtitle: Text(l10n.lockSettingsHint),
-                  value: s.enabled,
-                  onChanged: (on) => on ? _turnOn() : _turnOff(),
+                BlockStack(
+                  children: [
+                    BlockToggle(
+                      label: l10n.lockOn,
+                      subtitle: l10n.lockSettingsHint,
+                      value: s.enabled,
+                      onChanged: (on) => on ? _turnOn() : _turnOff(),
+                    ),
+                    if (s.enabled) ...[
+                      BlockToggle(
+                        label: l10n.lockBiometricOn,
+                        subtitle: _biometricAvailable
+                            ? null
+                            : l10n.lockBiometricNone,
+                        value: s.biometric && _biometricAvailable,
+                        onChanged: _biometricAvailable
+                            ? (v) async {
+                                await _service.setBiometric(enabled: v);
+                                await _reload();
+                              }
+                            : null,
+                      ),
+                      BlockToggle(
+                        label: l10n.lockProtect,
+                        value: s.protectScreen,
+                        onChanged: (v) async {
+                          await _service.setProtectScreen(enabled: v);
+                          await _changed();
+                        },
+                      ),
+                      BlockSubheading(l10n.lockTimeout),
+                      BlockChips<Duration>(
+                        options: [
+                          for (final d in const [
+                            Duration.zero,
+                            Duration(minutes: 1),
+                            Duration(minutes: 5),
+                            Duration(minutes: 15),
+                          ])
+                            (d, timeoutLabel(d)),
+                        ],
+                        isSelected: (d) => d == s.timeout,
+                        onTap: (d) async {
+                          await _service.setTimeout(d);
+                          await _reload();
+                        },
+                      ),
+                      BlockButton(
+                        l10n.lockChangePin,
+                        kind: BlockButtonKind.outlined,
+                        onPressed: _changePin,
+                      ),
+                    ],
+                    BlockText(l10n.lockRemember),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Text(
-                    l10n.lockRemember,
-                    style: theme.textTheme.bodySmall,
-                  ),
-                ),
-                if (s.enabled) ...[
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.lockChangePin),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: _changePin,
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.lockTimeout),
-                    subtitle: Text(timeoutLabel(s.timeout)),
-                    trailing: const Icon(Icons.expand_more),
-                    onTap: () async {
-                      final picked = await showDialog<Duration>(
-                        context: context,
-                        builder: (context) => SimpleDialog(
-                          children: [
-                            for (final d in const [
-                              Duration.zero,
-                              Duration(minutes: 1),
-                              Duration(minutes: 5),
-                              Duration(minutes: 15),
-                            ])
-                              ListTile(
-                                title: Text(timeoutLabel(d)),
-                                trailing: d == s.timeout
-                                    ? const Icon(Icons.check)
-                                    : null,
-                                onTap: () => Navigator.pop(context, d),
-                              ),
-                          ],
-                        ),
-                      );
-                      if (picked != null) {
-                        await _service.setTimeout(picked);
-                        await _reload();
-                      }
-                    },
-                  ),
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.lockBiometricOn),
-                    subtitle: _biometricAvailable
-                        ? null
-                        : Text(l10n.lockBiometricNone),
-                    value: s.biometric && _biometricAvailable,
-                    onChanged: _biometricAvailable
-                        ? (v) async {
-                            await _service.setBiometric(enabled: v);
-                            await _reload();
-                          }
-                        : null,
-                  ),
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.lockProtect),
-                    value: s.protectScreen,
-                    onChanged: (v) async {
-                      await _service.setProtectScreen(enabled: v);
-                      await _changed();
-                    },
-                  ),
-                ],
               ],
             ),
     );

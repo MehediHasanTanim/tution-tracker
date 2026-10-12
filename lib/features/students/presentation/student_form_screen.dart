@@ -15,8 +15,12 @@ import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/platform/photo_picker.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
+import 'package:tution_tracker/core/ui/time_chips.dart';
 import 'package:tution_tracker/core/utils/phone.dart';
+import 'package:tution_tracker/features/batches/data/batch_providers.dart';
 import 'package:tution_tracker/features/fees/domain/due_generation.dart';
 import 'package:tution_tracker/features/students/data/photo_processing.dart';
 import 'package:tution_tracker/features/students/data/photo_store.dart';
@@ -68,6 +72,11 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
   final Set<int> _classDays = {};
   ClockTime? _classTime;
 
+  /// Batches the student is in. Null until the current ones have loaded
+  /// (editing), so saving never removes memberships it has not seen.
+  Set<String>? _batchIds;
+  Set<String> _initialBatchIds = const {};
+
   @override
   void dispose() {
     for (final c in [
@@ -103,6 +112,33 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
     _classDays.addAll(s.classDayList);
     _classTime = s.classTimeValue;
     _loaded = true;
+    _loadBatches(s.id);
+  }
+
+  Future<void> _loadBatches(String studentId) async {
+    // Straight from the repository: a one-off read, not a watched provider.
+    final repo = await ref.read(batchRepositoryProvider.future);
+    final batches = await repo.watchBatchesOfStudent(studentId).first;
+    if (!mounted) return;
+    setState(() {
+      _initialBatchIds = {for (final b in batches) b.id};
+      _batchIds = {..._initialBatchIds};
+    });
+  }
+
+  /// Joins and leaves batches to match the chips (design: batch chips on the
+  /// student form).
+  Future<void> _saveBatches(Student saved) async {
+    final chosen = _batchIds;
+    if (chosen == null) return;
+    final today = todayFrom(ref.read(clockProvider));
+    final repo = await ref.read(batchRepositoryProvider.future);
+    for (final id in chosen.difference(_initialBatchIds)) {
+      await repo.addMembers(id, [saved.id], today);
+    }
+    for (final id in _initialBatchIds.difference(chosen)) {
+      await repo.removeMember(id, saved.id, today);
+    }
   }
 
   Future<void> _save() async {
@@ -139,6 +175,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
           ? await repo.update(widget.studentId!, draft)
           : await repo.create(draft);
       await _savePhoto(repo, saved);
+      await _saveBatches(saved);
       messenger.showSnackBar(SnackBar(content: Text(l10n.studentSaved)));
       if (router.canPop()) {
         router.pop();
@@ -228,42 +265,15 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
 
   Widget _photoPicker(AppLocalizations l10n) {
     final hasPhoto = _newPhoto != null || (_photoPath != null && !_removePhoto);
-    return Center(
-      child: Column(
-        children: [
-          InkWell(
-            customBorder: const CircleBorder(),
-            onTap: _photoMenu,
-            child: Stack(
-              children: [
-                StudentAvatar(
-                  name: _name.text.trim().isEmpty ? '?' : _name.text.trim(),
-                  photoPath: _removePhoto ? null : _photoPath,
-                  previewBytes: _newPhoto,
-                  radius: 44,
-                ),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: CircleAvatar(
-                    radius: 14,
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Icon(
-                      Icons.photo_camera,
-                      size: 16,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          TextButton(
-            onPressed: _photoMenu,
-            child: Text(hasPhoto ? l10n.photoChange : l10n.photoAdd),
-          ),
-        ],
+    return BlockPhoto(
+      avatar: StudentAvatar(
+        name: _name.text.trim().isEmpty ? '+' : _name.text.trim(),
+        photoPath: _removePhoto ? null : _photoPath,
+        previewBytes: _newPhoto,
+        radius: 44,
       ),
+      label: hasPhoto ? l10n.photoChange : l10n.photoAdd,
+      onTap: _photoMenu,
     );
   }
 
@@ -295,8 +305,9 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
         title: Text(_editing ? l10n.studentEditTitle : l10n.studentsAdd),
       ),
       bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.all(16),
+        minimum: const EdgeInsets.fromLTRB(20, 8, 20, 16),
         child: FilledButton(
+          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(56)),
           onPressed: _saving ? null : _save,
           child: Text(l10n.actionSave),
         ),
@@ -306,20 +317,25 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
         // A plain scroll view, not a lazy list: the form is short and every
         // field must exist so validation reaches fields that are off-screen.
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_full) ...[_photoPicker(l10n), const SizedBox(height: 8)],
+              if (!_full && !_editing) ...[
+                Text(
+                  l10n.studentQuickHint,
+                  style: Theme.of(context).textTheme.bodyLarge
+                      ?.copyWith(color: Organic.of(context).subtle),
+                ),
+                const SizedBox(height: 16),
+              ],
               TextFormField(
                 controller: _name,
                 autofocus: !_editing,
                 textInputAction: TextInputAction.next,
                 textCapitalization: TextCapitalization.words,
-                decoration: InputDecoration(
-                  labelText: '${l10n.fieldName} *',
-                  border: const OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: '${l10n.fieldName} *'),
                 validator: (v) => normalizeText(v ?? '').isEmpty
                     ? l10n.errorNameRequired
                     : null,
@@ -337,7 +353,6 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
                 decoration: InputDecoration(
                   labelText: '${l10n.fieldMonthlyFee} *',
                   helperText: _editing ? l10n.feeLockedHint : null,
-                  border: const OutlineInputBorder(),
                 ),
                 validator: (v) =>
                     (v ?? '').trim().isEmpty ? l10n.errorFeeRequired : null,
@@ -345,13 +360,13 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
               if (!_editing) _firstMonthNote(l10n),
               const SizedBox(height: 8),
               if (!_editing)
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: TextButton.icon(
-                    onPressed: () => setState(() => _full = !_full),
-                    icon: Icon(_full ? Icons.expand_less : Icons.expand_more),
-                    label: Text(_full ? l10n.fewerDetails : l10n.moreDetails),
-                  ),
+                BlockButton(
+                  _full ? l10n.fewerDetails : l10n.moreDetails,
+                  kind: BlockButtonKind.outlined,
+                  icon: _full
+                      ? Icons.expand_less_rounded
+                      : Icons.expand_more_rounded,
+                  onPressed: () => setState(() => _full = !_full),
                 ),
               if (_full) ..._fullFields(context, l10n),
             ],
@@ -407,8 +422,10 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
     final numerals =
         ref.watch(numeralStyleProvider).value ?? NumeralStyle.bangla;
     final defaultDueDay = ref.watch(defaultDueDayProvider).value ?? 10;
+    final dueDay = _dueDay ?? defaultDueDay;
     final today = todayFrom(ref.watch(clockProvider));
     final joined = _joinedOn ?? today;
+    final batches = ref.watch(batchOptionsProvider).value ?? const [];
 
     const gap = SizedBox(height: 16);
 
@@ -427,36 +444,20 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
 
     return [
       gap,
-      DropdownButtonFormField<String>(
-        initialValue: _classLevel,
-        decoration: InputDecoration(
-          labelText: l10n.fieldClassLevel,
-          border: const OutlineInputBorder(),
-        ),
-        items: [
-          for (final level in studentClassLevels)
-            DropdownMenuItem(value: level, child: Text(level)),
-        ],
-        onChanged: (v) => setState(() => _classLevel = v),
-      ),
-      gap,
-      TextFormField(
-        controller: _school,
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          labelText: l10n.fieldSchool,
-          border: const OutlineInputBorder(),
-        ),
+      BlockSubheading(l10n.fieldClassLevel),
+      const SizedBox(height: 8),
+      BlockChips<String>(
+        options: [for (final level in studentClassLevels) (level, level)],
+        isSelected: (v) => v == _classLevel,
+        // Tapping the chosen class again clears it.
+        onTap: (v) => setState(() => _classLevel = v == _classLevel ? null : v),
       ),
       gap,
       TextFormField(
         controller: _guardianName,
         textInputAction: TextInputAction.next,
         textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(
-          labelText: l10n.fieldGuardianName,
-          border: const OutlineInputBorder(),
-        ),
+        decoration: InputDecoration(labelText: l10n.fieldGuardianName),
       ),
       gap,
       TextFormField(
@@ -465,10 +466,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
         textInputAction: TextInputAction.next,
         inputFormatters: const [PhoneInputFormatter()],
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: InputDecoration(
-          labelText: l10n.fieldGuardianPhone,
-          border: const OutlineInputBorder(),
-        ),
+        decoration: InputDecoration(labelText: l10n.fieldGuardianPhone),
         validator: phoneError,
       ),
       gap,
@@ -478,23 +476,36 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
         textInputAction: TextInputAction.next,
         inputFormatters: const [PhoneInputFormatter()],
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        decoration: InputDecoration(
-          labelText: l10n.fieldStudentPhone,
-          border: const OutlineInputBorder(),
-        ),
+        decoration: InputDecoration(labelText: l10n.fieldStudentPhone),
         validator: phoneError,
+      ),
+      gap,
+      TextFormField(
+        controller: _school,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(labelText: l10n.fieldSchool),
       ),
       gap,
       TextFormField(
         controller: _address,
         textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          labelText: l10n.fieldAddress,
-          border: const OutlineInputBorder(),
-        ),
+        decoration: InputDecoration(labelText: l10n.fieldAddress),
       ),
       gap,
-      Text(l10n.fieldSubjects, style: Theme.of(context).textTheme.titleSmall),
+      BlockStepper(
+        label: l10n.fieldDueDay,
+        value: formatCount(dueDay, numerals),
+        minusTooltip: l10n.dueDayEarlier,
+        plusTooltip: l10n.dueDayLater,
+        onMinus: dueDay <= 1
+            ? null
+            : () => setState(() => _dueDay = dueDay - 1),
+        onPlus: dueDay >= 31
+            ? null
+            : () => setState(() => _dueDay = dueDay + 1),
+      ),
+      gap,
+      BlockSubheading(l10n.fieldSubjects),
       const SizedBox(height: 8),
       Wrap(
         spacing: 8,
@@ -516,7 +527,6 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           labelText: l10n.fieldOtherSubject,
-          border: const OutlineInputBorder(),
           isDense: true,
         ),
         onSubmitted: (v) {
@@ -538,7 +548,7 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
             calendar: watchCalendar(ref),
           ),
         ),
-        trailing: const Icon(Icons.calendar_today),
+        trailing: const Icon(Icons.calendar_today_rounded),
         onTap: () async {
           final picked = await showDatePicker(
             context: context,
@@ -551,20 +561,8 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
           }
         },
       ),
-      DropdownButtonFormField<int>(
-        initialValue: _dueDay ?? defaultDueDay,
-        decoration: InputDecoration(
-          labelText: l10n.fieldDueDay,
-          border: const OutlineInputBorder(),
-        ),
-        items: [
-          for (var d = 1; d <= 31; d++)
-            DropdownMenuItem(value: d, child: Text(formatCount(d, numerals))),
-        ],
-        onChanged: (v) => setState(() => _dueDay = v),
-      ),
       gap,
-      Text(l10n.fieldClassDays, style: Theme.of(context).textTheme.titleSmall),
+      BlockSubheading(l10n.fieldClassDays),
       const SizedBox(height: 8),
       Wrap(
         spacing: 8,
@@ -580,42 +578,35 @@ class _StudentFormScreenState extends ConsumerState<StudentFormScreen> {
             ),
         ],
       ),
+      gap,
+      BlockSubheading(l10n.fieldClassTime),
       const SizedBox(height: 8),
-      ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(l10n.fieldClassTime),
-        subtitle: Text(
-          _classTime == null
-              ? l10n.none
-              : applyNumerals(_classTime!.toKey(), numerals),
-        ),
-        trailing: _classTime == null
-            ? const Icon(Icons.access_time)
-            : IconButton(
-                tooltip: l10n.actionClear,
-                icon: const Icon(Icons.close),
-                onPressed: () => setState(() => _classTime = null),
-              ),
-        onTap: () async {
-          final picked = await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay(
-              hour: _classTime?.hour ?? 17,
-              minute: _classTime?.minute ?? 0,
-            ),
-          );
-          if (picked != null) {
-            setState(() => _classTime = ClockTime(picked.hour, picked.minute));
-          }
-        },
+      ClassTimeChips(
+        value: _classTime,
+        language: language,
+        numerals: numerals,
+        onChanged: (t) => setState(() => _classTime = t),
       ),
+      if (batches.isNotEmpty) ...[
+        gap,
+        BlockSubheading(l10n.tabBatches),
+        const SizedBox(height: 8),
+        BlockChips<String>(
+          multi: true,
+          options: [for (final b in batches) (b.id, b.name)],
+          isSelected: (id) => (_batchIds ?? const {}).contains(id),
+          onTap: (id) => setState(() {
+            final set = _batchIds ??= {};
+            set.contains(id) ? set.remove(id) : set.add(id);
+          }),
+        ),
+      ],
       gap,
       TextFormField(
         controller: _notes,
         maxLines: 3,
         decoration: InputDecoration(
           labelText: l10n.fieldNotes,
-          border: const OutlineInputBorder(),
           alignLabelWithHint: true,
         ),
       ),

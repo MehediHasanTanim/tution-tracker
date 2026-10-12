@@ -97,11 +97,11 @@ void main() {
         tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode!;
     expect(mode(), ThemeMode.system);
 
-    await tester.tap(find.text('গাঢ়'));
+    await tapCentered(tester, find.text('গাঢ়'));
     await waitFor(tester);
     expect(mode(), ThemeMode.dark);
 
-    await tester.tap(find.text('হালকা'));
+    await tapCentered(tester, find.text('হালকা'));
     await waitFor(tester);
     expect(mode(), ThemeMode.light);
     expect(

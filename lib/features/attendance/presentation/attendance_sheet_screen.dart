@@ -4,10 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:tution_tracker/core/i18n/date_format.dart';
 import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_blocks.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/attendance_stats.dart';
 import 'package:tution_tracker/features/attendance/domain/session_models.dart';
-import 'package:tution_tracker/features/fees/presentation/fields_dialog.dart';
+import 'package:tution_tracker/features/attendance/presentation/mark_off_sheet.dart';
 import 'package:tution_tracker/features/students/presentation/student_avatar.dart';
 import 'package:tution_tracker/features/students/presentation/student_list_providers.dart';
 import 'package:tution_tracker/l10n/generated/app_localizations.dart';
@@ -171,34 +173,24 @@ class _SheetViewState extends ConsumerState<_SheetView> {
     }
   }
 
-  Future<void> _markOff(SessionStatus status) async {
+  Future<void> _markOff() async {
     final l10n = AppLocalizations.of(context);
     final messenger = ScaffoldMessenger.of(context);
     final router = GoRouter.of(context);
-    final result = await showDialog<FieldsResult>(
-      context: context,
-      builder: (_) => FieldsDialog(
-        title: status == SessionStatus.cancelled
-            ? l10n.attCancelClass
-            : l10n.attHoliday,
-        fields: [
-          DialogField(key: 'reason', label: l10n.attReason, required: false),
-        ],
-      ),
-    );
+    final result = await showMarkOffSheet(context);
     if (result == null) return;
     final repo = await ref.read(attendanceRepositoryProvider.future);
     await repo.markOff(
       owner: widget.args.owner,
       date: widget.args.date,
       startTime: widget.args.time,
-      status: status,
-      reason: result.values['reason'],
+      status: result.status,
+      reason: result.note,
     );
     messenger.showSnackBar(
       SnackBar(
         content: Text(
-          status == SessionStatus.cancelled
+          result.status == SessionStatus.cancelled
               ? l10n.classCancelled
               : l10n.classHoliday,
         ),
@@ -225,9 +217,10 @@ class _SheetViewState extends ConsumerState<_SheetView> {
     final roster = widget.data.roster;
     final counts = AttendanceCounts.from(_marks.values);
 
-    final time = args.time == null
-        ? ''
-        : ' · ${applyNumerals(args.time!.toKey(), numerals)}';
+    final clock = args.time == null
+        ? null
+        : formatClockParts(args.time!, language: language, numerals: numerals);
+    final time = clock == null ? '' : ' · ${clock.time} ${clock.period}';
     final subtitle =
         '${weekdayName(args.date.isoWeekday, language)}, ${formatDate(args.date, language: language, numerals: numerals, calendar: watchCalendar(ref))}$time';
 
@@ -253,169 +246,218 @@ class _SheetViewState extends ConsumerState<_SheetView> {
             if (!_isOff && roster.isNotEmpty)
               IconButton(
                 tooltip: l10n.attMarkAllPresent,
-                icon: const Icon(Icons.done_all),
+                icon: const Icon(Icons.done_all_rounded),
                 onPressed: _markAllPresent,
               ),
             PopupMenuButton<String>(
               onSelected: (v) {
                 switch (v) {
-                  case 'cancel':
-                    _markOff(SessionStatus.cancelled);
-                  case 'holiday':
-                    _markOff(SessionStatus.holiday);
+                  case 'off':
+                    _markOff();
                   case 'restore':
                     _restore();
                 }
               },
               itemBuilder: (context) => [
-                if (!_isOff) ...[
-                  PopupMenuItem(
-                    value: 'cancel',
-                    child: Text(l10n.attCancelClass),
-                  ),
-                  PopupMenuItem(value: 'holiday', child: Text(l10n.attHoliday)),
-                ] else
+                if (!_isOff)
+                  PopupMenuItem(value: 'off', child: Text(l10n.offAction))
+                else
                   PopupMenuItem(value: 'restore', child: Text(l10n.attRestore)),
               ],
             ),
           ],
         ),
         body: _isOff ? _offBody(context) : _marksBody(context, counts),
-        bottomNavigationBar: _isOff || roster.isEmpty
+        bottomNavigationBar: _isOff
+            ? DecoratedBox(
+                decoration: BoxDecoration(
+                  color: Organic.of(context).raised,
+                  border: Border(
+                    top: BorderSide(color: Organic.of(context).divider),
+                  ),
+                ),
+                child: SafeArea(
+                  minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                  child: BlockButton(l10n.attRestore, onPressed: _restore),
+                ),
+              )
+            : roster.isEmpty
             ? null
-            : SafeArea(
-                minimum: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      '${l10n.attStatusPresent} ${formatCount(counts.present, numerals)} · '
-                      '${l10n.attStatusAbsent} ${formatCount(counts.absent, numerals)} · '
-                      '${l10n.attStatusLate} ${formatCount(counts.late, numerals)} · '
-                      '${l10n.attStatusExcused} ${formatCount(counts.excused, numerals)}',
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: _saving ? null : _saveAndClose,
-                        child: Text(l10n.actionSave),
+            : DecoratedBox(
+                // The handoff's raised footer: summary over a full-width save.
+                decoration: BoxDecoration(
+                  color: Organic.of(context).raised,
+                  border: Border(
+                    top: BorderSide(color: Organic.of(context).divider),
+                  ),
+                ),
+                child: SafeArea(
+                  minimum: const EdgeInsets.fromLTRB(20, 12, 20, 16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${l10n.attStatusPresent} ${formatCount(counts.present, numerals)} · '
+                        '${l10n.attStatusAbsent} ${formatCount(counts.absent, numerals)} · '
+                        '${l10n.attStatusLate} ${formatCount(counts.late, numerals)} · '
+                        '${l10n.attStatusExcused} ${formatCount(counts.excused, numerals)}',
+                        style: theme.textTheme.labelLarge,
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        width: double.infinity,
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            minimumSize: const Size.fromHeight(56),
+                          ),
+                          onPressed: _saving ? null : _saveAndClose,
+                          child: Text(l10n.actionSave),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),
     );
   }
 
+  /// The design's off-day view: a neutral banner with the reason, the
+  /// students marked off, and the restore button in the footer.
   Widget _offBody(BuildContext context) {
     final l10n = AppLocalizations.of(context);
+    final o = Organic.of(context);
     final holiday = _session!.status == SessionStatus.holiday;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+    final note = _session!.note;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
+      children: [
+        BlockStack(
           children: [
-            Icon(
-              holiday ? Icons.beach_access : Icons.event_busy,
-              size: 64,
-              color: Theme.of(context).colorScheme.outline,
+            BlockBanner(
+              title: holiday ? l10n.attHolidayBanner : l10n.attCancelledBanner,
+              text: [?note, l10n.offNoAttendance].join(' · '),
+              background: o.neutralSoft,
+              foreground: o.onNeutralSoft,
             ),
-            const SizedBox(height: 16),
-            Text(
-              holiday ? l10n.attHolidayBanner : l10n.attCancelledBanner,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-            if (_session!.note != null) ...[
-              const SizedBox(height: 8),
-              Text(_session!.note!, textAlign: TextAlign.center),
-            ],
-            const SizedBox(height: 24),
-            FilledButton.tonal(
-              onPressed: _restore,
-              child: Text(l10n.attRestore),
-            ),
+            for (final entry in widget.data.roster)
+              BlockItem(
+                leading: StudentAvatar(
+                  name: entry.student.name,
+                  photoPath: entry.student.photoPath,
+                  radius: 22,
+                ),
+                title: entry.student.name,
+                subtitle: holiday ? l10n.classHoliday : l10n.classCancelled,
+              ),
           ],
         ),
-      ),
+      ],
     );
   }
 
   Widget _marksBody(BuildContext context, AttendanceCounts counts) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final o = Organic.of(context);
     final roster = widget.data.roster;
     if (roster.isEmpty) {
       return Center(child: Text(l10n.attNoStudents));
     }
 
-    (String, Color) style(AttendanceStatus s) => switch (s) {
+    // The handoff's attendance colours: present sage, absent deep
+    // terracotta, late neutral; excused is a soft terracotta tint.
+    (String, Color, Color) style(AttendanceStatus s) => switch (s) {
       AttendanceStatus.present => (
         l10n.attStatusPresent,
-        scheme.primaryContainer,
+        o.sageSoft,
+        o.onSageSoft,
       ),
-      AttendanceStatus.absent => (l10n.attStatusAbsent, scheme.errorContainer),
-      AttendanceStatus.late => (l10n.attStatusLate, scheme.tertiaryContainer),
+      AttendanceStatus.absent => (
+        l10n.attStatusAbsent,
+        o.accentStrong,
+        Colors.white,
+      ),
+      AttendanceStatus.late => (
+        l10n.attStatusLate,
+        o.neutralSoft,
+        o.onNeutralSoft,
+      ),
       AttendanceStatus.excused => (
         l10n.attStatusExcused,
-        scheme.secondaryContainer,
+        o.accentSoft,
+        o.onAccentSoft,
       ),
     };
 
     return ListView(
-      padding: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-          child: TextField(
-            controller: _topic,
-            decoration: InputDecoration(
-              labelText: l10n.attTopic,
-              border: const OutlineInputBorder(),
-              isDense: true,
-            ),
-            onChanged: (_) {
-              if (!_dirty) setState(() => _dirty = true);
-            },
-          ),
+        Text(l10n.attMarkHint, style: theme.textTheme.bodySmall),
+        const SizedBox(height: 10),
+        BlockButton(
+          l10n.offAction,
+          kind: BlockButtonKind.outlined,
+          onPressed: _markOff,
         ),
+        const SizedBox(height: 12),
+        TextField(
+          controller: _topic,
+          decoration: InputDecoration(labelText: l10n.attTopic),
+          onChanged: (_) {
+            if (!_dirty) setState(() => _dirty = true);
+          },
+        ),
+        const SizedBox(height: 8),
         for (final entry in roster)
-          ListTile(
-            leading: StudentAvatar(
-              name: entry.student.name,
-              photoPath: entry.student.photoPath,
-            ),
-            // Tapping the name flips present and absent: one tap per absentee.
-            title: Text(
-              entry.student.name,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            onTap: () => _mark(
-              entry.student.id,
-              _marks[entry.student.id] == AttendanceStatus.absent
-                  ? AttendanceStatus.present
-                  : AttendanceStatus.absent,
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Wrap(
-                spacing: 6,
-                runSpacing: 0,
-                children: [
-                  for (final s in AttendanceStatus.values)
-                    ChoiceChip(
-                      label: Text(style(s).$1),
-                      selected: _marks[entry.student.id] == s,
-                      selectedColor: style(s).$2,
-                      visualDensity: VisualDensity.compact,
-                      onSelected: (_) => _mark(entry.student.id, s),
-                    ),
-                ],
+          Card(
+            child: ListTile(
+              contentPadding: const EdgeInsetsDirectional.fromSTEB(
+                12,
+                6,
+                12,
+                6,
+              ),
+              leading: StudentAvatar(
+                name: entry.student.name,
+                photoPath: entry.student.photoPath,
+              ),
+              // Tapping the name flips present and absent: one tap per
+              // absentee.
+              title: Text(
+                entry.student.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              onTap: () => _mark(
+                entry.student.id,
+                _marks[entry.student.id] == AttendanceStatus.absent
+                    ? AttendanceStatus.present
+                    : AttendanceStatus.absent,
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final s in AttendanceStatus.values)
+                      ChoiceChip(
+                        label: Text(style(s).$1),
+                        selected: _marks[entry.student.id] == s,
+                        backgroundColor: o.bg,
+                        selectedColor: style(s).$2,
+                        labelStyle: theme.textTheme.labelMedium?.copyWith(
+                          color: _marks[entry.student.id] == s
+                              ? style(s).$3
+                              : o.text,
+                        ),
+                        visualDensity: VisualDensity.compact,
+                        onSelected: (_) => _mark(entry.student.id, s),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -9,6 +9,8 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/platform/share_service.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
+import 'package:tution_tracker/core/theme/organic_tokens.dart';
+import 'package:tution_tracker/core/ui/organic_widgets.dart';
 import 'package:tution_tracker/features/attendance/data/attendance_providers.dart';
 import 'package:tution_tracker/features/attendance/domain/attendance_message.dart';
 import 'package:tution_tracker/features/attendance/domain/attendance_stats.dart';
@@ -68,31 +70,11 @@ class _StudentAttendanceTabState extends ConsumerState<StudentAttendanceTab> {
     );
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
       children: [
-        Row(
-          children: [
-            IconButton(
-              tooltip: l10n.calPrevMonth,
-              icon: const Icon(Icons.chevron_left),
-              onPressed: () => setState(() => _month = month.previous()),
-            ),
-            Expanded(
-              child: Text(
-                formatMonth(month, language: language, numerals: numerals),
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleMedium,
-              ),
-            ),
-            IconButton(
-              tooltip: l10n.calNextMonth,
-              icon: const Icon(Icons.chevron_right),
-              onPressed: () => setState(() => _month = month.next()),
-            ),
-          ],
-        ),
         Wrap(
           spacing: 8,
+          runSpacing: 8,
           children: [
             stat(l10n.attClassesCount, counts.total),
             stat(l10n.attStatusPresent, counts.present),
@@ -111,13 +93,54 @@ class _StudentAttendanceTabState extends ConsumerState<StudentAttendanceTab> {
             child: Center(child: Text(l10n.attNoClasses)),
           ),
         const SizedBox(height: 12),
-        _CalendarGrid(month: month, marks: marks),
-        const SizedBox(height: 8),
-        const _Legend(),
+        OrganicPanel(
+          radius: OrganicRadius.panel,
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      formatMonth(
+                        month,
+                        language: language,
+                        numerals: numerals,
+                      ),
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: l10n.calPrevMonth,
+                    icon: const Icon(Icons.chevron_left_rounded),
+                    onPressed: () => setState(() => _month = month.previous()),
+                  ),
+                  IconButton(
+                    tooltip: l10n.calNextMonth,
+                    icon: const Icon(Icons.chevron_right_rounded),
+                    onPressed: () => setState(() => _month = month.next()),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              _CalendarGrid(month: month, marks: marks, today: today),
+              const SizedBox(height: 12),
+              const _Legend(),
+            ],
+          ),
+        ),
         const SizedBox(height: 16),
         FilledButton.tonalIcon(
+          style: FilledButton.styleFrom(
+            backgroundColor: Organic.of(context).sage,
+            foregroundColor: Colors.white,
+            minimumSize: const Size.fromHeight(52),
+          ),
           onPressed: () => _share(month, counts),
-          icon: const Icon(Icons.share),
+          icon: const Icon(Icons.share_rounded),
           label: Text(l10n.attShare),
         ),
       ],
@@ -126,28 +149,36 @@ class _StudentAttendanceTabState extends ConsumerState<StudentAttendanceTab> {
 }
 
 /// Colour plus a glyph, so a day is readable without telling colours apart.
-(Color, String, String) _look(
+/// The handoff's calendar: present sage, absent deep terracotta, late
+/// neutral.
+(Color, Color, String, String) _look(
   DayStatus status,
-  ColorScheme scheme,
+  Organic o,
   AppLocalizations l10n,
 ) => switch (status) {
-  DayStatus.present => (scheme.primaryContainer, '✓', l10n.attStatusPresent),
-  DayStatus.late => (scheme.tertiaryContainer, 'L', l10n.attStatusLate),
-  DayStatus.absent => (scheme.errorContainer, '✗', l10n.attStatusAbsent),
-  DayStatus.excused => (scheme.secondaryContainer, 'E', l10n.attStatusExcused),
-  DayStatus.cancelled => (
-    scheme.surfaceContainerHighest,
-    '–',
-    l10n.classCancelled,
+  DayStatus.present => (o.sageSoft, o.onSageSoft, '✓', l10n.attStatusPresent),
+  DayStatus.late => (o.neutralSoft, o.onNeutralSoft, 'L', l10n.attStatusLate),
+  DayStatus.absent => (o.accentStrong, Colors.white, '✗', l10n.attStatusAbsent),
+  DayStatus.excused => (
+    o.accentSoft,
+    o.onAccentSoft,
+    'E',
+    l10n.attStatusExcused,
   ),
-  DayStatus.holiday => (scheme.surfaceContainerHighest, 'H', l10n.classHoliday),
+  DayStatus.cancelled => (o.raised, o.muted, '–', l10n.classCancelled),
+  DayStatus.holiday => (o.raised, o.muted, 'H', l10n.classHoliday),
 };
 
 class _CalendarGrid extends ConsumerWidget {
-  const _CalendarGrid({required this.month, required this.marks});
+  const _CalendarGrid({
+    required this.month,
+    required this.marks,
+    required this.today,
+  });
 
   final YearMonth month;
   final List<DayMark> marks;
+  final LocalDate today;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -167,7 +198,9 @@ class _CalendarGrid extends ConsumerWidget {
         Center(
           child: Text(
             weekdayShortName(w, language),
-            style: theme.textTheme.labelSmall,
+            style: theme.textTheme.labelSmall?.copyWith(
+              color: Organic.of(context).muted,
+            ),
           ),
         ),
       for (var i = 0; i < offset; i++) const SizedBox.shrink(),
@@ -177,6 +210,7 @@ class _CalendarGrid extends ConsumerWidget {
           status: byDay[d],
           numerals: numerals,
           date: LocalDate(month.year, month.month, d),
+          isToday: LocalDate(month.year, month.month, d) == today,
           l10n: l10n,
         ),
     ];
@@ -185,8 +219,8 @@ class _CalendarGrid extends ConsumerWidget {
       crossAxisCount: 7,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
+      mainAxisSpacing: 6,
+      crossAxisSpacing: 6,
       children: cells,
     );
   }
@@ -198,6 +232,7 @@ class _DayCell extends StatelessWidget {
     required this.status,
     required this.numerals,
     required this.date,
+    required this.isToday,
     required this.l10n,
   });
 
@@ -205,28 +240,44 @@ class _DayCell extends StatelessWidget {
   final DayStatus? status;
   final NumeralStyle numerals;
   final LocalDate date;
+  final bool isToday;
   final AppLocalizations l10n;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final look = status == null ? null : _look(status!, scheme, l10n);
+    final o = Organic.of(context);
+    final look = status == null ? null : _look(status!, o, l10n);
     final dayText = formatCount(day, numerals);
+    final fg = look?.$2 ?? o.subtle;
     return Semantics(
-      label: look == null ? dayText : '$dayText, ${look.$3}',
+      label: look == null ? dayText : '$dayText, ${look.$4}',
       excludeSemantics: true,
       child: Container(
         decoration: BoxDecoration(
           color: look?.$1,
-          borderRadius: BorderRadius.circular(8),
+          shape: BoxShape.circle,
+          border: isToday ? Border.all(color: o.text, width: 2) : null,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(dayText, style: Theme.of(context).textTheme.bodySmall),
-            if (look != null)
-              Text(look.$2, style: const TextStyle(fontSize: 12)),
-          ],
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  dayText,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: fg,
+                  ),
+                ),
+                if (look != null)
+                  Text(look.$3, style: TextStyle(fontSize: 10, color: fg)),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -239,7 +290,7 @@ class _Legend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final scheme = Theme.of(context).colorScheme;
+    final o = Organic.of(context);
     return Wrap(
       spacing: 12,
       runSpacing: 4,
@@ -247,7 +298,7 @@ class _Legend extends StatelessWidget {
         for (final s in DayStatus.values)
           Builder(
             builder: (context) {
-              final look = _look(s, scheme, l10n);
+              final look = _look(s, o, l10n);
               return Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -257,12 +308,15 @@ class _Legend extends StatelessWidget {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: look.$1,
-                      borderRadius: BorderRadius.circular(4),
+                      shape: BoxShape.circle,
                     ),
-                    child: Text(look.$2, style: const TextStyle(fontSize: 11)),
+                    child: Text(
+                      look.$3,
+                      style: TextStyle(fontSize: 11, color: look.$2),
+                    ),
                   ),
                   const SizedBox(width: 4),
-                  Text(look.$3, style: Theme.of(context).textTheme.bodySmall),
+                  Text(look.$4, style: Theme.of(context).textTheme.bodySmall),
                 ],
               );
             },

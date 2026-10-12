@@ -57,6 +57,7 @@ void main() {
       for (final l in [
         '/home',
         '/students',
+        '/batches',
         '/students/abc',
         '/batches/b1',
         '/fees',
@@ -77,6 +78,7 @@ void main() {
         '/fees/payments/p1/edit',
         '/students/new',
         '/students/s1/edit',
+        '/students/s1/adjust',
         '/batches/new',
         '/batches/b1/edit',
         '/settings/lock',

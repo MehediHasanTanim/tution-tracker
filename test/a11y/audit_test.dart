@@ -244,7 +244,14 @@ void main() {
         );
         await waitFor(tester);
         await tester.pump(const Duration(milliseconds: 300));
-        for (final tab in ['হোম', 'শিক্ষার্থী', 'ফি', 'রিপোর্ট', 'সেটিংস']) {
+        for (final tab in [
+          'হোম',
+          'শিক্ষার্থী',
+          'ব্যাচ',
+          'ফি',
+          'রিপোর্ট',
+          'সেটিংস',
+        ]) {
           await goTab(tester, tab);
           await tester.pump(const Duration(milliseconds: 300));
           expect(tester.takeException(), isNull, reason: tab);

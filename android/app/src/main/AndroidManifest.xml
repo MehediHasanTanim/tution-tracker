@@ -19,7 +19,8 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:label="@string/app_name"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round">
         <!-- Set per build with -PADMOB_APP_ID (see tool/release.sh); the default
              is Google's sample app id, which only serves test ads. -->
         <meta-data

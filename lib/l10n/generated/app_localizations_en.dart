@@ -1726,4 +1726,224 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get helpSupportMessage => 'Tuition Khata: I have a problem — ';
+
+  @override
+  String homeGreeting(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get homeGreetingPlain => 'Hello';
+
+  @override
+  String homeCollectedMonth(String month) {
+    return 'Collected · $month';
+  }
+
+  @override
+  String homeOfExpected(String amount) {
+    return 'of $amount';
+  }
+
+  @override
+  String get bkCardTitle => 'Backup';
+
+  @override
+  String get attMarkHint => 'Everyone starts Present. Tap a student to flip.';
+
+  @override
+  String get payFullBalance => 'Full balance';
+
+  @override
+  String get payHalf => 'Half';
+
+  @override
+  String get studentQuickHint =>
+      'Just name and monthly fee — fill the rest later.';
+
+  @override
+  String get navBatches => 'Batches';
+
+  @override
+  String batchesIntro(String count) {
+    return '$count batches · class days and times in one place';
+  }
+
+  @override
+  String batchStudentsTag(String count) {
+    return '$count students';
+  }
+
+  @override
+  String get batchTakeAttendance => 'Take today’s attendance';
+
+  @override
+  String get batchDelete => 'Delete batch';
+
+  @override
+  String get batchDeleteTitle => 'Delete this batch?';
+
+  @override
+  String get batchDeleteBody =>
+      'Students stay; only the batch and its schedule are removed.';
+
+  @override
+  String get batchDeleteYes => 'Yes, delete';
+
+  @override
+  String get batchDeleteNo => 'Keep it';
+
+  @override
+  String get batchDeleted => 'Batch deleted';
+
+  @override
+  String get timeOther => 'Other time…';
+
+  @override
+  String get dueDayEarlier => 'One day earlier';
+
+  @override
+  String get dueDayLater => 'One day later';
+
+  @override
+  String get noteNew => 'New note';
+
+  @override
+  String get noteHint => 'e.g. Needs help with algebra';
+
+  @override
+  String get noteAdd => 'Add note';
+
+  @override
+  String get noteNone => 'No notes yet.';
+
+  @override
+  String get noteEarlier => 'Earlier note';
+
+  @override
+  String fadjThisMonth(String amount) {
+    return 'This month: $amount';
+  }
+
+  @override
+  String get fadjPaused => 'billing paused';
+
+  @override
+  String get fadjPauseSub => 'For breaks or leave';
+
+  @override
+  String get fadjResumeSub => 'Fees count again from the month you choose';
+
+  @override
+  String get fadjOneTimeSub => 'Admission, books or exam fee';
+
+  @override
+  String fadjWaiveMonth(String month) {
+    return 'Waive or discount $month';
+  }
+
+  @override
+  String get fadjWaiveSub => 'The whole month or part of it';
+
+  @override
+  String get fadjPaymentsHint => 'Tap a payment to correct or delete it.';
+
+  @override
+  String get receiptFormatImage => 'Image (PNG)';
+
+  @override
+  String get receiptExactly => 'This is exactly what the guardian receives.';
+
+  @override
+  String homeExtraWhen(String date) {
+    return '$date — outside the regular routine.';
+  }
+
+  @override
+  String get homeExtraAdd => 'Add to the day';
+
+  @override
+  String get offAction => 'Cancel class / holiday';
+
+  @override
+  String get offTitle => 'Mark class off';
+
+  @override
+  String get offBody =>
+      'No one is marked absent and the class won’t count towards attendance %. You can restore it any time.';
+
+  @override
+  String get offPublicHoliday => 'Public holiday';
+
+  @override
+  String get offTutorUnwell => 'Tutor unwell';
+
+  @override
+  String get offExams => 'Students’ exams';
+
+  @override
+  String get offOther => 'Other reason';
+
+  @override
+  String get offConfirm => 'Mark class off';
+
+  @override
+  String get offNever => 'Never mind';
+
+  @override
+  String get offNoAttendance => 'No attendance is taken';
+
+  @override
+  String get tplIntro =>
+      'This text goes into every fee reminder. Tap a chip below to insert the name, amount and so on.';
+
+  @override
+  String remindAllOverdue(String count) {
+    return 'Remind all overdue ($count)';
+  }
+
+  @override
+  String get remBatterySub => 'Battery settings for Xiaomi, Oppo and others';
+
+  @override
+  String get remTemplateSub => 'What guardians receive';
+
+  @override
+  String get remPermAsk => 'Allow notifications?';
+
+  @override
+  String get remPermStep1 => 'A reminder before each class';
+
+  @override
+  String get remPermStep2 => 'A nudge on fee due dates';
+
+  @override
+  String get remPermStep3 =>
+      'Everything stays on this phone — no server, no ads';
+
+  @override
+  String get rsReplaceTitle => 'This replaces everything on this phone';
+
+  @override
+  String get bkRestoreSection => 'Restore';
+
+  @override
+  String get bkDangerZone => 'Danger zone';
+
+  @override
+  String get setOn => 'On';
+
+  @override
+  String get setOff => 'Off';
+
+  @override
+  String get setReplayIntro => 'Replay intro';
+
+  @override
+  String get setReplayIntroSub => 'Language and welcome screens';
+
+  @override
+  String reportMonths(String count) {
+    return '$count mo';
+  }
 }
