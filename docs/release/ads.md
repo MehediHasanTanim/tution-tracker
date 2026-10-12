@@ -83,6 +83,40 @@ ADMOB_INTERSTITIAL_ID=ca-app-pub-XXXXXXXXXXXXXXXX/WWWWWWWWWW \
 PRIVACY_URL=https://... tool/release.sh
 ```
 
+### Values for Tuition Khata (set up 12 October 2026)
+
+The ids are not secret: they are compiled into every release.
+
+| Item | Value |
+|---|---|
+| AdMob app (Android, "Tuition Khata") | `ca-app-pub-3379896207398236~9911381044` |
+| Banner "Browse banner" | `ca-app-pub-3379896207398236/2877225523` |
+| Interstitial "After payment" | `ca-app-pub-3379896207398236/2671930130` |
+| Privacy policy URL | <https://mehedihasantanim.github.io/tuition-khata/privacy/> |
+| app-ads.txt line | `google.com, pub-3379896207398236, DIRECT, f08c47fec0942fa0` |
+
+```
+ADS_MODE=live \
+ADMOB_APP_ID=ca-app-pub-3379896207398236~9911381044 \
+ADMOB_BANNER_ID=ca-app-pub-3379896207398236/2877225523 \
+ADMOB_INTERSTITIAL_ID=ca-app-pub-3379896207398236/2671930130 \
+PRIVACY_URL=https://mehedihasantanim.github.io/tuition-khata/privacy/ \
+tool/release.sh
+```
+
+Done in AdMob: app and both ad units created; eight sensitive categories
+blocked at app level (Dating, Drugs & Supplements, Get Rich Quick, Politics,
+References to Sex, Sensationalism, Sexual & Reproductive Health, Social Casino
+Games); maximum content rating General (G), set per app; European regulations
+(GDPR) message published for this app, with Do not consent on. Still to do:
+publish `app-ads.txt` on the developer domain, add test devices, the Play
+Console steps, and link the Play listing after the first upload.
+
+The privacy page is hosted from GitHub Pages: repository
+`MehediHasanTanim/tuition-khata`, file `privacy/index.html` (English and
+Bangla). When `privacy-policy.md` or the ad setup changes, update that file and
+its "Last updated" date.
+
 `tool/release.sh` refuses `live` without all three ids, and refuses Google's
 sample ids (they contain `3940256099942544`). Without `ADS_MODE`, a release has
 no ads (the manifest still lists the three ad permissions).
