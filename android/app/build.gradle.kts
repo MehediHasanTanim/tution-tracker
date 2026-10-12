@@ -45,6 +45,11 @@ android {
                 ?: "ca-app-pub-3940256099942544~3347511713"
     }
 
+    buildFeatures {
+        // AGP 9 turns this off by default; the flavors set app_name with resValue.
+        resValues = true
+    }
+
     flavorDimensions += "env"
     productFlavors {
         create("dev") {
