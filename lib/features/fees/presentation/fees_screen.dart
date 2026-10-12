@@ -45,24 +45,35 @@ class FeesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          all.maybeWhen(
-            data: (list) => _TotalsHeader(
-              total: money(list.fold(0, (s, e) => s + e.totalBalance)),
-              count: formatCount(list.length, numerals),
+      // One scroll view, so with big text or a banner the totals and filters
+      // scroll away instead of squeezing the list (or overflowing).
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: all.maybeWhen(
+              data: (list) => _TotalsHeader(
+                total: money(list.fold(0, (s, e) => s + e.totalBalance)),
+                count: formatCount(list.length, numerals),
+              ),
+              orElse: () => const SizedBox(height: 8),
             ),
-            orElse: () => const SizedBox(height: 8),
           ),
-          const _FilterBar(),
-          Expanded(
-            child: visible.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('$e')),
-              data: (list) {
-                if (list.isEmpty) {
-                  final nothingOwed = all.value?.isEmpty ?? true;
-                  return _Empty(
+          const SliverToBoxAdapter(child: _FilterBar()),
+          visible.when(
+            loading: () => const SliverFillRemaining(
+              hasScrollBody: false,
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            error: (e, _) => SliverFillRemaining(
+              hasScrollBody: false,
+              child: Center(child: Text('$e')),
+            ),
+            data: (list) {
+              if (list.isEmpty) {
+                final nothingOwed = all.value?.isEmpty ?? true;
+                return SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _Empty(
                     title: nothingOwed
                         ? l10n.feesEmptyTitle
                         : l10n.studentsNoMatch,
@@ -70,18 +81,15 @@ class FeesScreen extends ConsumerWidget {
                     icon: nothingOwed
                         ? Icons.check_circle_outline
                         : Icons.search_off,
-                  );
-                }
-                return ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (context, i) => _DueTile(
-                    entry: list[i],
-                    money: money,
-                    numerals: numerals,
                   ),
                 );
-              },
-            ),
+              }
+              return SliverList.builder(
+                itemCount: list.length,
+                itemBuilder: (context, i) =>
+                    _DueTile(entry: list[i], money: money, numerals: numerals),
+              );
+            },
           ),
         ],
       ),

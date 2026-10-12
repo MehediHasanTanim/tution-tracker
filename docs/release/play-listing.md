@@ -7,7 +7,7 @@ Limits: title 30 characters, short description 80, full description 4000.
 **Title:** টিউশন খাতা
 
 **Short description (≤ 80):**
-শিক্ষার্থী, হাজিরা ও ফি-র হিসাব: অফলাইনে, বাংলায়, ইন্টারনেট ছাড়া
+শিক্ষার্থী, হাজিরা ও ফি-র হিসাব: বাংলায়, ফোনেই, ইন্টারনেট ছাড়াও চলে
 
 **Full description:**
 প্রাইভেট শিক্ষকদের জন্য সহজ খাতা। কাগজের খাতা আর হিসাবের ঝামেলা ছেড়ে সব এক জায়গায়।
@@ -22,7 +22,7 @@ Limits: title 30 characters, short description 80, full description 4000.
 ✔ ব্যাকআপ ও রিস্টোর: নতুন ফোনে সব তথ্য হুবহু ফিরে আসে; চাইলে পাসওয়ার্ড দিন
 ✔ পিন বা আঙুলের ছাপ দিয়ে অ্যাপ লক
 
-গোপনীয়তা: আপনার সব তথ্য শুধু আপনার ফোনে থাকে। অ্যাপে ইন্টারনেটের অনুমতিই নেই, কোনো সাইন-আপ নেই, কোনো বিজ্ঞাপন নেই। আপনি ব্যাকআপ না নিলে ফোন হারালে তথ্য ফেরত পাওয়া যায় না, তাই নিয়মিত ব্যাকআপ নিন।
+গোপনীয়তা: আপনার সব তথ্য শুধু আপনার ফোনে থাকে। কোনো সাইন-আপ নেই। অ্যাপে বিজ্ঞাপন আছে (হাজিরা, পেমেন্ট, পিন ও ব্যাকআপের পর্দায় নেই); বিজ্ঞাপনে আপনার শিক্ষার্থী বা পেমেন্টের তথ্য ব্যবহার হয় না। আপনি ব্যাকআপ না নিলে ফোন হারালে তথ্য ফেরত পাওয়া যায় না, তাই নিয়মিত ব্যাকআপ নিন।
 
 বাংলা ও ইংরেজি দুই ভাষায়, বাংলা বা ইংরেজি সংখ্যায়। ছোট ও পুরনো ফোনেও চলে (অ্যান্ড্রয়েড ৭+)।
 
@@ -46,7 +46,7 @@ A simple register for private tutors in Bangladesh. Put the paper notebook and t
 ✔ Back up and restore: everything comes back exactly on a new phone; add a password if you like
 ✔ Lock the app with a PIN or fingerprint
 
-Privacy: your records stay on your phone. The app has no internet permission, no sign-up and no ads. If you never back up, a lost phone means lost records, so please back up regularly.
+Privacy: your records stay on your phone. The app has no sign-up and works without internet. It shows ads (never on the attendance, payment, PIN, backup or receipt screens), and your students' and payments' records are never used for them. If you never back up, a lost phone means lost records, so please back up regularly.
 
 Works in Bangla or English, with Bangla or English digits, on small and older phones (Android 7+).
 

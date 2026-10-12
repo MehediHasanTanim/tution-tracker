@@ -2,8 +2,10 @@
 
 Offline, Bangla-first tuition tracker for home tutors in Bangladesh: students,
 batches, attendance, fees and payments, receipts, guardian reminders, reports,
-class and fee reminders, backup and restore, optional app lock. No account, no
-network permission, all data on the phone.
+class and fee reminders, backup and restore, optional app lock. No account; all
+records stay on the phone. Shows AdMob ads (a banner on browsing screens, never
+on entry, PIN, backup or receipt screens) and uses the network only for them;
+builds without `ADS_MODE` have no ads. See `docs/release/ads.md`.
 
 See `docs/` for the spec (`docs/feature`), technical design (`docs/design`) and
 implementation plan (`docs/plan`). Release material is in `docs/release/`.

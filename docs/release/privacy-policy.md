@@ -31,10 +31,34 @@ copied to Google or to a new phone by the system.
 
 ## What the app does not do
 
-- It has **no internet permission**. It cannot send anything over the network.
-- It has no account, login, advertising, analytics or crash-reporting
-  libraries, and shares nothing with third parties.
+- It never sends your records over the network. The internet is used only by
+  the advertising library described below.
+- It has no account, login, analytics or crash-reporting libraries.
 - It does not read your contacts, location, messages, microphone or files.
+
+## Advertising
+
+The app shows ads from Google AdMob: a banner under the main screens, and
+occasionally a full-screen ad after you save a payment. There are no ads on the
+screens where you enter attendance or payments, the PIN screens, backup and
+restore, or receipts.
+
+- Google's advertising library uses the internet, your device's advertising ID
+  and technical information about the device and the ads (for example IP
+  address, device model, Android version, and whether an ad was shown or
+  tapped) to choose, show and measure ads and to prevent fraud. This is
+  collected and used by Google under
+  [Google's privacy policy](https://policies.google.com/privacy).
+- **None of your records are used for ads.** Student, guardian, attendance and
+  payment information is never given to the advertising library, and ad
+  requests carry no keywords or page content from the app.
+- Ads are limited to family-friendly content.
+- Where the law asks (for example in the European Economic Area and the UK) the
+  app asks for your consent before showing personalised ads, and you can change
+  your choice later in Settings, "Ad privacy options". You can also reset or
+  turn off personalisation of your advertising ID in your phone's Google
+  settings.
+- Without internet, no ad appears and the app works as normal.
 
 ## What leaves the phone, and only because you ask
 
@@ -55,6 +79,8 @@ copied to Google or to a new phone by the system.
 | Run at start-up | Restore reminders after the phone restarts | (automatic with reminders) |
 | Biometrics | Fingerprint or face unlock for the optional app lock | Only if you turn it on |
 | Vibrate | Notification vibration | With notifications |
+| Internet and network state | Only for showing ads | Whenever the app is open |
+| Advertising ID | Ads (you can reset or remove it in phone settings) | Whenever ads are shown |
 
 ## Your control
 

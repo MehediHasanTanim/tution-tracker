@@ -12,7 +12,7 @@ is built by `tool/release.sh`: pick the file for the phone's CPU
    the app you opened it from (for example WhatsApp), then go back and tap
    **Install**.
 3. Open **Tuition Khata**. Choose your language. Nothing else is needed: no sign-up,
-   no internet.
+   no internet needed (ads appear only when the phone is online).
 4. Afterwards you may switch "Install unknown apps" off again.
 
 ## বাংলা

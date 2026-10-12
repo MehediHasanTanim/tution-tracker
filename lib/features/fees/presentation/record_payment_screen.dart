@@ -14,6 +14,7 @@ import 'package:tution_tracker/core/i18n/locale_provider.dart';
 import 'package:tution_tracker/core/i18n/number_format.dart';
 import 'package:tution_tracker/core/money/taka.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/features/ads/data/ad_providers.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/data/payment_repository.dart';
 import 'package:tution_tracker/features/fees/domain/allocation.dart';
@@ -175,6 +176,7 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
     final today = todayFrom(ref.read(clockProvider));
     final messenger = ScaffoldMessenger.of(context);
     final router = GoRouter.of(context);
+    final showAd = ref.read(interstitialProvider);
     try {
       final repo = await ref.read(paymentRepositoryProvider.future);
       final RecordedPayment result;
@@ -211,6 +213,9 @@ class _PaymentFormState extends ConsumerState<_PaymentForm> {
         unawaited(router.pushReplacement('/fees/receipt/${result.payment.id}'));
       } else if (router.canPop()) {
         router.pop();
+        // A natural pause: the payment is saved and the receipt declined. The
+        // rules keep this rare, and it never happens while editing.
+        if (!_editing) unawaited(showAd());
       }
     } on PaymentException {
       if (mounted) setState(() => _amountError = l10n.payAmountRequired);

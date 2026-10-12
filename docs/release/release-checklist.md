@@ -49,14 +49,17 @@ Nothing is ticked on trust.
 - [ ] **publisher** Build it and run `tool/check_size.sh`: every APK under 25 MB
       (not measured: no Android SDK where this was written; expect about 15 to 20 MB
       per ABI for a Flutter app with these plugins, but measure)
-- [ ] **publisher** `tool/check_manifest.sh` on the built APK: no INTERNET, no
-      storage, contacts, location or camera permissions
+- [ ] **publisher** `tool/check_manifest.sh` on the built APK: only INTERNET,
+      ACCESS_NETWORK_STATE and AD_ID from the network group; no storage,
+      contacts, location or camera permissions
 - [ ] **publisher** Keystore generated and backed up in two offline places
       (`signing.md`)
 - [ ] **publisher** Play listing in Bangla and English (`play-listing.md`),
       screenshots captured, feature graphic and icon designed (the default launcher
       icon is still in use)
-- [x] Data safety answers drafted (`data-safety.md`: no data collected)
+- [x] Data safety answers drafted (`data-safety.md`: ad SDK data only; no tutoring data)
+- [ ] **publisher** AdMob account, app, ad units, consent messages, `app-ads.txt`, Play ads declarations (`ads.md`, steps 1 to 9)
+- [ ] **device** Ads checklist in `ads.md` (test ads, offline, lock, consent, 2 GB phone)
 - [ ] **publisher** Data safety form completed in Play Console
 - [ ] **publisher** Play Console vitals confirmed receiving; symbol files uploaded
 - [x] Direct APK install instructions (`install-apk.md`)

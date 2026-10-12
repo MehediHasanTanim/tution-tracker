@@ -87,6 +87,10 @@ class _AppGateState extends ConsumerState<AppGate> with WidgetsBindingObserver {
   }
 }
 
+/// True while the first-run flow, the lock or another notice covers the app.
+/// Anything that must not show through a cover (such as an ad) checks this.
+bool isAppCovered(WidgetRef ref) => _coverOf(ref) != _Cover.none;
+
 enum _Cover { none, splash, onboarding, lock, dateJump }
 
 _Cover _coverOf(WidgetRef ref) {

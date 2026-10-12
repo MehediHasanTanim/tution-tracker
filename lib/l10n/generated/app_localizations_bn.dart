@@ -1707,6 +1707,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get helpPrivacyPolicy => 'গোপনীয়তা নীতি';
 
   @override
+  String get adsPrivacyOptions => 'বিজ্ঞাপনের গোপনীয়তা অপশন';
+
+  @override
+  String get adsNote =>
+      'বিজ্ঞাপনে আপনার শিক্ষার্থী বা পেমেন্টের তথ্য কখনো ব্যবহার হয় না।';
+
+  @override
   String get helpSupportWhatsApp => 'WhatsApp-এ সহায়তা চান';
 
   @override

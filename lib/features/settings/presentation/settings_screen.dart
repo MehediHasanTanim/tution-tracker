@@ -11,6 +11,7 @@ import 'package:tution_tracker/core/settings/setting_key.dart';
 import 'package:tution_tracker/core/settings/settings_keys.dart';
 import 'package:tution_tracker/core/settings/settings_provider.dart';
 import 'package:tution_tracker/core/ui/input_formatters.dart';
+import 'package:tution_tracker/features/ads/data/ad_providers.dart';
 import 'package:tution_tracker/features/fees/data/fee_providers.dart';
 import 'package:tution_tracker/features/fees/domain/proration_rule.dart';
 import 'package:tution_tracker/features/onboarding/data/onboarding_providers.dart';
@@ -208,6 +209,14 @@ class SettingsScreen extends ConsumerWidget {
               trailing: const Icon(Icons.chevron_right),
               onTap: () => context.push('/settings/backup'),
             ),
+            if (ref.watch(privacyOptionsRequiredProvider).value ?? false)
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.ads_click_outlined),
+                title: Text(l10n.adsPrivacyOptions),
+                subtitle: Text(l10n.adsNote),
+                onTap: () => ref.read(adServiceProvider).showPrivacyOptions(),
+              ),
             // The privacy note is always here; the links appear when the build
             // was given them (tool/release.sh).
             heading(l10n.helpTitle),
