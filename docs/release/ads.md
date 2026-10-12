@@ -108,9 +108,16 @@ Done in AdMob: app and both ad units created; eight sensitive categories
 blocked at app level (Dating, Drugs & Supplements, Get Rich Quick, Politics,
 References to Sex, Sensationalism, Sexual & Reproductive Health, Social Casino
 Games); maximum content rating General (G), set per app; European regulations
-(GDPR) message published for this app, with Do not consent on. Still to do:
-publish `app-ads.txt` on the developer domain, add test devices, the Play
+(GDPR) message published for this app, with Do not consent on;
+`app-ads.txt` published (below). Still to do: add test devices, the Play
 Console steps, and link the Play listing after the first upload.
+
+`app-ads.txt` is served from the GitHub Pages user site
+<https://mehedihasantanim.github.io/app-ads.txt> (repository
+`MehediHasanTanim/MehediHasanTanim.github.io`, file `app-ads.txt` at the root).
+AdMob only finds it if the **developer website** on the Play listing is
+`https://mehedihasantanim.github.io`; set that when creating the listing. Google
+can take up to 7 days to crawl it (AdMob, Apps, app-ads.txt shows the status).
 
 The privacy page is hosted from GitHub Pages: repository
 `MehediHasanTanim/tuition-khata`, file `privacy/index.html` (English and
